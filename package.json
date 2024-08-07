@@ -24,6 +24,6 @@
 		"lint-staged": "15.2.8"
 	},
 	"lint-staged": {
-		"**/*": "biome check --write --ignore-unknown"
+		"**/*": "biome check --write"
 	}
 }
