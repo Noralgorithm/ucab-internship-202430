@@ -9,7 +9,8 @@
 		"start:dev": "pnpm --parallel -r start:dev",
 		"build": "pnpm --parallel -r build",
 		"generate:docs": "pnpm --parallel -r generate:docs",
-		"commitlint": "pnpx commitlint -e"
+		"commitlint": "pnpx commitlint -e",
+		"prepare": "husky"
 	},
 	"keywords": [],
 	"author": "",
