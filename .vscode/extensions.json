@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Angular.ng-template",
+    "biomejs.biome",
+    "aaron-bond.better-comments",
+    "vivaxy.vscode-conventional-commits",
+    "mikestead.dotenv",
+    "yoavbls.pretty-ts-errors",
+    "gruntfuggly.todo-tree"
+  ]
+}
