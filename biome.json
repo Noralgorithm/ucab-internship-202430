@@ -22,6 +22,9 @@
 			},
 			"complexity": {
 				"useLiteralKeys": "off"
+			},
+			"style": {
+				"useImportType": "off"
 			}
 		}
 	},
