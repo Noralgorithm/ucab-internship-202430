@@ -19,6 +19,9 @@
 			},
 			"nursery": {
 				"noConsole": "warn"
+			},
+			"complexity": {
+				"useLiteralKeys": "off"
 			}
 		}
 	},
