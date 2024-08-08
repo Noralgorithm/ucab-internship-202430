@@ -3,8 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UsersModule } from 'src/features/users/users.module'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { validate } from './config/env.validation'
 
 @Module({
@@ -23,8 +21,6 @@ import { validate } from './config/env.validation'
 			}
 		}),
 		UsersModule
-	],
-	controllers: [AppController],
-	providers: [AppService]
+	]
 })
 export class AppModule {}
