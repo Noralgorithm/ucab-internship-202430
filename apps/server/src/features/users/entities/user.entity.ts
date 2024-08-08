@@ -1,25 +1,33 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { Gender, UserRole, UserType } from '../users.constants'
+import {
+	EMAIL_MAX_LENGTH,
+	Gender,
+	NAME_MAX_LENGTH,
+	UserRole,
+	UserType
+} from '../users.constants'
+
+const ENCRYPTED_PASSWORD_LENGTH = 60
 
 @Entity()
 export class User {
 	@PrimaryGeneratedColumn()
-	id: number
+	internalId: number
 
-	@Column({ type: 'uuid' })
-	uuid: string
+	@Column({ type: 'uuid', unique: true })
+	id: string
 
-	@Column({ length: 35 })
+	@Column({ length: NAME_MAX_LENGTH })
 	firstName: string
 
-	@Column({ length: 35 })
+	@Column({ length: NAME_MAX_LENGTH })
 	lastName: string
 
-	@Column({ length: 320 })
+	@Column({ length: EMAIL_MAX_LENGTH })
 	email: string
 
-	@Column({ length: 60 })
-	password: string
+	@Column({ length: ENCRYPTED_PASSWORD_LENGTH })
+	encryptedPassword: string
 
 	@Column({ enum: Gender })
 	gender: Gender
@@ -27,7 +35,7 @@ export class User {
 	@Column({ enum: UserType })
 	type: UserType
 
-	@Column()
+	@Column({ nullable: false })
 	walkDistance: number
 
 	@Column({ enum: UserRole })
@@ -42,7 +50,7 @@ export class User {
 	@Column()
 	emergencyContactPhoneNumber: string
 
-	@Column()
+	@Column({ default: false })
 	isDriver: boolean
 
 	@Column({ default: true })
