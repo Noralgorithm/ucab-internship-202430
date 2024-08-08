@@ -1,20 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-
-enum Gender {
-	MALE = 'male',
-	FEMALE = 'female'
-}
-
-enum UserType {
-	STAFF = 'staff',
-	STUDENT = 'student',
-	PROFESSOR = 'professor'
-}
-
-enum UserRole {
-	PASSENGER = 'passenger',
-	DRIVER = 'driver'
-}
+import { Gender, UserRole, UserType } from '../users.constants'
 
 @Entity()
 export class User {
