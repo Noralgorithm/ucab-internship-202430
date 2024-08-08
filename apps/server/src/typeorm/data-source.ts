@@ -1,5 +1,6 @@
 import { config } from 'dotenv'
 import { DataSource } from 'typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 config()
 
@@ -9,6 +10,8 @@ export const AppDataSource: DataSource = new DataSource({
 	type: 'postgres',
 	url: DATABASE_URL,
 	entities: ['dist/**/*.entity.js'],
+	migrations: ['migrations/*.js'],
+	namingStrategy: new SnakeNamingStrategy(),
 	synchronize: false,
 	logging: true
 })
