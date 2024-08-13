@@ -1,0 +1,15 @@
+:root {
+	--primary-50: #fff1f4;
+	--primary-100: #ffe3e9;
+	--primary-200: #ffcbd9;
+	--primary-300: #ffa1b9;
+	--primary-400: #ff6d94;
+	--primary-500: #f92564;
+	--primary-600: #e7175f;
+	--primary-700: #c30d50;
+	--primary-800: #a30e4a;
+	--primary-900: #8c0f46;
+	--primary-950: #4e0321;
+
+	/* TODO: add missing colors from project's Figma */
+}
