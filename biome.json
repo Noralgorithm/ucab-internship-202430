@@ -54,7 +54,13 @@
 		}
 	},
 	"files": {
-		"ignore": ["node_modules", "dist", "pnpm-lock.yaml", ".husky"],
+		"ignore": [
+			"node_modules",
+			"dist",
+			"pnpm-lock.yaml",
+			".husky",
+			"metadata.ts"
+		],
 		"ignoreUnknown": true
 	}
 }
