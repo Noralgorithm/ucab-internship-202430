@@ -1,4 +1,5 @@
 :root {
+	/* Primary color */
 	--primary-50: #fff1f4;
 	--primary-100: #ffe3e9;
 	--primary-200: #ffcbd9;
@@ -10,6 +11,17 @@
 	--primary-800: #a30e4a;
 	--primary-900: #8c0f46;
 	--primary-950: #4e0321;
+
+	/* Status colors */
+	--success: #49af41;
+	--warning: #ffe16a;
+	--error: #f52936;
+
+	/* Text color */
+	--text-color: #001b25;
+
+	/* Background color */
+	--background-color: #fcf6ef;
 
 	/* TODO: add missing colors from project's Figma */
 }
