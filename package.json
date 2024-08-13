@@ -24,6 +24,6 @@
 		"lint-staged": "15.2.8"
 	},
 	"lint-staged": {
-		"**/*": "biome check --write"
+		"**/*": "biome check --write --no-errors-on-unmatched"
 	}
 }
