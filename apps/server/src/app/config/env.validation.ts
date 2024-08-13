@@ -11,7 +11,7 @@ import {
 
 class EnvironmentVariables {
 	@IsPort()
-	SERVER_PORT: number
+	SERVER_PORT: string
 
 	@IsUrl({
 		allow_trailing_dot: false,

@@ -8,19 +8,32 @@ export default async () => {
 		'@nestjs/swagger': {
 			models: [
 				[
-					import('./features/users/dto/create-user.dto'),
+					import('./shared/at-dates.entity'),
 					{
-						CreateUserDto: {
+						AtDates: {
+							createdAt: { required: true },
+							updatedAt: { required: true }
+						}
+					}
+				],
+				[
+					import('./features/users/entities/user.entity'),
+					{
+						User: {
+							internalId: { required: true, type: () => Number },
 							id: { required: true, type: () => String },
 							firstName: { required: true, type: () => String },
 							lastName: { required: true, type: () => String },
 							email: { required: true, type: () => String },
-							password: { required: true, type: () => String },
+							encryptedPassword: { required: true, type: () => String },
 							gender: { required: true, enum: t['./shared/constants'].Gender },
 							type: { required: true, enum: t['./shared/constants'].UserType },
 							walkDistance: { required: true, type: () => Number },
-							preferredRole: { required: true, type: () => String },
-							profilePic: { required: true, type: () => String },
+							preferredRole: {
+								required: true,
+								enum: t['./shared/constants'].UserRole
+							},
+							profilePicUrl: { required: true, type: () => String },
 							phoneNumber: { required: true, type: () => String },
 							emergencyContactPhoneNumber: {
 								required: true,
@@ -28,17 +41,26 @@ export default async () => {
 							},
 							isDriver: { required: true, type: () => Boolean },
 							isActive: { required: true, type: () => Boolean },
-							isBlocked: { required: true, type: () => Boolean }
+							isBlocked: { required: true, type: () => Boolean },
+							atDates: {
+								required: true,
+								type: () => t['./shared/at-dates.entity'].AtDates
+							}
 						}
 					}
 				],
-				[import('./features/users/dto/update-user.dto'), { UpdateUserDto: {} }],
 				[
-					import('./shared/at-dates.entity'),
+					import('./features/auth/dto/request-sign-up.dto'),
 					{
-						AtDates: {
-							createdAt: { required: true },
-							updatedAt: { required: true }
+						RequestSignUpDto: { email: { required: true, type: () => String } }
+					}
+				],
+				[
+					import('./features/auth/dto/sign-in.dto'),
+					{
+						SignInDto: {
+							email: { required: true, type: () => String },
+							password: { required: true, type: () => String }
 						}
 					}
 				],
@@ -76,29 +98,19 @@ export default async () => {
 					}
 				],
 				[
-					import('./features/auth/dto/request-sign-up.dto'),
+					import('./features/users/dto/create-user.dto'),
 					{
-						RequestSignUpDto: { email: { required: true, type: () => String } }
-					}
-				],
-				[
-					import('./features/users/entities/user.entity'),
-					{
-						User: {
-							internalId: { required: true, type: () => Number },
+						CreateUserDto: {
 							id: { required: true, type: () => String },
 							firstName: { required: true, type: () => String },
 							lastName: { required: true, type: () => String },
 							email: { required: true, type: () => String },
-							encryptedPassword: { required: true, type: () => String },
+							password: { required: true, type: () => String },
 							gender: { required: true, enum: t['./shared/constants'].Gender },
 							type: { required: true, enum: t['./shared/constants'].UserType },
 							walkDistance: { required: true, type: () => Number },
-							preferredRole: {
-								required: true,
-								enum: t['./shared/constants'].UserRole
-							},
-							profilePicUrl: { required: true, type: () => String },
+							preferredRole: { required: true, type: () => String },
+							profilePic: { required: true, type: () => String },
 							phoneNumber: { required: true, type: () => String },
 							emergencyContactPhoneNumber: {
 								required: true,
@@ -106,25 +118,23 @@ export default async () => {
 							},
 							isDriver: { required: true, type: () => Boolean },
 							isActive: { required: true, type: () => Boolean },
-							isBlocked: { required: true, type: () => Boolean },
-							atDates: {
-								required: true,
-								type: () => t['./shared/at-dates.entity'].AtDates
-							}
+							isBlocked: { required: true, type: () => Boolean }
 						}
 					}
 				],
-				[
-					import('./features/auth/dto/sign-in.dto'),
-					{
-						SignInDto: {
-							email: { required: true, type: () => String },
-							password: { required: true, type: () => String }
-						}
-					}
-				]
+				[import('./features/users/dto/update-user.dto'), { UpdateUserDto: {} }]
 			],
 			controllers: [
+				[
+					import('./features/auth/auth.controller'),
+					{
+						AuthController: {
+							requestSignUp: { type: String },
+							signUp: { type: String },
+							signIn: {}
+						}
+					}
+				],
 				[
 					import('./features/users/users.controller'),
 					{
@@ -134,16 +144,6 @@ export default async () => {
 							findOne: { type: String },
 							update: { type: String },
 							remove: { type: String }
-						}
-					}
-				],
-				[
-					import('./features/auth/auth.controller'),
-					{
-						AuthController: {
-							requestSignUp: { type: String },
-							signUp: { type: String },
-							signIn: {}
 						}
 					}
 				]
