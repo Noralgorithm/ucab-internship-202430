@@ -1,8 +1,5 @@
 import {
-	IsEmail,
 	IsEnum,
-	IsInt,
-	IsOptional,
 	IsPhoneNumber,
 	IsString,
 	IsUUID,
@@ -10,20 +7,16 @@ import {
 	MinLength
 } from 'class-validator'
 import {
-	EMAIL_MAX_LENGTH,
 	Gender,
 	NAME_MAX_LENGTH,
 	NAME_MIN_LENGTH,
 	PASSWORD_MAX_LENGTH,
 	PASSWORD_MIN_LENGTH,
-	UserRole,
 	UserType
 } from '~/shared/constants'
+import { SignUpRequest } from '../entities/sign-up-request.entity'
 
-export class CreateUserDto {
-	@IsUUID()
-	id: string
-
+export class SignUpDto {
 	@MaxLength(NAME_MAX_LENGTH)
 	@MinLength(NAME_MIN_LENGTH)
 	@IsString()
@@ -33,11 +26,6 @@ export class CreateUserDto {
 	@MinLength(NAME_MIN_LENGTH)
 	@IsString()
 	lastName: string
-
-	@MaxLength(EMAIL_MAX_LENGTH)
-	@IsEmail()
-	@IsString()
-	email: string
 
 	@MaxLength(PASSWORD_MAX_LENGTH)
 	@MinLength(PASSWORD_MIN_LENGTH)
@@ -50,29 +38,18 @@ export class CreateUserDto {
 	@IsEnum(UserType)
 	type: UserType
 
-	@IsInt()
-	walkDistance: number
-
-	@IsEnum(UserRole)
-	preferredRole: string
-
 	//TODO: recieve file
 	profilePic: string
 
 	//TODO: put venezuelan format
-	@IsPhoneNumber()
+	@IsPhoneNumber('VE')
 	phoneNumber: string
 
 	//TODO: put venezuelan forma
-	@IsPhoneNumber()
+	@IsPhoneNumber('VE')
 	emergencyContactPhoneNumber: string
 
-	@IsOptional()
-	isDriver: boolean
-
-	@IsOptional()
-	isActive: boolean
-
-	@IsOptional()
-	isBlocked: boolean
+	@IsUUID('4')
+	@IsString()
+	signUpRequestId: SignUpRequest['id']
 }

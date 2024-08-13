@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import {
 	FastifyAdapter,
@@ -6,6 +7,7 @@ import {
 } from '@nestjs/platform-fastify'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app/app.module'
+import metadata from './metadata'
 
 const GLOBAL_PIPES = [new ValidationPipe({ whitelist: true, transform: true })]
 
@@ -14,13 +16,13 @@ const SWAGGER_DESCRIPTION = 'API Documentation of MoviC Backend'
 const SWAGGER_VERSION = '1.0'
 const SWAGGER_PATH = 'docs'
 
-const SERVER_PORT = 3000
-
 async function bootstrap() {
 	const app = await NestFactory.create<NestFastifyApplication>(
 		AppModule,
 		new FastifyAdapter()
 	)
+
+	const configService = app.get(ConfigService)
 
 	app.useGlobalPipes(...GLOBAL_PIPES)
 
@@ -28,11 +30,16 @@ async function bootstrap() {
 		.setTitle(SWAGGER_TITLE)
 		.setDescription(SWAGGER_DESCRIPTION)
 		.setVersion(SWAGGER_VERSION)
+		.addBearerAuth({ type: 'http' })
 		.build()
 
+	await SwaggerModule.loadPluginMetadata(metadata)
 	const document = SwaggerModule.createDocument(app, config)
-	SwaggerModule.setup(SWAGGER_PATH, app, document)
+	SwaggerModule.setup(SWAGGER_PATH, app, document, {
+		jsonDocumentUrl: `${SWAGGER_PATH}/json`,
+		yamlDocumentUrl: `${SWAGGER_PATH}/yaml`
+	})
 
-	await app.listen(SERVER_PORT)
+	await app.listen(configService.get('SERVER_PORT', '3000'))
 }
 bootstrap()

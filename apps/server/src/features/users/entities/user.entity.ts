@@ -1,19 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm'
+import { AtDates } from '~/shared/at-dates.entity'
 import {
 	EMAIL_MAX_LENGTH,
+	ENCRYPTED_PASSWORD_LENGTH,
 	Gender,
 	NAME_MAX_LENGTH,
 	UserRole,
 	UserType
-} from '../users.constants'
-
-const ENCRYPTED_PASSWORD_LENGTH = 60
+} from '~/shared/constants'
 
 @Entity()
 export class User {
 	@PrimaryGeneratedColumn()
 	internalId: number
 
+	@Generated('uuid')
 	@Column({ type: 'uuid', unique: true })
 	id: string
 
@@ -29,16 +30,16 @@ export class User {
 	@Column({ length: ENCRYPTED_PASSWORD_LENGTH })
 	encryptedPassword: string
 
-	@Column({ enum: Gender })
+	@Column({ type: 'enum', enum: Gender })
 	gender: Gender
 
-	@Column({ enum: UserType })
+	@Column({ type: 'enum', enum: UserType })
 	type: UserType
 
-	@Column({ nullable: false })
+	@Column({ default: 150 })
 	walkDistance: number
 
-	@Column({ enum: UserRole })
+	@Column({ type: 'enum', enum: UserRole, default: UserRole.PASSENGER })
 	preferredRole: UserRole
 
 	@Column()
@@ -58,4 +59,7 @@ export class User {
 
 	@Column({ default: false })
 	isBlocked: boolean
+
+	@Column(() => AtDates, { prefix: false })
+	atDates: AtDates
 }
