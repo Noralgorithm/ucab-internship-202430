@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./app/core/styles/reset.css") layer(reset);
+@import url("./app/core/styles/colors.css");
+
+/* TODO: add missing variables from project's Figma */
