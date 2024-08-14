@@ -63,6 +63,9 @@ class EnvironmentVariables {
 	@IsPositive()
 	@IsInt()
 	JWT_NBF_SECONDS_OFFSET: number
+
+	@IsString()
+	LOCAL_FILE_STORAGE_PATH: string
 }
 
 export function validate(config: Record<string, unknown>) {

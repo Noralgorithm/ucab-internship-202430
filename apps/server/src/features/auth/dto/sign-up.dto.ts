@@ -1,3 +1,5 @@
+import { MemoryStorageFile } from '@blazity/nest-file-fastify'
+import { ApiProperty } from '@nestjs/swagger'
 import {
 	IsEnum,
 	IsPhoneNumber,
@@ -39,7 +41,8 @@ export class SignUpDto {
 	type: UserType
 
 	//TODO: recieve file
-	profilePic: string
+	@ApiProperty({ type: 'string', format: 'binary' })
+	profilePic: MemoryStorageFile
 
 	//TODO: put venezuelan format
 	@IsPhoneNumber('VE')

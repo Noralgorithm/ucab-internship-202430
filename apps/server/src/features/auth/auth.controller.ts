@@ -1,5 +1,7 @@
-import { Body, Controller, Patch, Post } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { MemoryStorageFile, UploadedFile } from '@blazity/nest-file-fastify'
+import { Body, Controller, Patch, Post, UseInterceptors } from '@nestjs/common'
+import { ApiConsumes, ApiTags } from '@nestjs/swagger'
+import { ImageInterceptor } from '~/shared/files-upload/images/image.interceptor'
 import { AuthService } from './auth.service'
 import { RequestSignUpDto } from './dto/request-sign-up.dto'
 import { SignInDto } from './dto/sign-in.dto'
@@ -19,7 +21,13 @@ export class AuthController {
 	}
 
 	@Post('sign-up')
-	signUp(@Body() signUpDto: SignUpDto) {
+	@UseInterceptors(ImageInterceptor('profilePic'))
+	@ApiConsumes('multipart/form-data')
+	signUp(
+		@Body() signUpDto: SignUpDto,
+		@UploadedFile() profilePic: MemoryStorageFile
+	) {
+		signUpDto.profilePic = profilePic
 		return this.authService.signUp(signUpDto)
 	}
 

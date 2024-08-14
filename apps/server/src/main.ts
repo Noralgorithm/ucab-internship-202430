@@ -1,3 +1,4 @@
+import fastifyMultipartPlugin from '@fastify/multipart'
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
@@ -23,6 +24,8 @@ async function bootstrap() {
 	)
 
 	const configService = app.get(ConfigService)
+
+	await app.register(fastifyMultipartPlugin)
 
 	app.useGlobalPipes(...GLOBAL_PIPES)
 
