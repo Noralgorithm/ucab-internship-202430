@@ -5,6 +5,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
 import { UsersModule } from '~/features/users/users.module'
+import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
+import { FilesController } from './files.controller'
 
 @Module({
 	imports: [
@@ -22,7 +24,9 @@ import { UsersModule } from '~/features/users/users.module'
 					namingStrategy: new SnakeNamingStrategy()
 				}
 			}
-		})
-	]
+		}),
+		FileStorageModule
+	],
+	controllers: [FilesController]
 })
 export class AppModule {}

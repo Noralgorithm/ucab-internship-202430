@@ -13,6 +13,7 @@ import { compare, hash } from 'bcrypt'
 import { DateTime } from 'luxon'
 import { Repository } from 'typeorm'
 import { User } from '~/features/users/entities/user.entity'
+import { FileStorageService } from '~/shared/files-upload/file-storage/file-storage.service'
 import { RequestSignUpDto } from './dto/request-sign-up.dto'
 import { SignInDto } from './dto/sign-in.dto'
 import { SignUpDto } from './dto/sign-up.dto'
@@ -25,6 +26,7 @@ export class AuthService {
 		private readonly signUpRequestsRepository: Repository<SignUpRequest>,
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
+		private readonly fileStorageService: FileStorageService,
 		private readonly jwtService: JwtService,
 		private readonly configService: ConfigService
 	) {}
@@ -80,10 +82,9 @@ export class AuthService {
 			HASH_SALT_ROUNDS
 		)
 
-		//TODO: validate user profile picture is .jpeg, .jpg, .avif, ... (check data dictionary)
-		//TODO: save user profile picture in server as a file
-		const userProfilePicUrl =
-			'https://www.shutterstock.com/shutterstock/photos/2287380849/display_1500/stock-photo-bread-stuffed-with-ham-typical-snak-from-venezuela-venezuelan-food-cachito-of-ham-2287380849.jpg'
+		const profilePicFilename = this.fileStorageService.save(
+			signUpDto.profilePic
+		)
 
 		await this.usersRepository.save({
 			firstName: signUpDto.firstName,
@@ -92,7 +93,7 @@ export class AuthService {
 			encryptedPassword: userEncryptedPassword,
 			gender: signUpDto.gender,
 			type: signUpDto.type,
-			profilePicUrl: userProfilePicUrl,
+			profilePicFilename: profilePicFilename,
 			phoneNumber: signUpDto.phoneNumber,
 			emergencyContactPhoneNumber: signUpDto.emergencyContactPhoneNumber
 		})

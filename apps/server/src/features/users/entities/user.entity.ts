@@ -9,7 +9,7 @@ import {
 	UserType
 } from '~/shared/constants'
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
 	@PrimaryGeneratedColumn()
 	internalId: number
@@ -43,7 +43,7 @@ export class User {
 	preferredRole: UserRole
 
 	@Column()
-	profilePicUrl: string
+	profilePicFilename: string
 
 	@Column()
 	phoneNumber: string
