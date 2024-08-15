@@ -1,0 +1,91 @@
+:host {
+	border-radius: var(--radius-sm);
+
+	transition: all 0.5s ease;
+
+	&:hover {
+		opacity: 0.9;
+		cursor: pointer;
+	}
+
+	/* Sizes */
+	&.small {
+		padding: 0.5rem 0.5rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		font-style: normal;
+		font-weight: 500;
+	}
+
+	&.medium {
+		padding: 0.75rem 1rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		font-style: normal;
+		font-weight: 500;
+	}
+
+	&.large {
+		padding: 0.75rem 4rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		font-style: normal;
+		font-weight: 500;
+	}
+
+	/* Appearance */
+
+	&.button-filled {
+		background-color: var(--bg-color);
+		border-color: var(--bg-color);
+		color: var(--text-color);
+	}
+
+	&.button-outlined {
+		background-color: transparent;
+		border: 1px solid var(--bg-color);
+		color: var(--text-color);
+	}
+
+	/* Severity */
+
+	&.severity-primary {
+		--bg-color: var(--primary-color);
+		--text-color: var(--contrast-color);
+	}
+
+	&.severity-secondary {
+		--bg-color: gray;
+		--text-color: black;
+	}
+
+	&.severity-contrast {
+		--bg-color: black;
+		--text-color: black;
+	}
+
+	&.severity-success {
+		--bg-color: rgb(38, 189, 38);
+		--text-color: black;
+	}
+
+	&.severity-info {
+		--bg-color: blue;
+		--text-color: black;
+	}
+
+	&.severity-warning {
+		--bg-color: yellow;
+		--text-color: black;
+	}
+
+	&.severity-danger {
+		--bg-color: red;
+		--text-color: black;
+	}
+
+	&.severity-help {
+		--bg-color: purple;
+		--text-color: white;
+	}
+}

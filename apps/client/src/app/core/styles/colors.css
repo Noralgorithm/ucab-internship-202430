@@ -1,3 +1,4 @@
+/* TODO: add missing colors from project's Figma */
 :root {
 	/* Primary color */
 	--primary-50: #fff1f4;
@@ -23,5 +24,24 @@
 	/* Background color */
 	--background-color: #fcf6ef;
 
-	/* TODO: add missing colors from project's Figma */
+	/* Added */
+	--primary-color-subtle: #feebf1;
+	--primary-color-lighter: #fb7ea4;
+	--primary-color: #f92564;
+	--primary-color-darker: #a90536;
+
+	--secondary-color-subtle: #d9dff5;
+	--secondary-color-lighter: #254bd4;
+	--secondary-color: #0c1844;
+	--secondary-color-darker: #070e27;
+
+	--tertiary-color-subtle: #ede5f2;
+	--tertiary-color-lighter: #b286d0;
+	--tertiary-color: #7d40a5;
+	--tertiary-color-darker: #4b2663;
+
+	--contrast-color-subtle: #ffffff;
+	--contrast-color-lighter: #fdfaf6;
+	--contrast-color: #fcf6ef;
+	--contrast-color-darker: #dd994b;
 }

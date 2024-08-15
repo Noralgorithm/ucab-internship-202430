@@ -1,4 +1,20 @@
 @import url("./app/core/styles/reset.css") layer(reset);
 @import url("./app/core/styles/colors.css");
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pixelify+Sans:wght@400..700&display=swap");
+
+/* Directives */
+@import "./app/shared/components/button/button.component.css";
+
 /* TODO: add missing variables from project's Figma */
+:root {
+	/* Border Radius */
+	--radius-xs: 0.25rem;
+	--radius-sm: 0.5rem;
+	--radius-md: 1rem;
+	--radius-lg: 2rem;
+	--radius-xl: 4rem;
+	--radius-full: 100%;
+
+	font-family: "Inter", sans-serif;
+}

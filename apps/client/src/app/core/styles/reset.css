@@ -20,6 +20,10 @@ select {
 	font: inherit;
 }
 
+button {
+	border: none;
+}
+
 p {
 	text-wrap: pretty;
 }
