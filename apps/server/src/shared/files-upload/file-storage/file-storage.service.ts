@@ -48,3 +48,6 @@ export class FileStorageService {
 		fs.unlinkSync(join(this.dirPath, filename))
 	}
 }
+
+//TODO(maybe, low priority): add typings for node-mime-types via declaration file
+//TODO(maybe, low priority): use node:fs/promises instead of node:fs

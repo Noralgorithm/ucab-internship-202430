@@ -10,7 +10,10 @@ const SUPPORTED_MIME_TYPES = [
 	'images/avif'
 ]
 
-export function filterImageUpload(req: FastifyRequest, file: UploadFilterFile) {
+export function filterImageUpload(
+	_req: FastifyRequest,
+	file: UploadFilterFile
+) {
 	validateSize(file, MAX_SIZE_IN_BYTES)
 	validateType(file, SUPPORTED_MIME_TYPES)
 
