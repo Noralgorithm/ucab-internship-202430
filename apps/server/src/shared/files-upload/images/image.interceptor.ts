@@ -1,5 +1,5 @@
 import { FileInterceptor, UploadOptions } from '@blazity/nest-file-fastify'
-import { filterImageUpload } from './filter-image-upload'
+import { filterImageUpload } from './filter-image-upload/filter-image-upload'
 
 const DEFAULT_OPTIONS: UploadOptions = {
 	filter: filterImageUpload
