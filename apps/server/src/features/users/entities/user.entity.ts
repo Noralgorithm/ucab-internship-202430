@@ -73,19 +73,19 @@ export class User {
 	isBlocked: boolean
 
 	@CreateDateColumn({
-		type: 'timestamp',
+		type: 'timestamptz',
 		transformer: LuxonDateTransformer
 	})
 	createdAt: DateTime
 
 	@UpdateDateColumn({
-		type: 'timestamp',
+		type: 'timestamptz',
 		transformer: LuxonDateTransformer
 	})
 	updatedAt: DateTime
 
 	@DeleteDateColumn({
-		type: 'timestamp',
+		type: 'timestamptz',
 		transformer: LuxonDateTransformer
 	})
 	deletedAt: DateTime

@@ -17,17 +17,17 @@ export class SignUpRequest {
 	@Column({ length: EMAIL_MAX_LENGTH, unique: true })
 	email: string
 
-	@Column({ type: 'timestamp' })
+	@Column({ type: 'timestamptz' })
 	expirationDate: DateTime
 
 	@CreateDateColumn({
-		type: 'timestamp',
+		type: 'timestamptz',
 		transformer: LuxonDateTransformer
 	})
 	createdAt: DateTime
 
 	@UpdateDateColumn({
-		type: 'timestamp',
+		type: 'timestamptz',
 		transformer: LuxonDateTransformer
 	})
 	updatedAt: DateTime

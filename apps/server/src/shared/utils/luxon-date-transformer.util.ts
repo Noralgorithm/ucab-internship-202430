@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 
 export const LuxonDateTransformer = {
-	to(value: DateTime): Date {
-		return value.toJSDate()
+	to(value: DateTime | undefined): string | undefined {
+		return value?.toJSDate().toISOString()
 	},
 
 	from(value: Date): DateTime {
