@@ -9,6 +9,7 @@ import { SignInDto } from './dto/sign-in.dto'
 import { SignUpDto } from './dto/sign-up.dto'
 
 @ApiTags('auth')
+@Public()
 @Controller('auth')
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
@@ -32,7 +33,6 @@ export class AuthController {
 		return this.authService.signUp(signUpDto)
 	}
 
-	@Public()
 	@Post('sign-in')
 	signIn(@Body() signInDto: SignInDto) {
 		return this.authService.signIn(signInDto)

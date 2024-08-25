@@ -34,6 +34,7 @@ async function bootstrap() {
 		.setDescription(SWAGGER_DESCRIPTION)
 		.setVersion(SWAGGER_VERSION)
 		.addBearerAuth({ type: 'http' })
+		.addSecurityRequirements('bearer')
 		.build()
 
 	// await SwaggerModule.loadPluginMetadata(metadata)
@@ -45,4 +46,5 @@ async function bootstrap() {
 
 	await app.listen(configService.get('SERVER_PORT', '3000'))
 }
+
 bootstrap()
