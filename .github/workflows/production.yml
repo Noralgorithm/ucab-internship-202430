@@ -1,0 +1,31 @@
+# name: CI/CD
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USERNAME }}
+#           password: ${{ secrets.SSH_PASSWORD }}
+#           port: ${{ secrets.SSH_PORT }}
+#           script: |
+#             export PATH="$PATH:/root/.nvm/versions/node/v22.2.0/bin/"
+#             cd /var/apps/ucab-internship-202430
+#             git restore pnpm-lock.yaml
+#             git pull
+#             pnpm install
+#             pnpm build
+#             pm2 restart movic-backend && kill $!
+
+            # pnpm generate:docs
+            # rm /var/www/green-summary-client-docs -rf
+            # rm /var/www/green-summary-server-docs -rf
+            # mv /var/apps/green-summary-202425/apps/client/documentation /var/www/green-summary-client-docs
+            # mv /var/apps/green-summary-202425/apps/server/documentation /var/www/green-summary-server-docs
