@@ -3,6 +3,7 @@ import { Body, Controller, Patch, Post, UseInterceptors } from '@nestjs/common'
 import { ApiConsumes, ApiTags } from '@nestjs/swagger'
 import { ImageInterceptor } from '~/shared/files-upload/images/image.interceptor'
 import { AuthService } from './auth.service'
+import { Public } from './decorators/public.decorator'
 import { RequestSignUpDto } from './dto/request-sign-up.dto'
 import { SignInDto } from './dto/sign-in.dto'
 import { SignUpDto } from './dto/sign-up.dto'
@@ -31,6 +32,7 @@ export class AuthController {
 		return this.authService.signUp(signUpDto)
 	}
 
+	@Public()
 	@Post('sign-in')
 	signIn(@Body() signInDto: SignInDto) {
 		return this.authService.signIn(signInDto)
