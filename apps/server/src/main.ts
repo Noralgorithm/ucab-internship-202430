@@ -8,7 +8,7 @@ import {
 } from '@nestjs/platform-fastify'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app/app.module'
-import metadata from './metadata'
+// import metadata from './metadata'
 
 const GLOBAL_PIPES = [new ValidationPipe({ whitelist: true, transform: true })]
 
@@ -36,7 +36,7 @@ async function bootstrap() {
 		.addBearerAuth({ type: 'http' })
 		.build()
 
-	await SwaggerModule.loadPluginMetadata(metadata)
+	// await SwaggerModule.loadPluginMetadata(metadata)
 	const document = SwaggerModule.createDocument(app, config)
 	SwaggerModule.setup(SWAGGER_PATH, app, document, {
 		jsonDocumentUrl: `${SWAGGER_PATH}/json`,

@@ -10,8 +10,8 @@ import { FilesController } from './files.controller'
 
 @Module({
 	imports: [
-		UsersModule,
 		AuthModule,
+		UsersModule,
 		ConfigModule.forRoot({ validate, isGlobal: true }),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
