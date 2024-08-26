@@ -1,14 +1,7 @@
 import { UploadFilterFile } from '@blazity/nest-file-fastify'
 import { FastifyRequest } from 'fastify'
-import { ImageSizeExceededError, InvalidImageTypeError } from './images.errors'
-
-const MAX_SIZE_IN_BYTES = 10_000_000 // 10 MB
-const SUPPORTED_MIME_TYPES = [
-	'image/jpeg',
-	'image/png',
-	'image/webp',
-	'images/avif'
-]
+import { MAX_SIZE_IN_BYTES, SUPPORTED_MIME_TYPES } from '../images.constants'
+import { ImageSizeExceededError, InvalidImageTypeError } from '../images.errors'
 
 export function filterImageUpload(
 	_req: FastifyRequest,
