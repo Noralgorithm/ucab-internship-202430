@@ -9,7 +9,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app/app.module'
 import { SuccessfulResponseBuilderInterceptor } from './app/succesful-response-builder/succesful-response-builder.interceptor'
-// import metadata from './metadata'
+import metadata from './metadata'
 
 const GLOBAL_PIPES = [new ValidationPipe({ whitelist: true, transform: true })]
 const GLOBAL_INTERCEPTORS = [new SuccessfulResponseBuilderInterceptor()]
@@ -40,7 +40,7 @@ async function bootstrap() {
 		.addSecurityRequirements('bearer')
 		.build()
 
-	// await SwaggerModule.loadPluginMetadata(metadata)
+	await SwaggerModule.loadPluginMetadata(metadata)
 	const document = SwaggerModule.createDocument(app, config)
 	SwaggerModule.setup(SWAGGER_PATH, app, document, {
 		jsonDocumentUrl: `${SWAGGER_PATH}/json`,

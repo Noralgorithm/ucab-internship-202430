@@ -27,7 +27,7 @@ export class AuthController {
 		private readonly configService: ConfigService
 	) {}
 
-	@HttpCode(204)
+	@HttpCode(200)
 	@Patch('request-sign-up')
 	async requestSignUp(@Body() requestSignUpDto: RequestSignUpDto) {
 		const signUpRequest = await this.authService.requestSignUp(requestSignUpDto)
@@ -38,6 +38,8 @@ export class AuthController {
 			subject: 'Confirmación de registro en Movic 🚗',
 			html: `<p>Para confirmar tu registro, accede al siguiente enlace: ${this.configService.get('CLIENT_URL')}/r?i=${signUpRequest.id}</p>`
 		})
+
+		return 'Confirmación enviada con éxito'
 	}
 
 	@Post('sign-up')
