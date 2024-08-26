@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
+import { MailingModule } from '~/shared/mailing/mailing.module'
 import { User } from '../users/entities/user.entity'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
@@ -23,7 +24,8 @@ import { SignUpRequest } from './entities/sign-up-request.entity'
 			inject: [ConfigService]
 		}),
 		TypeOrmModule.forFeature([SignUpRequest, User]),
-		FileStorageModule
+		FileStorageModule,
+		MailingModule
 	],
 	controllers: [AuthController],
 	providers: [AuthService]

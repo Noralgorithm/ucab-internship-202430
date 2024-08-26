@@ -20,3 +20,4 @@ export const PASSWORD_MIN_LENGTH = 8
 export const NAME_MIN_LENGTH = 2
 export const EMAIL_MAX_LENGTH = 320
 export const ENCRYPTED_PASSWORD_LENGTH = 60
+export const TEMPLATES_PATH = 'src/shared/templates'

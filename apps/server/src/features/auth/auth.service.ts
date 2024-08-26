@@ -31,7 +31,7 @@ export class AuthService {
 		private readonly configService: ConfigService
 	) {}
 
-	async requestSignUp({ email }: RequestSignUpDto): Promise<string> {
+	async requestSignUp({ email }: RequestSignUpDto): Promise<SignUpRequest> {
 		await this.signUpRequestsRepository.upsert(
 			{
 				email,
@@ -47,9 +47,7 @@ export class AuthService {
 			throw new InternalServerErrorException()
 		}
 
-		//TODO: send signUpRequest email
-
-		return signUpRequest.id
+		return signUpRequest
 	}
 
 	async signUp(signUpDto: SignUpDto) {
