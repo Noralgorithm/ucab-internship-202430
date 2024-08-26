@@ -1,5 +1,14 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm'
-import { AtDates } from '~/shared/at-dates.entity'
+import { DateTime } from 'luxon'
+import {
+	Column,
+	CreateDateColumn,
+	DeleteDateColumn,
+	Entity,
+	Generated,
+	Index,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
+} from 'typeorm'
 import {
 	EMAIL_MAX_LENGTH,
 	ENCRYPTED_PASSWORD_LENGTH,
@@ -8,8 +17,11 @@ import {
 	UserRole,
 	UserType
 } from '~/shared/constants'
+import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 
 @Entity({ name: 'users' })
+@Index(['id', 'deletedAt'], { unique: true })
+@Index(['email', 'deletedAt'], { unique: true })
 export class User {
 	@PrimaryGeneratedColumn()
 	internalId: number
@@ -24,10 +36,10 @@ export class User {
 	@Column({ length: NAME_MAX_LENGTH })
 	lastName: string
 
-	@Column({ length: EMAIL_MAX_LENGTH })
+	@Column({ length: EMAIL_MAX_LENGTH, unique: true })
 	email: string
 
-	@Column({ length: ENCRYPTED_PASSWORD_LENGTH })
+	@Column({ length: ENCRYPTED_PASSWORD_LENGTH, select: false })
 	encryptedPassword: string
 
 	@Column({ type: 'enum', enum: Gender })
@@ -60,6 +72,21 @@ export class User {
 	@Column({ default: false })
 	isBlocked: boolean
 
-	@Column(() => AtDates, { prefix: false })
-	atDates: AtDates
+	@CreateDateColumn({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer
+	})
+	createdAt: DateTime
+
+	@UpdateDateColumn({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer
+	})
+	updatedAt: DateTime
+
+	@DeleteDateColumn({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer
+	})
+	deletedAt: DateTime
 }

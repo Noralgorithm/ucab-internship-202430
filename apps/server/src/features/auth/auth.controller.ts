@@ -12,11 +12,13 @@ import { ApiConsumes, ApiTags } from '@nestjs/swagger'
 import { ImageInterceptor } from '~/shared/files-upload/images/image.interceptor'
 import { MailingService } from '~/shared/mailing/mailing.service'
 import { AuthService } from './auth.service'
+import { Public } from './decorators/public.decorator'
 import { RequestSignUpDto } from './dto/request-sign-up.dto'
 import { SignInDto } from './dto/sign-in.dto'
 import { SignUpDto } from './dto/sign-up.dto'
 
 @ApiTags('auth')
+@Public()
 @Controller('auth')
 export class AuthController {
 	constructor(

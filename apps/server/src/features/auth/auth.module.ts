@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_GUARD } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
@@ -8,6 +9,8 @@ import { User } from '../users/entities/user.entity'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { SignUpRequest } from './entities/sign-up-request.entity'
+import { AuthGuard } from './guards/auth.guard'
+import { RolesGuard } from './guards/roles.guard'
 
 @Module({
 	imports: [
@@ -23,11 +26,22 @@ import { SignUpRequest } from './entities/sign-up-request.entity'
 			}),
 			inject: [ConfigService]
 		}),
+		ConfigModule,
 		TypeOrmModule.forFeature([SignUpRequest, User]),
 		FileStorageModule,
 		MailingModule
 	],
 	controllers: [AuthController],
-	providers: [AuthService]
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: AuthGuard
+		},
+		{
+			provide: APP_GUARD,
+			useClass: RolesGuard
+		},
+		AuthService
+	]
 })
 export class AuthModule {}

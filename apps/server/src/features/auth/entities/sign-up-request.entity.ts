@@ -1,7 +1,13 @@
 import { DateTime } from 'luxon'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { AtDates } from '~/shared/at-dates.entity'
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
+} from 'typeorm'
 import { EMAIL_MAX_LENGTH } from '~/shared/constants'
+import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 
 @Entity()
 export class SignUpRequest {
@@ -11,9 +17,18 @@ export class SignUpRequest {
 	@Column({ length: EMAIL_MAX_LENGTH, unique: true })
 	email: string
 
-	@Column({ type: 'timestamp' })
+	@Column({ type: 'timestamptz' })
 	expirationDate: DateTime
 
-	@Column(() => AtDates, { prefix: false })
-	atDates: AtDates
+	@CreateDateColumn({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer
+	})
+	createdAt: DateTime
+
+	@UpdateDateColumn({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer
+	})
+	updatedAt: DateTime
 }
