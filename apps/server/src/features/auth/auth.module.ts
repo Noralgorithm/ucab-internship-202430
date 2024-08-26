@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -26,7 +26,6 @@ import { RolesGuard } from './guards/roles.guard'
 			}),
 			inject: [ConfigService]
 		}),
-		ConfigModule,
 		TypeOrmModule.forFeature([SignUpRequest, User]),
 		FileStorageModule,
 		MailingModule
