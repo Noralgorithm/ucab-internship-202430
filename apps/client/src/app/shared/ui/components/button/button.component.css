@@ -1,6 +1,5 @@
 :host {
 	border-radius: var(--radius-sm);
-
 	transition: all 0.5s ease;
 
 	&:hover {
@@ -10,7 +9,7 @@
 
 	/* Sizes */
 	&.small {
-		padding: 0.5rem 0.5rem;
+		padding: 0.5rem;
 		font-size: 1rem;
 		line-height: 1.5rem;
 		font-style: normal;
@@ -50,8 +49,8 @@
 	/* Severity */
 
 	&.severity-primary {
-		--bg-color: var(--primary-color);
-		--text-color: var(--contrast-color);
+		--bg-color: var(--primary);
+		--text-color: var(--contrast);
 	}
 
 	&.severity-secondary {
@@ -65,7 +64,7 @@
 	}
 
 	&.severity-success {
-		--bg-color: rgb(38, 189, 38);
+		--bg-color: rgb(38 189 38);
 		--text-color: black;
 	}
 

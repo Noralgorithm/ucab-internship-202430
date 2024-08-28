@@ -4,7 +4,7 @@ import { ColorSeverityDirective } from '../../directives/color-severity.directiv
 import { SizesDirective } from '../../directives/sizes.directive'
 
 @Component({
-	selector: 'button[mButton], m-button',
+	selector: 'button[mButton], a[mButton]',
 	standalone: true,
 	imports: [],
 	template: '<ng-content></ng-content>',

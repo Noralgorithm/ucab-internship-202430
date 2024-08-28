@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ButtonComponent } from '../../shared/components/button/button.component'
+import { ButtonComponent } from '../../shared/ui/components/button/button.component'
 
 @Component({
 	selector: 'app-component-playground',
