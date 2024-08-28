@@ -1,0 +1,23 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100dvh;
+	background-color: var(--primary-color);
+
+	svg {
+		scale: 1.5;
+
+		path {
+			fill: white;
+		}
+	}
+
+	.options-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+}
