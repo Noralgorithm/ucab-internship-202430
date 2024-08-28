@@ -8,7 +8,7 @@ import { Color } from '../../colors.enum'
 	templateUrl: './logo-icon.component.html',
 	styles: `
 	:host {
-		aspect-ratio: 48 / 47;
+		aspect-ratio: 81 / 84;
 		display: inline-block;
 		margin: auto;
 	}`
