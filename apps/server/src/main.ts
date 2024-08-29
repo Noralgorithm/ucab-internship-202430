@@ -7,6 +7,7 @@ import {
 	NestFastifyApplication
 } from '@nestjs/platform-fastify'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { useContainer } from 'class-validator'
 import { AppModule } from './app/app.module'
 import { SuccessfulResponseBuilderInterceptor } from './app/succesful-response-builder/succesful-response-builder.interceptor'
 import metadata from './metadata'
@@ -24,6 +25,8 @@ async function bootstrap() {
 		AppModule,
 		new FastifyAdapter()
 	)
+
+	useContainer(app.select(AppModule), { fallbackOnErrors: true })
 
 	const configService = app.get(ConfigService)
 
