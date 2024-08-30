@@ -4,7 +4,7 @@
 	justify-content: space-evenly;
 	align-items: center;
 	height: 100dvh;
-	background-color: var(--primary-color);
+	background-color: var(--primary-surface);
 
 	svg {
 		scale: 1.5;
