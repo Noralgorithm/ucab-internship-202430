@@ -6,6 +6,8 @@ import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
 import { UsersModule } from '~/features/users/users.module'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
+import { MailingModule } from '~/shared/mailing/mailing.module'
+import { ValidatorsModule } from '~/shared/validators/validators.module'
 import { FilesController } from './files.controller'
 
 @Module({
@@ -25,7 +27,9 @@ import { FilesController } from './files.controller'
 				}
 			}
 		}),
-		FileStorageModule
+		FileStorageModule,
+		MailingModule,
+		ValidatorsModule
 	],
 	controllers: [FilesController]
 })

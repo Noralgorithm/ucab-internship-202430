@@ -6,7 +6,7 @@ config()
 
 const { DATABASE_URL } = process.env
 
-export const AppDataSource: DataSource = new DataSource({
+const AppDataSource: DataSource = new DataSource({
 	type: 'postgres',
 	url: DATABASE_URL,
 	entities: ['dist/**/*.entity.js'],
@@ -15,3 +15,5 @@ export const AppDataSource: DataSource = new DataSource({
 	synchronize: false,
 	logging: true
 })
+
+export const getAppDataSource = async () => await AppDataSource.initialize()

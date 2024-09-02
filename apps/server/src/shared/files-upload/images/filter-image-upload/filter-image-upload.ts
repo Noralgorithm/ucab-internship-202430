@@ -3,7 +3,10 @@ import { FastifyRequest } from 'fastify'
 import { MAX_SIZE_IN_BYTES, SUPPORTED_MIME_TYPES } from '../images.constants'
 import { ImageSizeExceededError, InvalidImageTypeError } from '../images.errors'
 
-export function filterImageUpload(req: FastifyRequest, file: UploadFilterFile) {
+export function filterImageUpload(
+	_req: FastifyRequest,
+	file: UploadFilterFile
+) {
 	validateSize(file, MAX_SIZE_IN_BYTES)
 	validateType(file, SUPPORTED_MIME_TYPES)
 
