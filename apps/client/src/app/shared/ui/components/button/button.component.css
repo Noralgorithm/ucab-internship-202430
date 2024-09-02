@@ -1,5 +1,5 @@
 :host {
-	border-radius: var(--radius-sm);
+	border-radius: var(--radius-lg);
 	transition: all 0.5s ease;
 
 	&:hover {
@@ -49,23 +49,23 @@
 	/* Severity */
 
 	&.severity-primary {
-		--bg-color: var(--primary);
-		--text-color: var(--contrast);
+		--bg-color: var(--primary-surface);
+		--text-color: var(--contrast-surface);
 	}
 
 	&.severity-secondary {
-		--bg-color: gray;
-		--text-color: black;
+		--bg-color: var(--secondary-surface);
+		--text-color: var(--contrast-surface);
 	}
 
 	&.severity-contrast {
-		--bg-color: black;
-		--text-color: black;
+		--bg-color: var(--contrast-surface);
+		--text-color: var(--primary-text-value);
 	}
 
 	&.severity-success {
-		--bg-color: rgb(38 189 38);
-		--text-color: black;
+		--bg-color: var(--success-surface);
+		--text-color: var(--primary-text-value);
 	}
 
 	&.severity-info {
@@ -74,17 +74,22 @@
 	}
 
 	&.severity-warning {
-		--bg-color: yellow;
-		--text-color: black;
+		--bg-color: var(--warning-surface);
+		--text-color: var(--primary-text-value);
 	}
 
 	&.severity-danger {
-		--bg-color: red;
-		--text-color: black;
+		--bg-color: var(--error-surface);
+		--text-color: var(--primary-text-value);
 	}
 
 	&.severity-help {
 		--bg-color: purple;
 		--text-color: white;
+	}
+
+	&.severity-transparent {
+		--bg-color: transparent;
+		--text-color: var(--contrast-text-value);
 	}
 }

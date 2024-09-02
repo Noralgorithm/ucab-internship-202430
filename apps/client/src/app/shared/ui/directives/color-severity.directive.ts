@@ -15,6 +15,7 @@ export class ColorSeverityDirective {
 		| 'warning'
 		| 'danger'
 		| 'help'
+		| 'transparent'
 		| null
 		| undefined = 'primary'
 

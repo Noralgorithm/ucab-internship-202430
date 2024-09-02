@@ -51,10 +51,42 @@
 	--contrast-900: #112a46;
 	--contrast-950: #091625;
 
-	/* Status colors */
-	--success: #49af41;
-	--warning: #ffe16a;
-	--error: #f52936;
+	/* System Colors */
+	--error-50: #feeced;
+	--error-100: #fdd3d6;
+	--error-200: #fba7ad;
+	--error-300: #f98088;
+	--error-400: #f7545f;
+	--error-500: #f52936;
+	--error-600: #db0a18;
+	--error-700: #a60812;
+	--error-800: #6b050c;
+	--error-900: #360206;
+	--error-950: #1d0103;
+
+	--success-50: #edf8ec;
+	--success-100: #d8f0d6;
+	--success-200: #b4e2b1;
+	--success-300: #8dd388;
+	--success-400: #69c563;
+	--success-500: #49af41;
+	--success-600: #3a8d35;
+	--success-700: #2b6827;
+	--success-800: #1d471a;
+	--success-900: #0e210c;
+	--success-950: #081307;
+
+	--warning-50: #fffcf0;
+	--warning-100: #fff9e0;
+	--warning-200: #fff3c2;
+	--warning-300: #feeda2;
+	--warning-400: #ffe88a;
+	--warning-500: #ffe16a;
+	--warning-600: #ffd324;
+	--warning-700: #d6ab00;
+	--warning-800: #8f7200;
+	--warning-900: #473900;
+	--warning-950: #241d00;
 
 	/* Text color */
 	--text-color: #001b25;
@@ -83,6 +115,21 @@
 	--contrast-surface: var(--contrast-500);
 	--contrast-surface-darker: var(--contrast-700);
 
+	--error-surface-subtle: var(--error-100);
+	--error-surface-lighter: var(--error-300);
+	--error-surface: var(--error-500);
+	--error-surface-darker: var(--error-700);
+
+	--success-surface-subtle: var(--success-100);
+	--success-surface-lighter: var(--success-300);
+	--success-surface: var(--success-500);
+	--success-surface-darker: var(--success-700);
+
+	--warning-surface-subtle: var(--warning-100);
+	--warning-surface-lighter: var(--warning-300);
+	--warning-surface: var(--warning-500);
+	--warning-surface-darker: var(--warning-700);
+
 	/* Border */
 
 	--primary-border-subtle: var(--primary-100);
@@ -104,6 +151,21 @@
 	--contrast-border-lighter: var(--contrast-300);
 	--contrast-border: var(--contrast-500);
 	--contrast-border-darker: var(--contrast-700);
+
+	--error-border-subtle: var(--error-100);
+	--error-border-lighter: var(--error-300);
+	--error-border: var(--error-500);
+	--error-border-darker: var(--error-700);
+
+	--success-border-subtle: var(--success-100);
+	--success-border-lighter: var(--success-300);
+	--success-border: var(--success-500);
+	--success-border-darker: var(--success-700);
+
+	--warning-border-subtle: var(--warning-100);
+	--warning-border-lighter: var(--warning-300);
+	--warning-border: var(--warning-500);
+	--warning-border-darker: var(--warning-700);
 
 	/* Icon-Fill */
 
@@ -133,9 +195,9 @@
 	--tertiary-text-label: var(--tertiary-500);
 	--tertiary-text-value: var(--tertiary-400);
 
-	--constrast-text-placeholder: var(--contrast-300);
-	--constrast-text-label: #fcf6ef;
-	--constrast-text-value: #fdf8f2;
+	--contrast-text-placeholder: var(--contrast-300);
+	--contrast-text-label: #fcf6ef;
+	--contrast-text-value: #fdf8f2;
 
 	/* Greyscale Text*/
 
