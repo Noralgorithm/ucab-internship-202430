@@ -1,11 +1,21 @@
 .container {
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	gap: 0.125rem;
+	position: relative;
 }
 
 label {
 	color: var(--primary-text-label);
+}
+
+/* TODO: use semantic color here */
+.error-message {
+	color: var(--error-500);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transform: translate(0.08rem, 1.35rem);
 }
 
 input {
@@ -38,4 +48,9 @@ input:disabled::placeholder {
 
 input:disabled + label {
 	color: #969bac;
+}
+
+/* TODO: use semantic color here */
+input.error {
+	border-color: var(--error-500);
 }
