@@ -88,8 +88,18 @@
 	--warning-900: #473900;
 	--warning-950: #241d00;
 
-	/* Text color */
-	--text-color: #001b25;
+	/* Greyscale */
+	--greyscale-50: #f7f6f8;
+	--greyscale-100: #ecebf0;
+	--greyscale-200: #ddd9e3;
+	--greyscale-300: #cac4d4;
+	--greyscale-400: #bab3c7;
+	--greyscale-500: #a79eb7;
+	--greyscale-600: #85789b;
+	--greyscale-700: #625775;
+	--greyscale-800: #423b4f;
+	--greyscale-900: #201c26;
+	--greyscale-950: #110f14;
 
 	/* Background color */
 	--background-color: #fcf6ef;
@@ -198,6 +208,9 @@
 	--contrast-text-placeholder: var(--contrast-300);
 	--contrast-text-label: #fcf6ef;
 	--contrast-text-value: #fdf8f2;
+
+	--disabled-text-placeholder: #878eaa;
+	--disabled-text-label: #969bac;
 
 	/* Greyscale Text*/
 
