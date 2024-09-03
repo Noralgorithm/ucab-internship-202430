@@ -50,6 +50,8 @@ async function bootstrap() {
 		yamlDocumentUrl: `${SWAGGER_PATH}/yaml`
 	})
 
+	app.enableCors()
+
 	await app.listen(configService.get('SERVER_PORT', '3000'))
 }
 
