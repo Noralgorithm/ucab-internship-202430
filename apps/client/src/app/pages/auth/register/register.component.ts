@@ -1,9 +1,10 @@
 import { Component } from '@angular/core'
+import { InputTextComponent } from '../../../shared/ui/components/inputText/inputText.component'
 
 @Component({
 	selector: 'app-register',
 	standalone: true,
-	imports: [],
+	imports: [InputTextComponent],
 	templateUrl: './register.component.html',
 	styleUrl: './register.component.css'
 })
