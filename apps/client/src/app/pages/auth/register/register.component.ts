@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { InputTextComponent } from '../../../shared/ui/components/inputText/inputText.component'
+import { InputTextComponent } from '../../../shared/ui/components/text-input/text-input.component'
 
 @Component({
 	selector: 'app-register',
