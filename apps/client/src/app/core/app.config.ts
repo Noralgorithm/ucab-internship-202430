@@ -1,14 +1,13 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import {
 	type ApplicationConfig,
 	provideZoneChangeDetection
 } from '@angular/core'
-import { provideRouter } from '@angular/router'
-
-import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { provideClientHydration } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import player from 'lottie-web'
-import { provideLottieOptions } from 'ngx-lottie'
+import { provideRouter } from '@angular/router'
+// import player from 'lottie-web'
+// import { provideLottieOptions } from 'ngx-lottie'
 import { routes } from './app.routes'
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor'
 /* import { authorizationInterceptor } from './interceptors/authorization.interceptor'
@@ -20,9 +19,9 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(routes),
 		provideClientHydration(),
 		provideAnimations(),
-		provideLottieOptions({
-			player: () => player
-		}),
+		// provideLottieOptions({
+		// 	player: () => player
+		// }),
 		provideHttpClient(
 			withInterceptors([
 				/* authorizationInterceptor, loadingInterceptor */

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
-import { AnimationOptions, LottieComponent } from 'ngx-lottie'
+// import { AnimationOptions, LottieComponent } from 'ngx-lottie'
 import { SignInService } from '../../features/auth/services/sign-in.service'
 import { ButtonComponent } from '../../shared/ui/components/button/button.component'
 import { LogoIconComponent } from '../../shared/ui/components/logo-icon/logo-icon.component'
@@ -12,7 +12,7 @@ import { LogoComponent } from '../../shared/ui/components/logo/logo.component'
 	standalone: true,
 	imports: [
 		CommonModule,
-		LottieComponent,
+		// LottieComponent,
 		ButtonComponent,
 		LogoIconComponent,
 		LogoComponent
@@ -21,9 +21,9 @@ import { LogoComponent } from '../../shared/ui/components/logo/logo.component'
 	styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-	options: AnimationOptions = {
-		path: 'assets/lotties/driving-car.json'
-	}
+	// options: AnimationOptions = {
+	// 	path: 'assets/lotties/driving-car.json'
+	// }
 
 	constructor(
 		private readonly router: Router,
@@ -33,9 +33,7 @@ export class AuthComponent {
 	ngOnInit() {
 		this.signInService
 			.execute('joseandresrs0407@gmail.com', '123456')
-			.subscribe((res) => {
-				console.log(res)
-			})
+			.subscribe((res) => {})
 	}
 
 	goToLogin() {
