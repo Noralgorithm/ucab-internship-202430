@@ -1,0 +1,78 @@
+/* Heading */
+.heading-large {
+	font-size: 2rem;
+	font-weight: 600;
+	line-height: 2.5rem;
+}
+
+.heading-medium {
+	font-size: 1.75rem;
+	font-weight: 600;
+	line-height: 2.25rem;
+}
+
+.heading-small {
+	font-size: 1.5rem;
+	font-weight: 600;
+	line-height: 2rem;
+}
+
+.heading-xsmall {
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.75rem;
+}
+
+/* Label */
+
+.label-large {
+	font-size: 1.125rem;
+	font-weight: 500;
+	line-height: 1.5rem;
+}
+
+.label-medium {
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.25rem;
+}
+
+.label-small {
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1rem;
+}
+
+.label-xsmall {
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1rem;
+	letter-spacing: 0.019rem;
+}
+
+/* paragraph */
+
+.paragraph-large {
+	font-size: 1.125rem;
+	font-weight: 500;
+	line-height: 1.75rem;
+}
+
+.paragraph-medium {
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.5rem;
+}
+
+.paragraph-small {
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.75rem;
+}
+
+.paragraph-xsmall {
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.25rem;
+	letter-spacing: 0.019rem;
+}
