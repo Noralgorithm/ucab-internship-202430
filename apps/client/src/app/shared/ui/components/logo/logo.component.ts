@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, HostBinding, Input } from '@angular/core'
 import { LogoIconComponent } from '../logo-icon/logo-icon.component'
 
 @Component({
@@ -6,19 +6,18 @@ import { LogoIconComponent } from '../logo-icon/logo-icon.component'
 	standalone: true,
 	imports: [LogoIconComponent],
 	template: `
-  <div class="logo-container">
     <logo-icon [width]="getStyles().iconWidth" />
     <span class="brand-name" [style.fontSize]="getStyles().fontSize">
       MoviC
     </span>
-  </div>
   `,
 	styles: `
-  .logo-container {
+  :host {
     user-select: none;
     display: flex;
-    gap: 0.5rem;
-    height: 100%;
+		align-items: center;
+		height: fit;
+		justify-content: center;
   }
 
   .brand-name {
@@ -34,16 +33,22 @@ export class LogoComponent {
 	public readonly SIZE_STYLES = {
 		small: {
 			iconWidth: '3rem',
-			fontSize: '2rem'
+			fontSize: '2rem',
+			logoContainerWidth: '10.125rem'
 		},
 		large: {
 			iconWidth: '5.44rem',
-			fontSize: '3.2rem'
+			fontSize: '3.4rem',
+			logoContainerWidth: '18.25rem'
 		}
 	}
 
 	public getStyles() {
 		return this.SIZE_STYLES[this.size]
+	}
+
+	@HostBinding('style.width') get width() {
+		return this.getStyles().logoContainerWidth
 	}
 }
 
