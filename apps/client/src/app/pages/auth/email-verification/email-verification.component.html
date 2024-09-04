@@ -5,4 +5,5 @@
 <text-input inputId="email" [control]="emailControl" label="Correo electrónico" placeholder="ajrosas.21@est.ucab.edu.ve"
 	[style.margin-top]="'2.0625rem'" />
 
-<button mButton size="large" [disabled]="!emailControl.valid" [style.margin-top]="'4.125rem'">Enviar</button>
+<button mButton (click)="handleSubmit()" size="large" [disabled]="!emailControl.valid"
+	[style.margin-top]="'4.125rem'">Enviar</button>
