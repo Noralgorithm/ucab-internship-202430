@@ -1,13 +1,13 @@
 import { Component } from '@angular/core'
 import { Input } from '@angular/core'
-import { FormControl, Validators } from '@angular/forms'
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ValidationErrorMessages } from '../../../types/validation-error-messages.type'
 import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.util'
 
 @Component({
 	selector: 'password-input',
 	standalone: true,
-	imports: [],
+	imports: [ReactiveFormsModule],
 	templateUrl: './password-input.component.html',
 	styleUrl: './password-input.component.css'
 })
@@ -20,7 +20,6 @@ export class PasswordInputComponent {
 	@Input() label = ''
 	showPassword = false
 
-	/*TODO: the variable isValid is not working*/
 	get isInvalid() {
 		return this.control.errors && this.control.dirty && this.control.touched
 	}
