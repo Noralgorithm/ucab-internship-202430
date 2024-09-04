@@ -36,17 +36,17 @@ input::placeholder {
 	color: var(--primary-text-placeholder);
 }
 
-input:disabled {
+input.disabled {
 	background-color: var(--greyscale-surface-disabled);
 	color: #878eaa;
 	border: none;
 }
 
-input:disabled::placeholder {
+input.disabled::placeholder {
 	color: #878eaa;
 }
 
-input:disabled + label {
+.disabled-label {
 	color: #969bac;
 }
 

@@ -1,9 +1,9 @@
 <div class="container relative">
-	<label [for]="inputId" class="label-medium">{{ label }}</label>
-	<input type="text" [id]="inputId" [formControl]="control" [placeholder]="placeholder" [disabled]="disabled"
-		[class.error]="isInvalid" />
-
+	<label [for]="inputId" class="label-medium" [class.disabled-label]="control.disabled">{{ label }}</label>
+	<input type="text" [id]="inputId" [formControl]="control" [placeholder]="placeholder"
+		[class.disabled]="control.disabled" [class.error]="isInvalid" />
 	@if (isInvalid) {
 	<strong class="label-small error-message">{{getErrorMessage()}}</strong>
+
 	}
 </div>

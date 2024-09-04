@@ -15,7 +15,6 @@ export class InputTextComponent {
 	@Input({ required: true }) inputId!: string
 	@Input() control: FormControl = new FormControl()
 	@Input() errorMessages: ValidationErrorMessages = DEFAULT_ERROR_MESSAGES
-	@Input() disabled = false
 	@Input() placeholder = ''
 	@Input() label = ''
 
