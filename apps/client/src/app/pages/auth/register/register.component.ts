@@ -1,13 +1,19 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
+import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
 import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
 import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
 
 @Component({
 	selector: 'app-register',
 	standalone: true,
-	imports: [TextInputComponent, ButtonComponent, PasswordInputComponent],
+	imports: [
+		TextInputComponent,
+		ButtonComponent,
+		PasswordInputComponent,
+		LogoComponent
+	],
 	templateUrl: './register.component.html',
 	styleUrl: './register.component.css'
 })

@@ -3,6 +3,18 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap: 1.125rem;
+}
+
+.header-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.header-container .logo {
+	padding-top: 2rem;
 }
 
 .input-container {
