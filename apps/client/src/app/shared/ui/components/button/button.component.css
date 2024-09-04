@@ -3,7 +3,7 @@
 	transition: all 0.5s ease;
 
 	&:hover {
-		opacity: 0.9;
+		opacity: 0.8;
 		cursor: pointer;
 	}
 
@@ -25,6 +25,8 @@
 	}
 
 	&.large {
+		width: 21.125rem;
+		height: 4rem;
 		padding: 0.75rem 4rem;
 		font-size: 1rem;
 		line-height: 1.5rem;
@@ -42,20 +44,20 @@
 
 	&.button-outlined {
 		background-color: transparent;
-		border: 1px solid var(--bg-color);
-		color: var(--text-color);
+		border: 0.125rem solid var(--primary-border);
+		color: var(--primary-text-value);
 	}
 
 	/* Severity */
 
 	&.severity-primary {
 		--bg-color: var(--primary-surface);
-		--text-color: var(--contrast-surface);
+		--text-color: var(--contrast-text-label);
 	}
 
 	&.severity-secondary {
 		--bg-color: var(--secondary-surface);
-		--text-color: var(--contrast-surface);
+		--text-color: var(--contrast-text-value);
 	}
 
 	&.severity-contrast {
