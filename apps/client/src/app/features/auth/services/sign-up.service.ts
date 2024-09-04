@@ -26,8 +26,8 @@ export interface SignUpServiceDto {
 	password: string
 	gender: Gender
 	type: UserType
-	phoneNumber: string
-	emergencyContactPhoneNumber: string
+	/* phoneNumber: string
+	emergencyContactPhoneNumber: string */
 	signUpRequestId: string
 	profilePic: File
 }

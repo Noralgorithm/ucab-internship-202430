@@ -4,45 +4,45 @@
 </header>
 
 <section>
-	<form class="container">
+	<form class="container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
 
 		<div class="input-container">
 			<label for="profilePhoto">Subir foto de perfil</label>
-			<input type="file" name="profilePhoto" id="profilePhoto" accept="image/png,image/jpg,image/jpeg" />
+			<input type="file" name="profilePhoto" (change)="onImageUpload($event)" id="profilePhoto"
+				accept="image/png,image/jpg,image/jpeg" />
 		</div>
 
 		<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
-			[control]="registerForm.controls.name" />
+			[control]="registerFormGroup.controls.firstName" />
 		<text-input inputId="lastName" label="Apellido" placeholder="Ingrese el apellido"
-			[control]="registerForm.controls.lastName" />
+			[control]="registerFormGroup.controls.lastName" />
 
 		<fieldset>
 			<legend>Sexo</legend>
 			<div>
-				<input type="radio" name="gender" id="genderChoiceFemale" value="female" />
+				<input type="radio" name="gender" formControlName="gender" id="genderChoiceFemale" value="female" />
 				<label for="genderChoiceFemale">Femenino</label>
 			</div>
 
 			<div class="input-container">
-				<input type="radio" name="gender" id="genderChoiceMale" value="male" />
+				<input type="radio" name="gender" formControlName="gender" id="genderChoiceMale" value="male" />
 				<label for="genderChoiceMale">Masculino</label>
 			</div>
 		</fieldset>
 
 		<text-input inputId="email" label="Correo Electrónico" placeholder="Ingrese el correo electrónico"
-			[control]="registerForm.controls.email" />
+			[control]="registerFormGroup.controls.email" />
 
 		<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
-			[control]="registerForm.controls.password" />
+			[control]="registerFormGroup.controls.password" />
 
 		<password-input inputId="confirmPassword" label="Confirmar contraseña"
-			placeholder="Ingrese la contraseña nuevamente" [control]="registerForm.controls.confirmPassword" />
+			placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
 
 
-		<text-input inputId="type" label="Tipo" [control]="registerForm.controls.type" />
+		<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
 
-		<button mButton severity="secondary" size="large" (click)="handleSubmit()"
-			[disabled]="this.registerForm.invalid">Registrarme</button>
+		<button mButton severity="secondary" [disabled]="registerFormGroup.invalid" size="large">Registrarme</button>
 
 	</form>
 
