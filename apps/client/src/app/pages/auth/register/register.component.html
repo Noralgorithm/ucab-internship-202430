@@ -1,41 +1,68 @@
 <header class="header-container">
-	<brand-logo class="logo" size="small" />
-	<h4 class="heading-xsmall">Ingrese los datos</h4>
+	<div>
+		<brand-logo class="logo" size="small" />
+		<h4 class="heading-xsmall">Ingrese los datos</h4>
+	</div>
 </header>
 
 <section>
 	<form class="container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
-
-		<div class="input-container">
-			<label for="profilePhoto">Subir foto de perfil</label>
-			<input type="file" name="profilePhoto" (change)="onImageUpload($event)" id="profilePhoto"
-				accept="image/png,image/jpg,image/jpeg" />
+		/*TODO: change this and create a component*/
+		<div class="input-profile-pic-container">
+			<div class="avatar-container">
+				<input type="file" (change)="onImageUpload($event)" id="profilePic"
+					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" color="#000000"
+					fill="none" class="icon">
+					<path
+						d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z"
+						stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+					<path
+						d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z"
+						stroke="currentColor" stroke-width="1.5" />
+				</svg>
+			</div>
+			<label for="profilePic" class="label-medium label-profile-pic">Subir foto de perfil</label>
 		</div>
 
-		<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
-			[control]="registerFormGroup.controls.firstName" />
-		<text-input inputId="lastName" label="Apellido" placeholder="Ingrese el apellido"
-			[control]="registerFormGroup.controls.lastName" />
+		<div class="input-container">
+			<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
+				[control]="registerFormGroup.controls.firstName" />
+		</div>
+
+		<div class="input-container">
+			<text-input inputId="lastName" label="Apellido" placeholder="Ingrese el apellido"
+				[control]="registerFormGroup.controls.lastName" />
+		</div>
 
 
-		<radio-button />
+		<div class="input-container">
+			<label for="gender" class="label-medium">Sexo</label>
+			<div class="radio-button-group">
+				<radio-button inputId="gender" [control]="registerFormGroup.controls.gender" value="female"
+					label="Femenino" />
+				<radio-button inputId="gender" [control]="registerFormGroup.controls.gender" value="male"
+					label="Masculino" />
+			</div>
+		</div>
 
-		<!-- <div class="input-container">
-			<input type="radio" name="gender" formControlName="gender" id="genderChoiceMale" value="male" />
-			<label for="genderChoiceMale">Masculino</label>
-		</div> -->
+		<div class="input-container">
+			<text-input inputId="email" label="Correo Electrónico" placeholder="Ingrese el correo electrónico"
+				[control]="registerFormGroup.controls.email" />
+		</div>
 
-		<text-input inputId="email" label="Correo Electrónico" placeholder="Ingrese el correo electrónico"
-			[control]="registerFormGroup.controls.email" />
+		<div class="input-container">
+			<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
+				[control]="registerFormGroup.controls.password" />
+		</div>
+		<div class="input-container">
+			<password-input inputId="confirmPassword" label="Confirmar contraseña"
+				placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
+		</div>
 
-		<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
-			[control]="registerFormGroup.controls.password" />
-
-		<password-input inputId="confirmPassword" label="Confirmar contraseña"
-			placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
-
-
-		<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
+		<div class="input-container">
+			<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
+		</div>
 
 		<button mButton severity="secondary" [disabled]="registerFormGroup.invalid" size="large">Registrarme</button>
 
