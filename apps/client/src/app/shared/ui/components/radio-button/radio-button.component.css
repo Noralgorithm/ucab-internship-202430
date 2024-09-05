@@ -5,11 +5,11 @@
 	gap: 0.4rem;
 }
 
+label {
+	color: var(--primary-text-label);
+}
+
 input {
 	width: 1.2rem;
 	height: 1.2rem;
-}
-
-input:checked {
-	color: red;
 }
