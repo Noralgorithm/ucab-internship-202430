@@ -1,13 +1,6 @@
 import { MemoryStorageFile } from '@blazity/nest-file-fastify'
 import { ApiProperty } from '@nestjs/swagger'
-import {
-	IsEnum,
-	IsPhoneNumber,
-	IsString,
-	IsUUID,
-	MaxLength,
-	MinLength
-} from 'class-validator'
+import { IsEnum, IsString, IsUUID, MaxLength, MinLength } from 'class-validator'
 import {
 	Gender,
 	NAME_MAX_LENGTH,
@@ -44,13 +37,14 @@ export class SignUpDto {
 	@ApiProperty({ type: 'string', format: 'binary' })
 	profilePic: MemoryStorageFile
 
-	//TODO: put venezuelan format
-	@IsPhoneNumber('VE')
-	phoneNumber: string
+	//TODO: move phone numbers to another dto
+	// //TODO: put venezuelan format
+	// @IsPhoneNumber('VE')
+	// phoneNumber: string
 
-	//TODO: put venezuelan forma
-	@IsPhoneNumber('VE')
-	emergencyContactPhoneNumber: string
+	// //TODO: put venezuelan forma
+	// @IsPhoneNumber('VE')
+	// emergencyContactPhoneNumber: string
 
 	@IsUUID('4')
 	@IsString()

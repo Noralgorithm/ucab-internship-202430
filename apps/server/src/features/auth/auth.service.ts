@@ -103,8 +103,8 @@ export class AuthService {
 			gender: signUpDto.gender,
 			type: signUpDto.type,
 			profilePicFilename: profilePicFilename,
-			phoneNumber: signUpDto.phoneNumber,
-			emergencyContactPhoneNumber: signUpDto.emergencyContactPhoneNumber
+			phoneNumber: null,
+			emergencyContactPhoneNumber: null
 		})
 
 		return 'Usuario registrado con éxito'

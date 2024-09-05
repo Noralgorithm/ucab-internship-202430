@@ -57,11 +57,11 @@ export class User {
 	@Column()
 	profilePicFilename: string
 
-	@Column()
-	phoneNumber: string
+	@Column({ type: 'varchar', nullable: true })
+	phoneNumber: string | null
 
-	@Column()
-	emergencyContactPhoneNumber: string
+	@Column({ type: 'varchar', nullable: true })
+	emergencyContactPhoneNumber: string | null
 
 	@Column({ default: false })
 	isDriver: boolean
