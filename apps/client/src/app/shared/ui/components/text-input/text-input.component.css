@@ -3,7 +3,6 @@
 	flex-direction: column;
 	gap: 0.125rem;
 	position: relative;
-	width: 100%;
 }
 
 label {
@@ -21,6 +20,7 @@ label {
 
 input {
 	height: 3.063rem;
+	width: 21.125rem;
 	background-color: var(--contrast-surface-subtle);
 	color: var(--primary-text-value);
 	border: 0.125rem solid var(--contrast-border-subtle);

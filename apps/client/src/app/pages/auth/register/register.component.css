@@ -35,6 +35,13 @@ section {
 	gap: 0.4rem;
 }
 
+.gender-input-container {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
 .radio-button-group {
 	display: flex;
 	flex-direction: row;
@@ -59,6 +66,12 @@ label {
 .label-profile-pic {
 	color: #3953b2;
 }
+
+.gender-label {
+	width: 100%;
+	text-align: left;
+}
+
 /*TODO: position avatar inside de input */
 .input-profile-pic {
 	width: var(--avatar-l);
