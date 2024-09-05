@@ -1,5 +1,6 @@
 import { plainToInstance } from 'class-transformer'
 import {
+	IsBooleanString,
 	IsEmail,
 	IsInt,
 	IsPort,
@@ -107,6 +108,10 @@ class EnvironmentVariables {
 	@IsEmail({ allow_display_name: true })
 	@IsString()
 	MAIL_FROM: string
+
+	@IsBooleanString()
+	@IsString()
+	MAIL_SECURE: string
 }
 
 export function validate(config: Record<string, unknown>) {

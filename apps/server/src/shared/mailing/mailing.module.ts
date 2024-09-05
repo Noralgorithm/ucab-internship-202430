@@ -12,7 +12,7 @@ import { MailingService } from './mailing.service'
 				transport: {
 					host: configService.get('MAIL_HOST'),
 					port: Number(configService.get<string>('MAIL_PORT')),
-					secure: process.env.NODE_ENV === 'production', //TODO: change this to use configService once it's type inference is fixed
+					secure: configService.get('MAIL_SECURE') === 'true', //TODO: change this to use a better configService that correctly parses everything to the correct type
 					auth: {
 						user: configService.get('MAIL_USER'),
 						pass: configService.get('MAIL_PASS')

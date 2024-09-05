@@ -68,9 +68,6 @@ importers:
       lottie-web:
         specifier: ^5.12.2
         version: 5.12.2
-      ngx-lottie:
-        specifier: ^12.0.0
-        version: 12.0.0(@angular/core@18.1.3(rxjs@7.8.1)(zone.js@0.14.10))(lottie-web@5.12.2)
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
@@ -2150,9 +2147,6 @@ packages:
     resolution: {integrity: sha512-aJ1EJSuTdGnM6qbVC4B5DSmozPTqIag9fSzXRNNo+humQLG89XpPgdt16Ia56ORD7s+H8Pmyx44uczDQ0yDzpg==}
     cpu: [x64]
     os: [win32]
-
-  '@scarf/scarf@1.3.0':
-    resolution: {integrity: sha512-lHKK8M5CTcpFj2hZDB3wIjb0KAbEOgDmiJGDv1WBRfQgRm/a8/XMEkG/N1iM01xgbUDsPQwi42D+dFo1XPAKew==}
 
   '@schematics/angular@18.1.3':
     resolution: {integrity: sha512-VyoL7O+3eL+BazmoWzexFpVy9k0MoOAmff3XqKLhP3/V7eXPc9s7znIDpPp28QF0V/Y2xMaGDWhqTx2CFcz4Qg==}
@@ -5513,12 +5507,6 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
-
-  ngx-lottie@12.0.0:
-    resolution: {integrity: sha512-kOeqrGA4VjZpdpPI5NKI6Zv63uBNUz2xE5yUShtXRkeLYfjf0OxYBT3O6fwG/jHChSPeeLhBbG/Rt7dHYde69g==}
-    peerDependencies:
-      '@angular/core': '>=18'
-      lottie-web: '>=5.9.2'
 
   nice-napi@1.0.2:
     resolution: {integrity: sha512-px/KnJAJZf5RuBGcfD+Sp2pAKq0ytz8j+1NehvgIGFkvtvFrDM3T8E4x/JJODXK9WZow8RRGrbA9QQ3hs+pDhA==}
@@ -9899,8 +9887,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.20.0':
     optional: true
 
-  '@scarf/scarf@1.3.0': {}
-
   '@schematics/angular@18.1.3(chokidar@3.6.0)':
     dependencies:
       '@angular-devkit/core': 18.1.3(chokidar@3.6.0)
@@ -14234,13 +14220,6 @@ snapshots:
   negotiator@0.6.3: {}
 
   neo-async@2.6.2: {}
-
-  ngx-lottie@12.0.0(@angular/core@18.1.3(rxjs@7.8.1)(zone.js@0.14.10))(lottie-web@5.12.2):
-    dependencies:
-      '@angular/core': 18.1.3(rxjs@7.8.1)(zone.js@0.14.10)
-      '@scarf/scarf': 1.3.0
-      lottie-web: 5.12.2
-      tslib: 2.6.3
 
   nice-napi@1.0.2:
     dependencies:
