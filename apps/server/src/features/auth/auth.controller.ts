@@ -2,7 +2,9 @@ import { MemoryStorageFile, UploadedFile } from '@blazity/nest-file-fastify'
 import {
 	Body,
 	Controller,
+	Get,
 	HttpCode,
+	Param,
 	Patch,
 	Post,
 	UseInterceptors
@@ -14,7 +16,9 @@ import { MailingService } from '~/shared/mailing/mailing.service'
 import { AuthService } from './auth.service'
 import { Public } from './decorators/public.decorator'
 import { RequestSignUpDto } from './dto/request-sign-up.dto'
+import { RetrieveSignUpParamsDto } from './dto/retrieve-sign-up-params.dto'
 import { SignInDto } from './dto/sign-in.dto'
+import { SignUpRequestResponseDto } from './dto/sign-up-request-response.dto'
 import { SignUpDto } from './dto/sign-up.dto'
 
 @ApiTags('auth')
@@ -26,6 +30,15 @@ export class AuthController {
 		private readonly mailingService: MailingService,
 		private readonly configService: ConfigService
 	) {}
+
+	@Get('retrieve-sign-up-request/:id')
+	async retrieveSignUpRequest(
+		@Param() params: RetrieveSignUpParamsDto
+	): Promise<SignUpRequestResponseDto> {
+		const signUpRequest = await this.authService.getSignUpRequest(params.id)
+
+		return SignUpRequestResponseDto.from(signUpRequest)
+	}
 
 	@HttpCode(200)
 	@Patch('request-sign-up')

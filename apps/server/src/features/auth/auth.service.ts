@@ -3,6 +3,7 @@ import {
 	ConflictException,
 	Injectable,
 	InternalServerErrorException,
+	NotFoundException,
 	UnauthorizedException,
 	UnprocessableEntityException
 } from '@nestjs/common'
@@ -30,6 +31,16 @@ export class AuthService {
 		private readonly jwtService: JwtService,
 		private readonly configService: ConfigService
 	) {}
+
+	async getSignUpRequest(id: string): Promise<SignUpRequest> {
+		const signUpRequest = await this.signUpRequestsRepository.findOneBy({ id })
+
+		if (signUpRequest == null) {
+			throw new NotFoundException('Petición de registro no encontrada')
+		}
+
+		return signUpRequest
+	}
 
 	async requestSignUp({ email }: RequestSignUpDto): Promise<SignUpRequest> {
 		await this.signUpRequestsRepository.upsert(
