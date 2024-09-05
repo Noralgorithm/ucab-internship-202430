@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { RetrieveSignUpRequestService } from '../../../features/auth/services/retrieve-sign-up-request.service'
 import {
 	SignUpService,
 	SignUpServiceDto
@@ -35,16 +36,28 @@ import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.v
 export class RegisterComponent {
 	constructor(
 		private readonly route: ActivatedRoute,
-		private readonly signUpService: SignUpService
+		private readonly signUpService: SignUpService,
+		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService
 	) {}
 
 	private signUpToken: string | null = null
 
-	email = 'mpforero.21@est.ucab.edu.ve'
-
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
 			this.signUpToken = params['t']
+
+			// TODO: redirect to another page
+			if (!this.signUpToken) return
+
+			this.retrieveSignUpRequestService
+				.execute(this.signUpToken)
+				.subscribe((res) => {
+					if (res.ok) {
+						this.registerFormGroup.controls.email.setValue(res.val.email)
+					}
+
+					// TODO: handle fail
+				})
 		})
 	}
 
@@ -55,7 +68,7 @@ export class RegisterComponent {
 			]),
 			firstName: new FormControl('', [Validators.required]),
 			lastName: new FormControl('', [Validators.required]),
-			email: new FormControl({ value: this.email, disabled: true }, [
+			email: new FormControl({ value: '', disabled: true }, [
 				Validators.required
 			]),
 			password: new FormControl('', [
@@ -70,9 +83,7 @@ export class RegisterComponent {
 	)
 
 	handleSubmit() {
-		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
-			console.log(res)
-		})
+		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {})
 	}
 
 	onImageUpload(event: Event) {
