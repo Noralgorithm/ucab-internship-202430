@@ -6,7 +6,10 @@ config()
 
 const { DATABASE_URL } = process.env
 
-const AppDataSource: DataSource = new DataSource({
+/**
+ * Only exported for migrations. Use getAppDataSource instead.
+ */
+export const AppDataSource: DataSource = new DataSource({
 	type: 'postgres',
 	url: DATABASE_URL,
 	entities: ['dist/**/*.entity.js'],
