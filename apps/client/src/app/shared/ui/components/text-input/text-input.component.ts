@@ -1,5 +1,3 @@
-/* TODO: why you use JsonPipe? */
-import { JsonPipe } from '@angular/common'
 import { Component, Input } from '@angular/core'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ValidationErrorMessages } from '../../../types/validation-error-messages.type'
@@ -8,7 +6,7 @@ import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.ut
 @Component({
 	selector: 'text-input',
 	standalone: true,
-	imports: [ReactiveFormsModule, JsonPipe],
+	imports: [ReactiveFormsModule],
 	templateUrl: './text-input.component.html',
 	styleUrl: './text-input.component.css'
 })
