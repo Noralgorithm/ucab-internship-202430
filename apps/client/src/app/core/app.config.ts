@@ -1,4 +1,8 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http'
+import {
+	provideHttpClient,
+	withFetch,
+	withInterceptors
+} from '@angular/common/http'
 import {
 	type ApplicationConfig,
 	provideZoneChangeDetection
@@ -23,6 +27,7 @@ export const appConfig: ApplicationConfig = {
 		// 	player: () => player
 		// }),
 		provideHttpClient(
+			withFetch(),
 			withInterceptors([
 				/* authorizationInterceptor, loadingInterceptor */
 				BaseUrlInterceptor
