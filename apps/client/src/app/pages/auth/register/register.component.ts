@@ -14,6 +14,7 @@ import { UserType } from '../../../shared/types/users/user-type.type'
 import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
 import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
 import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
+import { RadioButtonComponent } from '../../../shared/ui/components/radio-button/radio-button.component'
 import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
 import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.validator'
 
@@ -25,6 +26,7 @@ import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.v
 		ButtonComponent,
 		PasswordInputComponent,
 		LogoComponent,
+		RadioButtonComponent,
 		ReactiveFormsModule
 	],
 	templateUrl: './register.component.html',
