@@ -72,12 +72,12 @@ label {
 	text-align: left;
 }
 
-/*TODO: position avatar inside de input */
+/* TODO: position avatar inside de input */
 .input-profile-pic {
 	width: var(--avatar-l);
 	height: var(--avatar-l);
 	border-radius: 100%;
-	background-color: rgb(107, 63, 148);
+	background-color: rgb(107 63 148);
 }
 
 .avatar-container .icon {

@@ -3,6 +3,7 @@ import { AuthComponent } from '../pages/auth/auth.component'
 import { EmailVerificationComponent } from '../pages/auth/email-verification/email-verification.component'
 import { LoginComponent } from '../pages/auth/login/login.component'
 import { RegisterComponent } from '../pages/auth/register/register.component'
+import { SuccessfulEmailVerificationComponent } from '../pages/auth/successful-email-verification/successful-email-verification.component'
 
 export const routes: Routes = [
 	{
@@ -24,5 +25,10 @@ export const routes: Routes = [
 		path: 'email-verification',
 		title: 'Verificación de correo electrónico',
 		component: EmailVerificationComponent
+	},
+	{
+		path: 'email-verification/success',
+		title: 'Correo enviado con éxito',
+		component: SuccessfulEmailVerificationComponent
 	}
 ]

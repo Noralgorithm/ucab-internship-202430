@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ElementRef, ViewChild } from '@angular/core'
 import { Input } from '@angular/core'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ValidationErrorMessages } from '../../../types/validation-error-messages.type'
@@ -14,10 +14,12 @@ import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.ut
 export class PasswordInputComponent {
 	@Input({ required: true }) inputId!: string
 	@Input({ required: true }) control: FormControl = new FormControl()
-	/*TODO: Why is this an input decorator?*/
 	@Input() errorMessages: ValidationErrorMessages = DEFAULT_ERROR_MESSAGES
 	@Input() placeholder = ''
 	@Input() label = ''
+
+	@ViewChild('input') input: ElementRef<HTMLInputElement> | undefined
+
 	showPassword = false
 
 	get isInvalid() {
@@ -35,8 +37,10 @@ export class PasswordInputComponent {
 	handlePasswordVisibility() {
 		if (this.showPassword) {
 			this.showPassword = false
+			this.input?.nativeElement.focus()
 		} else {
 			this.showPassword = true
+			this.input?.nativeElement.focus()
 		}
 	}
 }

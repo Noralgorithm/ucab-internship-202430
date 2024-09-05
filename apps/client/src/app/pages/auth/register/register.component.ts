@@ -5,7 +5,7 @@ import {
 	ReactiveFormsModule,
 	Validators
 } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { RetrieveSignUpRequestService } from '../../../features/auth/services/retrieve-sign-up-request.service'
 import {
 	SignUpService,
@@ -14,6 +14,7 @@ import {
 import { UserType } from '../../../shared/types/users/user-type.type'
 import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
 import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
+import { PageLayoutComponent } from '../../../shared/ui/components/page-layout/page-layout.component'
 import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
 import { RadioButtonComponent } from '../../../shared/ui/components/radio-button/radio-button.component'
 import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
@@ -28,7 +29,8 @@ import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.v
 		PasswordInputComponent,
 		LogoComponent,
 		RadioButtonComponent,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		PageLayoutComponent
 	],
 	templateUrl: './register.component.html',
 	styleUrl: './register.component.css'
@@ -36,6 +38,7 @@ import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.v
 export class RegisterComponent {
 	constructor(
 		private readonly route: ActivatedRoute,
+		private readonly router: Router,
 		private readonly signUpService: SignUpService,
 		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService
 	) {}
@@ -83,7 +86,15 @@ export class RegisterComponent {
 	)
 
 	handleSubmit() {
-		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {})
+		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
+			if (res.ok) {
+				this.router.navigate(['/auth/sign-in'], {
+					queryParams: { e: this.registerFormGroup.controls.email.value }
+				})
+			} else {
+				//TODO: show error to user
+			}
+		})
 	}
 
 	onImageUpload(event: Event) {
