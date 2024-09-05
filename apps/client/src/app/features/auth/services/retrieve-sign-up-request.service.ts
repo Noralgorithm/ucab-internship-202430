@@ -26,8 +26,7 @@ export class RetrieveSignUpRequestService {
 			return new Ok({
 				id: response.data.id,
 				email: response.data.email,
-				expirationDate: new Date(response.data.expirationDate),
-				a: 'asd'
+				expirationDate: new Date(response.data.expirationDate)
 			})
 		}
 
