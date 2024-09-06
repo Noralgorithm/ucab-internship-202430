@@ -9,20 +9,9 @@
 	<section>
 		<form class="container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
 			<div class="input-profile-pic-container">
-				<div class="avatar-container">
-					<input type="file" (change)="onImageUpload($event)" id="profilePic" accept="image/png,image/jpg,image/jpeg"
-						class="input-profile-pic" />
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" color="#000000" fill="none"
-						class="icon">
-						<path
-							d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z"
-							stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						<path
-							d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z"
-							stroke="currentColor" stroke-width="1.5" />
-					</svg>
-				</div>
-				<label for="profilePic" class="label-medium label-profile-pic">Subir foto de perfil</label>
+				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
+				<input type="file" (change)="onImageUpload($event)" id="profilePic"
+					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
 			</div>
 
 			<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
@@ -32,8 +21,8 @@
 				[control]="registerFormGroup.controls.lastName" />
 
 
-			<div class="gender-input-container">
-				<label for="gender" class="label-medium gender-label">Sexo</label>
+			<div class="radio-input-container">
+				<label for="gender" class="label-medium">Sexo</label>
 				<div class="radio-button-group">
 					<radio-button inputId="gender-male" [control]="registerFormGroup.controls.gender" value="female"
 						label="Femenino" />
@@ -51,9 +40,22 @@
 			<password-input inputId="confirmPassword" label="Confirmar contraseña"
 				placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
 
+			@if(isAStudent()){
 			<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
+			} @else {
+			<div class="radio-input-container">
+				<label for="type" class="label-medium">Tipo</label>
+				<div class="radio-button-group">
+					<radio-button inputId="type-staff" [control]="registerFormGroup.controls.type" value="staff"
+						label="Personal" />
+					<radio-button inputId="type-professor" [control]="registerFormGroup.controls.type" value="professor"
+						label="Profesor" />
+				</div>
+			</div>
+			}
 
-			<button mButton severity="secondary" [disabled]="registerFormGroup.invalid" size="large">Registrarme</button>
+			<button mButton severity="secondary" [disabled]="registerFormGroup.invalid"
+				size="large">Registrarme</button>
 
 		</form>
 

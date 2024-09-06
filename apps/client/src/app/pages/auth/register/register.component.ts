@@ -44,13 +44,18 @@ export class RegisterComponent {
 	) {}
 
 	private signUpToken: string | null = null
+	regexIsAStudent: RegExp = /@\b(est)\b/
 
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
 			this.signUpToken = params['t']
 
-			// TODO: redirect to another page
-			if (!this.signUpToken) return
+			// TODO: Create page for the redirect "No se encuentra la página"
+
+			if (!this.signUpToken) {
+				this.router.navigate([''])
+				return
+			}
 
 			this.retrieveSignUpRequestService
 				.execute(this.signUpToken)
@@ -58,7 +63,6 @@ export class RegisterComponent {
 					if (res.ok) {
 						this.registerFormGroup.controls.email.setValue(res.val.email)
 					}
-
 					// TODO: handle fail
 				})
 		})
@@ -71,16 +75,23 @@ export class RegisterComponent {
 			]),
 			firstName: new FormControl('', [Validators.required]),
 			lastName: new FormControl('', [Validators.required]),
-			email: new FormControl({ value: '', disabled: true }, [
-				Validators.required
-			]),
+			email: new FormControl<string>(
+				{ value: 'mpforero.21@ucab.edu.ve', disabled: true },
+				[Validators.required]
+			),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.minLength(8)
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			type: new FormControl<UserType>({ value: 'student', disabled: true })
+			type: new FormControl<UserType>(
+				this.isAStudent() ? { value: 'student', disabled: true } : 'professor',
+				[Validators.required]
+			)
+			// type: new FormControl<UserType>({ value: 'staff', disabled: true }, [
+			// 	Validators.required
+			// ])
 		},
 		{ validators: passwordsMatchValidator }
 	)
@@ -103,6 +114,12 @@ export class RegisterComponent {
 		const file = (event.target as HTMLInputElement).files?.[0]
 
 		this.registerFormGroup.patchValue({ profilePic: file })
+	}
+
+	// TODO: add to read email from registerFormGruop
+
+	isAStudent(): boolean {
+		return this.regexIsAStudent.test('mpforero.21@ucab.edu.ve')
 	}
 
 	private constructSignUpDto(): SignUpServiceDto {
