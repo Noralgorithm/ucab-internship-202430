@@ -4,7 +4,7 @@
 	<section class="container">
 		<form class="container" [formGroup]="loginFormGroup" (submit)="handleSubmit()">
 			<text-input inputId="email" [control]="loginFormGroup.controls.email" label="Correo electrónico"
-				placeholder="ajrosas.21@est.ucab.edu.ve" [style.margin-top]="'5.125rem'" />
+				placeholder="Ingrese el correo electrónico" [style.margin-top]="'5.125rem'" />
 
 			<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
 				[control]="loginFormGroup.controls.password" />

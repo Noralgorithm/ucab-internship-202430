@@ -12,7 +12,7 @@ import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.ut
 })
 export class TextInputComponent {
 	@Input({ required: true }) inputId!: string
-	@Input({ required: true }) control: FormControl = new FormControl()
+	@Input() control: FormControl = new FormControl()
 	@Input() errorMessages: ValidationErrorMessages = DEFAULT_ERROR_MESSAGES
 	@Input() placeholder = ''
 	@Input() label = ''

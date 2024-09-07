@@ -62,8 +62,10 @@ export class RegisterComponent {
 				.subscribe((res) => {
 					if (res.ok) {
 						this.registerFormGroup.controls.email.setValue(res.val.email)
+						if (this.isAStudent()) {
+							this.updateTypeControl()
+						}
 					}
-					// TODO: handle fail
 				})
 		})
 	}
@@ -75,36 +77,29 @@ export class RegisterComponent {
 			]),
 			firstName: new FormControl('', [Validators.required]),
 			lastName: new FormControl('', [Validators.required]),
-			email: new FormControl<string>(
-				{ value: 'mpforero.21@ucab.edu.ve', disabled: true },
-				[Validators.required]
-			),
+			email: new FormControl<string>({ value: '', disabled: true }, [
+				Validators.required
+			]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.minLength(8)
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			type: new FormControl<UserType>(
-				this.isAStudent() ? { value: 'student', disabled: true } : 'professor',
-				[Validators.required]
-			)
-			// type: new FormControl<UserType>({ value: 'staff', disabled: true }, [
-			// 	Validators.required
-			// ])
+			type: new FormControl<UserType>('staff', [Validators.required])
 		},
 		{ validators: passwordsMatchValidator }
 	)
 
 	handleSubmit() {
+		console.log(this.registerFormGroup.controls)
 		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
 			if (res.ok) {
 				this.router.navigate(['/auth/sign-in'], {
 					queryParams: { e: this.registerFormGroup.controls.email.value }
 				})
-			} else {
-				//TODO: show error to user
 			}
+			//TODO: show error to user
 		})
 	}
 
@@ -116,10 +111,17 @@ export class RegisterComponent {
 		this.registerFormGroup.patchValue({ profilePic: file })
 	}
 
-	// TODO: add to read email from registerFormGruop
+	updateTypeControl() {
+		this.registerFormGroup.controls.type.patchValue('student')
+		this.registerFormGroup.controls.type.disable()
+		console.log(this.registerFormGroup.controls)
+	}
 
 	isAStudent(): boolean {
-		return this.regexIsAStudent.test('mpforero.21@ucab.edu.ve')
+		if (!this.registerFormGroup.controls.email.value) return false
+		return this.regexIsAStudent.test(
+			this.registerFormGroup.controls.email.value
+		)
 	}
 
 	private constructSignUpDto(): SignUpServiceDto {

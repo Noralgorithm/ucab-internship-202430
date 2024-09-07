@@ -46,16 +46,17 @@
 			<div class="radio-input-container">
 				<label for="type" class="label-medium">Tipo</label>
 				<div class="radio-button-group">
-					<radio-button inputId="type-staff" [control]="registerFormGroup.controls.type" value="staff"
-						label="Personal" />
-					<radio-button inputId="type-professor" [control]="registerFormGroup.controls.type" value="professor"
-						label="Profesor" />
+					<input type="radio" name="type" id="staff" formControlName="type" value="staff">
+					<input type="radio" name="type" id="staff" formControlName="type" value="professor">
+					<!-- <radio-button inputId="type-staff" [control]="registerFormGroup.controls.type" value="staff"
+						label="Personal" /> -->
+					<!-- <radio-button inputId="type-professor" [control]="registerFormGroup.controls.type" value="professor"
+						label="Profesor" /> -->
 				</div>
 			</div>
 			}
 
-			<button mButton severity="secondary" [disabled]="registerFormGroup.invalid"
-				size="large">Registrarme</button>
+			<button mButton severity="secondary" size="large">Registrarme</button>
 
 		</form>
 
