@@ -18,6 +18,7 @@ import { PageLayoutComponent } from '../../../shared/ui/components/page-layout/p
 import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
 import { RadioButtonComponent } from '../../../shared/ui/components/radio-button/radio-button.component'
 import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
+import { isUcabStudentEmail } from '../../../shared/utils/is-ucab-student.util'
 import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.validator'
 
 @Component({
@@ -42,9 +43,11 @@ export class RegisterComponent {
 		private readonly signUpService: SignUpService,
 		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService
 	) {}
+	private readonly STUDENT_INPUT_VALUE = 'Estudiante'
 
 	private signUpToken: string | null = null
-	regexIsAStudent: RegExp = /@\b(est)\b/
+
+	isStudent = false
 
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
@@ -62,8 +65,10 @@ export class RegisterComponent {
 				.subscribe((res) => {
 					if (res.ok) {
 						this.registerFormGroup.controls.email.setValue(res.val.email)
-						if (this.isAStudent()) {
-							this.updateTypeControl()
+
+						if (isUcabStudentEmail(res.val.email)) {
+							this.isStudent = true
+							this.useStudentTypeControl()
 						}
 					}
 				})
@@ -86,13 +91,14 @@ export class RegisterComponent {
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			type: new FormControl<UserType>('staff', [Validators.required])
+			type: new FormControl<UserType | 'Estudiante'>('staff', [
+				Validators.required
+			])
 		},
 		{ validators: passwordsMatchValidator }
 	)
 
 	handleSubmit() {
-		console.log(this.registerFormGroup.controls)
 		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
 			if (res.ok) {
 				this.router.navigate(['/auth/sign-in'], {
@@ -111,23 +117,20 @@ export class RegisterComponent {
 		this.registerFormGroup.patchValue({ profilePic: file })
 	}
 
-	updateTypeControl() {
-		this.registerFormGroup.controls.type.patchValue('student')
+	useStudentTypeControl() {
+		this.registerFormGroup.controls.type.setValue(this.STUDENT_INPUT_VALUE)
 		this.registerFormGroup.controls.type.disable()
-		console.log(this.registerFormGroup.controls)
-	}
-
-	isAStudent(): boolean {
-		if (!this.registerFormGroup.controls.email.value) return false
-		return this.regexIsAStudent.test(
-			this.registerFormGroup.controls.email.value
-		)
 	}
 
 	private constructSignUpDto(): SignUpServiceDto {
+		const typeToUse =
+			this.registerFormGroup.controls.type.value === this.STUDENT_INPUT_VALUE
+				? 'student'
+				: this.registerFormGroup.controls.type.value
+
 		return {
 			...this.registerFormGroup.value,
-			type: this.registerFormGroup.controls.type.value,
+			type: typeToUse,
 			signUpRequestId: this.signUpToken
 		} as SignUpServiceDto
 	}

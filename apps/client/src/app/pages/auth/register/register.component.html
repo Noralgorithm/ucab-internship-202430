@@ -10,8 +10,8 @@
 		<form class="container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
 			<div class="input-profile-pic-container">
 				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
-				<input type="file" (change)="onImageUpload($event)" id="profilePic"
-					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
+				<input type="file" (change)="onImageUpload($event)" id="profilePic" accept="image/png,image/jpg,image/jpeg"
+					class="input-profile-pic" />
 			</div>
 
 			<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
@@ -24,10 +24,10 @@
 			<div class="radio-input-container">
 				<label for="gender" class="label-medium">Sexo</label>
 				<div class="radio-button-group">
-					<radio-button inputId="gender-male" [control]="registerFormGroup.controls.gender" value="female"
-						label="Femenino" />
-					<radio-button inputId="gender-female" [control]="registerFormGroup.controls.gender" value="male"
-						label="Masculino" />
+					<radio-button inputId="gender-male" groupName="gender" [control]="registerFormGroup.controls.gender"
+						value="female" label="Femenino" />
+					<radio-button inputId="gender-female" groupName="gender" [control]="registerFormGroup.controls.gender"
+						value="male" label="Masculino" />
 				</div>
 			</div>
 
@@ -40,23 +40,21 @@
 			<password-input inputId="confirmPassword" label="Confirmar contraseña"
 				placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
 
-			@if(isAStudent()){
+			@if(isStudent){
 			<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
 			} @else {
 			<div class="radio-input-container">
 				<label for="type" class="label-medium">Tipo</label>
 				<div class="radio-button-group">
-					<input type="radio" name="type" id="staff" formControlName="type" value="staff">
-					<input type="radio" name="type" id="staff" formControlName="type" value="professor">
-					<!-- <radio-button inputId="type-staff" [control]="registerFormGroup.controls.type" value="staff"
-						label="Personal" /> -->
-					<!-- <radio-button inputId="type-professor" [control]="registerFormGroup.controls.type" value="professor"
-						label="Profesor" /> -->
+					<radio-button inputId="type-staff" groupName="type" [control]="registerFormGroup.controls.type" value="staff"
+						label="Personal" />
+					<radio-button inputId="type-professor" groupName="type" [control]="registerFormGroup.controls.type"
+						value="professor" label="Profesor" />
 				</div>
 			</div>
 			}
 
-			<button mButton severity="secondary" size="large">Registrarme</button>
+			<button mButton severity="secondary" size="large" [disabled]="registerFormGroup.invalid">Registrarme</button>
 
 		</form>
 
