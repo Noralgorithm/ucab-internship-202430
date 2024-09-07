@@ -64,11 +64,11 @@ export class LoginComponent {
 				this.loginFormGroup.value.email,
 				this.loginFormGroup.value.password
 			)
-			.subscribe((res) => {
-				if (res.ok) {
+			.subscribe({
+				next: (res) => {
 					alert('Logged in successfully')
-				} else {
-					// TODO: show error to user
+				},
+				error: (err) => {
 					alert('Failed to log in')
 				}
 			})

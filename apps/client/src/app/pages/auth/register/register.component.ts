@@ -63,13 +63,11 @@ export class RegisterComponent {
 			this.retrieveSignUpRequestService
 				.execute(this.signUpToken)
 				.subscribe((res) => {
-					if (res.ok) {
-						this.registerFormGroup.controls.email.setValue(res.val.email)
+					this.registerFormGroup.controls.email.setValue(res.data.email)
 
-						if (isUcabStudentEmail(res.val.email)) {
-							this.isStudent = true
-							this.useStudentTypeControl()
-						}
+					if (isUcabStudentEmail(res.data.email)) {
+						this.isStudent = true
+						this.useStudentTypeControl()
 					}
 				})
 		})
@@ -99,13 +97,15 @@ export class RegisterComponent {
 	)
 
 	handleSubmit() {
-		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
-			if (res.ok) {
+		this.signUpService.execute(this.constructSignUpDto()).subscribe({
+			next: (res) => {
 				this.router.navigate(['/auth/sign-in'], {
 					queryParams: { e: this.registerFormGroup.controls.email.value }
 				})
+			},
+			error: (err) => {
+				//TODO: show error to user
 			}
-			//TODO: show error to user
 		})
 	}
 

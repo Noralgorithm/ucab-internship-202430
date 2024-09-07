@@ -32,14 +32,13 @@ export class EmailVerificationComponent {
 			throw new Error('Invalid email submission')
 		}
 
-		this.requestSignUpService
-			.execute(this.emailControl.value)
-			.subscribe((res) => {
-				if (res.ok) {
-					this.router.navigate(['/email-verification/success'])
-				} else {
-					//TODO: show error to user
-				}
-			})
+		this.requestSignUpService.execute(this.emailControl.value).subscribe({
+			next: (res) => {
+				this.router.navigate(['/email-verification/success'])
+			},
+			error: (err) => {
+				//TODO: show error to user
+			}
+		})
 	}
 }
