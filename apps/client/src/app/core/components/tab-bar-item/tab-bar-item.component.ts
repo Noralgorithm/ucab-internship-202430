@@ -11,4 +11,5 @@ import { Component, Input } from '@angular/core'
 export class TabBarItemComponent {
 	@Input({ required: true }) iconSrc!: string
 	@Input({ required: true }) label!: string
+	@Input() href = ''
 }
