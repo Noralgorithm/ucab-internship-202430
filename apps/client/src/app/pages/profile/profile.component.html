@@ -10,16 +10,16 @@
 
 	<button mButton [severity]="'contrast'" class="edit-profile-button">Editar perfil</button>
 
-	<ul class="user-preferences paragraph-small">
-		<div class="li-item">
+	<ul class="user-preferences paragraph-medium">
+		<div class="user-preference-item">
 			<img src="assets/svgs/Student.svg" />
 			<li>Estudiante</li>
 		</div>
-		<div class="li-item">
+		<div class="user-preference-item">
 			<img src="assets/svgs/Walk.svg" />
 			<li>150 mts</li>
 		</div>
-		<div class="li-item">
+		<div class="user-preference-item">
 			<img src="assets/svgs/Favourite.svg" />
 			<li>Conductor</li>
 		</div>
@@ -28,13 +28,17 @@
 	<section>
 		<h4 class="paragraph-large">Información de contacto</h4>
 		<div class="phone-number-container paragraph-medium">
-			<img src="assets/svgs/Telephone.svg" />
-			<span class="phone-number-label">Número de teléfono</span>
+			<span class="phone-number-label-container">
+				<img src="assets/svgs/Telephone.svg" class="phone-number-icon" />
+				<span class="phone-number-label">Número de teléfono</span>
+			</span>
 			<span class="phone-number">04147652369</span>
 		</div>
 		<div class="phone-number-container paragraph-medium">
-			<img src="assets/svgs/Alert.svg" />
-			<span class="phone-number-label">Contacto de emergencia</span>
+			<span class="phone-number-label-container">
+				<img src="assets/svgs/Alert.svg" class="phone-number-icon" />
+				<span class="phone-number-label">Contacto de emergencia</span>
+			</span>
 			<span class="phone-number">04147652369</span>
 		</div>
 	</section>
@@ -42,16 +46,16 @@
 	<section>
 		<h4 class="paragraph-large">Mis Destinos</h4>
 		<div class="list-container">
-			<div class="item-container">
+			<div class="chip-container">
 				<img src="assets/svgs/Destination.svg" />
 				<p class="label-small">Urb. Isla Dorada</p>
 			</div>
-			<div class="item-container">
+			<div class="chip-container">
 				<img src="assets/svgs/Destination.svg" />
 				<p class="label-small">Los olivos</p>
 			</div>
 			<div>
-				<button size="small" mButton>Añadir</button>
+				<button size="small" mButton appearance="outlined" class="add-button">Añadir</button>
 			</div>
 		</div>
 	</section>
@@ -59,16 +63,16 @@
 	<section>
 		<h4 class="paragraph-large">Mis Rutas</h4>
 		<div class="list-container">
-			<div class="item-container">
+			<div class="chip-container">
 				<img src="assets/svgs/Route.svg" />
 				<p class="label-small">Av Atlántico</p>
 			</div>
-			<div class="item-container">
+			<div class="chip-container">
 				<img src="assets/svgs/Route.svg" />
 				<p class="label-small">Paseo Caroní</p>
 			</div>
 			<div>
-				<button size="small" mButton>Añadir</button>
+				<button size="small" mButton appearance="outlined" class="add-button">Añadir</button>
 			</div>
 		</div>
 	</section>
