@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { map } from 'rxjs'
-import { BackendResponse } from '../../../shared/types/backend-response.type'
+import { SuccesfulResponse } from '../../../shared/types/backend-response.type'
 import { Gender } from '../../../shared/types/users/user-gender.type'
 import { UserType } from '../../../shared/types/users/user-type.type'
-import { parseBackendResponseStatus } from '../../../shared/utils/parse-backend-response-status.util'
 
 @Injectable({
 	providedIn: 'root'
@@ -19,9 +17,7 @@ export class SignUpService {
 			formData.append(key, signUpServiceDto[key as keyof SignUpServiceDto])
 		}
 
-		return this.http
-			.post<BackendResponse<unknown, unknown>>('/auth/sign-up', formData)
-			.pipe(map(parseBackendResponseStatus))
+		return this.http.post<SuccesfulResponse<unknown>>('/auth/sign-up', formData)
 	}
 }
 

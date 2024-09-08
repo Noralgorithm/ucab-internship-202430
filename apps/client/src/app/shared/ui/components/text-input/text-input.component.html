@@ -5,5 +5,7 @@
 
 	@if (isInvalid) {
 	<strong class="label-small error-message">{{getErrorMessage()}}</strong>
+	} @else {
+	<strong class="label-small error-message invisible" aria-hidden>A</strong>
 	}
 </div>

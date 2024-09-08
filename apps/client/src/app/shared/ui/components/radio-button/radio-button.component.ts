@@ -10,6 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'
 })
 export class RadioButtonComponent {
 	@Input({ required: true }) inputId!: string
+	@Input() groupName = ''
 	@Input() control: FormControl = new FormControl()
 	@Input() value = ''
 	@Input() label = ''

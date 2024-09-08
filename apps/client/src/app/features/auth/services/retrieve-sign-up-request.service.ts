@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { map } from 'rxjs'
-import { Err, Ok, Result } from 'ts-results'
 import { SignUpRequest } from '../../../shared/types/auth/sign-up-request.type'
-import { BackendResponse } from '../../../shared/types/backend-response.type'
+import { SuccesfulResponse } from '../../../shared/types/backend-response.type'
 
 @Injectable({
 	providedIn: 'root'
@@ -15,22 +14,21 @@ export class RetrieveSignUpRequestService {
 		const url = `/auth/retrieve-sign-up-request/${signUpRequestToken}`
 
 		return this.http
-			.get<BackendResponse<ResponseDto, unknown>>(url)
+			.get<SuccesfulResponse<ResponseDto>>(url)
 			.pipe(map(this.parseResponse))
 	}
 
 	private parseResponse(
-		response: BackendResponse<ResponseDto, unknown>
-	): Result<SignUpRequest, unknown> {
-		if (response.status === 'success') {
-			return new Ok({
+		response: SuccesfulResponse<ResponseDto>
+	): SuccesfulResponse<SignUpRequest> {
+		return {
+			status: 'success',
+			data: {
 				id: response.data.id,
 				email: response.data.email,
 				expirationDate: new Date(response.data.expirationDate)
-			})
+			}
 		}
-
-		return new Err(response.data)
 	}
 }
 

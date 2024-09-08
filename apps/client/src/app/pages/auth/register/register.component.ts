@@ -18,6 +18,7 @@ import { PageLayoutComponent } from '../../../shared/ui/components/page-layout/p
 import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
 import { RadioButtonComponent } from '../../../shared/ui/components/radio-button/radio-button.component'
 import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
+import { isUcabStudentEmail } from '../../../shared/utils/is-ucab-student.util'
 import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.validator'
 
 @Component({
@@ -42,9 +43,11 @@ export class RegisterComponent {
 		private readonly signUpService: SignUpService,
 		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService
 	) {}
+	private readonly STUDENT_INPUT_VALUE = 'Estudiante'
 
 	private signUpToken: string | null = null
-	regexIsAStudent: RegExp = /@\b(est)\b/
+
+	isStudent = false
 
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
@@ -60,10 +63,12 @@ export class RegisterComponent {
 			this.retrieveSignUpRequestService
 				.execute(this.signUpToken)
 				.subscribe((res) => {
-					if (res.ok) {
-						this.registerFormGroup.controls.email.setValue(res.val.email)
+					this.registerFormGroup.controls.email.setValue(res.data.email)
+
+					if (isUcabStudentEmail(res.data.email)) {
+						this.isStudent = true
+						this.useStudentTypeControl()
 					}
-					// TODO: handle fail
 				})
 		})
 	}
@@ -75,34 +80,30 @@ export class RegisterComponent {
 			]),
 			firstName: new FormControl('', [Validators.required]),
 			lastName: new FormControl('', [Validators.required]),
-			email: new FormControl<string>(
-				{ value: 'mpforero.21@ucab.edu.ve', disabled: true },
-				[Validators.required]
-			),
+			email: new FormControl<string>({ value: '', disabled: true }, [
+				Validators.required
+			]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.minLength(8)
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			type: new FormControl<UserType>(
-				this.isAStudent() ? { value: 'student', disabled: true } : 'professor',
-				[Validators.required]
-			)
-			// type: new FormControl<UserType>({ value: 'staff', disabled: true }, [
-			// 	Validators.required
-			// ])
+			type: new FormControl<UserType | 'Estudiante'>('staff', [
+				Validators.required
+			])
 		},
 		{ validators: passwordsMatchValidator }
 	)
 
 	handleSubmit() {
-		this.signUpService.execute(this.constructSignUpDto()).subscribe((res) => {
-			if (res.ok) {
+		this.signUpService.execute(this.constructSignUpDto()).subscribe({
+			next: (res) => {
 				this.router.navigate(['/auth/sign-in'], {
 					queryParams: { e: this.registerFormGroup.controls.email.value }
 				})
-			} else {
+			},
+			error: (err) => {
 				//TODO: show error to user
 			}
 		})
@@ -116,16 +117,20 @@ export class RegisterComponent {
 		this.registerFormGroup.patchValue({ profilePic: file })
 	}
 
-	// TODO: add to read email from registerFormGruop
-
-	isAStudent(): boolean {
-		return this.regexIsAStudent.test('mpforero.21@ucab.edu.ve')
+	useStudentTypeControl() {
+		this.registerFormGroup.controls.type.setValue(this.STUDENT_INPUT_VALUE)
+		this.registerFormGroup.controls.type.disable()
 	}
 
 	private constructSignUpDto(): SignUpServiceDto {
+		const typeToUse =
+			this.registerFormGroup.controls.type.value === this.STUDENT_INPUT_VALUE
+				? 'student'
+				: this.registerFormGroup.controls.type.value
+
 		return {
 			...this.registerFormGroup.value,
-			type: this.registerFormGroup.controls.type.value,
+			type: typeToUse,
 			signUpRequestId: this.signUpToken
 		} as SignUpServiceDto
 	}
