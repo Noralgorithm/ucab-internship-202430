@@ -44,6 +44,16 @@ section {
 	color: var(--primary-text-value);
 }
 
+.user-preferences .li-item {
+	display: flex;
+	align-items: center;
+	gap: .5625rem;
+}
+
+.li-item img {
+	width: var(--icon-s);
+}
+
 .phone-number-container {
 	display: flex;
 	justify-content: space-between;
@@ -57,4 +67,27 @@ section {
 
 .phone-number-label {
 	color: #878eaa;
+}
+
+.list-container {
+	display: flex;
+	align-items: center;
+	gap: 1.1875rem;
+	margin-top: .8125rem;
+}
+
+.item-container {
+	background-color: #e7e1db;
+	padding: .4375rem .9375rem;
+	border-radius: 1rem;
+}
+
+.item-container p {
+	color: var(--primary-text-value);
+}
+
+.action-buttons-container {
+	display: flex;
+	flex-direction: column;
+	gap: .625rem;
 }
