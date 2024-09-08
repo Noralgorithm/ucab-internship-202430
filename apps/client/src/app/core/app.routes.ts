@@ -4,6 +4,8 @@ import { EmailVerificationComponent } from '../pages/auth/email-verification/ema
 import { LoginComponent } from '../pages/auth/login/login.component'
 import { RegisterComponent } from '../pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '../pages/auth/successful-email-verification/successful-email-verification.component'
+import { ProfileComponent } from '../pages/profile/profile.component'
+import { TabBarLayoutComponent } from './components/tab-bar-layout/tab-bar-layout.component'
 
 export const routes: Routes = [
 	{
@@ -30,5 +32,15 @@ export const routes: Routes = [
 		path: 'email-verification/success',
 		title: 'Correo enviado con éxito',
 		component: SuccessfulEmailVerificationComponent
+	},
+	{
+		path: 'app',
+		component: TabBarLayoutComponent,
+		children: [
+			{
+				path: 'profile',
+				component: ProfileComponent
+			}
+		]
 	}
 ]

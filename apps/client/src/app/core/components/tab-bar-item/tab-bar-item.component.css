@@ -1,0 +1,14 @@
+a {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: var(--greyscale-text-caption);
+	gap: 0.3rem;
+}
+
+.icon {
+	width: 1.9375rem;
+	aspect-ratio: 1;
+	background-color: var(--greyscale-border-disabled);
+}

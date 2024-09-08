@@ -5,7 +5,7 @@ import {
 	ReactiveFormsModule,
 	Validators
 } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { SignInService } from '../../../features/auth/services/sign-in.service'
 import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
 import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
@@ -30,6 +30,7 @@ import { TextInputComponent } from '../../../shared/ui/components/text-input/tex
 export class LoginComponent {
 	constructor(
 		private readonly route: ActivatedRoute,
+		private readonly router: Router,
 		private readonly signInService: SignInService
 	) {}
 
@@ -67,6 +68,7 @@ export class LoginComponent {
 			.subscribe({
 				next: (res) => {
 					alert('Logged in successfully')
+					this.router.navigate(['/app/profile'])
 				},
 				error: (err) => {
 					alert('Failed to log in')

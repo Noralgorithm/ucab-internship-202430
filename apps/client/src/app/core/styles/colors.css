@@ -217,7 +217,7 @@
 	--greyscale-text-title: var(--greyscale-900);
 	--greyscale-text-body: var(--greyscale-800);
 	--greyscale-text-subtitle: var(--greyscale-700);
-	--greyscale-text-caption: var(--greyscale-700);
+	--greyscale-text-caption: var(--greyscale-500);
 	--greyscale-text-disabled: var(--greyscale-700);
 
 	/* Greyscale Border */
