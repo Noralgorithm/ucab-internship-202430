@@ -5,6 +5,7 @@ a {
 	justify-content: center;
 	color: var(--greyscale-text-caption);
 	gap: 0.3rem;
+	text-decoration: none;
 }
 
 .icon {

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
+import { RouterLink } from '@angular/router'
 
 @Component({
 	selector: 'tab-bar-item',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, RouterLink],
 	templateUrl: './tab-bar-item.component.html',
 	styleUrl: './tab-bar-item.component.css'
 })
