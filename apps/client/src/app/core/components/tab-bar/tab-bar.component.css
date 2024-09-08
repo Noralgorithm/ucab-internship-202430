@@ -30,6 +30,12 @@
 	z-index: 104;
 }
 
+.circle-icon {
+	width: 100%;
+	height: 100%;
+	background-color: var(--contrast-icon-lighter);
+}
+
 .outline-circle {
 	width: 5.2rem;
 	border: 1.5px solid #e8e8e8;
