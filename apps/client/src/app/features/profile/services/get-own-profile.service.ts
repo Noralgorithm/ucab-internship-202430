@@ -20,7 +20,7 @@ export class GetOwnProfileService {
 			.pipe(map(this.parseResponse))
 	}
 
-	parseResponse(
+	private parseResponse(
 		response: SuccesfulResponse<ResponseDto>
 	): SuccesfulResponse<UserProfile> {
 		return {
