@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
+import { ProfileModule } from '~/features/profile/profile.module'
 import { UsersModule } from '~/features/users/users.module'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
 import { MailingModule } from '~/shared/mailing/mailing.module'
@@ -29,7 +30,8 @@ import { FilesController } from './files.controller'
 		}),
 		FileStorageModule,
 		MailingModule,
-		ValidatorsModule
+		ValidatorsModule,
+		ProfileModule
 	],
 	controllers: [FilesController]
 })
