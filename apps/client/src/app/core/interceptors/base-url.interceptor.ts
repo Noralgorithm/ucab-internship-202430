@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { BACKEND_BASE_URL } from '../../config'
+import { BACKEND_BASE_URL } from '~/config'
 
 export function BaseUrlInterceptor(
 	req: HttpRequest<unknown>,

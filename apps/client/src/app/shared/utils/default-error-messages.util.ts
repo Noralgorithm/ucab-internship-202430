@@ -1,4 +1,4 @@
-import { ValidationErrorMessages } from '../types/validation-error-messages.type'
+import { ValidationErrorMessages } from '~/shared/types/validation-error-messages.type'
 
 export const DEFAULT_ERROR_MESSAGES: ValidationErrorMessages = {
 	required: 'Este campo es requerido',

@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 // import { AnimationOptions, LottieComponent } from 'ngx-lottie'
-import { ButtonComponent } from '../../shared/ui/components/button/button.component'
-import { LogoIconComponent } from '../../shared/ui/components/logo-icon/logo-icon.component'
-import { LogoComponent } from '../../shared/ui/components/logo/logo.component'
+import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { LogoIconComponent } from '~/shared/ui/components/logo-icon/logo-icon.component'
+import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
 
 @Component({
 	selector: 'app-auth',

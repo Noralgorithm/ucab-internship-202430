@@ -6,20 +6,20 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { RetrieveSignUpRequestService } from '../../../features/auth/services/retrieve-sign-up-request.service'
+import { RetrieveSignUpRequestService } from '~/features/auth/services/retrieve-sign-up-request.service'
 import {
 	SignUpService,
 	SignUpServiceDto
-} from '../../../features/auth/services/sign-up.service'
-import { UserType } from '../../../shared/types/users/user-type.type'
-import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
-import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
-import { PageLayoutComponent } from '../../../shared/ui/components/page-layout/page-layout.component'
-import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
-import { RadioButtonComponent } from '../../../shared/ui/components/radio-button/radio-button.component'
-import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
-import { isUcabStudentEmail } from '../../../shared/utils/is-ucab-student.util'
-import { passwordsMatchValidator } from '../../../shared/utils/passwords-match.validator'
+} from '~/features/auth/services/sign-up.service'
+import { UserType } from '~/shared/types/users/user-type.type'
+import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
+import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
+import { PasswordInputComponent } from '~/shared/ui/components/password-input/password-input.component'
+import { RadioButtonComponent } from '~/shared/ui/components/radio-button/radio-button.component'
+import { TextInputComponent } from '~/shared/ui/components/text-input/text-input.component'
+import { isUcabStudentEmail } from '~/shared/utils/is-ucab-student.util'
+import { passwordsMatchValidator } from '~/shared/utils/passwords-match.validator'
 
 @Component({
 	selector: 'app-register',

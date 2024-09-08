@@ -6,12 +6,12 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { SignInService } from '../../../features/auth/services/sign-in.service'
-import { ButtonComponent } from '../../../shared/ui/components/button/button.component'
-import { LogoComponent } from '../../../shared/ui/components/logo/logo.component'
-import { PageLayoutComponent } from '../../../shared/ui/components/page-layout/page-layout.component'
-import { PasswordInputComponent } from '../../../shared/ui/components/password-input/password-input.component'
-import { TextInputComponent } from '../../../shared/ui/components/text-input/text-input.component'
+import { SignInService } from '~/features/auth/services/sign-in.service'
+import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
+import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
+import { PasswordInputComponent } from '~/shared/ui/components/password-input/password-input.component'
+import { TextInputComponent } from '~/shared/ui/components/text-input/text-input.component'
 
 @Component({
 	selector: 'app-login',

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { SuccesfulResponse } from '../../../shared/types/backend-response.type'
-import { Gender } from '../../../shared/types/users/user-gender.type'
-import { UserType } from '../../../shared/types/users/user-type.type'
+import { SuccesfulResponse } from '~/shared/types/backend-response.type'
+import { Gender } from '~/shared/types/users/user-gender.type'
+import { UserType } from '~/shared/types/users/user-type.type'
 
 @Injectable({
 	providedIn: 'root'

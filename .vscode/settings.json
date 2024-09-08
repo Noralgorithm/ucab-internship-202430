@@ -21,5 +21,6 @@
 		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"material-icon-theme.activeIconPack": "nest",
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	"javascript.preferences.importModuleSpecifier": "non-relative"
 }

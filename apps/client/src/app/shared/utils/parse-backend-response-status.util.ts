@@ -1,5 +1,5 @@
 import { Err, Ok, Result } from 'ts-results'
-import { BackendResponse } from '../types/backend-response.type'
+import { BackendResponse } from '~/shared/types/backend-response.type'
 
 export function parseBackendResponseStatus<T, U>(
 	response: BackendResponse<T, U>
