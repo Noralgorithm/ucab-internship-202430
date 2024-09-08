@@ -9,3 +9,8 @@ tab-bar {
 	bottom: 0;
 	z-index: 100;
 }
+
+.tab-bar-placeholder {
+	height: 5.4rem;
+	display: hidden;
+}
