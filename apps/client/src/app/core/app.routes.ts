@@ -4,6 +4,7 @@ import { EmailVerificationComponent } from '~/pages/auth/email-verification/emai
 import { LoginComponent } from '~/pages/auth/login/login.component'
 import { RegisterComponent } from '~/pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '~/pages/auth/successful-email-verification/successful-email-verification.component'
+import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.component'
 import { HomeComponent } from '~/pages/home/home.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
@@ -29,12 +30,14 @@ export const routes: Routes = [
 	{
 		path: 'email-verification',
 		title: 'Verificación de correo electrónico',
-		component: EmailVerificationComponent
-	},
-	{
-		path: 'email-verification/success',
-		title: 'Correo enviado con éxito',
-		component: SuccessfulEmailVerificationComponent
+		component: EmailVerificationComponent,
+		children: [
+			{
+				path: 'success',
+				title: 'Correo enviado con éxito',
+				component: SuccessfulEmailVerificationComponent
+			}
+		]
 	},
 	{
 		path: 'app',
@@ -47,7 +50,14 @@ export const routes: Routes = [
 			},
 			{
 				path: 'profile',
-				component: ProfileComponent
+				component: ProfileComponent,
+				children: [
+					{
+						path: 'edit',
+						title: 'Editar perfil',
+						component: EditProfileComponent
+					}
+				]
 			},
 			{
 				path: 'movipanas',
