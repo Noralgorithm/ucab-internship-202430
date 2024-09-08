@@ -1,0 +1,60 @@
+h1 {
+	color: var(--primary-text-value);
+	margin-top: 3.625rem;
+}
+
+h4 {
+	color: var(--primary-text-label);
+	width: 100%;
+	text-align: left;
+	display: block;
+}
+
+section {
+	width: 100%;
+	margin-top: 1.5rem;
+}
+
+.avatar {
+	width: 5.5rem;
+	aspect-ratio: 1;
+	border-radius: 100%;
+	margin-top: 0.5rem;
+}
+
+.star {
+	margin-top: 0.5rem;
+	height: 1.5rem;
+}
+
+.email {
+	margin-top: 0.5rem;
+	color: #878eaa;
+}
+
+.edit-profile-button {
+	margin-top: 1rem;
+}
+
+.user-preferences {
+	display: flex;
+	gap: 1.25rem;
+	list-style-type: none;
+	margin-top: .625rem;
+	color: var(--primary-text-value);
+}
+
+.phone-number-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: .25rem;
+}
+
+.phone-number {
+	color: var(--primary-text-value);
+	font-weight: 700;
+}
+
+.phone-number-label {
+	color: #878eaa;
+}

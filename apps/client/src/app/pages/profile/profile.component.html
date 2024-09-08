@@ -1,3 +1,38 @@
-<p>{{profile | json}}</p>
-<input type="text" />
-<img [src]="profile?.profilePicSrc" />
+<page-layout>
+	<h1 class="heading-xsmall">María Paula Porero Fardo</h1>
+
+	<img [src]="profile?.profilePicSrc" class="avatar" />
+
+	<img src="assets/svgs/HalfStar.svg" class="star" />
+
+	<h3 class="paragraph-small email">{{ profile?.email }}</h3>
+
+
+	<button mButton [severity]="'contrast'" class="edit-profile-button">Editar perfil</button>
+
+	<ul class="user-preferences paragraph-small">
+		<li>Estudiante</li>
+		<li>150 mts</li>
+		<li>Conductor</li>
+	</ul>
+
+	<section>
+		<h4 class="paragraph-large">Información de contacto</h4>
+		<div class="phone-number-container paragraph-medium">
+			<span class="phone-number-label">Número de teléfono</span>
+			<span class="phone-number">04147652369</span>
+		</div>
+		<div class="phone-number-container paragraph-medium">
+			<span class="phone-number-label">Contacto de emergencia</span>
+			<span class="phone-number">04147652369</span>
+		</div>
+	</section>
+
+	<section>
+		<h4 class="paragraph-large">Mis Destinos</h4>
+	</section>
+
+	<section>
+		<h4 class="paragraph-large">Mis Rutas</h4>
+	</section>
+</page-layout>
