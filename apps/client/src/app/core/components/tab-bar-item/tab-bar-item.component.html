@@ -1,4 +1,4 @@
-<a class="label-small" [routerLink]="href">
+<a class="label-small" [routerLink]="href" [routerLinkActive]="'is-active'" [routerLinkActiveOptions]="{exact: true}">
 	<div class="icon" [ngStyle]="{mask: 'url(' + iconSrc + ') no-repeat center', 'mask-size': '1.9375rem'}">
 	</div>
 	{{ label }}

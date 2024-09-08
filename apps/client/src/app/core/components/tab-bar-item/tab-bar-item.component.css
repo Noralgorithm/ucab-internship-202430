@@ -13,3 +13,11 @@ a {
 	aspect-ratio: 1;
 	background-color: var(--greyscale-border-disabled);
 }
+
+.is-active {
+	color: var(--primary-text-value);
+}
+
+.is-active > .icon {
+	background-color: var(--primary-icon-darker);
+}
