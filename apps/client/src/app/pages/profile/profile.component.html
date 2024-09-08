@@ -1,5 +1,5 @@
 <page-layout>
-	<h1 class="heading-xsmall">María Paula Porero Fardo</h1>
+	<h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
 
 	<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
 
