@@ -1,11 +1,11 @@
 <page-layout>
 	<h1 class="heading-xsmall">María Paula Porero Fardo</h1>
 
-	<img [src]="profile?.profilePicSrc" class="avatar" />
+	<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
 
 	<img src="assets/svgs/HalfStar.svg" class="star" />
 
-	<h3 class="paragraph-small email">{{ profile?.email }}</h3>
+	<h3 class="paragraph-small email">{{ profile?.email ? profile?.email : '--' }}</h3>
 
 
 	<button mButton [severity]="'contrast'" class="edit-profile-button">Editar perfil</button>
@@ -13,15 +13,25 @@
 	<ul class="user-preferences paragraph-medium">
 		<div class="user-preference-item">
 			<img src="assets/svgs/Student.svg" />
-			<li>Estudiante</li>
+			<li>
+				@if (!profile?.type) {
+				--
+				} @else {
+				{{ userTypeLabels[profile!.type] }}
+				}
+			</li>
 		</div>
 		<div class="user-preference-item">
 			<img src="assets/svgs/Walk.svg" />
-			<li>150 mts</li>
+			<li>
+				{{profile?.walkDistance ? profile!.walkDistance + ' mts' : '--'}}
+			</li>
 		</div>
 		<div class="user-preference-item">
 			<img src="assets/svgs/Favourite.svg" />
-			<li>Conductor</li>
+			<li>
+				{{profile?.preferredRole ? userRoleLabels[profile!.preferredRole] : '--' }}
+			</li>
 		</div>
 	</ul>
 
@@ -32,14 +42,14 @@
 				<img src="assets/svgs/Telephone.svg" class="phone-number-icon" />
 				<span class="phone-number-label">Número de teléfono</span>
 			</span>
-			<span class="phone-number">04147652369</span>
+			<span class="phone-number">{{ profile?.phoneNumber ?? '--'}}</span>
 		</div>
 		<div class="phone-number-container paragraph-medium">
 			<span class="phone-number-label-container">
 				<img src="assets/svgs/Alert.svg" class="phone-number-icon" />
 				<span class="phone-number-label">Contacto de emergencia</span>
 			</span>
-			<span class="phone-number">04147652369</span>
+			<span class="phone-number">{{ profile?.emergencyContactPhoneNumber ?? '--'}}</span>
 		</div>
 	</section>
 
