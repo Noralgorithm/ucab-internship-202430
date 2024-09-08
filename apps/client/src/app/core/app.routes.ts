@@ -4,6 +4,9 @@ import { EmailVerificationComponent } from '../pages/auth/email-verification/ema
 import { LoginComponent } from '../pages/auth/login/login.component'
 import { RegisterComponent } from '../pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '../pages/auth/successful-email-verification/successful-email-verification.component'
+import { HomeComponent } from '../pages/home/home.component'
+import { MovipanasComponent } from '../pages/movipanas/movipanas.component'
+import { MyDestinationsComponent } from '../pages/my-destinations/my-destinations.component'
 import { ProfileComponent } from '../pages/profile/profile.component'
 import { TabBarLayoutComponent } from './components/tab-bar-layout/tab-bar-layout.component'
 
@@ -38,8 +41,23 @@ export const routes: Routes = [
 		component: TabBarLayoutComponent,
 		children: [
 			{
+				path: '',
+				title: 'Inicio',
+				component: HomeComponent
+			},
+			{
 				path: 'profile',
 				component: ProfileComponent
+			},
+			{
+				path: 'movipanas',
+				title: 'MoviPanas',
+				component: MovipanasComponent
+			},
+			{
+				path: 'my-destinations',
+				title: 'Mis destinos',
+				component: MyDestinationsComponent
 			}
 		]
 	}
