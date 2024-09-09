@@ -1,10 +1,10 @@
-import { Component } from '@angular/core'
+import { Component, HostBinding, Input } from '@angular/core'
 
 @Component({
 	selector: 'page-layout',
 	standalone: true,
 	imports: [],
-	template: '<ng-content></ng-content>',
+	template: '<div class="container"><ng-content></ng-content></div>',
 	styles: `
 		:host {
 			display: flex;
@@ -12,10 +12,25 @@ import { Component } from '@angular/core'
 			justify-content: start;
 			align-items: center;
 			height: 100dvh;
+			width: 100%;
+			padding: 0 2rem;
+			overflow-y: auto;
+		}
+		
+		.container {
 			max-width: 24.375rem;
-			margin: 0 auto;
-			padding: 0 1rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			align-items: center;
 		}
 	`
 })
-export class PageLayoutComponent {}
+export class PageLayoutComponent {
+	@Input() hasTabBar = false
+
+	@HostBinding('style.padding-bottom')
+	get paddingBottom() {
+		return this.hasTabBar ? '7rem' : '0'
+	}
+}

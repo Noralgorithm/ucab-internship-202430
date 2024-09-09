@@ -1,16 +1,5 @@
-:host {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
 tab-bar {
 	position: fixed;
 	bottom: 0;
 	z-index: 100;
-}
-
-.tab-bar-placeholder {
-	height: 5.4rem;
-	display: hidden;
 }
