@@ -9,11 +9,11 @@
 	</header>
 
 	<section>
-		<form class="container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
+		<form class="form-container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
 			<div class="input-profile-pic-container">
 				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
-				<input type="file" (change)="onImageUpload($event)" id="profilePic" accept="image/png,image/jpg,image/jpeg"
-					class="input-profile-pic" />
+				<input type="file" (change)="onImageUpload($event)" id="profilePic"
+					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
 			</div>
 
 			<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
@@ -28,8 +28,8 @@
 				<div class="radio-button-group">
 					<radio-button inputId="gender-male" groupName="gender" [control]="registerFormGroup.controls.gender"
 						value="female" label="Femenino" />
-					<radio-button inputId="gender-female" groupName="gender" [control]="registerFormGroup.controls.gender"
-						value="male" label="Masculino" />
+					<radio-button inputId="gender-female" groupName="gender"
+						[control]="registerFormGroup.controls.gender" value="male" label="Masculino" />
 				</div>
 			</div>
 
@@ -48,15 +48,16 @@
 			<div class="radio-input-container">
 				<label for="type" class="label-medium">Tipo</label>
 				<div class="radio-button-group">
-					<radio-button inputId="type-staff" groupName="type" [control]="registerFormGroup.controls.type" value="staff"
-						label="Personal" />
+					<radio-button inputId="type-staff" groupName="type" [control]="registerFormGroup.controls.type"
+						value="staff" label="Personal" />
 					<radio-button inputId="type-professor" groupName="type" [control]="registerFormGroup.controls.type"
 						value="professor" label="Profesor" />
 				</div>
 			</div>
 			}
 
-			<button mButton severity="secondary" size="large" [disabled]="registerFormGroup.invalid">Registrarme</button>
+			<button mButton severity="secondary" size="large"
+				[disabled]="registerFormGroup.invalid">Registrarme</button>
 
 		</form>
 

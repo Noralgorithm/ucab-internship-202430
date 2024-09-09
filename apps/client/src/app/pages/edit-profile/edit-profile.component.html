@@ -1,4 +1,60 @@
 <page-layout>
-	<h1 class="heading-xsmall">María Paula Forero Pardo</h1>
+
+	<header>
+		<a class="label-small" routerLink="/app/profile" [routerLinkActive]="'is-active'"
+			[routerLinkActiveOptions]="{exact: true}">
+			<img src="assets/svgs/Arrow-left.svg" />
+		</a>
+		<h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
+	</header>
+
+	<section>
+		<form class="form-container" [formGroup]="editProfileFormGroup">
+
+			@if(uploadProfilePic) {
+			<div class="input-profile-pic-container">
+				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
+				<input type="file" (change)="onImageUpload($event)" id="profilePic"
+					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
+			</div>
+			}@else {
+			<div class="profilePic-container">
+				<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
+				<!-- <button mButton size="small" (click)="editProfilePic()">
+					Subir foto de perfil
+				</button> -->
+				<button size="small" mButton appearance="outlined" class="edit-profilePic-button"
+					(click)="editProfilePic()">Subir foto de perfil</button>
+			</div>
+			}
+
+			<div class="radio-input-container">
+				<label for="role" class="label-medium">Rol preferido</label>
+				<div class="radio-button-group">
+					<radio-button inputId="role-driver" groupName="role"
+						[control]="editProfileFormGroup.controls.preferredRole" value="driver" label="Conductor" />
+					<radio-button inputId="role-passenger" groupName="role"
+						[control]="editProfileFormGroup.controls.preferredRole" value="passenger" label="Pasajero" />
+				</div>
+			</div>
+
+			<div class="input-walkDistance-container">
+				<label for="walkDistance">Distancia dispuesto a caminar</label>
+				<input type="number" name="walkDistance" id="walkDistance" formControlName="walkDistance">
+			</div>
+
+			<text-input inputId="phoneNumber" [control]="editProfileFormGroup.controls.phoneNumber"
+				label="Número de Teléfono" placeholder="Ingrese el número de teléfono" />
+			<text-input inputId="emergencyContactPhoneNumber"
+				[control]="editProfileFormGroup.controls.emergencyContactPhoneNumber" label="Contacto de emergencia"
+				placeholder="Ingrese el número del contacto" />
+
+			<button mButton severity="secondary" size="large" [disabled]="editProfileFormGroup.invalid"
+				(click)="handleSubmit()">Editar
+				Perfil</button>
+
+		</form>
+
+	</section>
 
 </page-layout>
