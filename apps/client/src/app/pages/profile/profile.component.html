@@ -8,7 +8,7 @@
 	<h3 class="paragraph-small email">{{ profile?.email ? profile?.email : '--' }}</h3>
 
 
-	<button mButton [severity]="'contrast'" class="edit-profile-button">Editar perfil</button>
+	<a mButton [severity]="'contrast'" class="edit-profile-button" routerLink="/app/profile/edit">Editar perfil</a>
 
 	<ul class="user-preferences paragraph-medium">
 		<div class="user-preference-item">

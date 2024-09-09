@@ -30,14 +30,12 @@ export const routes: Routes = [
 	{
 		path: 'email-verification',
 		title: 'Verificación de correo electrónico',
-		component: EmailVerificationComponent,
-		children: [
-			{
-				path: 'success',
-				title: 'Correo enviado con éxito',
-				component: SuccessfulEmailVerificationComponent
-			}
-		]
+		component: EmailVerificationComponent
+	},
+	{
+		path: 'email-verification/success',
+		title: 'Correo enviado con éxito',
+		component: SuccessfulEmailVerificationComponent
 	},
 	{
 		path: 'app',
@@ -50,14 +48,13 @@ export const routes: Routes = [
 			},
 			{
 				path: 'profile',
-				component: ProfileComponent,
-				children: [
-					{
-						path: 'edit',
-						title: 'Editar perfil',
-						component: EditProfileComponent
-					}
-				]
+				title: 'Perfil',
+				component: ProfileComponent
+			},
+			{
+				path: 'profile/edit',
+				title: 'Editar perfil',
+				component: EditProfileComponent
 			},
 			{
 				path: 'movipanas',

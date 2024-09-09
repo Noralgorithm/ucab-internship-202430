@@ -15,6 +15,10 @@ section {
 	margin-top: 1.5rem;
 }
 
+a {
+	text-decoration: none;
+}
+
 .avatar {
 	width: 5.5rem;
 	aspect-ratio: 1;

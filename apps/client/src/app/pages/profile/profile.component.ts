@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { RouterLink } from '@angular/router'
 import { GetOwnProfileService } from '~/features/profile/services/get-own-profile.service'
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
@@ -11,7 +12,7 @@ import { USER_TYPE_LABELS } from '~/shared/utils/user-type-labels.util'
 	standalone: true,
 	templateUrl: './profile.component.html',
 	styleUrl: './profile.component.css',
-	imports: [PageLayoutComponent, ButtonComponent]
+	imports: [PageLayoutComponent, ButtonComponent, RouterLink]
 })
 export class ProfileComponent {
 	constructor(private readonly getOwnProfileService: GetOwnProfileService) {}
