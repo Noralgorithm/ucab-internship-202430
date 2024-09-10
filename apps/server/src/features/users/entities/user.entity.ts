@@ -15,7 +15,8 @@ import {
 	Gender,
 	NAME_MAX_LENGTH,
 	UserRole,
-	UserType
+	UserType,
+	WALK_DISTANCE_MAX_VALUE
 } from '~/shared/constants'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 
@@ -48,7 +49,7 @@ export class User {
 	@Column({ type: 'enum', enum: UserType })
 	type: UserType
 
-	@Column({ default: 150 })
+	@Column({ default: WALK_DISTANCE_MAX_VALUE })
 	walkDistance: number
 
 	@Column({ type: 'enum', enum: UserRole, default: UserRole.PASSENGER })
