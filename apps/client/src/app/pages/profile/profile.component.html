@@ -1,4 +1,4 @@
-<page-layout>
+<page-layout [hasTabBar]="true">
 	<h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
 
 	<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
