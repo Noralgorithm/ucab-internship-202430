@@ -37,15 +37,6 @@ export class SignUpDto {
 	@ApiProperty({ type: 'string', format: 'binary' })
 	profilePic: MemoryStorageFile
 
-	//TODO: move phone numbers to another dto
-	// //TODO: put venezuelan format
-	// @IsPhoneNumber('VE')
-	// phoneNumber: string
-
-	// //TODO: put venezuelan forma
-	// @IsPhoneNumber('VE')
-	// emergencyContactPhoneNumber: string
-
 	@IsUUID('4')
 	@IsString()
 	signUpRequestId: SignUpRequest['id']
