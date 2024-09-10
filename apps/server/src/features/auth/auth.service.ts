@@ -110,10 +110,13 @@ export class AuthService {
 		return 'Usuario registrado con éxito'
 	}
 
-	async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+	async signIn(signInDto: SignInDto): Promise<{
+		accessToken: string
+		user: { preferredRole: User['preferredRole'] }
+	}> {
 		const user = await this.usersRepository.findOne({
 			where: { email: signInDto.email },
-			select: ['id', 'encryptedPassword']
+			select: ['id', 'encryptedPassword', 'preferredRole']
 		})
 
 		if (user == null) {
@@ -151,7 +154,10 @@ export class AuthService {
 		}
 
 		return {
-			accessToken: await this.jwtService.signAsync(payload)
+			accessToken: await this.jwtService.signAsync(payload),
+			user: {
+				preferredRole: user.preferredRole
+			}
 		}
 	}
 }
