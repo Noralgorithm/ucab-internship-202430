@@ -1,0 +1,7 @@
+<router-outlet></router-outlet>
+
+@if (isPassenger) {
+<passenger-tab-bar @InOut></passenger-tab-bar>
+} @else {
+<driver-tab-bar @InOut></driver-tab-bar>
+}

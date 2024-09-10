@@ -15,9 +15,9 @@ a {
 }
 
 .is-active {
-	color: var(--primary-text-value);
+	color: var(--active-text-color);
 }
 
 .is-active > .icon {
-	background-color: var(--primary-icon-darker);
+	background-color: var(--active-icon-color);
 }
