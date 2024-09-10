@@ -9,7 +9,7 @@ import { HomeComponent } from '~/pages/home/home.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
-import { TabBarLayoutComponent } from './components/tab-bar-layout/tab-bar-layout.component'
+import { TabBarLayoutComponent } from './components/tab-bar/tab-bar-layout/tab-bar-layout.component'
 
 export const routes: Routes = [
 	{

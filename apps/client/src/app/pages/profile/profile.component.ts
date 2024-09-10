@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { GetOwnProfileService } from '~/features/profile/services/get-own-profile.service'
+import { UserCurrentRoleService } from '~/features/profile/services/user-current-role.service'
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -15,7 +16,10 @@ import { USER_TYPE_LABELS } from '~/shared/utils/user-type-labels.util'
 	imports: [PageLayoutComponent, ButtonComponent, RouterLink]
 })
 export class ProfileComponent {
-	constructor(private readonly getOwnProfileService: GetOwnProfileService) {}
+	constructor(
+		private readonly getOwnProfileService: GetOwnProfileService,
+		public readonly userCurrentRoleService: UserCurrentRoleService
+	) {}
 
 	userTypeLabels = USER_TYPE_LABELS
 	userRoleLabels = USER_ROLE_LABELS
