@@ -1,0 +1,52 @@
+h1 {
+	color: var(--primary-text-value);
+	text-align: left;
+	margin-top: 3.625rem;
+}
+
+.card-cars-container {
+	width: 22.0625rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: .875rem;
+	border: 2px solid red;
+	background-color: #efefef;
+}
+
+img {
+	border: 2px solid blue;
+}
+
+.card-info-container {
+	display: flex;
+	flex-direction: column;
+	gap: .8125rem;
+}
+
+.card-header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.card-header-container h3 {
+	color: var(--primary-text-value);
+}
+
+.card-specs-container {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.card-specs-container p {
+	color: var(--primary-text-value);
+}
+
+.card-buttons-container {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	gap: .5rem;
+}
