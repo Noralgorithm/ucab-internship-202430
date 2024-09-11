@@ -13,8 +13,8 @@
 			@if(uploadProfilePic) {
 			<div class="input-profile-pic-container">
 				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
-				<input type="file" (change)="onImageUpload($event)" id="profilePic" accept="image/png,image/jpg,image/jpeg"
-					class="input-profile-pic" />
+				<input type="file" (change)="onImageUpload($event)" id="profilePic"
+					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
 			</div>
 			}@else {
 			<div class="profile-pic-container">
@@ -22,7 +22,7 @@
 				<!-- <button mButton size="small" (click)="editProfilePic()">
 					Subir foto de perfil
 				</button> -->
-				<button size="small" mButton appearance="outlined" class="edit-profilePic-button"
+				<button size="small" mButton appearance="outlined" class="edit-profile-pic-button"
 					(click)="editProfilePic()">Subir foto de perfil</button>
 			</div>
 			}
@@ -30,20 +30,20 @@
 			<div class="radio-input-container">
 				<label for="role" class="label-medium">Rol preferido</label>
 				<div class="radio-button-group">
-					<radio-button inputId="role-driver" groupName="role" [control]="editProfileFormGroup.controls.preferredRole"
-						value="driver" label="Conductor" />
+					<radio-button inputId="role-driver" groupName="role"
+						[control]="editProfileFormGroup.controls.preferredRole" value="driver" label="Conductor" />
 					<radio-button inputId="role-passenger" groupName="role"
 						[control]="editProfileFormGroup.controls.preferredRole" value="passenger" label="Pasajero" />
 				</div>
 			</div>
 
-			<div class="input-walkDistance-container">
+			<div class="input-walk-distance-container">
 				<label for="walkDistance">Distancia dispuesto a caminar</label>
 				<input type="number" name="walkDistance" id="walkDistance" formControlName="walkDistance">
 			</div>
 
-			<text-input inputId="phoneNumber" [control]="editProfileFormGroup.controls.phoneNumber" label="Número de Teléfono"
-				placeholder="Ingrese el número de teléfono" />
+			<text-input inputId="phoneNumber" [control]="editProfileFormGroup.controls.phoneNumber"
+				label="Número de Teléfono" placeholder="Ingrese el número de teléfono" />
 			<text-input inputId="emergencyContactPhoneNumber"
 				[control]="editProfileFormGroup.controls.emergencyContactPhoneNumber" label="Contacto de emergencia"
 				placeholder="Ingrese el número del contacto" />

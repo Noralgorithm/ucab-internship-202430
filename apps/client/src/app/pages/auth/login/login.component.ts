@@ -7,6 +7,9 @@ import {
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SignInService } from '~/features/auth/services/sign-in.service'
+import { UserCurrentRoleService } from '~/features/profile/services/user-current-role.service'
+import { PREFERRED_ROLE_KEY } from '~/shared/constants'
+import { UserRole } from '~/shared/types/users/user-role.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -31,9 +34,11 @@ export class LoginComponent {
 	constructor(
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
-		private readonly signInService: SignInService
+		private readonly signInService: SignInService,
+		private readonly userCurrentRole: UserCurrentRoleService
 	) {}
 
+	userPreferredRole: UserRole = 'passenger'
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
 			const email = params['e']
@@ -52,6 +57,10 @@ export class LoginComponent {
 		])
 	})
 
+	setUserCurrentRole() {
+		this.userCurrentRole.setCurrentRole(this.userPreferredRole)
+	}
+
 	handleSubmit() {
 		if (
 			!this.loginFormGroup.value.email ||
@@ -67,6 +76,10 @@ export class LoginComponent {
 			)
 			.subscribe({
 				next: (res) => {
+					this.userPreferredRole =
+						(localStorage.getItem(PREFERRED_ROLE_KEY) as UserRole) ??
+						'passenger'
+					this.setUserCurrentRole()
 					alert('Logged in successfully')
 					this.router.navigate(['/app/profile'])
 				},
