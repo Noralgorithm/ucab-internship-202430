@@ -5,10 +5,18 @@ import tinyColor from 'tinycolor2'
 	selector: 'movic-car',
 	standalone: true,
 	imports: [],
-	templateUrl: './car.component.html'
+	templateUrl: './car.component.html',
+	styles: `
+		:host {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+		}
+	`
 })
 export class CarComponent {
-	@Input({ required: true }) color!: string
+	@Input() color = '#262626'
 
 	colorHex = ''
 	lightColorHex = ''

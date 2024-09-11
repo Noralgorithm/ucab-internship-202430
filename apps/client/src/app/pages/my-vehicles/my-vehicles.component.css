@@ -14,14 +14,10 @@ h1 {
 	background-color: #efefef;
 }
 
-img {
-	border: 2px solid blue;
-}
-
 .card-info-container {
 	display: flex;
 	flex-direction: column;
-	gap: .8125rem;
+	gap: .7rem;
 }
 
 .card-header-container {
@@ -49,4 +45,19 @@ img {
 	justify-content: end;
 	align-items: center;
 	gap: .5rem;
+}
+
+movic-car {
+	width: 100%;
+}
+
+.car-detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25rem;
+}
+
+.car-detail strong {
+	color: var(--primary-text-value);
 }
