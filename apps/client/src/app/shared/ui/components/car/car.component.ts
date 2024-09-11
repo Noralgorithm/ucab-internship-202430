@@ -5,8 +5,7 @@ import tinyColor from 'tinycolor2'
 	selector: 'movic-car',
 	standalone: true,
 	imports: [],
-	templateUrl: './car.component.html',
-	styleUrl: './car.component.css'
+	templateUrl: './car.component.html'
 })
 export class CarComponent {
 	@Input({ required: true }) color!: string
