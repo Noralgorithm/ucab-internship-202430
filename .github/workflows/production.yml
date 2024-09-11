@@ -21,8 +21,9 @@ jobs:
             git restore pnpm-lock.yaml
             git pull
             pnpm install
+            pnpm --filter server migration:run
             pnpm --filter server build
-            pm2 restart movic-backend && kill $!
+            pm2 restart movic-backend
 
           # pnpm generate:docs
           # rm /var/www/green-summary-client-docs -rf

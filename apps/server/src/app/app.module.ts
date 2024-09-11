@@ -6,6 +6,7 @@ import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
 import { ProfileModule } from '~/features/profile/profile.module'
 import { UsersModule } from '~/features/users/users.module'
+import { VehiclesModule } from '~/features/vehicles/vehicles.module'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
 import { MailingModule } from '~/shared/mailing/mailing.module'
 import { ValidatorsModule } from '~/shared/validators/validators.module'
@@ -31,7 +32,8 @@ import { FilesController } from './files.controller'
 		FileStorageModule,
 		MailingModule,
 		ValidatorsModule,
-		ProfileModule
+		ProfileModule,
+		VehiclesModule
 	],
 	controllers: [FilesController]
 })

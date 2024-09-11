@@ -6,9 +6,11 @@ import {
 	Entity,
 	Generated,
 	Index,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import {
 	EMAIL_MAX_LENGTH,
 	ENCRYPTED_PASSWORD_LENGTH,
@@ -90,4 +92,14 @@ export class User {
 		transformer: LuxonDateTransformer
 	})
 	deletedAt: DateTime
+
+	@OneToMany(
+		() => Vehicle,
+		(vehicle) => vehicle.driver,
+		{
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE'
+		}
+	)
+	vehicles: Vehicle[]
 }
