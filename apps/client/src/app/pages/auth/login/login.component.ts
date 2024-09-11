@@ -81,7 +81,7 @@ export class LoginComponent {
 						'passenger'
 					this.setUserCurrentRole()
 					alert('Logged in successfully')
-					this.router.navigate(['/app/profile'])
+					this.router.navigate(['/app'])
 				},
 				error: (err) => {
 					alert('Failed to log in')

@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common'
 import { Component } from '@angular/core'
 import {
 	FormControl,
@@ -15,6 +14,7 @@ import {
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { UserRole } from '~/shared/types/users/user-role.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { NumberInputComponent } from '~/shared/ui/components/number-input/number-input.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
 import { RadioButtonComponent } from '~/shared/ui/components/radio-button/radio-button.component'
 import { TextInputComponent } from '~/shared/ui/components/text-input/text-input.component'
@@ -31,7 +31,7 @@ import { removeNullProperties } from '~/shared/utils/remove-null-properties.util
 		RouterLinkActive,
 		TextInputComponent,
 		ButtonComponent,
-		JsonPipe
+		NumberInputComponent
 	],
 	templateUrl: './edit-profile.component.html',
 	styleUrl: './edit-profile.component.css'

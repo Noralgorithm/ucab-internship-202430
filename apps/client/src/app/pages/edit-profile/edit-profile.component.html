@@ -19,9 +19,6 @@
 			}@else {
 			<div class="profile-pic-container">
 				<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
-				<!-- <button mButton size="small" (click)="editProfilePic()">
-					Subir foto de perfil
-				</button> -->
 				<button size="small" mButton appearance="outlined" class="edit-profile-pic-button"
 					(click)="editProfilePic()">Subir foto de perfil</button>
 			</div>
@@ -37,10 +34,9 @@
 				</div>
 			</div>
 
-			<div class="input-walk-distance-container">
-				<label for="walkDistance">Distancia dispuesto a caminar</label>
-				<input type="number" name="walkDistance" id="walkDistance" formControlName="walkDistance">
-			</div>
+			<number-input inputId="walkDistance" [control]="editProfileFormGroup.controls.walkDistance"
+				label="Distancia dispuesto a caminar (metros)" placeholder="Ingrese la distancia en metros" [min]="20"
+				[max]="150" />
 
 			<text-input inputId="phoneNumber" [control]="editProfileFormGroup.controls.phoneNumber"
 				label="Número de Teléfono" placeholder="Ingrese el número de teléfono" />
