@@ -3,17 +3,19 @@
 		<h1 class="heading-xsmall">Administrar vehículos</h1>
 	</header>
 
+	@for (vehicle of myVehicles; track vehicle.id) {
 	<section>
 		<div class="card-cars-container">
-			<movic-car></movic-car>
+			<movic-car [color]="vehicle.color"></movic-car>
 			<div class="card-info-container">
 				<div class="card-header-container">
-					<h3>Chevrolet | Spark</h3>
-					<h3>A17BN1E</h3>
+					<h3>{{vehicle.brand}} | {{vehicle.model}}</h3>
+					<h3>{{vehicle.plate}}</h3>
 				</div>
 				<div class="card-specs-container">
-					<span class="car-detail"><img src="assets/svgs/CarSeat.svg" /> <strong>4</strong></span>
-					<span class="car-detail"><img src="assets/svgs/PaintPalette.svg" /> <strong>Negro</strong></span>
+					<span class="car-detail"><img src="assets/svgs/CarSeat.svg" />
+						<strong>{{vehicle.seatQuantity}}</strong></span>
+					<span class="car-detail"><img src="assets/svgs/PaintPalette.svg" /> <strong>{{vehicle.color}}</strong></span>
 				</div>
 				<div class="card-buttons-container">
 					<button mButton severity="tertiary">Eliminar</button>
@@ -22,5 +24,7 @@
 			</div>
 		</div>
 	</section>
+	}
+
 
 </page-layout>

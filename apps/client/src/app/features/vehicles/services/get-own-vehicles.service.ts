@@ -21,18 +21,16 @@ export class GetOwnVehiclesService {
 	): SuccesfulResponse<Vehicle[]> {
 		return {
 			status: response.status,
-			data: {
-				...response.data.map((vehicle) => ({
-					id: vehicle.id,
-					plate: vehicle.plate,
-					brand: vehicle.brand,
-					color: vehicle.color,
-					model: vehicle.model,
-					seatQuantity: vehicle.seatQuantity,
-					createdAt: new Date(vehicle.createdAt),
-					updatedAt: new Date(vehicle.updatedAt)
-				}))
-			}
+			data: response.data.map((vehicle) => ({
+				id: vehicle.id,
+				plate: vehicle.plate,
+				brand: vehicle.brand,
+				color: vehicle.color,
+				model: vehicle.model,
+				seatQuantity: vehicle.seatQuantity,
+				createdAt: new Date(vehicle.createdAt),
+				updatedAt: new Date(vehicle.updatedAt)
+			}))
 		}
 	}
 }
