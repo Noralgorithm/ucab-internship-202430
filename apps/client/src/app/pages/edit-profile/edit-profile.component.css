@@ -31,7 +31,7 @@ header h1 {
 	gap: 0.4rem;
 }
 
-.profilePic-container {
+.profile-pic-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

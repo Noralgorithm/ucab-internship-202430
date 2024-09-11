@@ -75,9 +75,7 @@ export class RegisterComponent {
 
 	registerFormGroup = new FormGroup(
 		{
-			profilePic: new FormControl<File | undefined>(undefined, [
-				Validators.required
-			]),
+			profilePic: new FormControl<File | null>(null, [Validators.required]),
 			firstName: new FormControl('', [Validators.required]),
 			lastName: new FormControl('', [Validators.required]),
 			email: new FormControl<string>({ value: '', disabled: true }, [
@@ -114,7 +112,7 @@ export class RegisterComponent {
 
 		const file = (event.target as HTMLInputElement).files?.[0]
 
-		this.registerFormGroup.patchValue({ profilePic: file })
+		this.registerFormGroup.patchValue({ profilePic: file ?? null })
 	}
 
 	useStudentTypeControl() {

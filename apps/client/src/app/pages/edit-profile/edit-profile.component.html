@@ -1,8 +1,7 @@
 <page-layout [hasTabBar]="true">
 
 	<header>
-		<a class="label-small" routerLink="/app/profile" [routerLinkActive]="'is-active'"
-			[routerLinkActiveOptions]="{exact: true}">
+		<a class="label-small" routerLink="/app/profile">
 			<img src="assets/svgs/ArrowLeft.svg" />
 		</a>
 		<h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
@@ -18,7 +17,7 @@
 					class="input-profile-pic" />
 			</div>
 			}@else {
-			<div class="profilePic-container">
+			<div class="profile-pic-container">
 				<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
 				<!-- <button mButton size="small" (click)="editProfilePic()">
 					Subir foto de perfil
