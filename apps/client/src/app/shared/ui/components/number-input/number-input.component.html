@@ -1,0 +1,11 @@
+<div class="container relative">
+	<label [for]="inputId" class="label-medium" [class.disabled-label]="control.disabled">{{ label }}</label>
+	<input type="number" [id]="inputId" [formControl]="control" step="1" [min]="min" [max]="max"
+		[placeholder]="placeholder" [class.disabled]="control.disabled" [class.error]="isInvalid" />
+
+	@if (isInvalid) {
+	<strong class="label-small error-message">{{getErrorMessage()}}</strong>
+	} @else {
+	<strong class="label-small error-message invisible" aria-hidden>A</strong>
+	}
+</div>

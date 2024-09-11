@@ -66,21 +66,20 @@ header h1 {
 	width: 100%;
 }
 
-.input-walkDistance-container {
+.input-walk-distance-container {
 	display: flex;
 	width: 100%;
 	flex-direction: column;
 	gap: 0.4rem;
 }
 
-.add-button {
+.edit-profile-pic-button {
 	height: 2.125rem;
 	align-items: center;
 }
 
 /* TODO: change these styles for the ones in figma */
 /* Input file */
-
 input[type="file"] {
 	position: relative;
 }
