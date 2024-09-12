@@ -3,28 +3,11 @@
 		<h1 class="heading-xsmall">Administrar vehículos</h1>
 	</header>
 
-	@for (vehicle of myVehicles; track vehicle.id) {
 	<section>
-		<div class="card-cars-container">
-			<movic-car [color]="vehicle.color"></movic-car>
-			<div class="card-info-container">
-				<div class="card-header-container">
-					<h3>{{vehicle.brand}} | {{vehicle.model}}</h3>
-					<h3>{{vehicle.plate}}</h3>
-				</div>
-				<div class="card-specs-container">
-					<span class="car-detail"><img src="assets/svgs/CarSeat.svg" />
-						<strong>{{vehicle.seatQuantity}}</strong></span>
-					<span class="car-detail"><img src="assets/svgs/PaintPalette.svg" /> <strong>{{vehicle.color}}</strong></span>
-				</div>
-				<div class="card-buttons-container">
-					<button mButton severity="tertiary">Eliminar</button>
-					<button mButton severity="tertiary">Editar</button>
-				</div>
-			</div>
-		</div>
+		@for (vehicle of myVehicles; track vehicle.id) {
+		<card-vehicle [vehicle]="vehicle" (updateVehicles)="getOwnVehicles()" />
+		}
 	</section>
-	}
 
 
 </page-layout>

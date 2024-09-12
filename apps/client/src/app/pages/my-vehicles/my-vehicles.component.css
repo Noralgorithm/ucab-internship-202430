@@ -4,60 +4,8 @@ h1 {
 	margin-top: 3.625rem;
 }
 
-.card-cars-container {
-	width: 22.0625rem;
+section {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	padding: .875rem;
-	border-radius: 16px;
-	background-color: #efefef;
-}
-
-.card-info-container {
-	display: flex;
-	flex-direction: column;
-	gap: .7rem;
-}
-
-.card-header-container {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.card-header-container h3 {
-	color: var(--primary-text-value);
-}
-
-.card-specs-container {
-	display: flex;
-	align-items: center;
-	gap: 1.5rem;
-}
-
-.card-specs-container p {
-	color: var(--primary-text-value);
-}
-
-.card-buttons-container {
-	display: flex;
-	justify-content: end;
-	align-items: center;
-	gap: .5rem;
-}
-
-movic-car {
-	width: 100%;
-}
-
-.car-detail {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.25rem;
-}
-
-.car-detail strong {
-	color: var(--primary-text-value);
+	gap: .9375rem;
 }

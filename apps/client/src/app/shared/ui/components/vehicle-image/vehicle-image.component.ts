@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core'
 import tinyColor from 'tinycolor2'
 
 @Component({
-	selector: 'movic-car',
+	selector: 'movic-vehicle',
 	standalone: true,
 	imports: [],
-	templateUrl: './car.component.html',
+	templateUrl: './vehicle-image.component.html',
 	styles: `
 		:host {
 			display: flex;
@@ -15,8 +15,8 @@ import tinyColor from 'tinycolor2'
 		}
 	`
 })
-export class CarComponent {
-	@Input() color = '#262626'
+export class VehicleImageComponent {
+	@Input({ required: true }) color!: string
 
 	colorHex = ''
 	lightColorHex = ''
@@ -24,7 +24,7 @@ export class CarComponent {
 
 	ngOnInit() {
 		const colorObject = tinyColor(this.color)
-
+		console.log(colorObject)
 		this.colorHex = colorObject.toHexString()
 		this.lightColorHex = colorObject.lighten(10).toHexString()
 		this.lighterColorHex = colorObject.lighten(20).toHexString()
