@@ -13,7 +13,7 @@
 				placeholder="Ingrese la cantidad de asientos disponibles"
 				[control]="editVehicleFormGroup.controls.seatQuantity" [min]="1" [max]="4" />
 
-			<dropdown />
+			<dropdown inputId="colors" [control]="editVehicleFormGroup.controls.color" />
 
 			<text-input inputId="plate" label="Placa" placeholder="Ingrese la placa"
 				[control]="editVehicleFormGroup.controls.plate" />
