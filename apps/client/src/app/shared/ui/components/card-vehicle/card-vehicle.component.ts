@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { RouterLink } from '@angular/router'
 import { DeleteOwnVehicleService } from '~/features/vehicles/services/delete-own-vehicle.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '../button/button.component'
@@ -7,7 +8,7 @@ import { VehicleImageComponent } from '../vehicle-image/vehicle-image.component'
 @Component({
 	selector: 'card-vehicle',
 	standalone: true,
-	imports: [VehicleImageComponent, ButtonComponent],
+	imports: [VehicleImageComponent, ButtonComponent, RouterLink],
 	templateUrl: './card-vehicle.component.html',
 	styleUrl: './card-vehicle.component.css'
 })

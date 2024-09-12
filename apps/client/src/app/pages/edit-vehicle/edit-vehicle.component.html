@@ -1,0 +1,31 @@
+<page-layout [hasTabBar]="true">
+	<header>
+		<a class="label-small" routerLink="/app/my-vehicles">
+			<img src="assets/svgs/ArrowLeft.svg" />
+		</a>
+		<h1 class="heading-xsmall">Editar Vehículo</h1>
+	</header>
+
+	<section>
+		<form class="form-container" [formGroup]="editVehicleFormGroup">
+
+			<number-input inputId="seatQuantity" label="Asientos Disponibles"
+				placeholder="Ingrese la cantidad de asientos disponibles"
+				[control]="editVehicleFormGroup.controls.seatQuantity" [min]="1" [max]="4" />
+
+			<dropdown />
+
+			<text-input inputId="plate" label="Placa" placeholder="Ingrese la placa"
+				[control]="editVehicleFormGroup.controls.plate" />
+			<text-input inputId="brand" label="Marca" placeholder="Ingrese la marca"
+				[control]="editVehicleFormGroup.controls.brand" />
+			<text-input inputId="model" label="Modelo" placeholder="Ingrese el modelo"
+				[control]="editVehicleFormGroup.controls.model" />
+
+			<button mButton severity="secondary" size="large" [disabled]="editVehicleFormGroup.invalid">Editar
+				Vehículo</button>
+
+		</form>
+
+	</section>
+</page-layout>

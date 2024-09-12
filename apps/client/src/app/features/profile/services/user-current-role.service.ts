@@ -6,6 +6,13 @@ import { UserRole } from '~/shared/types/users/user-role.type'
 	providedIn: 'root'
 })
 export class UserCurrentRoleService {
+	// constructor() {
+	// 	const userPreferredRole: UserRole = (localStorage.getItem(
+	// 		PREFERRED_ROLE_KEY
+	// 	) ?? 'passenger') as UserRole
+
+	// 	this.setCurrentRole(userPreferredRole)
+	// }
 	public currentRole$ = new BehaviorSubject<UserRole>('passenger')
 
 	setCurrentRole(role: UserRole) {

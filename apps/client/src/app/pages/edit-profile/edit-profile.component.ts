@@ -62,7 +62,8 @@ export class EditProfileComponent {
 		profilePic: new FormControl<File | null>(null),
 		walkDistance: new FormControl(0, [
 			Validators.required,
-			Validators.max(150)
+			Validators.max(150),
+			Validators.min(20)
 		]),
 		phoneNumber: new FormControl('', [Validators.required]),
 		emergencyContactPhoneNumber: new FormControl('', [Validators.required]),

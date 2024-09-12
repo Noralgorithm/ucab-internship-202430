@@ -5,6 +5,7 @@ import { LoginComponent } from '~/pages/auth/login/login.component'
 import { RegisterComponent } from '~/pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '~/pages/auth/successful-email-verification/successful-email-verification.component'
 import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.component'
+import { EditVehicleComponent } from '~/pages/edit-vehicle/edit-vehicle.component'
 import { HomeComponent } from '~/pages/home/home.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
@@ -71,6 +72,11 @@ export const routes: Routes = [
 				path: 'my-vehicles',
 				title: 'Mis vehículos',
 				component: MyVehiclesComponent
+			},
+			{
+				path: 'my-vehicle/edit',
+				title: 'Editar vehículo',
+				component: EditVehicleComponent
 			}
 		]
 	}

@@ -1,0 +1,14 @@
+select {
+	height: 3.063rem;
+	width: 21.125rem;
+	background-color: var(--contrast-surface-subtle);
+	color: var(--primary-text-value);
+	border: 0.125rem solid var(--contrast-border-subtle);
+	border-radius: 0.625rem;
+	outline: none;
+	padding: 0 0.8rem;
+}
+
+label {
+	color: var(--primary-text-label);
+}

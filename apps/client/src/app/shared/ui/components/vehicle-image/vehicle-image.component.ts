@@ -24,7 +24,6 @@ export class VehicleImageComponent {
 
 	ngOnInit() {
 		const colorObject = tinyColor(this.color)
-		console.log(colorObject)
 		this.colorHex = colorObject.toHexString()
 		this.lightColorHex = colorObject.lighten(10).toHexString()
 		this.lighterColorHex = colorObject.lighten(20).toHexString()
