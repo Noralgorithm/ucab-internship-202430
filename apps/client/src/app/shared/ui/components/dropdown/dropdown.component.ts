@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
+import { Option } from '~/shared/types/vehicles/option.type'
 
 @Component({
 	selector: 'dropdown',
@@ -13,9 +14,4 @@ export class DropdownComponent {
 	@Input({ required: true }) inputId!: string
 	@Input() label = ''
 	@Input() control: FormControl = new FormControl()
-}
-
-interface Option {
-	value: string
-	label: string
 }
