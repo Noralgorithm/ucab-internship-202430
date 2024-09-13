@@ -46,9 +46,7 @@ export class VehiclesService {
 	}
 
 	async findByVehicle(vehicleId: Vehicle['id']) {
-		return await this.vehiclesRepository.find({
-			where: { id: vehicleId }
-		})
+		return await this.vehiclesRepository.findOneBy({ id: vehicleId })
 	}
 
 	async findByDriver(driverId: User['id']) {
