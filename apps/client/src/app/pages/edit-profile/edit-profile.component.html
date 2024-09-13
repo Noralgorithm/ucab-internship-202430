@@ -35,7 +35,7 @@
 			</div>
 
 			<number-input inputId="walkDistance" [control]="editProfileFormGroup.controls.walkDistance"
-				label="Distancia dispuesto a caminar (metros)" placeholder="Ingrese la distancia en metros" />
+				label="Distancia dispuesto a caminar (metros)" placeholder="Ingrese la distancia en metros" [max]="150" [min]="20"/>
 
 			<text-input inputId="phoneNumber" [control]="editProfileFormGroup.controls.phoneNumber"
 				label="Número de Teléfono" placeholder="Ingrese el número de teléfono" />
