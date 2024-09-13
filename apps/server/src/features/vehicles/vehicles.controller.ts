@@ -56,6 +56,12 @@ export class VehiclesController {
 		return await this.vehiclesService.findByDriver(userId)
 	}
 
+	@HttpCode(200)
+	@Get(':id')
+	async findOne(@Param() { id }: UpdateVehicleParamsDto) {
+		return await this.vehiclesService.findByVehicle(id)
+	}
+
 	@HttpCode(201)
 	@Post()
 	async create(

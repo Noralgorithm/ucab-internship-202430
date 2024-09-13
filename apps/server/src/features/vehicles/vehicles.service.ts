@@ -45,6 +45,12 @@ export class VehiclesService {
 		return this.vehiclesRepository.save({ ...createVehicleDto, driver })
 	}
 
+	async findByVehicle(vehicleId: Vehicle['id']) {
+		return await this.vehiclesRepository.find({
+			where: { id: vehicleId }
+		})
+	}
+
 	async findByDriver(driverId: User['id']) {
 		try {
 			await this.usersService.findOne(driverId)
