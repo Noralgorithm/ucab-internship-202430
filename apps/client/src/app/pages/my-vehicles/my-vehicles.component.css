@@ -1,11 +1,19 @@
 h1 {
 	color: var(--primary-text-value);
 	text-align: left;
-	margin-top: 3.625rem;
 }
 
 section {
 	display: flex;
 	flex-direction: column;
 	gap: .9375rem;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 3.625rem;
+	padding-bottom: 1.875rem;
+	width: 100%;
 }

@@ -1,0 +1,33 @@
+<page-layout [hasTabBar]="true">
+	<header>
+		<a class="label-small" routerLink="/app/my-vehicles">
+			<img src="assets/svgs/ArrowLeft.svg" />
+		</a>
+		<h1 class="heading-xsmall">Agregar Vehículo</h1>
+	</header>
+
+	<section>
+		<form class="form-container" [formGroup]="addVehicleFormGroup">
+
+			<number-input inputId="seatQuantity" label="Asientos Disponibles"
+				placeholder="Ingrese la cantidad de asientos disponibles"
+				[control]="addVehicleFormGroup.controls.seatQuantity" [min]="1" [max]="4" />
+
+			<dropdown inputId="colors" [control]="addVehicleFormGroup.controls.color" [options]="colors"
+				label="Color" />
+
+			<text-input inputId="plate" label="Placa" placeholder="Ingrese la placa"
+				[control]="addVehicleFormGroup.controls.plate" />
+			<text-input inputId="brand" label="Marca" placeholder="Ingrese la marca"
+				[control]="addVehicleFormGroup.controls.brand" />
+			<text-input inputId="model" label="Modelo" placeholder="Ingrese el modelo"
+				[control]="addVehicleFormGroup.controls.model" />
+
+			<button mButton severity="secondary" size="large" [disabled]="addVehicleFormGroup.invalid"
+				(click)="handleSubmit()">Agregar
+				Vehículo</button>
+
+		</form>
+
+	</section>
+</page-layout>

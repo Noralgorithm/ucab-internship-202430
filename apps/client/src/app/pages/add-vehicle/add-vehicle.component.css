@@ -1,0 +1,26 @@
+header {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 4.3rem;
+	width: 100%;
+	margin-top: 3.625rem;
+}
+
+a img {
+	width: var(--icon-x);
+}
+
+h1 {
+	color: var(--primary-text-value);
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1.125rem;
+	width: 21.125rem;
+	margin-top: 1.25rem;
+}

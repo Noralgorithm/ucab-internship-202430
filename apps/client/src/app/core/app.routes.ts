@@ -1,4 +1,5 @@
 import type { Routes } from '@angular/router'
+import { AddVehicleComponent } from '~/pages/add-vehicle/add-vehicle.component'
 import { AuthComponent } from '~/pages/auth/auth.component'
 import { EmailVerificationComponent } from '~/pages/auth/email-verification/email-verification.component'
 import { LoginComponent } from '~/pages/auth/login/login.component'
@@ -77,6 +78,11 @@ export const routes: Routes = [
 				path: 'my-vehicle/edit',
 				title: 'Editar vehículo',
 				component: EditVehicleComponent
+			},
+			{
+				path: 'my-vehicle/add',
+				title: 'Agregar vehículo',
+				component: AddVehicleComponent
 			}
 		]
 	}

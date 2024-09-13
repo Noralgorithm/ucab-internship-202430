@@ -1,6 +1,9 @@
-<page-layout>
+<page-layout [hasTabBar]="true">
 	<header>
 		<h1 class="heading-xsmall">Administrar vehículos</h1>
+		@if(ownVehiclesQuantity !== 3) {
+		<button mButton severity="contrast" size="small" routerLink="/app/my-vehicle/add">Agregar</button>
+		}
 	</header>
 
 	<section>

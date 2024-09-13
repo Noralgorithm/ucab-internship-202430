@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { RouterLink } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { DeleteOwnVehicleService } from '~/features/vehicles/services/delete-own-vehicle.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '../button/button.component'
@@ -14,7 +14,8 @@ import { VehicleImageComponent } from '../vehicle-image/vehicle-image.component'
 })
 export class CardVehicleComponent {
 	constructor(
-		private readonly deleteOwnVehicleService: DeleteOwnVehicleService
+		private readonly deleteOwnVehicleService: DeleteOwnVehicleService,
+		private readonly router: Router
 	) {}
 	@Input() vehicle: Vehicle | null = null
 	@Output() updateVehicles = new EventEmitter()
@@ -25,6 +26,12 @@ export class CardVehicleComponent {
 				alert('Vehiculo eliminado')
 				this.updateVehicles.emit()
 			}
+		})
+	}
+
+	navigateToEditPage(id: string) {
+		this.router.navigate(['/app/my-vehicle/edit'], {
+			queryParams: { id: id }
 		})
 	}
 }

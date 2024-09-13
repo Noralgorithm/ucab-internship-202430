@@ -5,14 +5,12 @@ import {
 	ReactiveFormsModule,
 	Validators
 } from '@angular/forms'
-import { ActivatedRoute, Router, RouterLink } from '@angular/router'
-import { GetVehicleByIdService } from '~/features/vehicles/services/get-vehicle-by-id.service'
+import { Router, RouterLink } from '@angular/router'
 import {
-	UpdateOwnVehicleService,
-	UpdateOwnVehicleServiceDto
-} from '~/features/vehicles/services/update-own-vehicle.service'
+	CreateOwnVehicleService,
+	CreateOwnVehicleServiceDto
+} from '~/features/vehicles/services/create-own-vehicle.service'
 import { Option } from '~/shared/types/vehicles/option.type'
-import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DropdownComponent } from '~/shared/ui/components/dropdown/dropdown.component'
 import { NumberInputComponent } from '~/shared/ui/components/number-input/number-input.component'
@@ -21,7 +19,7 @@ import { TextInputComponent } from '~/shared/ui/components/text-input/text-input
 import { removeNullProperties } from '~/shared/utils/remove-null-properties.util'
 
 @Component({
-	selector: 'app-edit-vehicle',
+	selector: 'app-add-vehicle',
 	standalone: true,
 	imports: [
 		PageLayoutComponent,
@@ -32,21 +30,14 @@ import { removeNullProperties } from '~/shared/utils/remove-null-properties.util
 		DropdownComponent,
 		ButtonComponent
 	],
-	templateUrl: './edit-vehicle.component.html',
-	styleUrl: './edit-vehicle.component.css'
+	templateUrl: './add-vehicle.component.html',
+	styleUrl: './add-vehicle.component.css'
 })
-export class EditVehicleComponent {
+export class AddVehicleComponent {
 	constructor(
-		private readonly getVehicleByIdService: GetVehicleByIdService,
-		private readonly updateOwnVehicleService: UpdateOwnVehicleService,
-		private readonly route: ActivatedRoute,
+		private readonly createOwnVehicleService: CreateOwnVehicleService,
 		private readonly router: Router
 	) {}
-
-	vehicle: Vehicle | null = null
-
-	vehicleId = ''
-
 	colors: Option[] = [
 		{ value: '', label: 'Seleccione un color de vehículo' },
 		{ value: 'black', label: 'Negro' },
@@ -62,7 +53,7 @@ export class EditVehicleComponent {
 		{ value: 'orange', label: 'Naranja' }
 	]
 
-	editVehicleFormGroup = new FormGroup({
+	addVehicleFormGroup = new FormGroup({
 		plate: new FormControl('', [
 			Validators.required,
 			Validators.maxLength(7),
@@ -77,41 +68,19 @@ export class EditVehicleComponent {
 		])
 	})
 
-	ngOnInit() {
-		this.route.queryParams.subscribe((params) => {
-			this.vehicleId = params['id']
+	handleSubmit() {
+		if (this.addVehicleFormGroup.invalid)
+			throw new Error('Invalid editProfileFormGroup value')
 
-			if (this.vehicleId) {
-				this.getVehicleByIdService.execute(this.vehicleId).subscribe((res) => {
-					this.vehicle = res.data
-					this.editVehicleFormGroup.patchValue({
-						plate: this.vehicle.plate,
-						brand: this.vehicle.brand,
-						color: this.vehicle.color,
-						model: this.vehicle.model,
-						seatQuantity: this.vehicle.seatQuantity
-					})
-				})
+		const createOwnVehicleDto =
+			removeNullProperties<CreateOwnVehicleServiceDto>(
+				this.addVehicleFormGroup.value
+			)
+
+		this.createOwnVehicleService.execute(createOwnVehicleDto).subscribe({
+			next: (res) => {
+				this.router.navigate(['/app/my-vehicles'])
 			}
 		})
-	}
-
-	handleSubmit() {
-		if (this.editVehicleFormGroup.invalid)
-			throw new Error('Invalid editVehicleFormGroup value')
-
-		const updateOwnVehicleDto =
-			removeNullProperties<UpdateOwnVehicleServiceDto>({
-				...this.editVehicleFormGroup.value,
-				id: this.vehicle?.id
-			})
-
-		this.updateOwnVehicleService
-			.execute(this.vehicleId, updateOwnVehicleDto)
-			.subscribe({
-				next: (res) => {
-					this.router.navigate(['/app/my-vehicles'])
-				}
-			})
 	}
 }
