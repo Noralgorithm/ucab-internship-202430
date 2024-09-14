@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Router, RouterLink } from '@angular/router'
 import { DeleteOwnVehicleService } from '~/features/vehicles/api/delete-own-vehicle.service'
+import { VehicleImageComponent } from '~/features/vehicles/components/vehicle-image/vehicle-image.component'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
-import { VehicleImageComponent } from '~/shared/ui/components/vehicle-image/vehicle-image.component'
 import { VehiclesColorsService } from '../../vehicles-colors.service'
 
 @Component({

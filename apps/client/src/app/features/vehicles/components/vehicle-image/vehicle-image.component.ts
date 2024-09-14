@@ -23,7 +23,7 @@ export class VehicleImageComponent {
 	lighterColorHex = ''
 
 	ngOnInit() {
-		const colorObject = tinyColor(this.color)
+		const colorObject = new tinyColor(this.color)
 		this.colorHex = colorObject.toHexString()
 		this.lightColorHex = colorObject.lighten(10).toHexString()
 		this.lighterColorHex = colorObject.lighten(20).toHexString()
