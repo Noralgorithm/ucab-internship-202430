@@ -1,4 +1,4 @@
-export type color =
+export type Color =
 	| 'black'
 	| 'white'
 	| 'blue'

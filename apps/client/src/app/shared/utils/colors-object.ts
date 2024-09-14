@@ -3,35 +3,35 @@ import { Color } from '../types/vehicles/color.type'
 
 export const colors: Record<Color, ColorInfo> = {
 	black: {
-		value: '#000000',
+		value: '#121111',
 		label: 'Negro'
 	},
 	white: {
-		value: '#ffffff',
+		value: '#eceaea',
 		label: 'Blanco'
 	},
 	blue: {
-		value: '#0000ff',
-		label: 'Azúl'
+		value: '#3c3cd7',
+		label: 'Azul'
 	},
 	gray: {
 		value: '#808080',
 		label: 'Gris'
 	},
 	silver: {
-		value: '#bebebe',
+		value: '#c8c4c4',
 		label: 'Plateado'
 	},
 	red: {
-		value: '#ff0000',
+		value: '#da2a2a',
 		label: 'Rojo'
 	},
 	green: {
-		value: '#008000',
+		value: '#278B27',
 		label: 'Verde'
 	},
 	yellow: {
-		value: 'ffff00',
+		value: '#dede18',
 		label: 'Amarillo'
 	},
 	purple: {
@@ -39,7 +39,7 @@ export const colors: Record<Color, ColorInfo> = {
 		label: 'Morado'
 	},
 	pink: {
-		value: '#ffc1bc',
+		value: '#ff84f3',
 		label: 'Rosado'
 	},
 	orange: {
