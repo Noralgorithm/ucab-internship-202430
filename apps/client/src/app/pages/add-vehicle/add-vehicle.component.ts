@@ -10,6 +10,7 @@ import {
 	CreateOwnVehicleService,
 	CreateOwnVehicleServiceDto
 } from '~/features/vehicles/api/create-own-vehicle.service'
+import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
 import { SelectOption } from '~/shared/types/select-option.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DropdownComponent } from '~/shared/ui/components/dropdown/dropdown.component'
@@ -36,22 +37,20 @@ import { removeNullProperties } from '~/shared/utils/remove-null-properties.util
 export class AddVehicleComponent {
 	constructor(
 		private readonly createOwnVehicleService: CreateOwnVehicleService,
+		private readonly vehiclesColorsService: VehiclesColorsService,
 		private readonly router: Router
 	) {}
+
 	colors: SelectOption[] = [
-		{ value: '', label: 'Seleccione un color de vehículo' },
-		{ value: 'black', label: 'Negro' },
-		{ value: 'white', label: 'Blanco' },
-		{ value: 'blue', label: 'Azul' },
-		{ value: 'gray', label: 'Gris' },
-		{ value: 'silver', label: 'Plateado' },
-		{ value: 'red', label: 'Rojo' },
-		{ value: 'green', label: 'Verde' },
-		{ value: 'yellow', label: 'Amarillo' },
-		{ value: 'purple', label: 'Morado' },
-		{ value: 'pink', label: 'Rosado' },
-		{ value: 'orange', label: 'Naranja' }
+		{ value: '', label: 'Seleccione un color de vehículo' }
 	]
+
+	ngOnInit() {
+		this.colors = [
+			...this.colors,
+			...this.vehiclesColorsService.getColorsOptions()
+		]
+	}
 
 	addVehicleFormGroup = new FormGroup({
 		plate: new FormControl('', [
