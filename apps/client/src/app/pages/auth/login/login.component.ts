@@ -7,7 +7,7 @@ import {
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SignInService } from '~/features/auth/api/sign-in.service'
-import { UserCurrentRoleService } from '~/features/profile/api/user-current-role.service'
+import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { PREFERRED_ROLE_KEY } from '~/shared/constants'
 import { UserRole } from '~/shared/types/users/user-role.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'

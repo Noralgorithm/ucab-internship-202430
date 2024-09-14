@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
-import { UserCurrentRoleService } from '~/features/profile/api/user-current-role.service'
+import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'

@@ -1,4 +1,4 @@
-export interface Option {
+export interface SelectOption {
 	value: string
 	label: string
 }

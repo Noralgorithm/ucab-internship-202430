@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { UserCurrentRoleService } from '~/features/profile/api/user-current-role.service'
+import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 
 @Component({
