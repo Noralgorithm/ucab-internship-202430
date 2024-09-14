@@ -27,8 +27,10 @@ export class VehiclesColorsService {
 		return VEHICLES_COLORS[colorKey]
 	}
 
-	getLabel(color: Color) {
-		return VEHICLES_COLORS_LABELS[color]
+	getLabel(color: string): string | undefined {
+		const label = VEHICLES_COLORS_LABELS[color as Color]
+
+		return label ?? undefined
 	}
 
 	getColorsOptions(): SelectOption[] {

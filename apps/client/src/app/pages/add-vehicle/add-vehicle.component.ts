@@ -10,7 +10,7 @@ import {
 	CreateOwnVehicleService,
 	CreateOwnVehicleServiceDto
 } from '~/features/vehicles/api/create-own-vehicle.service'
-import { Option } from '~/shared/types/vehicles/option.type'
+import { SelectOption } from '~/shared/types/select-option.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DropdownComponent } from '~/shared/ui/components/dropdown/dropdown.component'
 import { NumberInputComponent } from '~/shared/ui/components/number-input/number-input.component'
@@ -38,7 +38,7 @@ export class AddVehicleComponent {
 		private readonly createOwnVehicleService: CreateOwnVehicleService,
 		private readonly router: Router
 	) {}
-	colors: Option[] = [
+	colors: SelectOption[] = [
 		{ value: '', label: 'Seleccione un color de vehículo' },
 		{ value: 'black', label: 'Negro' },
 		{ value: 'white', label: 'Blanco' },

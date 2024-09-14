@@ -1,9 +1,9 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { GetOwnVehiclesService } from '~/features/vehicles/api/get-own-vehicles.service'
+import { CardVehicleComponent } from '~/features/vehicles/components/card-vehicle/card-vehicle.component'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
-import { CardVehicleComponent } from '~/shared/ui/components/card-vehicle/card-vehicle.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
 import { VehicleImageComponent } from '~/shared/ui/components/vehicle-image/vehicle-image.component'
 
