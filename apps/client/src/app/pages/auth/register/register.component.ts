@@ -6,11 +6,11 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { RetrieveSignUpRequestService } from '~/features/auth/services/retrieve-sign-up-request.service'
+import { RetrieveSignUpRequestService } from '~/features/auth/api/retrieve-sign-up-request.service'
 import {
 	SignUpService,
 	SignUpServiceDto
-} from '~/features/auth/services/sign-up.service'
+} from '~/features/auth/api/sign-up.service'
 import { UserType } from '~/shared/types/users/user-type.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { LogoComponent } from '~/shared/ui/components/logo/logo.component'

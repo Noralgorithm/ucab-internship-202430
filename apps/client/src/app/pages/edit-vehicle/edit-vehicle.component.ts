@@ -6,11 +6,11 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
-import { GetVehicleByIdService } from '~/features/vehicles/services/get-vehicle-by-id.service'
+import { GetVehicleByIdService } from '~/features/vehicles/api/get-vehicle-by-id.service'
 import {
 	UpdateOwnVehicleService,
 	UpdateOwnVehicleServiceDto
-} from '~/features/vehicles/services/update-own-vehicle.service'
+} from '~/features/vehicles/api/update-own-vehicle.service'
 import { Option } from '~/shared/types/vehicles/option.type'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'

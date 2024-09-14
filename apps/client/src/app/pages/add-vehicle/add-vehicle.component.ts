@@ -9,7 +9,7 @@ import { Router, RouterLink } from '@angular/router'
 import {
 	CreateOwnVehicleService,
 	CreateOwnVehicleServiceDto
-} from '~/features/vehicles/services/create-own-vehicle.service'
+} from '~/features/vehicles/api/create-own-vehicle.service'
 import { Option } from '~/shared/types/vehicles/option.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DropdownComponent } from '~/shared/ui/components/dropdown/dropdown.component'

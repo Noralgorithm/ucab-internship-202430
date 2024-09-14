@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { RequestSignUpService } from '~/features/auth/services/request-sign-up.service'
+import { RequestSignUpService } from '~/features/auth/api/request-sign-up.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'

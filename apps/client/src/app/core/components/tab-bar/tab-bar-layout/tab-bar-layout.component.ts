@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations'
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { UserCurrentRoleService } from '~/features/profile/services/user-current-role.service'
+import { UserCurrentRoleService } from '~/features/profile/api/user-current-role.service'
 import { DriverTabBarComponent } from '../driver-tab-bar/tab-bar.component'
 import { PassengerTabBarComponent } from '../passenger-tab-bar/tab-bar.component'
 

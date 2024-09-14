@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { GetOwnVehiclesService } from '~/features/vehicles/services/get-own-vehicles.service'
+import { GetOwnVehiclesService } from '~/features/vehicles/api/get-own-vehicles.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { CardVehicleComponent } from '~/shared/ui/components/card-vehicle/card-vehicle.component'

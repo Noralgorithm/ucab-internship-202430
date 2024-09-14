@@ -6,11 +6,11 @@ import {
 	Validators
 } from '@angular/forms'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
-import { GetOwnProfileService } from '~/features/profile/services/get-own-profile.service'
+import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import {
 	UpdateOwnProfileService,
 	UpdateOwnProfileServiceDto
-} from '~/features/profile/services/update-own-profile.service'
+} from '~/features/profile/api/update-own-profile.service'
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { UserRole } from '~/shared/types/users/user-role.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'

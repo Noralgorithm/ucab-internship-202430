@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Router, RouterLink } from '@angular/router'
-import { DeleteOwnVehicleService } from '~/features/vehicles/services/delete-own-vehicle.service'
+import { DeleteOwnVehicleService } from '~/features/vehicles/api/delete-own-vehicle.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '../button/button.component'
 import { VehicleImageComponent } from '../vehicle-image/vehicle-image.component'

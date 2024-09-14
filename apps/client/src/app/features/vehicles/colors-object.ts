@@ -1,5 +1,5 @@
-import { ColorInfo } from '../types/vehicles/color-info.type'
-import { Color } from '../types/vehicles/color.type'
+import { ColorInfo } from '~/shared/types/vehicles/color-info.type'
+import { Color } from '~/shared/types/vehicles/color.type'
 
 export const colors: Record<Color, ColorInfo> = {
 	black: {
