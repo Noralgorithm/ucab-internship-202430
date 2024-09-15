@@ -28,8 +28,14 @@ export const ENCRYPTED_PASSWORD_LENGTH = 60
 export const TEMPLATES_PATH = 'src/shared/templates'
 export const WALK_DISTANCE_MAX_VALUE = 150
 export const WALK_DISTANCE_MIN_VALUE = 20
-export const PLATE_LENGTH = 7
+export const MIN_PLATE_LENGTH = 6
+export const MAX_PLATE_LENGTH = 7
 export const BRAND_MAX_LENGTH = 100
 export const COLOR_MAX_LENGTH = 100
 export const MODEL_MAX_LENGTH = 100
 export const VEHICLES_MAX_AMOUNT = 3
+
+export const MIN_LATITUDE = -90
+export const MAX_LATITUDE = 90
+export const MIN_LONGITUDE = -180
+export const MAX_LONGITUDE = 180
