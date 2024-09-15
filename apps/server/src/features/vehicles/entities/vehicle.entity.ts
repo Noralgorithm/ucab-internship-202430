@@ -7,9 +7,11 @@ import {
 	Generated,
 	Index,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { Travel } from '~/features/travels/entities/travel.entity'
 import { User } from '~/features/users/entities/user.entity'
 import {
 	BRAND_MAX_LENGTH,
@@ -72,4 +74,10 @@ export class Vehicle {
 		}
 	)
 	driver: User
+
+	@OneToMany(
+		() => Travel,
+		(travel) => travel.vehicle
+	)
+	travels: Travel[]
 }
