@@ -59,7 +59,8 @@
 			"dist",
 			"pnpm-lock.yaml",
 			".husky",
-			"metadata.ts"
+			"metadata.ts",
+			"open-location-code.util.js"
 		],
 		"ignoreUnknown": true
 	}

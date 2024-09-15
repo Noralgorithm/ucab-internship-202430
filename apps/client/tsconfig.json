@@ -22,7 +22,8 @@
 			"~/*": ["./app/*"],
 			"~assets/*": ["./assets/*"],
 			"~env/*": ["./environments/*"]
-		}
+		},
+		"allowJs": true
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,
