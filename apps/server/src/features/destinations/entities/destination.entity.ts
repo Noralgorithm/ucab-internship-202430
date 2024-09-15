@@ -24,8 +24,11 @@ export class Destination {
 	@Column()
 	name: string
 
-	@Column()
-	endpoint: string
+	@Column({ type: 'decimal' })
+	latitude: number
+
+	@Column({ type: 'decimal' })
+	longitude: number
 
 	@CreateDateColumn({
 		type: 'timestamptz',
