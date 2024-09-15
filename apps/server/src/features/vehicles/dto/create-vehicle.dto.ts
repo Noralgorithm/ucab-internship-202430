@@ -9,12 +9,13 @@ import {
 import {
 	BRAND_MAX_LENGTH,
 	COLOR_MAX_LENGTH,
-	MODEL_MAX_LENGTH,
-	PLATE_LENGTH
+	MAX_PLATE_LENGTH,
+	MIN_PLATE_LENGTH,
+	MODEL_MAX_LENGTH
 } from '~/shared/constants'
 
 export class CreateVehicleDto {
-	@Length(PLATE_LENGTH, PLATE_LENGTH)
+	@Length(MIN_PLATE_LENGTH, MAX_PLATE_LENGTH)
 	@IsString()
 	plate: string
 
