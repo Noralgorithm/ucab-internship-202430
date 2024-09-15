@@ -10,12 +10,12 @@
 				<span class="car-detail"><img src="assets/svgs/CarSeat.svg" />
 					<strong>{{vehicle.seatQuantity}}</strong></span>
 				<span class="car-detail"><img src="assets/svgs/PaintPalette.svg" />
-					<!--TODO: CHANGE THIS TO getLabelByHex WHEN THE STORED DATA IS HEX CODE-->
-					<strong>{{vehiclesColorsService.getLabel(vehicle.color)}}</strong></span>
+					<strong>{{vehiclesColorsService.getLabelByHex(vehicle.color)}}</strong></span>
 			</div>
 			<div class="card-buttons-container">
 				<button mButton severity="tertiary" size="small" (click)="handleDelete(vehicle.id)">Eliminar</button>
-				<button mButton severity="contrast" size="small" (click)="navigateToEditPage(vehicle.id)">Editar</button>
+				<button mButton severity="contrast" size="small"
+					(click)="navigateToEditPage(vehicle.id)">Editar</button>
 			</div>
 		</div>
 	</div>
