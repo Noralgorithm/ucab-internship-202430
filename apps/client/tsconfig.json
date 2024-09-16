@@ -21,7 +21,9 @@
 		"paths": {
 			"~/*": ["./app/*"],
 			"~assets/*": ["./assets/*"],
-			"~env/*": ["./environments/*"]
+			"~env/*": ["./environments/*"],
+			"~src/*": ["./*"],
+			"~root/*": ["../*"]
 		},
 		"allowJs": true
 	},
