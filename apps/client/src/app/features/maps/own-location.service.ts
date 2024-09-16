@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 })
 export class OwnLocationService {
 	$location = new Observable<GeolocationPosition>((subscriber) => {
-		if (navigator.geolocation) {
+		if (navigator?.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
 					subscriber.next(position)
