@@ -6,6 +6,10 @@ import { Observable } from 'rxjs'
 })
 export class OwnLocationService {
 	$location = new Observable<GeolocationPosition>((subscriber) => {
+		if (typeof navigator === 'undefined') {
+			subscriber.error('Geolocation runs only in client.')
+		}
+
 		if (navigator?.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
