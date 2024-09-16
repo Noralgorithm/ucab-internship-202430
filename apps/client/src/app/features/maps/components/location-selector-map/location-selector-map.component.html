@@ -1,3 +1,6 @@
-<iframe width="100%" height="100%" frameborder="0" style="border:0;" referrerpolicy="no-referrer-when-downgrade"
+<!-- <iframe width="100%" height="100%" frameborder="0" style="border:0;" referrerpolicy="no-referrer-when-downgrade"
 	[src]="mapSrc" allowfullscreen>
-</iframe>
+</iframe> -->
+<google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)">
+	<map-marker [position]="markerPosition" [options]="markerOptions" />
+</google-map>
