@@ -1,0 +1,56 @@
+.container {
+	width: 20.375rem;
+	background-color: var(--contrast-surface-subtle);
+	padding: 1rem 1.1875rem;
+	border-radius: var(--radius-sm);
+	z-index: 101;
+	position: absolute;
+	display: block;
+	transition: all 5s ease-in-out;
+}
+
+.open {
+	display: block;
+}
+
+.close {
+	display: none;
+	transition: all 200ms;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.header h1 {
+	color: var(--primary-text-value);
+}
+
+.content p {
+	color: var(--primary-text-label);
+}
+
+.container-button {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.625rem;
+	padding-top: 1rem;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.7);
+	transition: opacity 500ms;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}
