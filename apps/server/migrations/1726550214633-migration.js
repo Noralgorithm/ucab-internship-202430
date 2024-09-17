@@ -1,7 +1,7 @@
 const { MigrationInterface, QueryRunner } = require('typeorm')
 
-module.exports = class Migration1726365066949 {
-	name = 'Migration1726365066949'
+module.exports = class Migration1726550214633 {
+	name = 'Migration1726550214633'
 
 	async up(queryRunner) {
 		await queryRunner.query(
@@ -14,7 +14,7 @@ module.exports = class Migration1726365066949 {
 			`DROP INDEX "public"."IDX_26816e99720827d647d0a57a71"`
 		)
 		await queryRunner.query(
-			`CREATE TABLE "destinations" ("internal_id" SERIAL NOT NULL, "id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "endpoint" character varying NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP WITH TIME ZONE, "user_internal_id" integer, CONSTRAINT "UQ_69c5e8db964dcb83d3a0640f3c7" UNIQUE ("id"), CONSTRAINT "PK_987e972a4404229561ffc0fec95" PRIMARY KEY ("internal_id"))`
+			`CREATE TABLE "destinations" ("internal_id" SERIAL NOT NULL, "id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "latitude" numeric NOT NULL, "longitude" numeric NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP WITH TIME ZONE, "user_internal_id" integer, CONSTRAINT "UQ_69c5e8db964dcb83d3a0640f3c7" UNIQUE ("id"), CONSTRAINT "PK_987e972a4404229561ffc0fec95" PRIMARY KEY ("internal_id"))`
 		)
 		await queryRunner.query(
 			`CREATE TYPE "public"."routes_type_enum" AS ENUM('to-ucab', 'from-ucab')`

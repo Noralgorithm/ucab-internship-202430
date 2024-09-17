@@ -15,7 +15,7 @@ import { DestinationsService } from './destinations.service'
 import { CreateDestinationDto } from './dto/create-destination.dto'
 import { UpdateDestinationDto } from './dto/update-destination.dto'
 
-@ApiTags('[WIP] destinations')
+@ApiTags('destinations')
 @Controller('destinations')
 export class DestinationsController {
 	constructor(private readonly destinationsService: DestinationsService) {}
