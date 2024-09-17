@@ -2,6 +2,7 @@
 	[src]="mapSrc" allowfullscreen>
 </iframe> -->
 <google-map height="100%" width="100%" [options]="options" [center]="center" (mapClick)="addMarker($event)">
+	<button mButton class="save-button">Guardar</button>
 	@if (markerPosition) {
 	<map-marker [position]="markerPosition" [options]="markerOptions" />
 	}

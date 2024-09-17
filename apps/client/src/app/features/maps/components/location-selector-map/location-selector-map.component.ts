@@ -2,12 +2,14 @@ import { Component } from '@angular/core'
 import { GoogleMap, MapMarker } from '@angular/google-maps'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { UcabLocationService } from '~/features/maps/ucab-location.service'
+import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 
 @Component({
 	selector: 'location-selector-map',
 	standalone: true,
-	imports: [GoogleMap, MapMarker],
-	templateUrl: './location-selector-map.component.html'
+	imports: [GoogleMap, MapMarker, ButtonComponent],
+	templateUrl: './location-selector-map.component.html',
+	styleUrl: './location-selector-map.component.css'
 })
 export class LocationSelectorMapComponent {
 	constructor(
