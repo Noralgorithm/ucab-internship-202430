@@ -11,6 +11,7 @@ import {
 	UpdateOwnVehicleService,
 	UpdateOwnVehicleServiceDto
 } from '~/features/vehicles/api/update-own-vehicle.service'
+import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
 import { SelectOption } from '~/shared/types/select-option.type'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
@@ -39,6 +40,7 @@ export class EditVehicleComponent {
 	constructor(
 		private readonly getVehicleByIdService: GetVehicleByIdService,
 		private readonly updateOwnVehicleService: UpdateOwnVehicleService,
+		private readonly vehiclesColorsService: VehiclesColorsService,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router
 	) {}
@@ -48,18 +50,7 @@ export class EditVehicleComponent {
 	vehicleId = ''
 
 	colors: SelectOption[] = [
-		{ value: '', label: 'Seleccione un color de vehículo' },
-		{ value: 'black', label: 'Negro' },
-		{ value: 'white', label: 'Blanco' },
-		{ value: 'blue', label: 'Azul' },
-		{ value: 'gray', label: 'Gris' },
-		{ value: 'silver', label: 'Plateado' },
-		{ value: 'red', label: 'Rojo' },
-		{ value: 'green', label: 'Verde' },
-		{ value: 'yellow', label: 'Amarillo' },
-		{ value: 'purple', label: 'Morado' },
-		{ value: 'pink', label: 'Rosado' },
-		{ value: 'orange', label: 'Naranja' }
+		{ value: '', label: 'Seleccione un color de vehículo' }
 	]
 
 	editVehicleFormGroup = new FormGroup({
@@ -78,6 +69,10 @@ export class EditVehicleComponent {
 	})
 
 	ngOnInit() {
+		this.colors = [
+			...this.colors,
+			...this.vehiclesColorsService.getColorsOptions()
+		]
 		this.route.queryParams.subscribe((params) => {
 			this.vehicleId = params['id']
 

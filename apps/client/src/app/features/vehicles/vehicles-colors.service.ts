@@ -18,13 +18,13 @@ export class VehiclesColorsService {
 	getLabelByHex(hex: string) {
 		const colorKey = Object.keys(VEHICLES_COLORS).filter(
 			(key) => VEHICLES_COLORS[key as Color] === hex
-		)?.[1] as Color
+		)[0] as Color
 
 		if (!colorKey) {
 			return undefined
 		}
 
-		return VEHICLES_COLORS[colorKey]
+		return VEHICLES_COLORS_LABELS[colorKey]
 	}
 
 	getLabel(color: string): string | undefined {

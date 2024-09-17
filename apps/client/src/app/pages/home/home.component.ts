@@ -1,11 +1,12 @@
 import { Component } from '@angular/core'
 import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
+import { ModalComponent } from '~/shared/ui/components/modal/modal.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [PageLayoutComponent],
+	imports: [PageLayoutComponent, ModalComponent],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css'
 })

@@ -4,8 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
+import { DestinationsModule } from '~/features/destinations/destinations.module'
 import { ProfileModule } from '~/features/profile/profile.module'
+import { RidesModule } from '~/features/rides/rides.module'
 import { GoogleMapsRoutesModule } from '~/features/routes/google-maps/google-maps-routes.module'
+import { RoutesModule } from '~/features/routes/routes.module'
+import { TravelsModule } from '~/features/travels/travels.module'
 import { UsersModule } from '~/features/users/users.module'
 import { VehiclesModule } from '~/features/vehicles/vehicles.module'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
@@ -35,7 +39,11 @@ import { FilesController } from './files.controller'
 		ValidatorsModule,
 		ProfileModule,
 		VehiclesModule,
-		GoogleMapsRoutesModule
+		GoogleMapsRoutesModule,
+		DestinationsModule,
+		RoutesModule,
+		TravelsModule,
+		RidesModule
 	],
 	controllers: [FilesController]
 })

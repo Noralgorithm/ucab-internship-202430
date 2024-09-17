@@ -1,0 +1,15 @@
+<div>
+	<div class="container open" [class.close]="!show">
+		<div class="header">
+			<h1 class="label-large">titulo</h1>
+			<button mButton size="small" (click)="onClose()">Close</button>
+		</div>
+		<div class="content">
+			<p class="paragraph-medium">hola este es un modal en donde puedes colocar algunas cosas</p>
+		</div>
+		<div class="container-button">
+			<button mButton size="small">Cancelar</button>
+			<button mButton size="small">Guardar</button>
+		</div>
+	</div>
+</div>
