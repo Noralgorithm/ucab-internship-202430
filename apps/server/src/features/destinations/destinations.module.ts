@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthMiddleware } from '../auth/middlewares/auth.middleware'
 import { User } from '../users/entities/user.entity'
 import { UsersModule } from '../users/users.module'
 import { DestinationsController } from './destinations.controller'
@@ -16,4 +17,13 @@ import { Destination } from './entities/destination.entity'
 	controllers: [DestinationsController],
 	providers: [DestinationsService]
 })
-export class DestinationsModule {}
+export class DestinationsModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(AuthMiddleware)
+			.forRoutes(
+				{ path: 'destinations', method: RequestMethod.POST },
+				{ path: 'destinations/mine', method: RequestMethod.GET }
+			)
+	}
+}
