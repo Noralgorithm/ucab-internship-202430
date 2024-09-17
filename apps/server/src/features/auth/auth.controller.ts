@@ -31,6 +31,7 @@ export class AuthController {
 		private readonly configService: ConfigService
 	) {}
 
+	@HttpCode(200)
 	@Get('retrieve-sign-up-request/:id')
 	async retrieveSignUpRequest(
 		@Param() params: RetrieveSignUpParamsDto
@@ -46,15 +47,24 @@ export class AuthController {
 		const signUpRequest = await this.authService.requestSignUp(requestSignUpDto)
 
 		//TODO: send mail using mjml template
-		await this.mailingService.sendMailWithHtml({
+		// await this.mailingService.sendMailWithHtml({
+		// 	to: signUpRequest.email,
+		// 	subject: 'Confirmación de registro en Movic 🚗',
+		// 	html: `<p>Para confirmar tu registro, accede al siguiente enlace: ${this.configService.get('CLIENT_URL')}/r?i=${signUpRequest.id}</p>`
+		// })
+
+		await this.mailingService.sendMailWithTemplate({
 			to: signUpRequest.email,
 			subject: 'Confirmación de registro en Movic 🚗',
-			html: `<p>Para confirmar tu registro, accede al siguiente enlace: ${this.configService.get('CLIENT_URL')}/r?i=${signUpRequest.id}</p>`
+			templatePath: 'src/shared/templates/confirm-email.template.mjml',
+			templateType: 'mjml',
+			altText: 'sexo'
 		})
 
 		return 'Confirmación enviada con éxito'
 	}
 
+	@HttpCode(201)
 	@Post('sign-up')
 	@UseInterceptors(ImageInterceptor('profilePic'))
 	@ApiConsumes('multipart/form-data')
@@ -66,6 +76,7 @@ export class AuthController {
 		return this.authService.signUp(signUpDto)
 	}
 
+	@HttpCode(200)
 	@Post('sign-in')
 	signIn(@Body() signInDto: SignInDto) {
 		return this.authService.signIn(signInDto)

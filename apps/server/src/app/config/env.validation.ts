@@ -112,6 +112,9 @@ class EnvironmentVariables {
 	@IsBooleanString()
 	@IsString()
 	MAIL_SECURE: string
+
+	@IsString()
+	GOOGLE_MAPS_API_KEY: string
 }
 
 export function validate(config: Record<string, unknown>) {

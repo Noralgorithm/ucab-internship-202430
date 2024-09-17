@@ -5,6 +5,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
 import { ProfileModule } from '~/features/profile/profile.module'
+import { GoogleMapsRoutesModule } from '~/features/routes/google-maps/google-maps-routes.module'
 import { UsersModule } from '~/features/users/users.module'
 import { VehiclesModule } from '~/features/vehicles/vehicles.module'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
@@ -33,7 +34,8 @@ import { FilesController } from './files.controller'
 		MailingModule,
 		ValidatorsModule,
 		ProfileModule,
-		VehiclesModule
+		VehiclesModule,
+		GoogleMapsRoutesModule
 	],
 	controllers: [FilesController]
 })
