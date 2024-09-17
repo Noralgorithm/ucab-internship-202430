@@ -59,15 +59,54 @@ export class DestinationsService {
 		})
 	}
 
+	async findOneByPassenger(id: Destination['id'], passengerId: User['id']) {
+		const destination = await this.destinationsRepository.findOneBy({
+			id,
+			user: { id: passengerId }
+		})
+
+		if (destination == null) {
+			throw new NotFoundException('Destination not found')
+		}
+
+		return destination
+	}
+
 	async findByDestination(destinationId: Destination['id']) {
 		return await this.destinationsRepository.findOneBy({ id: destinationId })
 	}
 
-	async update(id: number, updateDestinationDto: UpdateDestinationDto) {
-		return `This action updates a #${id} destination`
+	async update(
+		id: Destination['id'],
+		driverId: User['id'],
+		updateVehicleDto: UpdateDestinationDto
+	) {
+		try {
+			await this.findOneByPassenger(id, driverId)
+		} catch (error: unknown) {
+			if (error instanceof NotFoundException) {
+				throw new UnprocessableEntityException('Destination does not exist')
+			}
+
+			throw new UnknownError(undefined, { cause: error })
+		}
+
+		return this.destinationsRepository.update({ id }, updateVehicleDto)
 	}
 
-	async remove(id: number) {
-		return `This action removes a #${id} destination`
+	async remove(id: Destination['id'], passengerId: User['id']) {
+		try {
+			await this.findOneByPassenger(id, passengerId)
+		} catch (error: unknown) {
+			if (error instanceof NotFoundException) {
+				throw new UnprocessableEntityException('Destination does not exist')
+			}
+
+			throw new UnknownError(undefined, { cause: error })
+		}
+
+		return await this.destinationsRepository.softDelete({
+			id
+		})
 	}
 }

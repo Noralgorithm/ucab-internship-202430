@@ -22,8 +22,10 @@ export class DestinationsModule {
 		consumer
 			.apply(AuthMiddleware)
 			.forRoutes(
+				{ path: 'destinations/mine', method: RequestMethod.GET },
 				{ path: 'destinations', method: RequestMethod.POST },
-				{ path: 'destinations/mine', method: RequestMethod.GET }
+				{ path: 'destinations/:id', method: RequestMethod.PATCH },
+				{ path: 'destinations/:id', method: RequestMethod.DELETE }
 			)
 	}
 }
