@@ -25,6 +25,8 @@
 		"@types/tinycolor2": "^1.4.6",
 		"TinyColor": "github:bgrins/TinyColor",
 		"express": "^4.18.2",
+		"lottie-web": "^5.12.2",
+		"ngx-lottie": "^12.0.0",
 		"remove": "^0.1.5",
 		"rxjs": "~7.8.0",
 		"tinycolor": "^0.0.1",
