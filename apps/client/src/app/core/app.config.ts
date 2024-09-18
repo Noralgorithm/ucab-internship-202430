@@ -10,13 +10,10 @@ import {
 import { provideClientHydration } from '@angular/platform-browser'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { provideRouter } from '@angular/router'
-// import player from 'lottie-web'
-// import { provideLottieOptions } from 'ngx-lottie'
 import { routes } from './app.routes'
 import { authorizationInterceptor } from './interceptors/authorization.interceptor'
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor'
-/* import { authorizationInterceptor } from './interceptors/authorization.interceptor'
-import { loadingInterceptor } from './interceptors/loading.interceptor' */
+import { loadingInterceptor } from './interceptors/loading.interceptor'
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -30,7 +27,7 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(
 			withFetch(),
 			withInterceptors([
-				/* loadingInterceptor */
+				loadingInterceptor,
 				BaseUrlInterceptor,
 				authorizationInterceptor
 			])

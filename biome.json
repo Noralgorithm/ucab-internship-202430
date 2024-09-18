@@ -60,7 +60,8 @@
 			"pnpm-lock.yaml",
 			".husky",
 			"metadata.ts",
-			"open-location-code.util.js"
+			"open-location-code.util.js",
+			"secrets.js"
 		],
 		"ignoreUnknown": true
 	}
