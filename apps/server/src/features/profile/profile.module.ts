@@ -16,6 +16,6 @@ export class ProfileModule {
 	configure(consumer: MiddlewareConsumer) {
 		consumer
 			.apply(AuthMiddleware)
-			.forRoutes({ path: 'profile/me', method: RequestMethod.ALL })
+			.forRoutes({ path: 'profile/me', method: RequestMethod.GET })
 	}
 }
