@@ -4,6 +4,7 @@
 	"scripts": {
 		"ng": "ng",
 		"start:dev": "ng serve",
+		"start:dev:deploy": "ng serve --port 4029",
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",

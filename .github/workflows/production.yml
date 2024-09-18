@@ -24,6 +24,7 @@ jobs:
             pnpm --filter server migration:run
             pnpm --filter server build
             pm2 restart movic-backend
+            pm2 restart movic-frontend
 
           # pnpm generate:docs
           # rm /var/www/green-summary-client-docs -rf
