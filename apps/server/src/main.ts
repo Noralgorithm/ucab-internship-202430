@@ -16,7 +16,7 @@ const GLOBAL_PIPES = [new ValidationPipe({ whitelist: true, transform: true })]
 const GLOBAL_INTERCEPTORS = [new SuccessfulResponseBuilderInterceptor()]
 
 const SWAGGER_TITLE = 'MoviC Backend API'
-const SWAGGER_DESCRIPTION = 'API Documentation of MoviC Backend'
+const SWAGGER_DESCRIPTION = 'API Documentation of MoviC Backend.'
 const SWAGGER_VERSION = '1.0'
 const SWAGGER_PATH = 'docs'
 
