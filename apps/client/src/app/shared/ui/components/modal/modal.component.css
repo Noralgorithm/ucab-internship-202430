@@ -27,8 +27,19 @@
 	color: var(--primary-text-value);
 }
 
-.content p {
-	color: var(--primary-text-label);
+.header .icon {
+	width: var(--icon-m);
+}
+
+.header span {
+	cursor: pointer;
+}
+
+.title-with-icon {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: .25rem;
 }
 
 .container-button {

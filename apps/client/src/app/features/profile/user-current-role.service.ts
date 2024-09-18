@@ -6,6 +6,7 @@ import { UserRole } from '~/shared/types/users/user-role.type'
 	providedIn: 'root'
 })
 export class UserCurrentRoleService {
+	// TODO: Implement AfterNextRender
 	// constructor() {
 	// 	const userPreferredRole: UserRole = (localStorage.getItem(
 	// 		PREFERRED_ROLE_KEY
