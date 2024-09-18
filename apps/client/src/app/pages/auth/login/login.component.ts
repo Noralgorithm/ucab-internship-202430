@@ -80,12 +80,17 @@ export class LoginComponent {
 						(localStorage.getItem(PREFERRED_ROLE_KEY) as UserRole) ??
 						'passenger'
 					this.setUserCurrentRole()
-					alert('Logged in successfully')
+					// alert('Logged in successfully')
+					//TODO: ADD Toast
 					this.router.navigate(['/app'])
 				},
 				error: (err) => {
 					alert('Failed to log in')
 				}
 			})
+	}
+
+	goToRegister() {
+		this.router.navigate(['/email-verification'])
 	}
 }
