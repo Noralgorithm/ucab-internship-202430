@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { ModalService } from './modal.service'
 @Component({
 	selector: 'modal',
 	standalone: true,
@@ -8,12 +9,12 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 	styleUrl: './modal.component.css'
 })
 export class ModalComponent {
+	constructor(public modalService: ModalService) {}
 	@Input() tittle = ''
-	@Input() content = ''
 	@Input() show = true
-	@Input() srcIcon = 'assets/svgs/Alert.svg'
+	@Input() srcIcon = ''
 
 	onClose() {
-		this.show = false
+		this.modalService.closeModal()
 	}
 }

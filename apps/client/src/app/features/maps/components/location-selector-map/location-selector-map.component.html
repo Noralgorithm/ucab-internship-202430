@@ -2,8 +2,14 @@
 	[src]="mapSrc" allowfullscreen>
 </iframe> -->
 <google-map height="100%" width="100%" [options]="options" [center]="center" (mapClick)="addMarker($event)">
-	<button mButton class="save-button">Guardar</button>
+	<button mButton class="save-button" (click)="onSave()">Guardar</button>
 	@if (markerPosition) {
 	<map-marker [position]="markerPosition" [options]="markerOptions" />
 	}
+	<modal tittle="Guardar ubicación" srcIcon="assets/svgs/Save.svg">
+		<form formGroup="formGroup" style="padding-top: 0.8rem;">
+			<text-input inputId="destination-name" type="text" placeholder="Ingrese un nombre"
+				label="Nombre de mi destino" [control]="formGroup.controls.ubicationName" />
+		</form>
+	</modal>
 </google-map>

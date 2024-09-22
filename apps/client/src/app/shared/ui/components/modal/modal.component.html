@@ -1,9 +1,9 @@
-<div>
-	<div class="container open" [class.close]="!show">
+<div [class.close]="!modalService.show">
+	<div class="container">
 		<div class="header">
 			<div class="title-with-icon">
 				<img [src]="srcIcon" class="icon" />
-				<h1 class="label-large">titulo</h1>
+				<h1 class="label-large">{{tittle}}</h1>
 			</div>
 			<span (click)="onClose()">
 				<img src="assets/svgs/Cancel.svg" class="icon" />
@@ -13,8 +13,9 @@
 			<ng-content></ng-content>
 		</div>
 		<div class="container-button">
-			<button mButton size="small">Cancelar</button>
-			<button mButton size="small">Guardar</button>
+			<button mButton size="small" (click)="onClose()">Cancelar</button>
+			<button mButton size="small" (click)="onClose()">Aceptar</button>
 		</div>
 	</div>
+	<div class="overlay" #overlay></div>
 </div>

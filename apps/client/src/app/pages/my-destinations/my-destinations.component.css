@@ -2,3 +2,7 @@
 	width: 100%;
 	height: calc(100dvh - 5.3rem);
 }
+
+.modal p {
+	color: var(--primary-text-label);
+}
