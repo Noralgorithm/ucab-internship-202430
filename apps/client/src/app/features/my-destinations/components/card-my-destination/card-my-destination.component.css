@@ -1,6 +1,6 @@
 .card-destination-container {
-	position: relative;
 	width: 21.0625rem;
+	height: 18.5625rem;
 	border-radius: 16px;
 	border: 1px solid #efefef;
 }
@@ -18,7 +18,10 @@
 	padding: 0 .875rem;
 	padding-top: 1.125rem;
 	padding-bottom: 1.375rem;
-	z-index: 20;
+	backdrop-filter: blur(5px);
+	position: absolute; /* position the information on top of the iframe */
+	z-index: 1;
+	border: 1px solid purple;
 }
 
 .destination-name {
