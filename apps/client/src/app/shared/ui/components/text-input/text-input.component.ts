@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, HostBinding, Input } from '@angular/core'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ValidationErrorMessages } from '../../../types/validation-error-messages.type'
 import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.util'
@@ -16,12 +16,19 @@ export class TextInputComponent {
 	@Input() errorMessages: ValidationErrorMessages = DEFAULT_ERROR_MESSAGES
 	@Input() type: 'text' | 'email' = 'text'
 	@Input() placeholder = ''
+	@Input() width: 'static' | 'full' = 'static'
 	@Input() label = ''
 
 	get isInvalid() {
 		return this.control.errors && this.control.dirty && this.control.touched
 	}
 
+	@HostBinding('style')
+	get style() {
+		return {
+			'--input-width': this.width === 'full' ? '100%' : '21.125rem'
+		}
+	}
 	getErrorMessage() {
 		const errors = this.control.errors
 		if (!errors) return ''

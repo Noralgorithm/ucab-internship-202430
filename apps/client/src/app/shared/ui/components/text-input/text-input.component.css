@@ -20,7 +20,7 @@ label {
 }
 
 input {
-	width: 21.125rem;
+	width: var(--input-width);
 	height: 3.063rem;
 	background-color: var(--contrast-surface-subtle);
 	color: var(--primary-text-value);
