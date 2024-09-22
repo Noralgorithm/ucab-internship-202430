@@ -1,0 +1,33 @@
+.card-destination-container {
+	position: relative;
+	width: 21.0625rem;
+	border-radius: 16px;
+	border: 1px solid #efefef;
+}
+
+.map-view button {
+	position: absolute;
+	right: 0.5rem;
+	top: 0.5rem;
+}
+
+.card-destination-information {
+	display: flex;
+	flex-direction: column;
+	gap: 2.4375rem;
+	padding: 0 .875rem;
+	padding-top: 1.125rem;
+	padding-bottom: 1.375rem;
+	z-index: 20;
+}
+
+.destination-name {
+	color: var(--primary-text-value);
+}
+
+.card-buttons-container {
+	display: flex;
+	flex-direction: row;
+	gap: .3125rem;
+	justify-content: end;
+}

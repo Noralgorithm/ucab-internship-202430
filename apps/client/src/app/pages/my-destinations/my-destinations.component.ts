@@ -1,10 +1,11 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
+import { LocationSelectorMapComponent } from '~/features/maps/components/location-selector-map/location-selector-map.component'
 import {
 	CreateOwnDestinationService,
 	CreateOwnDestinationServiceDto
-} from '~/features/maps/api/create-own-destination.service'
-import { LocationSelectorMapComponent } from '~/features/maps/components/location-selector-map/location-selector-map.component'
+} from '~/features/my-destinations/api/create-own-destination.service'
+import { CardMyDestinationComponent } from '~/features/my-destinations/components/card-my-destination/card-my-destination.component'
 import { ModalComponent } from '~/shared/ui/components/modal/modal.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 import { TextInputComponent } from '../../shared/ui/components/text-input/text-input.component'
@@ -16,7 +17,9 @@ import { TextInputComponent } from '../../shared/ui/components/text-input/text-i
 		PageLayoutComponent,
 		LocationSelectorMapComponent,
 		ModalComponent,
-		TextInputComponent
+		TextInputComponent,
+		CardMyDestinationComponent,
+		PageLayoutComponent
 	],
 	templateUrl: './my-destinations.component.html',
 	styleUrl: './my-destinations.component.css'

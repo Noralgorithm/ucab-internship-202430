@@ -1,4 +1,12 @@
-<main class="container">
+<page-layout [hasTabBar]="true">
+	<header>
+		<h1 class="heading-xsmall">Mis destinos</h1>
+		<button mButton severity="contrast" size="small" routerLink="/app/my-destination/add">Agregar</button>
+	</header>
+	<card-my-destination />
+</page-layout>
+
+<!-- <main class="container">
 	<location-selector-map (onAction)="openUbicationNameModal($event)" actionLabel="Guardar"></location-selector-map>
 
 	<modal [(isOpen)]="isAdviceModalOpen" variant="confirmation" title="Seleccionar ubicación"
@@ -15,5 +23,5 @@
 			<text-input inputId="destination-name" type="text" placeholder="Ingrese un nombre" label="Nombre de mi destino"
 				[control]="ubicationNameControl" width="full" />
 		</form>
-	</modal>
-</main>
+	</modal> 
+</main> -->
