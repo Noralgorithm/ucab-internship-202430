@@ -3,25 +3,10 @@
 		<h1 class="heading-xsmall">Mis destinos</h1>
 		<button mButton severity="contrast" size="small" routerLink="/app/my-destination/add">Agregar</button>
 	</header>
-	<card-my-destination />
+
+	<ul class="destinations-list">
+		@for (destination of destinations; track destination.id) {
+		<card-my-destination [destination]="destination" />
+		}
+	</ul>
 </page-layout>
-
-<!-- <main class="container">
-	<location-selector-map (onAction)="openUbicationNameModal($event)" actionLabel="Guardar"></location-selector-map>
-
-	<modal [(isOpen)]="isAdviceModalOpen" variant="confirmation" title="Seleccionar ubicación"
-		srcIcon="assets/svgs/MapsLocation.svg" class="modal">
-		<p class="paragraph-medium">Toca la pantalla para que se seleccione la ubicación deseada, luego podrás guardar
-			la ubicación como tu
-			destino el cual podrás utilizar al pedir cola.</p>
-	</modal>
-
-	<modal [(isOpen)]="isUbicationNameModalOpen" variant="actions" (onConfirm)="saveUbicationName()"
-		(onClose)="clearUbicationName()" [isConfirmButtonDisabled]="ubicationNameControl.invalid" title="Guardar ubicación"
-		srcIcon="assets/svgs/Save.svg">
-		<form formGroup="formGroup" style="padding-top: 0.8rem;">
-			<text-input inputId="destination-name" type="text" placeholder="Ingrese un nombre" label="Nombre de mi destino"
-				[control]="ubicationNameControl" width="full" />
-		</form>
-	</modal> 
-</main> -->

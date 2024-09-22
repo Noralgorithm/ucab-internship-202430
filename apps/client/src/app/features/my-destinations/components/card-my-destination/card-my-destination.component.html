@@ -1,14 +1,11 @@
-<section>
-	<div class="card-destination-container">
-		<button mButton size="small">Ver</button>
-		<img src="https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key="
-			alt="map">
-		<div class="card-destination-information">
-			<h2 class="heading-xsmall destination-name">Urbanización Isla Dorada</h2>
-			<div class="card-buttons-container">
-				<button mButton size="small" severity="tertiary">Eliminar</button>
-				<button mButton size="small" severity="primary">Editar</button>
-			</div>
+<div class="card-destination-container">
+	<button mButton size="small" class="view-button">Ver</button>
+	<img [src]="staticMapUrl" alt="map">
+	<div class="card-destination-information">
+		<h2 class="heading-xsmall destination-name">Urbanización Isla Dorada</h2>
+		<div class="card-buttons-container">
+			<button mButton size="small" severity="tertiary">Eliminar</button>
+			<button mButton size="small" severity="primary">Editar</button>
 		</div>
 	</div>
-</section>
+</div>

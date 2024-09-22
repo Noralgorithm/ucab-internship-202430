@@ -1,11 +1,14 @@
 .card-destination-container {
-	width: 21.0625rem;
-	height: 18.5625rem;
+	position: relative;
 	border-radius: 16px;
 	border: 1px solid #efefef;
 }
 
-.map-view button {
+img {
+	border-radius: 16px;
+}
+
+.view-button {
 	position: absolute;
 	right: 0.5rem;
 	top: 0.5rem;
@@ -14,14 +17,15 @@
 .card-destination-information {
 	display: flex;
 	flex-direction: column;
-	gap: 2.4375rem;
+	gap: 1.4375rem;
 	padding: 0 .875rem;
 	padding-top: 1.125rem;
 	padding-bottom: 1.375rem;
-	backdrop-filter: blur(5px);
-	position: absolute; /* position the information on top of the iframe */
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	z-index: 1;
-	border: 1px solid purple;
+	backdrop-filter: blur(5px);
 }
 
 .destination-name {
