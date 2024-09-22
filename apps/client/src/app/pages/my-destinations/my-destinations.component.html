@@ -1,8 +1,19 @@
 <main class="container">
-	<location-selector-map></location-selector-map>
-	<modal tittle="Seleccionar ubicación" srcIcon="assets/svgs/MapsLocation.svg" class="modal">
+	<location-selector-map (onAction)="openUbicationNameModal($event)" actionLabel="Guardar"></location-selector-map>
+
+	<modal [(isOpen)]="isAdviceModalOpen" variant="confirmation" title="Seleccionar ubicación"
+		srcIcon="assets/svgs/MapsLocation.svg" class="modal">
 		<p class="paragraph-medium">Toca la pantalla para que se seleccione la ubicación deseada, luego podrás guardar
 			la ubicación como tu
 			destino el cual podrás utilizar al pedir cola.</p>
+	</modal>
+
+	<modal [(isOpen)]="isUbicationNameModalOpen" variant="actions" (onConfirm)="saveUbicationName()"
+		(onClose)="clearUbicationName()" [isConfirmButtonDisabled]="ubicationNameControl.invalid" title="Guardar ubicación"
+		srcIcon="assets/svgs/Save.svg">
+		<form formGroup="formGroup" style="padding-top: 0.8rem;">
+			<text-input inputId="destination-name" type="text" placeholder="Ingrese un nombre" label="Nombre de mi destino"
+				[control]="ubicationNameControl" />
+		</form>
 	</modal>
 </main>

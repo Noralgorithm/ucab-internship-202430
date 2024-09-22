@@ -1,21 +1,30 @@
-<div [class.close]="!modalService.show">
-	<div class="container">
-		<div class="header">
-			<div class="title-with-icon">
-				<img [src]="srcIcon" class="icon" />
-				<h1 class="label-large">{{tittle}}</h1>
-			</div>
-			<span (click)="onClose()">
-				<img src="assets/svgs/Cancel.svg" class="icon" />
-			</span>
+@if (isOpen) {
+<div class="container">
+	<div class="header">
+		<div class="title-with-icon">
+			<img [src]="srcIcon" class="icon" />
+			<h1 class="label-large">{{title}}</h1>
 		</div>
-		<div class="content">
-			<ng-content></ng-content>
-		</div>
-		<div class="container-button">
-			<button mButton size="small" (click)="onClose()">Cancelar</button>
-			<button mButton size="small" (click)="onClose()">Aceptar</button>
-		</div>
+		<span (click)="closeModal()">
+			<img src="assets/svgs/Cancel.svg" class="icon" />
+		</span>
 	</div>
-	<div class="overlay" #overlay></div>
+	<div class="content">
+		<ng-content></ng-content>
+	</div>
+
+	@if (variant === 'actions') {
+	<div class="container-button">
+		<button mButton size="small" (click)="cancel()">Cancelar</button>
+		<button mButton size="small" (click)="confirm()" [disabled]="isConfirmButtonDisabled">Aceptar</button>
+	</div>
+	}
+
+	@if (variant === 'confirmation') {
+	<div class="container-button">
+		<button mButton size="small" (click)="confirm()" [disabled]="isConfirmButtonDisabled">Aceptar</button>
+	</div>
+	}
 </div>
+<div class="overlay" #overlay></div>
+}

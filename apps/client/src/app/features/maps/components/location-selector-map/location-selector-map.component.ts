@@ -1,11 +1,9 @@
-import { Component } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { GoogleMap, MapMarker } from '@angular/google-maps'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { UcabLocationService } from '~/features/maps/ucab-location.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { ModalComponent } from '~/shared/ui/components/modal/modal.component'
-import { ModalService } from '~/shared/ui/components/modal/modal.service'
 import { TextInputComponent } from '~/shared/ui/components/text-input/text-input.component'
 
 @Component({
@@ -24,13 +22,11 @@ import { TextInputComponent } from '~/shared/ui/components/text-input/text-input
 export class LocationSelectorMapComponent {
 	constructor(
 		readonly ucabLocationService: UcabLocationService,
-		private readonly ownLocationService: OwnLocationService,
-		private readonly modalService: ModalService
+		private readonly ownLocationService: OwnLocationService
 	) {}
 
-	formGroup = new FormGroup({
-		ubicationName: new FormControl('', Validators.required)
-	})
+	@Input() actionLabel = ''
+	@Output() onAction = new EventEmitter()
 
 	options: google.maps.MapOptions = {
 		streetViewControl: false
@@ -64,7 +60,7 @@ export class LocationSelectorMapComponent {
 		}
 	}
 
-	onSave() {
-		this.modalService.openModal()
+	handleAction() {
+		this.onAction.emit(this.markerPosition)
 	}
 }

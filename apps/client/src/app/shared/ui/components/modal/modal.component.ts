@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
-import { ModalService } from './modal.service'
 @Component({
 	selector: 'modal',
 	standalone: true,
@@ -9,12 +8,32 @@ import { ModalService } from './modal.service'
 	styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-	constructor(public modalService: ModalService) {}
-	@Input() tittle = ''
+	@Input() title = ''
 	@Input() show = true
 	@Input() srcIcon = ''
+	@Input() isOpen = true
+	@Output() isOpenChange = new EventEmitter<boolean>()
 
-	onClose() {
-		this.modalService.closeModal()
+	@Input() variant: 'simple' | 'actions' | 'confirmation' = 'simple'
+
+	@Output() onConfirm = new EventEmitter()
+	@Output() onCancel = new EventEmitter()
+	@Output() onClose = new EventEmitter()
+
+	@Input() isConfirmButtonDisabled = false
+
+	confirm() {
+		this.onConfirm.emit()
+		this.closeModal()
+	}
+
+	cancel() {
+		this.onCancel.emit()
+		this.closeModal()
+	}
+
+	closeModal() {
+		this.isOpenChange.emit(false)
+		this.onClose.emit()
 	}
 }
