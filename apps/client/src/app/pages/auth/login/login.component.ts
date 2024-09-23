@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { SignInService } from '~/features/auth/api/sign-in.service'
 import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { PREFERRED_ROLE_KEY } from '~/shared/constants'
@@ -35,7 +36,8 @@ export class LoginComponent {
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
 		private readonly signInService: SignInService,
-		private readonly userCurrentRole: UserCurrentRoleService
+		private readonly userCurrentRole: UserCurrentRoleService,
+		private readonly toastrService: ToastrService
 	) {}
 
 	userPreferredRole: UserRole = 'passenger'
@@ -80,12 +82,10 @@ export class LoginComponent {
 						(localStorage.getItem(PREFERRED_ROLE_KEY) as UserRole) ??
 						'passenger'
 					this.setUserCurrentRole()
-					// alert('Logged in successfully')
-					//TODO: ADD Toast
 					this.router.navigate(['/app'])
 				},
 				error: (err) => {
-					alert('Failed to log in')
+					this.toastrService.error('Correo o contraseña incorrectos')
 				}
 			})
 	}

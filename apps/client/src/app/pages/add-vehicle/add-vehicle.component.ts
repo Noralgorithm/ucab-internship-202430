@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { Router, RouterLink } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import {
 	CreateOwnVehicleService,
 	CreateOwnVehicleServiceDto
@@ -38,7 +39,8 @@ export class AddVehicleComponent {
 	constructor(
 		private readonly createOwnVehicleService: CreateOwnVehicleService,
 		private readonly vehiclesColorsService: VehiclesColorsService,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly toastrService: ToastrService
 	) {}
 
 	colors: SelectOption[] = [
@@ -79,6 +81,9 @@ export class AddVehicleComponent {
 		this.createOwnVehicleService.execute(createOwnVehicleDto).subscribe({
 			next: (res) => {
 				this.router.navigate(['/app/my-vehicles'])
+			},
+			error: (err) => {
+				this.toastrService.error('Error al agregar el vehículo')
 			}
 		})
 	}

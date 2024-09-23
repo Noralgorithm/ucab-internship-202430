@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { GetVehicleByIdService } from '~/features/vehicles/api/get-vehicle-by-id.service'
 import {
 	UpdateOwnVehicleService,
@@ -42,7 +43,8 @@ export class EditVehicleComponent {
 		private readonly updateOwnVehicleService: UpdateOwnVehicleService,
 		private readonly vehiclesColorsService: VehiclesColorsService,
 		private readonly route: ActivatedRoute,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly toastrService: ToastrService
 	) {}
 
 	vehicle: Vehicle | null = null
@@ -106,6 +108,9 @@ export class EditVehicleComponent {
 			.subscribe({
 				next: (res) => {
 					this.router.navigate(['/app/my-vehicles'])
+				},
+				error: (err) => {
+					this.toastrService.error('Error al actualizar el vehículo')
 				}
 			})
 	}

@@ -12,6 +12,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router'
 import player from 'lottie-web'
 import { provideLottieOptions } from 'ngx-lottie'
+import { provideToastr } from 'ngx-toastr'
 import { routes } from './app.routes'
 import { authorizationInterceptor } from './interceptors/authorization.interceptor'
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor'
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(routes),
 		provideClientHydration(),
 		provideAnimationsAsync(),
+		provideToastr(),
 		provideLottieOptions({
 			player: () => player
 		}),

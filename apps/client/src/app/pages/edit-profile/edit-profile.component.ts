@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import {
 	UpdateOwnProfileService,
@@ -40,7 +41,8 @@ export class EditProfileComponent {
 	constructor(
 		private readonly router: Router,
 		private readonly getOwnProfileService: GetOwnProfileService,
-		private readonly updateOwnProfileService: UpdateOwnProfileService
+		private readonly updateOwnProfileService: UpdateOwnProfileService,
+		private readonly toastrService: ToastrService
 	) {}
 
 	profile: UserProfile | undefined
@@ -81,6 +83,9 @@ export class EditProfileComponent {
 		this.updateOwnProfileService.execute(updateProfileDto).subscribe({
 			next: (res) => {
 				this.router.navigate(['/app/profile'])
+			},
+			error: (err) => {
+				this.toastrService.error('Error al actualizar el perfil')
 			}
 		})
 	}

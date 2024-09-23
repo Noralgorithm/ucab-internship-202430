@@ -6,6 +6,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { RetrieveSignUpRequestService } from '~/features/auth/api/retrieve-sign-up-request.service'
 import {
 	SignUpService,
@@ -41,7 +42,8 @@ export class RegisterComponent {
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
 		private readonly signUpService: SignUpService,
-		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService
+		private readonly retrieveSignUpRequestService: RetrieveSignUpRequestService,
+		private readonly toastrService: ToastrService
 	) {}
 	private readonly STUDENT_INPUT_VALUE = 'Estudiante'
 
@@ -102,7 +104,7 @@ export class RegisterComponent {
 				})
 			},
 			error: (err) => {
-				//TODO: show error to user
+				this.toastrService.error('Error al registrarse')
 			}
 		})
 	}
