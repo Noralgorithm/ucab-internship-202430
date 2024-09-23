@@ -1,8 +1,8 @@
 <div class="card-destination-container">
 	<button mButton size="small" class="view-button">Ver</button>
-	<img [src]="staticMapUrl" alt="map">
+	<img [src]="imageDestinationUrl" alt="map">
 	<div class="card-destination-information">
-		<h2 class="heading-xsmall destination-name">Urbanización Isla Dorada</h2>
+		<h2 class="heading-xsmall destination-name">{{destination.name}}</h2>
 		<div class="card-buttons-container">
 			<button mButton size="small" severity="tertiary">Eliminar</button>
 			<button mButton size="small" severity="primary">Editar</button>

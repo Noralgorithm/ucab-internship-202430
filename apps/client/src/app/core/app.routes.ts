@@ -71,7 +71,7 @@ export const routes: Routes = [
 				component: MyDestinationsComponent
 			},
 			{
-				path: 'my-destinations/add',
+				path: 'my-destination/add',
 				title: 'Agregar destino',
 				component: AddDestinationComponent
 			},

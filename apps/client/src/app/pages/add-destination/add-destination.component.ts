@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import { LocationSelectorMapComponent } from '~/features/maps/components/location-selector-map/location-selector-map.component'
 import {
 	CreateOwnDestinationService,
@@ -26,7 +27,8 @@ import { TextInputComponent } from '~/shared/ui/components/text-input/text-input
 })
 export class AddDestinationComponent {
 	constructor(
-		private readonly createOwnDestinationService: CreateOwnDestinationService
+		private readonly createOwnDestinationService: CreateOwnDestinationService,
+		private readonly router: Router
 	) {}
 
 	selectedMarkerPosition: google.maps.LatLngLiteral | null = null
@@ -66,7 +68,7 @@ export class AddDestinationComponent {
 
 		this.createOwnDestinationService.execute(payload).subscribe({
 			next: (res) => {
-				console.log('Destination created', res)
+				this.router.navigate(['app/my-destinations'])
 			},
 			error: (res) => {
 				console.error('Error creating destination', res)

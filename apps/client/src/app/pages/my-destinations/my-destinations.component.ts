@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { RouterLink } from '@angular/router'
 import { LocationSelectorMapComponent } from '~/features/maps/components/location-selector-map/location-selector-map.component'
 import { GetOwnDestinationsService } from '~/features/my-destinations/api/get-own-destinations.service'
 import { CardMyDestinationComponent } from '~/features/my-destinations/components/card-my-destination/card-my-destination.component'
@@ -18,7 +19,8 @@ import { TextInputComponent } from '../../shared/ui/components/text-input/text-i
 		TextInputComponent,
 		CardMyDestinationComponent,
 		PageLayoutComponent,
-		ButtonComponent
+		ButtonComponent,
+		RouterLink
 	],
 	templateUrl: './my-destinations.component.html',
 	styleUrls: ['./my-destinations.component.css']

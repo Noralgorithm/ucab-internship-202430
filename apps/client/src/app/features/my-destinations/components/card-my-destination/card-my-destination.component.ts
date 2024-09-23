@@ -16,13 +16,32 @@ export class CardMyDestinationComponent {
 
 	staticMapUrl!: SafeResourceUrl
 
+	imageDestinationUrl = ''
+
 	constructor(private readonly sanitizer: DomSanitizer) {}
 
 	ngOnInit() {
 		const unsafeStaticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?markers=${this.constructDestinationPositionString(this.destination)}&size=300x300&key=${GOOGLE_MAPS_API_KEY}`
 
+		this.getImageByUrl(unsafeStaticMapUrl)
+
 		this.staticMapUrl =
 			this.sanitizer.bypassSecurityTrustResourceUrl(unsafeStaticMapUrl)
+	}
+
+	async getImageByUrl(url: string) {
+		const image = await fetch(url)
+		const imageBlob = await image.blob()
+		const reader = new FileReader()
+		let imageBlobUrl = ''
+
+		reader.onload = () => {
+			imageBlobUrl = reader.result as string
+			setTimeout(() => {
+				this.imageDestinationUrl = imageBlobUrl
+			})
+		}
+		reader.readAsDataURL(imageBlob)
 	}
 
 	private constructDestinationPositionString(destination: Destination): string {
