@@ -1,44 +1,35 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post
-} from '@nestjs/common'
+import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { CreateRouteDto } from './dto/create-route.dto'
-import { UpdateRouteDto } from './dto/update-route.dto'
-import { RoutesService } from './routes.service'
+import { UCAB_GUAYANA_LOCATION } from './constants'
+import { DriveFromUCABDto } from './dto/drive-from-ucab.dto'
+import { DriveToUCABDto } from './dto/drive-to-ucab.dto'
+import { RoutesService } from './types'
 
 @ApiTags('[WIP] routes')
 @Controller('routes')
 export class RoutesController {
-	constructor(private readonly routesService: RoutesService) {}
+	constructor(
+		@Inject(RoutesService) private readonly routesService: RoutesService
+	) {}
 
-	@Post()
-	create(@Body() createRouteDto: CreateRouteDto) {
-		return this.routesService.create(createRouteDto)
+	@Post('drive-from-ucab')
+	driveFromUCAB(@Body() driveFromUCABDto: DriveFromUCABDto) {
+		const origin = {
+			location: UCAB_GUAYANA_LOCATION
+		}
+
+		return this.routesService.createDriveRoute(
+			origin,
+			driveFromUCABDto.destination
+		)
 	}
 
-	@Get()
-	findAll() {
-		return this.routesService.findAll()
-	}
+	@Post('drive-to-ucab')
+	driveToUCAB(@Body() { origin }: DriveToUCABDto) {
+		const destination = {
+			location: UCAB_GUAYANA_LOCATION
+		}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.routesService.findOne(+id)
-	}
-
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateRouteDto: UpdateRouteDto) {
-		return this.routesService.update(+id, updateRouteDto)
-	}
-
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.routesService.remove(+id)
+		return this.routesService.createDriveRoute(origin, destination)
 	}
 }

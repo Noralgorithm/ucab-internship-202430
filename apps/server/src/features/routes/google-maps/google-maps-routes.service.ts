@@ -6,6 +6,7 @@ import {
 	GOOGLE_MAPS_COMPUTE_ROUTES,
 	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE
 } from './constants'
+import { GoogleMapsAPIError } from './errors'
 import {
 	GoogleMapsComputeRoutesRequest,
 	GoogleMapsComputeRoutesResponseBody,
@@ -26,15 +27,13 @@ export class GoogleMapsRoutesService implements RoutesService {
 				location: {
 					latLng: origin.location.coords,
 					heading: origin.location.heading
-				},
-				sideOfRoad: origin.sideOfRoad
+				}
 			},
 			destination: {
 				location: {
 					latLng: destination.location.coords,
 					heading: destination.location.heading
-				},
-				sideOfRoad: destination.sideOfRoad
+				}
 			},
 			intermediates: waypoints.map((waypoint) => ({
 				location: {
@@ -66,8 +65,25 @@ export class GoogleMapsRoutesService implements RoutesService {
 			body: JSON.stringify(mapsRequest)
 		})
 
-		const { routes, fallbackInfo } =
+		const responseJson =
 			(await response.json()) as GoogleMapsComputeRoutesResponseBody<GoogleMapsRoute>
+
+		const jsonResponseIsEmpty = JSON.stringify(responseJson) === '{}'
+
+		if (jsonResponseIsEmpty) {
+			throw new NoRoutesFoundError(
+				'No se encontraron rutas para los puntos especificados'
+			)
+		}
+
+		const { error, routes, fallbackInfo } = responseJson
+
+		if (error != null) {
+			throw new GoogleMapsAPIError(
+				`${error.status}(${error.code}): ${error.message}`,
+				{ cause: error }
+			)
+		}
 
 		if (routes.length === 0) {
 			throw new NoRoutesFoundError(

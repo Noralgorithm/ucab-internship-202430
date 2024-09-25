@@ -25,15 +25,15 @@ export class Route {
 	@Column()
 	name: string
 
-	@Column()
-	route: string
-
 	@Column({
 		type: 'enum',
 		enum: RouteType,
 		nullable: false
 	})
 	type: RouteType
+
+	@Column()
+	route: string
 
 	@CreateDateColumn({
 		type: 'timestamptz',

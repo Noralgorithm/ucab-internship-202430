@@ -46,6 +46,9 @@ async function bootstrap() {
 	await SwaggerModule.loadPluginMetadata(metadata)
 	const document = SwaggerModule.createDocument(app, config)
 	SwaggerModule.setup(SWAGGER_PATH, app, document, {
+		swaggerOptions: {
+			docExpansion: 'none'
+		},
 		jsonDocumentUrl: `${SWAGGER_PATH}/json`,
 		yamlDocumentUrl: `${SWAGGER_PATH}/yaml`
 	})

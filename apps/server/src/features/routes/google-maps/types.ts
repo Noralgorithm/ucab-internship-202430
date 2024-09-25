@@ -1,3 +1,8 @@
+/**
+ * Types for Google Maps REST v2 Routes API extracted from [their documentation](https://developers.google.com/maps/documentation/routes/reference/rest)
+ */
+
+/** imports */
 import { XOR } from 'ts-xor'
 import { GeoJsonLineString } from '../types'
 
@@ -6,6 +11,16 @@ export interface GoogleMapsComputeRoutesResponseBody<
 > {
 	routes: T[]
 	fallbackInfo?: GoogleMapsFallbackInfo
+	error: GoogleMapsError
+}
+
+/**
+ * Type extracted from [here](https://developers.google.com/maps/documentation/roads/errors)
+ */
+export interface GoogleMapsError {
+	code: number
+	message: string
+	status: string
 }
 
 export interface GoogleMapsFallbackInfo {

@@ -41,7 +41,6 @@ export interface Location {
  */
 export interface Waypoint {
 	location: Location
-	sideOfRoad?: boolean
 }
 
 /**
@@ -72,14 +71,6 @@ export type Polyline = string | GeoJsonLineString
 //TODO: add GeoJson related types (https://datatracker.ietf.org/doc/html/rfc7946)
 export type GeoJsonLineString = object
 
-//TODO: add needed methods
-//biome-ignore lint/suspicious/noEmptyInterface: This is a placeholder interface, no methods yet
-export interface RoutesModule {}
-
-//TODO: add needed methods
-//biome-ignore lint/suspicious/noEmptyInterface: This is a placeholder interface, no methods yet
-export interface RoutesController {}
-
 export interface RoutesService {
 	/**
 	 * Creates a route between multiple locations and waypoints, with transportation mode set to driving (by car)
@@ -95,3 +86,6 @@ export interface RoutesService {
 		...waypoints: IntermediateWaypoint[]
 	): Promise<Route>
 }
+
+// This is a symbol to be used as a provider token
+export const RoutesService = Symbol('RoutesService')
