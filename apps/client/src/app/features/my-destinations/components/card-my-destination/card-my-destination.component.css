@@ -5,6 +5,8 @@
 
 img {
 	border-radius: 16px;
+	min-height: 18.75rem;
+	min-width: 18.75rem;
 }
 
 .view-button {
