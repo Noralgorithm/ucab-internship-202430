@@ -12,7 +12,10 @@ import { HomeComponent } from '~/pages/home/home.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
+import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
+import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
+import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
 import { TabBarLayoutComponent } from './components/tab-bar/tab-bar-layout/tab-bar-layout.component'
 
 export const routes: Routes = [
@@ -89,6 +92,21 @@ export const routes: Routes = [
 				path: 'my-vehicle/add',
 				title: 'Agregar vehículo',
 				component: AddVehicleComponent
+			},
+			{
+				path: 'offer-travel',
+				title: 'Crear viaje',
+				component: OfferTravelComponent
+			},
+			{
+				path: 'view-travels',
+				title: 'Ver viajes',
+				component: ViewTravelsComponent
+			},
+			{
+				path: 'travel-type-selection',
+				title: 'Seleccionar tipo de viaje',
+				component: TravelTypeSelectionComponent
 			}
 		]
 	}
