@@ -11,15 +11,17 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 	styleUrl: './travel-type-selection.component.css'
 })
 export class TravelTypeSelectionComponent {
-	routeToRedirect: '/app/view-travels' | '/app/offer-travel' =
-		'/app/view-travels'
+	ucabToExternalRouteToRedirect = '/app/offer-travel'
+	externalToUcabRouteToRedirect = '/app/view-travels'
 
 	constructor(private readonly userCurrentRoleService: UserCurrentRoleService) {
 		this.userCurrentRoleService.currentRole$.subscribe((role) => {
 			if (role === 'passenger') {
-				this.routeToRedirect = '/app/view-travels'
+				this.ucabToExternalRouteToRedirect = '/app/select-destination'
+				this.externalToUcabRouteToRedirect = '/app/available-drivers'
 			} else {
-				this.routeToRedirect = '/app/offer-travel'
+				this.ucabToExternalRouteToRedirect = 'TODO'
+				this.externalToUcabRouteToRedirect = 'TODO'
 			}
 		})
 	}
