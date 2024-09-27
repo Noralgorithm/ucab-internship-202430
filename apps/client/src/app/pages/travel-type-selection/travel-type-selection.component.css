@@ -44,13 +44,15 @@ p {
 }
 
 .icon {
-	min-width: 2.25rem;
+	width: 2.25rem;
 	min-height: 2.25rem;
 	margin-left: 1.1875rem;
 }
 
 .image {
-	margin-bottom: 1.125rem;
-	margin-top: 2rem;
 	min-height: 8.125rem;
+	margin-top: 2rem;
+	margin-bottom: 1.125rem;
+	padding-left: .5rem;
+	padding-right: .5rem;
 }
