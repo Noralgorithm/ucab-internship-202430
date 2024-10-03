@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { PREFERRED_ROLE_KEY } from '~/shared/constants'
+import { CURRENT_ROLE_KEY } from '~/shared/constants'
 import { UserRole } from '~/shared/types/users/user-role.type'
 
 @Injectable({
@@ -9,15 +9,15 @@ import { UserRole } from '~/shared/types/users/user-role.type'
 export class UserCurrentRoleService {
 	// TODO: Implement AfterNextRender
 	constructor() {
-		const userPreferredRole: UserRole = (localStorage.getItem(
-			PREFERRED_ROLE_KEY
-		) ?? 'passenger') as UserRole
+		const userCurrentRole: UserRole = (localStorage.getItem(CURRENT_ROLE_KEY) ??
+			'passenger') as UserRole
 
-		this.setCurrentRole(userPreferredRole)
+		this.setCurrentRole(userCurrentRole)
 	}
 	public currentRole$ = new BehaviorSubject<UserRole>('passenger')
 
 	setCurrentRole(role: UserRole) {
+		localStorage.setItem(CURRENT_ROLE_KEY, role)
 		this.currentRole$.next(role)
 	}
 }
