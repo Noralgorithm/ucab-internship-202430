@@ -5,9 +5,11 @@ import {
 	Get,
 	Param,
 	Patch,
-	Post
+	Post,
+	Req
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
+import { FastifyRequest } from 'fastify'
 import { CreateTravelDto } from './dto/create-travel.dto'
 import { UpdateTravelDto } from './dto/update-travel.dto'
 import { TravelsService } from './travels.service'
@@ -18,8 +20,13 @@ export class TravelsController {
 	constructor(private readonly travelsService: TravelsService) {}
 
 	@Post()
-	create(@Body() createTravelDto: CreateTravelDto) {
-		return this.travelsService.create(createTravelDto)
+	create(
+		@Req() req: FastifyRequest & { userId: string },
+		@Body() createTravelDto: CreateTravelDto
+	) {
+		const userId = req['userId']
+
+		return this.travelsService.create(userId, createTravelDto)
 	}
 
 	@Get()
