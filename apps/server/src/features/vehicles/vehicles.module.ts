@@ -15,6 +15,7 @@ import { VehiclesService } from './vehicles.service'
 		JwtModule
 	],
 	controllers: [VehiclesController],
-	providers: [VehiclesService]
+	providers: [VehiclesService],
+	exports: [VehiclesService]
 })
 export class VehiclesModule {}
