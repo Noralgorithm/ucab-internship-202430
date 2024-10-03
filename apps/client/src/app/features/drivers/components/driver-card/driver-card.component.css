@@ -1,0 +1,53 @@
+.card {
+	border-radius: 16px;
+	padding: 0 .6rem;
+	border: 3px solid #bab3c7;
+	width: 100%;
+	display: flex;
+	margin-top: 1rem;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.card-row {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.avatar {
+	width: 2.9375rem;
+	aspect-ratio: 1;
+	border-radius: 100%;
+	margin: 0.5rem 0;
+}
+
+.driver-name {
+	color: var(--primary-text-value);
+}
+
+.card-information-title {
+	color: var(--primary-text-placeholder);
+}
+
+.rating-information {
+	display: flex;
+	align-items: center;
+	gap: .1875rem;
+}
+
+.rating-icon {
+	width: 1.25rem;
+}
+
+.card-information {
+	display: flex;
+	align-items: center;
+	gap: .1875rem;
+}
+
+.card-information-icon {
+	width: var(--icon-s);
+}
