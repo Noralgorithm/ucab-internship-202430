@@ -12,7 +12,7 @@ import {
 } from 'typeorm'
 import { Destination } from '~/features/destinations/entities/destination.entity'
 import { Ride } from '~/features/rides/entities/ride.entity'
-import { Route } from '~/features/routes/entities/route.entity'
+import { RouteEntity } from '~/features/routes/entities/route.entity'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import {
 	EMAIL_MAX_LENGTH,
@@ -117,14 +117,14 @@ export class User {
 	destinations: Destination[]
 
 	@OneToMany(
-		() => Route,
+		() => RouteEntity,
 		(route) => route.user,
 		{
 			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE'
 		}
 	)
-	routes: Route[]
+	routes: RouteEntity[]
 
 	@OneToMany(
 		() => Ride,

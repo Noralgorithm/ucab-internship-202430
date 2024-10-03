@@ -12,9 +12,10 @@ import {
 import { User } from '~/features/users/entities/user.entity'
 import { RouteType } from '~/shared/constants'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
+import { GeoJsonLineString } from '../types'
 
 @Entity({ name: 'routes' })
-export class Route {
+export class RouteEntity {
 	@PrimaryGeneratedColumn()
 	internalId: number
 
@@ -32,8 +33,21 @@ export class Route {
 	})
 	type: RouteType
 
+	// Route Data
+	// Meters
 	@Column()
-	route: string
+	distance: number
+
+	// Seconds
+	@Column()
+	duration: string
+
+	@Column()
+	description: string
+
+	@Column('jsonb', { nullable: false })
+	geoJsonLineString: GeoJsonLineString
+	//
 
 	@CreateDateColumn({
 		type: 'timestamptz',

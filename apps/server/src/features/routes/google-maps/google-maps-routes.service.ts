@@ -1,5 +1,15 @@
-import { Injectable } from '@nestjs/common'
+import {
+	Injectable,
+	NotFoundException,
+	UnprocessableEntityException
+} from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { User } from '~/features/users/entities/user.entity'
+import { UsersService } from '~/features/users/users.service'
+import { RouteType } from '~/shared/constants'
+import { RouteEntity } from '../entities/route.entity'
 import { NoRoutesFoundError } from '../errors'
 import { IntermediateWaypoint, Route, RoutesService, Waypoint } from '../types'
 import {
@@ -15,7 +25,48 @@ import {
 
 @Injectable()
 export class GoogleMapsRoutesService implements RoutesService {
-	constructor(private readonly configService: ConfigService) {}
+	constructor(
+		@InjectRepository(RouteEntity)
+		private readonly routesRepository: Repository<RouteEntity>,
+		private readonly configService: ConfigService,
+		private readonly usersService: UsersService
+	) {}
+
+	async find({ id }: { id: string }): Promise<RouteEntity> {
+		const route = await this.routesRepository.findOne({ where: { id } })
+
+		if (route == null) {
+			throw new NotFoundException('No se encontró la ruta especificada')
+		}
+
+		return route
+	}
+
+	async createAndSaveDriveRoute({
+		origin,
+		destination,
+		type,
+		name,
+		userId,
+		waypoints
+	}: {
+		origin: Waypoint
+		destination: Waypoint
+		type: RouteType
+		name: string
+		userId: string
+		waypoints?: IntermediateWaypoint[]
+	}) {
+		let route: Route
+
+		if (waypoints) {
+			route = await this.createDriveRoute(origin, destination, ...waypoints)
+		} else {
+			route = await this.createDriveRoute(origin, destination)
+		}
+
+		return await this.save(route, type, name, userId)
+	}
 
 	async createDriveRoute(
 		origin: Waypoint,
@@ -110,5 +161,30 @@ export class GoogleMapsRoutesService implements RoutesService {
 			duration: recommendedRoute.duration,
 			polyline: recommendedRoute.polyline
 		}
+	}
+
+	async save(
+		route: Route,
+		type: RouteType,
+		name: string,
+		userId: string
+	): Promise<RouteEntity> {
+		let user: User
+
+		try {
+			user = await this.usersService.findOne(userId)
+		} catch (error) {
+			throw new UnprocessableEntityException('El usuario no existe')
+		}
+
+		return await this.routesRepository.save({
+			name: name,
+			type: type,
+			distance: route.distance,
+			duration: route.duration,
+			description: route.description,
+			geoJsonLineString: route.polyline,
+			user
+		})
 	}
 }

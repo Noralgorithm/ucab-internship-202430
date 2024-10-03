@@ -11,12 +11,13 @@ import {
 	UpdateDateColumn
 } from 'typeorm'
 import { Ride } from '~/features/rides/entities/ride.entity'
+import { GeoJsonLineString } from '~/features/routes/types'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import { RouteType } from '~/shared/constants'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 import { TravelStatus } from '../enums/travel-status.enum'
 
-@Entity({ name: 'vehicles' })
+@Entity({ name: 'travels' })
 export class Travel {
 	@PrimaryGeneratedColumn()
 	internalId: number
@@ -25,8 +26,21 @@ export class Travel {
 	@Column({ type: 'uuid', unique: true })
 	id: string
 
-	@Column({ type: 'varchar' })
-	route: string
+	// Route Data
+	// Meters
+	@Column()
+	distance: number
+
+	// Seconds
+	@Column()
+	duration: number
+
+	@Column()
+	description: string
+
+	@Column('jsonb', { nullable: false })
+	geoJsonLineString: GeoJsonLineString
+	//
 
 	@Column({ type: 'varchar' })
 	endpoint: string

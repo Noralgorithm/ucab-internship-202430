@@ -9,9 +9,10 @@ import {
 	IsString,
 	IsUUID
 } from 'class-validator'
-import { Route } from '~/features/routes/entities/route.entity'
+import { RouteEntity } from '~/features/routes/entities/route.entity'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import { RouteType } from '~/shared/constants'
+import { Exists } from '~/shared/validators/exists.validator'
 import { TravelStatus } from '../enums/travel-status.enum'
 
 export class CreateTravelDto {
@@ -34,15 +35,13 @@ export class CreateTravelDto {
 	@IsNumber()
 	availableSeatQuantity: number
 
-	// @IsPositive()
-	// @IsInt()
-	// @IsNumber()
-	// vehicleId: Vehicle['internalId']
+	@Exists({ entity: Vehicle, key: 'id' })
 	@IsUUID(4)
 	@IsString()
 	vehicleId: Vehicle['id']
 
+	@Exists({ entity: RouteEntity, key: 'id' })
 	@IsUUID(4)
 	@IsString()
-	routeId: Route['id']
+	routeId: RouteEntity['id']
 }

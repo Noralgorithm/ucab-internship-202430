@@ -18,18 +18,27 @@ export class RoutesController {
 			location: UCAB_GUAYANA_LOCATION
 		}
 
-		return this.routesService.createDriveRoute(
-			origin,
-			driveFromUCABDto.destination
-		)
+		return this.routesService.createAndSaveDriveRoute({
+			origin: origin,
+			destination: driveFromUCABDto.destination,
+			type: driveFromUCABDto.type,
+			name: driveFromUCABDto.name,
+			userId: driveFromUCABDto.userId
+		})
 	}
 
 	@Post('drive-to-ucab')
-	driveToUCAB(@Body() { origin }: DriveToUCABDto) {
+	driveToUCAB(@Body() driveToUcabDto: DriveToUCABDto) {
 		const destination = {
 			location: UCAB_GUAYANA_LOCATION
 		}
 
-		return this.routesService.createDriveRoute(origin, destination)
+		return this.routesService.createAndSaveDriveRoute({
+			origin: driveToUcabDto.origin,
+			destination: destination,
+			type: driveToUcabDto.type,
+			name: driveToUcabDto.name,
+			userId: driveToUcabDto.userId
+		})
 	}
 }

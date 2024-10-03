@@ -29,11 +29,6 @@ export class TravelsController {
 		return this.travelsService.create(userId, createTravelDto)
 	}
 
-	@Get()
-	findAll() {
-		return this.travelsService.findAll()
-	}
-
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.travelsService.findOne(+id)

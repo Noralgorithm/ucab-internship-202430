@@ -1,3 +1,6 @@
+import { RouteType } from '~/shared/constants'
+import { RouteEntity } from './entities/route.entity'
+
 /**
  * Coords is a simple interface to represent a pair of latitude and longitude
  * @interface Coords
@@ -66,10 +69,13 @@ export interface Route {
 /**
  * A representation of a route in an easy-to-use format
  */
-export type Polyline = string | GeoJsonLineString
+export type Polyline = GeoJsonLineString
 
 //TODO: add GeoJson related types (https://datatracker.ietf.org/doc/html/rfc7946)
-export type GeoJsonLineString = object
+export type GeoJsonLineString = {
+	type: 'LineString'
+	coordinates: [number, number][]
+}
 
 export interface RoutesService {
 	/**
@@ -85,6 +91,31 @@ export interface RoutesService {
 		destination: Waypoint,
 		...waypoints: IntermediateWaypoint[]
 	): Promise<Route>
+
+	createAndSaveDriveRoute({
+		origin,
+		destination,
+		type,
+		name,
+		userId,
+		waypoints
+	}: {
+		origin: Waypoint
+		destination: Waypoint
+		type: RouteType
+		name: string
+		userId: string
+		waypoints?: IntermediateWaypoint[]
+	}): Promise<RouteEntity>
+
+	save(
+		route: Route,
+		type: RouteType,
+		name: string,
+		userId: string
+	): Promise<RouteEntity>
+
+	find({ id }: { id: string }): Promise<RouteEntity>
 }
 
 // This is a symbol to be used as a provider token
