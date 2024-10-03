@@ -9,11 +9,9 @@
 
 	<ul>
 
-		<driver-card />
-		<driver-card />
-		<driver-card />
-		<driver-card />
-		<driver-card />
+		@for (i of [1,2,3,4,5]; track $index) {
+		<driver-card routerLink="/app/waiting-for-review" />
+		}
 
 	</ul>
 

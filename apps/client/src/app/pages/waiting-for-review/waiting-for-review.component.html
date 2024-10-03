@@ -1,0 +1,9 @@
+<page-layout [hasTabBar]="true">
+	<div class="container">
+		<h1 class="heading-xsmall">El conductor está revisando su solicitud...</h1>
+
+		<driver-card />
+
+		<button mButton [size]="'large'" severity="danger" (click)="cancelReview()">Cancelar solicitud</button>
+	</div>
+</page-layout>

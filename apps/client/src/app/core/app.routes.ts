@@ -17,6 +17,7 @@ import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.componen
 import { ProfileComponent } from '~/pages/profile/profile.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
 import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
+import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
 import { TabBarLayoutComponent } from './components/tab-bar/tab-bar-layout/tab-bar-layout.component'
 
 export const routes: Routes = [
@@ -113,6 +114,11 @@ export const routes: Routes = [
 				path: 'available-drivers',
 				title: 'Conductores disponibles',
 				component: AvailableDriversComponent
+			},
+			{
+				path: 'waiting-for-review',
+				title: 'Esperando revisión',
+				component: WaitingForReviewComponent
 			}
 		]
 	}
