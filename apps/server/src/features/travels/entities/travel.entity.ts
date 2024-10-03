@@ -33,7 +33,7 @@ export class Travel {
 
 	// Seconds
 	@Column()
-	duration: number
+	duration: string
 
 	@Column()
 	description: string
