@@ -23,11 +23,12 @@ export class ProfileController {
 	@HttpCode(200)
 	@Get('me')
 	async findMe(
-		@Req() req: FastifyRequest & { userId: string }
+		@Req() req: FastifyRequest & { user: { sub: string } }
 	): Promise<ProfileDto> {
-		const userId = req['userId']
+		//TODO: (maybe) refactor this to use a decorator
+		const user = req.user
 
-		return await this.profileService.getUserProfile(userId)
+		return await this.profileService.getUserProfile(user.sub)
 	}
 
 	@HttpCode(200)
@@ -35,14 +36,17 @@ export class ProfileController {
 	@UseInterceptors(ImageInterceptor('profilePic'))
 	@ApiConsumes('multipart/form-data')
 	async updateMe(
-		@Req() req: FastifyRequest & { userId: string },
+		@Req() req: FastifyRequest & { user: { sub: string } },
 		@Body() updateProfileDto: UpdateProfileDto,
 		@UploadedFile() profilePic?: MemoryStorageFile
 	) {
-		const userId = req['userId']
+		const user = req.user
 
 		updateProfileDto.profilePic = profilePic
 
-		return await this.profileService.updateUserProfile(userId, updateProfileDto)
+		return await this.profileService.updateUserProfile(
+			user.sub,
+			updateProfileDto
+		)
 	}
 }
