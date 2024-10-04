@@ -99,7 +99,7 @@ export class RegisterComponent {
 	handleSubmit() {
 		this.signUpService.execute(this.constructSignUpDto()).subscribe({
 			next: (res) => {
-				this.router.navigate(['/auth/sign-in'], {
+				this.router.navigate(['/login'], {
 					queryParams: { e: this.registerFormGroup.controls.email.value }
 				})
 			},
