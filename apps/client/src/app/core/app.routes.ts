@@ -15,6 +15,7 @@ import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
+import { RouteSelectionComponent } from '~/pages/route-selection/route-selection.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
 import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
 import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
@@ -119,6 +120,11 @@ export const routes: Routes = [
 				path: 'waiting-for-review',
 				title: 'Esperando revisión',
 				component: WaitingForReviewComponent
+			},
+			{
+				path: 'route-selection',
+				title: 'Seleccionar ruta',
+				component: RouteSelectionComponent
 			}
 		]
 	}

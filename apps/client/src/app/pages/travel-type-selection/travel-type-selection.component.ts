@@ -20,8 +20,8 @@ export class TravelTypeSelectionComponent {
 				this.ucabToExternalRouteToRedirect = '/app/select-destination'
 				this.externalToUcabRouteToRedirect = '/app/available-drivers'
 			} else {
-				this.ucabToExternalRouteToRedirect = 'TODO'
-				this.externalToUcabRouteToRedirect = 'TODO'
+				this.ucabToExternalRouteToRedirect = '/app/route-selection'
+				this.externalToUcabRouteToRedirect = '/app/route-selection'
 			}
 		})
 	}
