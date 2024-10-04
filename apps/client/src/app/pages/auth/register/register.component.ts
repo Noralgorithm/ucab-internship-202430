@@ -53,7 +53,7 @@ export class RegisterComponent {
 
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
-			this.signUpToken = params['t']
+			this.signUpToken = params['i']
 
 			// TODO: Create page for the redirect "No se encuentra la página"
 

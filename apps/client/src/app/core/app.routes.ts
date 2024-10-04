@@ -32,7 +32,7 @@ export const routes: Routes = [
 		component: LoginComponent
 	},
 	{
-		path: 'register',
+		path: 'r',
 		title: 'Registrarse',
 		component: RegisterComponent
 	},
