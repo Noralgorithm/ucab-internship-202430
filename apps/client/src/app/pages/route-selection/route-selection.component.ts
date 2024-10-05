@@ -23,7 +23,7 @@ import { geoJsonLineStringToLatLng } from '~/shared/utils/geo-json-line-string.u
 	styleUrl: './route-selection.component.css'
 })
 export class RouteSelectionComponent {
-	polylines: google.maps.LatLngLiteral[][] = []
+	routes: Route[] = []
 
 	constructor(
 		private readonly computeRoutesService: ComputeRoutesService,
@@ -38,13 +38,23 @@ export class RouteSelectionComponent {
 					lng: position.coords.longitude
 				})
 				.subscribe((res) => {
-					this.polylines = res.data.map((route) =>
-						geoJsonLineStringToLatLng(route.polyline.geoJsonLinestring)
-					)
+					this.routes = res.data.map((route) => ({
+						vertices: geoJsonLineStringToLatLng(
+							route.polyline.geoJsonLinestring
+						),
+						selected: false
+					}))
 
-					console.log(this.polylines[0])
+					if (this.routes.length > 0) this.routes[0].selected = true
 				})
 		})
+	}
+
+	handlePolylineClick(route: Route) {
+		for (const r of this.routes) {
+			r.selected = false
+		}
+		route.selected = true
 	}
 
 	options: google.maps.MapOptions = {
@@ -58,7 +68,7 @@ export class RouteSelectionComponent {
 	markerOptions: google.maps.MarkerOptions = {
 		draggable: false
 	}
-	markerPosition: google.maps.LatLngLiteral = {
+	ucabMarkerPosition: google.maps.LatLngLiteral = {
 		lat: UCAB_LATITUDE,
 		lng: UCAB_LONGITUDE
 	}
