@@ -6,6 +6,10 @@ export function BaseUrlInterceptor(
 	req: HttpRequest<unknown>,
 	next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
+	if (!req.url.startsWith('/')) {
+		return next(req)
+	}
+
 	const apiReq = req.clone({ url: `${BACKEND_BASE_URL}${req.url}` })
 	return next(apiReq)
 }
