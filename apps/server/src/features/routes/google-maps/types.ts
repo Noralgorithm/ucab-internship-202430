@@ -1,5 +1,5 @@
 /**
- * Types for Google Maps REST v2 Routes API extracted from [their documentation](https://developers.google.com/maps/documentation/routes/reference/rest)
+ * Types for Google Maps REST v2 Routes API extracted from [their documentation](https://developers.google.com/maps/documentation/routes/reference/rest), many of them are not exhaustive and only include used attributes
  */
 
 /** imports */
@@ -7,9 +7,9 @@ import { XOR } from 'ts-xor'
 import { GeoJsonLineString } from '../types'
 
 export interface GoogleMapsComputeRoutesResponseBody<
-	T extends GoogleMapsRoute
+	T extends GoogleMapsPolyline
 > {
-	routes: T[]
+	routes: Array<GoogleMapsRoute<T>>
 	fallbackInfo?: GoogleMapsFallbackInfo
 	error: GoogleMapsError
 }
@@ -37,15 +37,16 @@ export type GoogleMapsFallbackReason =
 	| 'SERVER_ERROR'
 	| 'LATENCY_EXCEEDED'
 
-export interface GoogleMapsRoute {
+export interface GoogleMapsRoute<T extends GoogleMapsPolyline> {
 	distanceMeters: number
 	duration: string
-	polyline: GoogleMapsPolyline
+	polyline: T
 	description: string
 	optimizedIntermediateWaypointIndex?: number[]
 }
 
-export interface GoogleMapsRouteWithLegs extends GoogleMapsRoute {
+export interface GoogleMapsRouteWithLegs<T extends GoogleMapsPolyline>
+	extends GoogleMapsRoute<T> {
 	legs: GoogleMapsRouteLeg[]
 }
 
@@ -79,6 +80,9 @@ export interface GoogleMapsComputeRoutesRequest {
 	units: GoogleMapsUnits
 	optimizeWaypointOrder?: boolean
 	trafficModel?: GoogleMapsTrafficModel
+	departureTime?: string
+	arrivalTime?: string
+	regionCode?: string
 }
 
 /**

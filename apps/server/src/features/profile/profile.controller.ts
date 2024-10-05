@@ -5,12 +5,12 @@ import {
 	Get,
 	HttpCode,
 	Patch,
-	Req,
 	UseInterceptors
 } from '@nestjs/common'
 import { ApiConsumes, ApiTags } from '@nestjs/swagger'
-import { FastifyRequest } from 'fastify'
 import { ImageInterceptor } from '~/shared/files-upload/images/image.interceptor'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { User } from '../users/entities/user.entity'
 import { ProfileDto } from './dto/profile.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { ProfileService } from './profile.service'
@@ -23,12 +23,9 @@ export class ProfileController {
 	@HttpCode(200)
 	@Get('me')
 	async findMe(
-		@Req() req: FastifyRequest & { user: { sub: string } }
+		@CurrentUser('id') currentUserId: User['id']
 	): Promise<ProfileDto> {
-		//TODO: (maybe) refactor this to use a decorator
-		const user = req.user
-
-		return await this.profileService.getUserProfile(user.sub)
+		return await this.profileService.getUserProfile(currentUserId)
 	}
 
 	@HttpCode(200)
@@ -36,16 +33,14 @@ export class ProfileController {
 	@UseInterceptors(ImageInterceptor('profilePic'))
 	@ApiConsumes('multipart/form-data')
 	async updateMe(
-		@Req() req: FastifyRequest & { user: { sub: string } },
+		@CurrentUser('id') currentUserId: User['id'],
 		@Body() updateProfileDto: UpdateProfileDto,
 		@UploadedFile() profilePic?: MemoryStorageFile
 	) {
-		const user = req.user
-
 		updateProfileDto.profilePic = profilePic
 
 		return await this.profileService.updateUserProfile(
-			user.sub,
+			currentUserId,
 			updateProfileDto
 		)
 	}

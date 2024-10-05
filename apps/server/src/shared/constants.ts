@@ -42,3 +42,5 @@ export const MAX_LONGITUDE = 180
 
 export const MIN_HEADING = 0
 export const MAX_HEADING = 360
+
+export const MIN_DISTANCE = 0

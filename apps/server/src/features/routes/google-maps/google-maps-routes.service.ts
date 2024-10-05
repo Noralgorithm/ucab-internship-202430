@@ -1,17 +1,18 @@
-import {
-	Injectable,
-	NotFoundException,
-	UnprocessableEntityException
-} from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from '~/features/users/entities/user.entity'
-import { UsersService } from '~/features/users/users.service'
 import { RouteType } from '~/shared/constants'
 import { RouteEntity } from '../entities/route.entity'
 import { NoRoutesFoundError } from '../errors'
-import { IntermediateWaypoint, Route, RoutesService, Waypoint } from '../types'
+import {
+	GeoJsonLineString,
+	IntermediateWaypoint,
+	Route,
+	RoutesService,
+	Waypoint
+} from '../types'
 import {
 	GOOGLE_MAPS_COMPUTE_ROUTES,
 	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE
@@ -19,8 +20,7 @@ import {
 import { GoogleMapsAPIError } from './errors'
 import {
 	GoogleMapsComputeRoutesRequest,
-	GoogleMapsComputeRoutesResponseBody,
-	GoogleMapsRoute
+	GoogleMapsComputeRoutesResponseBody
 } from './types'
 
 @Injectable()
@@ -28,8 +28,7 @@ export class GoogleMapsRoutesService implements RoutesService {
 	constructor(
 		@InjectRepository(RouteEntity)
 		private readonly routesRepository: Repository<RouteEntity>,
-		private readonly configService: ConfigService,
-		private readonly usersService: UsersService
+		private readonly configService: ConfigService
 	) {}
 
 	async find({ id }: { id: string }): Promise<RouteEntity> {
@@ -42,37 +41,52 @@ export class GoogleMapsRoutesService implements RoutesService {
 		return route
 	}
 
-	async createAndSaveDriveRoute({
+	async createAndSaveUserDriveRoute({
 		origin,
 		destination,
 		type,
 		name,
-		userId,
-		waypoints
+		user,
+		waypoints,
+		alternativeRoutes
 	}: {
 		origin: Waypoint
 		destination: Waypoint
 		type: RouteType
 		name: string
-		userId: string
+		user: User
 		waypoints?: IntermediateWaypoint[]
+		alternativeRoutes?: boolean
 	}) {
-		let route: Route
+		const routes = await this.createDriveRoute({
+			origin,
+			destination,
+			waypoints,
+			alternativeRoutes
+		})
 
-		if (waypoints) {
-			route = await this.createDriveRoute(origin, destination, ...waypoints)
-		} else {
-			route = await this.createDriveRoute(origin, destination)
-		}
+		// The first route is the recommended route (https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes#response-body)
+		const recommendedRoute = routes[0]
 
-		return await this.save(route, type, name, userId)
+		return await this.saveUserRoute({
+			route: recommendedRoute,
+			type,
+			name,
+			user
+		})
 	}
 
-	async createDriveRoute(
-		origin: Waypoint,
-		destination: Waypoint,
-		...waypoints: IntermediateWaypoint[]
-	): Promise<Route> {
+	async createDriveRoute({
+		origin,
+		destination,
+		waypoints,
+		alternativeRoutes
+	}: {
+		origin: Waypoint
+		destination: Waypoint
+		waypoints?: IntermediateWaypoint[]
+		alternativeRoutes?: boolean
+	}): Promise<Array<Route>> {
 		const mapsRequest: GoogleMapsComputeRoutesRequest = {
 			origin: {
 				location: {
@@ -86,21 +100,25 @@ export class GoogleMapsRoutesService implements RoutesService {
 					heading: destination.location.heading
 				}
 			},
-			intermediates: waypoints.map((waypoint) => ({
-				location: {
-					latLng: waypoint.location.coords,
-					heading: waypoint.location.heading
-				},
-				sideOfRoad: waypoint.sideOfRoad,
-				vehicleStopover: waypoint.vehicleStopover,
-				via: waypoint.via
-			})),
+			intermediates:
+				waypoints != null
+					? waypoints.map((waypoint) => ({
+							location: {
+								latLng: waypoint.location.coords,
+								heading: waypoint.location.heading
+							},
+							sideOfRoad: waypoint.sideOfRoad,
+							vehicleStopover: waypoint.vehicleStopover,
+							via: waypoint.via
+						}))
+					: undefined,
 			polylineQuality: 'OVERVIEW',
 			polylineEncoding: 'GEO_JSON_LINESTRING',
 			routingPreference: 'TRAFFIC_UNAWARE',
 			travelMode: 'DRIVE',
 			units: 'METRIC',
-			languageCode: GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE
+			languageCode: GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE,
+			computeAlternativeRoutes: alternativeRoutes
 		}
 
 		const response = await fetch(GOOGLE_MAPS_COMPUTE_ROUTES.url, {
@@ -117,7 +135,7 @@ export class GoogleMapsRoutesService implements RoutesService {
 		})
 
 		const responseJson =
-			(await response.json()) as GoogleMapsComputeRoutesResponseBody<GoogleMapsRoute>
+			(await response.json()) as GoogleMapsComputeRoutesResponseBody<GeoJsonLineString>
 
 		const jsonResponseIsEmpty = JSON.stringify(responseJson) === '{}'
 
@@ -142,41 +160,36 @@ export class GoogleMapsRoutesService implements RoutesService {
 			)
 		}
 
-		// The first route is the recommended route (https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes#response-body)
-		const recommendedRoute = routes[0]
-
+		//TODO: make type assertions for recommendedRoute.polyline instead of using 'as'
 		//TODO: implement fallback logic (https://developers.google.com/maps/documentation/routes/reference/rest/v2/FallbackInfo)
 		if (fallbackInfo != null) {
-			return {
-				distance: recommendedRoute.distanceMeters,
-				description: recommendedRoute.description,
-				duration: recommendedRoute.duration,
-				polyline: recommendedRoute.polyline
-			}
+			return routes.map((route) => ({
+				distance: route.distanceMeters,
+				description: route.description,
+				duration: route.duration,
+				polyline: route.polyline
+			}))
 		}
 
-		return {
-			distance: recommendedRoute.distanceMeters,
-			description: recommendedRoute.description,
-			duration: recommendedRoute.duration,
-			polyline: recommendedRoute.polyline
-		}
+		return routes.map((route) => ({
+			distance: route.distanceMeters,
+			description: route.description,
+			duration: route.duration,
+			polyline: route.polyline
+		}))
 	}
 
-	async save(
-		route: Route,
-		type: RouteType,
-		name: string,
-		userId: string
-	): Promise<RouteEntity> {
-		let user: User
-
-		try {
-			user = await this.usersService.findOne(userId)
-		} catch (error) {
-			throw new UnprocessableEntityException('El usuario no existe')
-		}
-
+	async saveUserRoute({
+		route,
+		type,
+		name,
+		user
+	}: {
+		route: Route
+		type: RouteType
+		name: string
+		user: User
+	}): Promise<RouteEntity> {
 		return await this.routesRepository.save({
 			name: name,
 			type: type,

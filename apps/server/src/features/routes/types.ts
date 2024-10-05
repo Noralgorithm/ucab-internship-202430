@@ -1,4 +1,5 @@
 import { RouteType } from '~/shared/constants'
+import { User } from '../users/entities/user.entity'
 import { RouteEntity } from './entities/route.entity'
 
 /**
@@ -56,6 +57,7 @@ export interface IntermediateWaypoint {
 	sideOfRoad?: boolean
 }
 
+//TODO: refactor this so Route is a Route<T extends Polyline> where T is the type of the polyline
 /**
  * A route between two or more locations, joining beginning, ending and intermediate waypoints
  */
@@ -71,49 +73,70 @@ export interface Route {
  */
 export type Polyline = GeoJsonLineString
 
-//TODO: add GeoJson related types (https://datatracker.ietf.org/doc/html/rfc7946)
+/**
+ * Extracted from [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.4)
+ */
 export type GeoJsonLineString = {
 	type: 'LineString'
-	coordinates: [number, number][]
+	coordinates: Array<GeoJsonPosition>
 }
+
+/**
+ * Extracted from [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.1)
+ */
+export type GeoJsonPosition = [number, number] | [number, number, number]
 
 export interface RoutesService {
 	/**
-	 * Creates a route between multiple locations and waypoints, with transportation mode set to driving (by car)
-	 * @param origin The starting point of the route
-	 * @param destination The ending point of the route
-	 * @param waypoints Intermediate points that the route must pass through
-	 * @returns A promise that resolves to a route object
+	 * Creates routes between multiple locations and waypoints, with transportation mode set to driving (by car)
+	 * @param origin The starting point of the routes
+	 * @param destination The ending point of the routes
+	 * @param waypoints Intermediate points that the routes must pass through
+	 * @param alternativeRoutes Whether to compute alternative routes
+	 * @returns A promise that resolves to an array of routes, with only 1 if alternativeRoutes is false, or more than 1 if alternativeRoutes is true
 	 * @throws {NoRoutesFoundError} If no route could be found between the given locations
 	 */
-	createDriveRoute(
-		origin: Waypoint,
-		destination: Waypoint,
-		...waypoints: IntermediateWaypoint[]
-	): Promise<Route>
+	createDriveRoute({
+		origin,
+		destination,
+		waypoints,
+		alternativeRoutes
+	}: {
+		origin: Waypoint
+		destination: Waypoint
+		waypoints?: IntermediateWaypoint[]
+		alternativeRoutes?: boolean
+	}): Promise<Array<Route>>
 
-	createAndSaveDriveRoute({
+	createAndSaveUserDriveRoute({
 		origin,
 		destination,
 		type,
 		name,
-		userId,
-		waypoints
+		user,
+		waypoints,
+		alternativeRoutes
 	}: {
 		origin: Waypoint
 		destination: Waypoint
 		type: RouteType
 		name: string
-		userId: string
+		user: User
 		waypoints?: IntermediateWaypoint[]
+		alternativeRoutes?: boolean
 	}): Promise<RouteEntity>
 
-	save(
-		route: Route,
-		type: RouteType,
-		name: string,
-		userId: string
-	): Promise<RouteEntity>
+	saveUserRoute({
+		route,
+		type,
+		name,
+		user
+	}: {
+		route: Route
+		type: RouteType
+		name: string
+		user: User
+	}): Promise<RouteEntity>
 
 	find({ id }: { id: string }): Promise<RouteEntity>
 }

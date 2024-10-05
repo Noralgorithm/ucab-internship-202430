@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
 import { FastifyRequest } from 'fastify'
+import { UsersService } from '~/features/users/users.service'
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 
 @Injectable()
@@ -15,6 +16,7 @@ export class AuthGuard implements CanActivate {
 	constructor(
 		private jwtService: JwtService,
 		private configService: ConfigService,
+		private usersService: UsersService,
 		private reflector: Reflector
 	) {}
 
@@ -38,9 +40,11 @@ export class AuthGuard implements CanActivate {
 			const payload = await this.jwtService.verifyAsync(token, {
 				secret: jwtSecret
 			})
-			// 💡 We're assigning the payload to the request object here
+			const user = await this.usersService.findOne(payload['sub'])
+
+			// 💡 We're assigning the user to the request object here
 			// so that we can access it in our route handlers
-			request['user'] = payload
+			request['user'] = user
 		} catch {
 			throw new UnauthorizedException()
 		}

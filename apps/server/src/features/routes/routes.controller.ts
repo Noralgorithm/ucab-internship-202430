@@ -1,8 +1,12 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { User } from '../users/entities/user.entity'
 import { UCAB_GUAYANA_LOCATION } from './constants'
 import { DriveFromUCABDto } from './dto/drive-from-ucab.dto'
 import { DriveToUCABDto } from './dto/drive-to-ucab.dto'
+import { RouteDto } from './dto/route.dto'
+import { SaveMineRouteDto } from './dto/save-mine-route.dto'
 import { RoutesService } from './types'
 
 @ApiTags('[WIP] routes')
@@ -13,32 +17,45 @@ export class RoutesController {
 	) {}
 
 	@Post('drive-from-ucab')
-	driveFromUCAB(@Body() driveFromUCABDto: DriveFromUCABDto) {
+	driveFromUCAB(
+		@Body() { destination, alternativeRoutes }: DriveFromUCABDto
+	): Promise<Array<RouteDto>> {
 		const origin = {
 			location: UCAB_GUAYANA_LOCATION
 		}
 
-		return this.routesService.createAndSaveDriveRoute({
-			origin: origin,
-			destination: driveFromUCABDto.destination,
-			type: driveFromUCABDto.type,
-			name: driveFromUCABDto.name,
-			userId: driveFromUCABDto.userId
+		return this.routesService.createDriveRoute({
+			origin,
+			destination,
+			alternativeRoutes
 		})
 	}
 
 	@Post('drive-to-ucab')
-	driveToUCAB(@Body() driveToUcabDto: DriveToUCABDto) {
+	driveToUCAB(
+		@Body() { origin, alternativeRoutes }: DriveToUCABDto
+	): Promise<Array<RouteDto>> {
 		const destination = {
 			location: UCAB_GUAYANA_LOCATION
 		}
 
-		return this.routesService.createAndSaveDriveRoute({
-			origin: driveToUcabDto.origin,
-			destination: destination,
-			type: driveToUcabDto.type,
-			name: driveToUcabDto.name,
-			userId: driveToUcabDto.userId
+		return this.routesService.createDriveRoute({
+			origin,
+			destination,
+			alternativeRoutes
+		})
+	}
+
+	@Post('mine')
+	saveMineRoute(
+		@Body() { route, name, type }: SaveMineRouteDto,
+		@CurrentUser() currentUser: User
+	) {
+		return this.routesService.saveUserRoute({
+			route,
+			name,
+			type,
+			user: currentUser
 		})
 	}
 }

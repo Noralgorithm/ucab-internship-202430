@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 import { getAppDataSource } from '~/typeorm/data-source'
 import { ExistsConstraint } from './exists.validator'
+import { IsGeoJsonPositionConstraint } from './is-geo-json-position.validator'
 import { NotExistsConstraint } from './not-exists.validator'
 
 @Global()
@@ -12,7 +13,8 @@ import { NotExistsConstraint } from './not-exists.validator'
 			useFactory: getAppDataSource
 		},
 		ExistsConstraint,
-		NotExistsConstraint
+		NotExistsConstraint,
+		IsGeoJsonPositionConstraint
 	]
 })
 export class ValidatorsModule {}

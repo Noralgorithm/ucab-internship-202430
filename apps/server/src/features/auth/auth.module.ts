@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
 import { MailingModule } from '~/shared/mailing/mailing.module'
 import { User } from '../users/entities/user.entity'
+import { UsersModule } from '../users/users.module'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { SignUpRequest } from './entities/sign-up-request.entity'
@@ -28,7 +29,8 @@ import { RolesGuard } from './guards/roles.guard'
 		}),
 		TypeOrmModule.forFeature([SignUpRequest, User]),
 		FileStorageModule,
-		MailingModule
+		MailingModule,
+		UsersModule
 	],
 	controllers: [AuthController],
 	providers: [
