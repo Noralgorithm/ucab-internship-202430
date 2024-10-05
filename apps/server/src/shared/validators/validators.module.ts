@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { getAppDataSource } from '~/typeorm/data-source'
 import { ExistsConstraint } from './exists.validator'
 import { IsGeoJsonPositionConstraint } from './is-geo-json-position.validator'
+import { IsUcabEmailConstraint } from './is-ucab-email.validator'
 import { NotExistsConstraint } from './not-exists.validator'
 
 @Global()
@@ -14,7 +15,8 @@ import { NotExistsConstraint } from './not-exists.validator'
 		},
 		ExistsConstraint,
 		NotExistsConstraint,
-		IsGeoJsonPositionConstraint
+		IsGeoJsonPositionConstraint,
+		IsUcabEmailConstraint
 	]
 })
 export class ValidatorsModule {}
