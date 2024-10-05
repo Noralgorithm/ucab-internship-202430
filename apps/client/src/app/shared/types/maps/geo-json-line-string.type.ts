@@ -1,4 +1,4 @@
 export type GeoJsonLineString = {
 	type: 'LineString'
-	coordinates: [number, number][]
+	coordinates: Array<[number, number] | [number, number, number]>
 }

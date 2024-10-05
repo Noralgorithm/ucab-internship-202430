@@ -10,10 +10,17 @@ export class UcabLocationService {
 	}
 
 	getUcabLatitude() {
-		return UCAB_LATITUDE
+		return Number(UCAB_LATITUDE)
 	}
 
 	getUcabLongitude() {
-		return UCAB_LONGITUDE
+		return Number(UCAB_LONGITUDE)
+	}
+
+	getUcabLatLng() {
+		return {
+			lat: this.getUcabLatitude(),
+			lng: this.getUcabLongitude()
+		}
 	}
 }

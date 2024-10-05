@@ -1,4 +1,14 @@
-<page-layout [hasTabBar]="true">
-	<p>hola aqui se muestra las rutas</p>
-	<button (click)="computeRoutes()">Test</button>
-</page-layout>
+<main class="container">
+	<google-map height="700px" width="100%" [options]="options" [center]="center">
+		<map-marker [options]="markerOptions" [position]="markerPosition"></map-marker>
+		@for (p of polylines; track $index) {
+		<map-polyline [path]="p" [options]="{
+			strokeColor: $index === 1 ? '#0096FF' : '#999999',
+			strokeOpacity: 1.0,
+			strokeWeight: 8,
+			zIndex: $index === 1 ? 1 : 0
+		}"></map-polyline>
+		}
+	</google-map>
+	<button mButton (click)="computeRoutes()">Test</button>
+</main>
