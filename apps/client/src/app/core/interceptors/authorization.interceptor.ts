@@ -2,6 +2,10 @@ import type { HttpInterceptorFn } from '@angular/common/http'
 import { TOKEN_KEY } from '~/shared/constants'
 
 export const authorizationInterceptor: HttpInterceptorFn = (req, next) => {
+	if (!req.url.startsWith('/')) {
+		return next(req)
+	}
+
 	const isLocalStorageAvailable = typeof localStorage !== 'undefined'
 
 	if (!isLocalStorageAvailable) {
