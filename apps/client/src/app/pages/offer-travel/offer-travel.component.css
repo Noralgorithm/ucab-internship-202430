@@ -1,0 +1,74 @@
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 1.3rem;
+	width: 100%;
+	padding-top: 3.625rem;
+	padding-bottom: .7rem;
+}
+
+h1 {
+	color: var(--primary-text-label);
+}
+
+h3 {
+	color: var(--primary-text-placeholder);
+}
+
+.card-vehicle {
+	display: flex;
+	align-items: center;
+	border: .2rem solid var(--greyscale-border);
+	width: 22.625rem;
+	height: 7.75rem;
+	border-radius: 1rem;
+	justify-content: space-evenly;
+}
+
+.card-vehicle-image {
+	width: 8.5rem;
+}
+
+.card-vehicle-info {
+	display: flex;
+	flex-direction: column;
+	gap: .8rem;
+	color: var(--primary-text-value);
+}
+
+.card-vehicle-info .vehicle-details {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: .6rem;
+}
+
+.card-vehicle-info .vehcicle-specs {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 1.5rem;
+}
+
+.checkbox-container {
+	width: 100%;
+}
+
+.only-woman-checkbox {
+	display: none;
+}
+
+.only-woman-label {
+	color: #f92564;
+	border: 2px solid #f92564;
+	border-radius: 16px;
+	font-weight: 500;
+	padding: 8px 10px;
+	transition: all 0.2s;
+}
+
+.only-woman-label:has(.only-woman-checkbox:checked) {
+	color: white;
+	background-color: #f92564;
+}

@@ -1,1 +1,29 @@
-<p>offer-travel works!</p>
+<page-layout [hasTabBar]="true">
+	<header>
+		<h1 class="heading-small">Crear Viaje</h1>
+		<div class="checkbox-container">
+			<label class="only-woman-label">
+				<input class="only-woman-checkbox" type="checkbox" />
+				Solo mujeres en el viaje</label>
+		</div>
+		<h3 class="label-small">Selecciona el vehículo a utilizar</h3>
+	</header>
+	<div>
+		<div class="card-vehicle">
+			<div class="card-vehicle-image">
+				<movic-vehicle color="#FF0000"></movic-vehicle>
+			</div>
+			<div class="card-vehicle-info">
+				<div class="vehicle-details">
+					<h4 class="label-medium vehicle-title">Chevrolet | Spark</h4>
+					<h4 class="label-medium vehicle-plate">A17BN1E</h4>
+				</div>
+				<div class="vehcicle-specs">
+					<p class="label-medium spec-item">4</p>
+					<p class="label-medium spec-item">Rojo</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button mButton severity="primary" size="large">Siguiente</button>
+</page-layout>
