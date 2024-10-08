@@ -23,7 +23,7 @@ h3 {
 	width: 22.625rem;
 	height: 7.75rem;
 	border-radius: 1rem;
-	justify-content: space-evenly;
+	justify-content: start;
 }
 
 .card-vehicle-image {
@@ -39,9 +39,9 @@ h3 {
 
 .card-vehicle-info .vehicle-details {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	justify-content: start;
-	gap: .6rem;
+	gap: .2rem;
 }
 
 .card-vehicle-info .vehcicle-specs {
@@ -71,4 +71,17 @@ h3 {
 .only-woman-label:has(.only-woman-checkbox:checked) {
 	color: white;
 	background-color: #f92564;
+}
+
+.op-button {
+	width: 2.9375rem;
+	aspect-ratio: 1;
+}
+
+.modal-body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 1.5rem;
 }
