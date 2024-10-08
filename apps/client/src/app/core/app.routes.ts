@@ -14,6 +14,7 @@ import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
+import { PassengerListComponent } from '~/pages/passenger-list/passenger-list.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
 import { RouteSelectionComponent } from '~/pages/route-selection/route-selection.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
@@ -125,6 +126,11 @@ export const routes: Routes = [
 				path: 'route-selection',
 				title: 'Seleccionar ruta',
 				component: RouteSelectionComponent
+			},
+			{
+				path: 'passenger-list',
+				title: 'Lista de pasajeros',
+				component: PassengerListComponent
 			}
 		]
 	}
