@@ -13,7 +13,7 @@ import { Component, HostBinding, Input } from '@angular/core'
 			align-items: center;
 			height: 100dvh;
 			width: 100%;
-			padding: 0 2rem;
+			padding: 0 .8rem;
 			overflow-y: auto;
 		}
 		

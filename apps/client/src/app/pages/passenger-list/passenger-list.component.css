@@ -11,6 +11,11 @@ h1 {
 	color: var(--primary-text-label);
 }
 
+.passengers {
+	width: 100%;
+	margin-top: .8rem;
+}
+
 .only-woman-info {
 	display: flex;
 	justify-content: center;
@@ -118,8 +123,15 @@ h1 {
 	color: var(--primary-text-placeholder);
 }
 
-.quantity-of-passengers {
+.passengers-quantity {
 	color: var(--primary-text-placeholder);
+	margin-bottom: 0.3rem;
+}
+
+.passengers-list {
+	display: flex;
+	flex-direction: column;
+	gap: .9rem;
 }
 
 /* Passenger Card */
@@ -130,10 +142,9 @@ h1 {
 	border: 3px solid #bab3c7;
 	width: 100%;
 	display: flex;
-	margin-top: 1rem;
 	justify-content: center;
 	align-items: center;
-	gap: 1rem;
+	gap: .6rem;
 }
 
 .card-row {
@@ -141,6 +152,10 @@ h1 {
 	justify-content: left;
 	align-items: center;
 	gap: 0.6rem;
+}
+
+.card-row.justify-between {
+	justify-content: space-between;
 }
 
 .avatar {
@@ -158,6 +173,10 @@ h1 {
 	color: var(--primary-text-placeholder);
 }
 
+.rating-number {
+	color: var(--primary-text-placeholder);
+}
+
 .rating-information {
 	display: flex;
 	align-items: center;
@@ -168,6 +187,10 @@ h1 {
 	width: 1.25rem;
 }
 
+.chat-icon {
+	width: var(--icon-l);
+}
+
 .card-information {
 	display: flex;
 	align-items: center;
@@ -176,4 +199,8 @@ h1 {
 
 .card-information-icon {
 	width: var(--icon-s);
+}
+
+.vehicles-available {
+	margin-top: 0.5rem;
 }
