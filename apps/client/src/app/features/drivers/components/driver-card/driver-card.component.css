@@ -28,6 +28,10 @@
 	color: var(--primary-text-value);
 }
 
+.rating-number {
+	color: var(--primary-text-placeholder);
+}
+
 .card-information-title {
 	color: var(--primary-text-placeholder);
 }

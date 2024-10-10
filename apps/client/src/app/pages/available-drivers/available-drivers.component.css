@@ -2,6 +2,7 @@ h1 {
 	text-align: left;
 	margin-top: 2rem;
 	width: 100%;
+	color: var(--primary-text-label);
 }
 
 ul {
