@@ -20,7 +20,6 @@ import { Component, HostBinding, Input } from '@angular/core'
 		.container {
 			max-width: 28.375rem;
 			display: flex;
-			height: 100%;
 			flex-direction: column;
 			justify-content: start;
 			align-items: center;
