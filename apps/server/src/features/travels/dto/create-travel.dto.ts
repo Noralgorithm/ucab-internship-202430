@@ -1,15 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
 import {
 	IsBoolean,
+	IsDefined,
 	IsEnum,
 	IsInt,
 	IsNotEmpty,
+	IsNotEmptyObject,
 	IsNumber,
+	IsObject,
 	IsPositive,
 	IsString,
-	IsUUID
+	IsUUID,
+	ValidateNested
 } from 'class-validator'
-import { RouteEntity } from '~/features/routes/entities/route.entity'
+import { RouteDto } from '~/features/routes/dto/route.dto'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import { RouteType } from '~/shared/constants'
 import { Exists } from '~/shared/validators/exists.validator'
@@ -35,13 +40,15 @@ export class CreateTravelDto {
 	@IsNumber()
 	availableSeatQuantity: number
 
+	@IsDefined()
+	@IsNotEmptyObject()
+	@IsObject()
+	@ValidateNested()
+	@Type(() => RouteDto)
+	route: RouteDto
+
 	@Exists({ entity: Vehicle, key: 'id' })
 	@IsUUID(4)
 	@IsString()
 	vehicleId: Vehicle['id']
-
-	@Exists({ entity: RouteEntity, key: 'id' })
-	@IsUUID(4)
-	@IsString()
-	routeId: RouteEntity['id']
 }
