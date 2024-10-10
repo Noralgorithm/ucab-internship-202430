@@ -1,4 +1,6 @@
 import { Component } from '@angular/core'
+import { Router } from '@angular/router'
+import { CreateTravelStoreService } from '~/features/travels/create-travel-store.service'
 import { GetOwnVehiclesService } from '~/features/vehicles/api/get-own-vehicles.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
@@ -19,7 +21,11 @@ import { ModalComponent } from '../../shared/ui/components/modal/modal.component
 	styleUrl: './offer-travel.component.css'
 })
 export class OfferTravelComponent {
-	constructor(private getOwnVehiclesService: GetOwnVehiclesService) {}
+	constructor(
+		private getOwnVehiclesService: GetOwnVehiclesService,
+		private createTravelStoreService: CreateTravelStoreService,
+		private readonly router: Router
+	) {}
 
 	myVehicles: Vehicle[] = []
 	selectedVehicle: Vehicle | null = null
@@ -53,5 +59,17 @@ export class OfferTravelComponent {
 		this.selectedVehicle = vehicle
 		this.seatsCount = vehicle.seatQuantity - 1
 		this.isModalOpen = true
+	}
+
+	handleConfirm() {
+		this.createTravelStoreService.vehicleId = String(this.selectedVehicle?.id)
+		this.createTravelStoreService.availableSeatQuantity = this.seatsCount
+
+		const routeToNavigate =
+			this.createTravelStoreService.type === 'to-ucab'
+				? '/app/route-to-ucab-selection'
+				: '/app/route-from-ucab-selection'
+
+		this.router.navigate([routeToNavigate])
 	}
 }

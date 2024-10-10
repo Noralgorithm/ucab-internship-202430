@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
-import { GeoJsonLineString } from '~/shared/types/maps/geo-json-line-string.type'
+import { Route } from '~/shared/types/travels/route.type'
 
 @Injectable({
 	providedIn: 'root'
@@ -44,10 +44,4 @@ export class ComputeRoutesService {
 	}
 }
 
-type ResponseDto = {
-	distance: number
-	duration: string
-	polyline: {
-		geoJsonLinestring: GeoJsonLineString
-	}
-}[]
+type ResponseDto = Route[]
