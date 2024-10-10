@@ -80,7 +80,7 @@ h1 {
 	color: var(--primary-text-value);
 }
 
-.card-vehicle {
+.vehicle-card {
 	display: flex;
 	align-items: center;
 	border: .2rem solid var(--greyscale-border);
@@ -90,18 +90,18 @@ h1 {
 	justify-content: start;
 }
 
-.card-vehicle-image {
+.vehicle-card-image {
 	width: 8.5rem;
 }
 
-.card-vehicle-info {
+.vehicle-card-info {
 	display: flex;
 	flex-direction: column;
 	gap: .3rem;
 	color: var(--primary-text-value);
 }
 
-.card-vehicle-info .vehicle-details {
+.vehicle-card-info .vehicle-details {
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
@@ -118,8 +118,13 @@ h1 {
 	color: var(--primary-text-placeholder);
 }
 
-/* Card Passenger */
-.card-passenger {
+.quantity-of-passengers {
+	color: var(--primary-text-placeholder);
+}
+
+/* Passenger Card */
+
+.passenger-card {
 	border-radius: 16px;
 	padding: 0 .6rem;
 	border: 3px solid #bab3c7;
@@ -145,11 +150,11 @@ h1 {
 	margin: 0.5rem 0;
 }
 
-.driver-name {
+.passenger-name {
 	color: var(--primary-text-value);
 }
 
-.card-passenger-info-title {
+.card-information-title {
 	color: var(--primary-text-placeholder);
 }
 
@@ -163,12 +168,12 @@ h1 {
 	width: 1.25rem;
 }
 
-.card-passenger-info {
+.card-information {
 	display: flex;
 	align-items: center;
 	gap: .1875rem;
 }
 
-.card-passenger-info-icon {
+.card-information-icon {
 	width: var(--icon-s);
 }
