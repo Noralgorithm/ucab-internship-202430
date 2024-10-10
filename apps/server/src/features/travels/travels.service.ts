@@ -1,12 +1,6 @@
-import {
-	Inject,
-	Injectable,
-	UnprocessableEntityException
-} from '@nestjs/common'
+import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { RouteEntity } from '../routes/entities/route.entity'
-import { RoutesService } from '../routes/types'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
 import { VehiclesService } from '../vehicles/vehicles.service'
@@ -19,8 +13,7 @@ export class TravelsService {
 	constructor(
 		@InjectRepository(Travel)
 		private readonly travelsRepository: Repository<Travel>,
-		private readonly vehiclesService: VehiclesService,
-		@Inject(RoutesService) private readonly routesService: RoutesService
+		private readonly vehiclesService: VehiclesService
 	) {}
 
 	async create(driverId: User['id'], createTravelDto: CreateTravelDto) {
@@ -36,23 +29,12 @@ export class TravelsService {
 			)
 		}
 
-		let route: RouteEntity
-		try {
-			route = await this.routesService.find({
-				id: createTravelDto.routeId
-			})
-		} catch (error) {
-			throw new UnprocessableEntityException(
-				'No se encontró la ruta especificada'
-			)
-		}
-
 		const travel = this.travelsRepository.create({
 			...createTravelDto,
-			distance: route.distance,
-			duration: route.duration,
-			description: route.description,
-			geoJsonLineString: route.geoJsonLineString,
+			distance: createTravelDto.route.distance,
+			duration: createTravelDto.route.duration,
+			description: createTravelDto.route.description,
+			geoJsonLineString: createTravelDto.route.polyline,
 			vehicle
 		})
 
