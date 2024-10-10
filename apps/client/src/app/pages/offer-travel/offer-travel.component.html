@@ -28,7 +28,7 @@
 	</div>
 	}
 
-	<modal title="Asientos disponibles" variant="confirmation" [(isOpen)]="isModalOpen">
+	<modal title="Asientos disponibles" variant="confirmation" [(isOpen)]="isModalOpen" (onConfirm)="handleConfirm()">
 		<div class="modal-body">
 			<button class="op-button" (click)="decrementSeatsCount()">-</button>
 			<output>{{seatsCount}}</output>

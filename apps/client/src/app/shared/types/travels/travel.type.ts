@@ -6,3 +6,7 @@ export interface Travel {
 	vehicleId: string
 	routeId: string
 }
+
+export type TravelType = 'to-ucab' | 'from-ucab'
+
+export type TravelStatus = 'not-started' | 'in-progress' | 'finished'

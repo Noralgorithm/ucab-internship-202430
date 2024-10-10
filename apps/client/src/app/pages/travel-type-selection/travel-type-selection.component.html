@@ -1,7 +1,7 @@
 <page-layout [hasTabBar]="true">
 	<h1 class="heading-small">Modalidad de viaje</h1>
 	<section class="cards-container">
-		<a class="card" [routerLink]="ucabToExternalRouteToRedirect">
+		<button class="card" (click)="handleFromUcabSelection()">
 
 			<img class="image" src="/assets/svgs/UcabToExternal.svg" alt="" />
 
@@ -14,9 +14,9 @@
 					</p>
 				</div>
 			</div>
-		</a>
+		</button>
 
-		<a class="card" [routerLink]="externalToUcabRouteToRedirect">
+		<button class="card" (click)="handleToUcabSelection()">
 
 			<img class="image" src="/assets/svgs/ExternalToUcab.svg" alt="" />
 
@@ -28,6 +28,6 @@
 					<p class="label-small">Servicio de movilidad con un punto inicial externo y punto final la UCAB.</p>
 				</div>
 			</div>
-		</a>
+		</button>
 	</section>
 </page-layout>

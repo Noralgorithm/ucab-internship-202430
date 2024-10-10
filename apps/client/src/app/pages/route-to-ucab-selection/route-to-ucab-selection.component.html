@@ -1,6 +1,11 @@
 <main class="container">
 	<google-map height="100%" width="100%" [options]="options" [center]="center">
-		<map-marker [options]="markerOptions" [position]="ucabMarkerPosition"></map-marker>
+		<map-marker [options]="markerOptions" [position]="ucabMarkerPosition" [options]="{
+			icon: 'https://cdn-icons-png.flaticon.com/32/684/684908.png'
+		}"></map-marker>
+		<map-marker [options]="markerOptions" [position]="originMarkerPosition" [options]="{
+			icon: 'https://cdn-icons-png.flaticon.com/16/6162/6162025.png'
+		}"></map-marker>
 		@for (r of routes; track $index) {
 		<map-polyline [path]="r.vertices" [options]="{
 			strokeColor: r.selected ? '#0096FF' : '#999999',
@@ -11,6 +16,6 @@
 		}
 	</google-map>
 	<div class="button-container">
-		<button mButton size="large">Usar esta ruta</button>
+		<button mButton size="large" (click)="handleConfirm()">Usar esta ruta</button>
 	</div>
 </main>
