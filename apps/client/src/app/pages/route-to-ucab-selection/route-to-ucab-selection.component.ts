@@ -19,8 +19,8 @@ import { geoJsonLineStringToLatLng } from '~/shared/utils/geo-json-line-string.u
 		MapPolyline,
 		MapMarker
 	],
-	templateUrl: './route-selection.component.html',
-	styleUrl: './route-selection.component.css'
+	templateUrl: './route-to-ucab-selection.component.html',
+	styleUrl: './route-to-ucab-selection.component.css'
 })
 export class RouteSelectionComponent {
 	routes: Route[] = []
@@ -28,7 +28,9 @@ export class RouteSelectionComponent {
 	constructor(
 		private readonly computeRoutesService: ComputeRoutesService,
 		private readonly ownLocationService: OwnLocationService
-	) {}
+	) {
+		this.computeRoutes()
+	}
 
 	async computeRoutes() {
 		this.ownLocationService.$location.subscribe((position) => {

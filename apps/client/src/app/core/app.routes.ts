@@ -16,7 +16,7 @@ import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
 import { PassengerListComponent } from '~/pages/passenger-list/passenger-list.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
-import { RouteSelectionComponent } from '~/pages/route-selection/route-selection.component'
+import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
 import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
 import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
@@ -123,7 +123,7 @@ export const routes: Routes = [
 				component: WaitingForReviewComponent
 			},
 			{
-				path: 'route-selection',
+				path: 'route-to-ucab-selection',
 				title: 'Seleccionar ruta',
 				component: RouteSelectionComponent
 			},

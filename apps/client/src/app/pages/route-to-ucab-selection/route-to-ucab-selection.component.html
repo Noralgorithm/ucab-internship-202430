@@ -1,5 +1,5 @@
 <main class="container">
-	<google-map height="700px" width="100%" [options]="options" [center]="center">
+	<google-map height="100%" width="100%" [options]="options" [center]="center">
 		<map-marker [options]="markerOptions" [position]="ucabMarkerPosition"></map-marker>
 		@for (r of routes; track $index) {
 		<map-polyline [path]="r.vertices" [options]="{
@@ -10,5 +10,7 @@
 		}" (polylineClick)="handlePolylineClick(r)"></map-polyline>
 		}
 	</google-map>
-	<button mButton size="large" (click)="computeRoutes()">(TEST) my location</button>
+	<div class="button-container">
+		<button mButton size="large">Usar esta ruta</button>
+	</div>
 </main>
