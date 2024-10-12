@@ -10,6 +10,7 @@ import { AvailableDriversComponent } from '~/pages/available-drivers/available-d
 import { ConfirmTravelComponent } from '~/pages/confirm-travel/confirm-travel.component'
 import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.component'
 import { EditVehicleComponent } from '~/pages/edit-vehicle/edit-vehicle.component'
+import { ExternalDestinationSelectionComponent } from '~/pages/external-destination-selection/external-destination-selection.component'
 import { HomeComponent } from '~/pages/home/home.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
@@ -137,6 +138,11 @@ export const routes: Routes = [
 				path: 'confirm-travel',
 				title: 'Confirmar viaje',
 				component: ConfirmTravelComponent
+			},
+			{
+				path: 'external-destination-selection',
+				title: 'Seleccionar destino externo',
+				component: ExternalDestinationSelectionComponent
 			}
 		]
 	}

@@ -13,6 +13,7 @@ import { GOOGLE_MAPS_API_KEY } from '~root/secrets'
 })
 export class CardMyDestinationComponent {
 	@Input({ required: true }) destination!: Destination
+	@Input({ required: true }) actionButtons = true
 
 	staticMapUrl!: SafeResourceUrl
 
