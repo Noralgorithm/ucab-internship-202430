@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { Route } from '~/shared/types/travels/route.type'
 import {
 	Travel,
@@ -16,6 +17,16 @@ export class CreateTravelStoreService {
 	availableSeatQuantity: number | null = null
 	vehicleId: string | null = null
 	route: Route | null = null
+
+	constructor(private readonly activatedRoute: ActivatedRoute) {
+		this.activatedRoute.queryParams.subscribe((params) => {
+			this.forWomen = params['forWomen'] === 'true'
+			this.type = params['type'] as TravelType
+			this.status = params['status'] as TravelStatus
+			this.availableSeatQuantity = Number(params['availableSeatQuantity'])
+			this.vehicleId = params['vehicleId']
+		})
+	}
 }
 
 export interface CreateTravelServiceDto extends Travel {}

@@ -39,7 +39,7 @@ export class OfferTravelComponent {
 	}
 
 	incrementSeatsCount() {
-		const seatsCountLimit = (this.selectedVehicle?.seatQuantity || 1) - 1
+		const seatsCountLimit = this.selectedVehicle?.seatQuantity || 1
 
 		if (this.seatsCount >= seatsCountLimit) {
 			return
@@ -57,7 +57,7 @@ export class OfferTravelComponent {
 
 	handleVehicleSelection(vehicle: Vehicle) {
 		this.selectedVehicle = vehicle
-		this.seatsCount = vehicle.seatQuantity - 1
+		this.seatsCount = vehicle.seatQuantity
 		this.isModalOpen = true
 	}
 
@@ -70,6 +70,12 @@ export class OfferTravelComponent {
 				? '/app/route-to-ucab-selection'
 				: '/app/route-from-ucab-selection'
 
-		this.router.navigate([routeToNavigate])
+		this.router.navigate([routeToNavigate], {
+			queryParams: {
+				vehicleId: this.selectedVehicle?.id,
+				availableSeatQuantity: this.seatsCount
+			},
+			queryParamsHandling: 'merge'
+		})
 	}
 }
