@@ -6,11 +6,14 @@ import {
 	Entity,
 	Generated,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { Message } from '~/features/messages/entities/message.entity'
 import { Travel } from '~/features/travels/entities/travel.entity'
 import { User } from '~/features/users/entities/user.entity'
+import { GeoJsonPoint } from '~/shared/types'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 import { TravelCancelType } from '../enums/travel-cancel-type.enum'
 
@@ -23,44 +26,45 @@ export class Ride {
 	@Column({ type: 'uuid', unique: true })
 	id: string
 
-	@Column({ type: 'varchar' })
-	endpoint: string
-
 	@Column({ type: 'boolean', default: false, nullable: false })
 	isAccepted: boolean
 
 	@Column({
 		type: 'timestamptz',
-		transformer: LuxonDateTransformer
+		transformer: LuxonDateTransformer,
+		nullable: true
 	})
-	arrivalTime: DateTime
-
-	@Column({ type: 'float', nullable: true })
-	starRating: number
+	arrivalTime?: DateTime
 
 	// Passenger Columns
 
-	@Column({ type: 'boolean', default: false, nullable: true })
+	@Column({ type: 'jsonb' })
+	origin: GeoJsonPoint
+
+	@Column({ type: 'jsonb' })
+	destination: GeoJsonPoint
+
+	@Column({ type: 'boolean', default: false })
 	tookTheRide: boolean
 
-	@Column({ type: 'varchar', nullable: true })
-	meetingPoint: string
+	@Column({ type: 'jsonb', nullable: true })
+	meetingPoint?: GeoJsonPoint
 
 	@Column({ nullable: true })
-	cancellationReason: string
+	cancellationReason?: string
 
 	@Column({
 		type: 'enum',
 		enum: TravelCancelType,
 		nullable: true
 	})
-	travelCancelType: TravelCancelType
+	travelCancelType?: TravelCancelType
 
-	@Column()
-	passengerStarRating: number
+	@Column({ type: 'float', nullable: true })
+	passengerStarRating?: number
 
-	@Column()
-	driverStarRating: number
+	@Column({ type: 'float', nullable: true })
+	driverStarRating?: number
 
 	@CreateDateColumn({
 		type: 'timestamptz',
@@ -91,4 +95,10 @@ export class Ride {
 		(travel) => travel.rides
 	)
 	travel: Travel
+
+	@OneToMany(
+		() => Message,
+		(message) => message.ride
+	)
+	messages: Message[]
 }

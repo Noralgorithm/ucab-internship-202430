@@ -3,11 +3,13 @@ import { ArrayMinSize, Equals, IsArray } from 'class-validator'
 import { IsGeoJsonPosition } from '~/shared/validators/is-geo-json-position.validator'
 import { GeoJsonLineString, GeoJsonPosition } from '../types'
 
+const lineString = 'LineString'
+
 export class GeoJsonLineStringDto implements GeoJsonLineString {
-	@Equals('LineString', {
+	@Equals(lineString, {
 		message: 'El tipo de geometría debe ser "LineString"'
 	})
-	type: 'LineString'
+	type: typeof lineString
 
 	@ApiProperty({
 		type: 'array',

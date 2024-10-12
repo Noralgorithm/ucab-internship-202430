@@ -13,8 +13,11 @@ import {
 	MIN_PLATE_LENGTH,
 	MODEL_MAX_LENGTH
 } from '~/shared/constants'
+import { NotExists } from '~/shared/validators/not-exists.validator'
+import { Vehicle } from '../entities/vehicle.entity'
 
 export class CreateVehicleDto {
+	@NotExists({ entity: Vehicle, key: 'plate' })
 	@Length(MIN_PLATE_LENGTH, MAX_PLATE_LENGTH)
 	@IsString()
 	plate: string

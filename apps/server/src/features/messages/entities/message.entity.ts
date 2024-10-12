@@ -9,11 +9,12 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { Ride } from '~/features/rides/entities/ride.entity'
 import { User } from '~/features/users/entities/user.entity'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 
-@Entity({ name: 'destinations' })
-export class Destination {
+@Entity({ name: 'messages' })
+export class Message {
 	@PrimaryGeneratedColumn()
 	internalId: number
 
@@ -22,16 +23,7 @@ export class Destination {
 	id: string
 
 	@Column()
-	name: string
-
-	@Column({ type: 'decimal' })
-	latitude: number
-
-	@Column({ type: 'decimal' })
-	longitude: number
-
-	// @Column()
-	// destinationPicFilename: string
+	content: string
 
 	@CreateDateColumn({
 		type: 'timestamptz',
@@ -52,8 +44,20 @@ export class Destination {
 	deletedAt: DateTime
 
 	@ManyToOne(
-		() => User,
-		(user) => user.destinations
+		() => Ride,
+		(ride) => ride.messages
 	)
-	user: User
+	ride: Ride
+
+	@ManyToOne(
+		() => User,
+		(user) => user.messagesAsDriver
+	)
+	driver: User
+
+	@ManyToOne(
+		() => User,
+		(user) => user.messagesAsPassenger
+	)
+	passenger: User
 }

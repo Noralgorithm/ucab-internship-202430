@@ -6,11 +6,11 @@ import {
 	HttpCode,
 	Param,
 	Patch,
-	Post,
-	Req
+	Post
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { FastifyRequest } from 'fastify'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { User } from '../users/entities/user.entity'
 import { DestinationsService } from './destinations.service'
 import { CreateDestinationDto } from './dto/create-destination.dto'
 import { UpdateDestinationDto } from './dto/update-destination.dto'
@@ -22,10 +22,8 @@ export class DestinationsController {
 
 	@HttpCode(200)
 	@Get('mine')
-	async findAll(@Req() req: FastifyRequest & { userId: string }) {
-		const userId = req['userId']
-
-		return this.destinationsService.findByPassenger(userId)
+	async findAll(@CurrentUser() currentUser: User) {
+		return this.destinationsService.findByPassenger(currentUser.id)
 	}
 
 	@Get(':id')
@@ -36,37 +34,32 @@ export class DestinationsController {
 	@HttpCode(201)
 	@Post()
 	async create(
-		@Req() req: FastifyRequest & { userId: string },
+		@CurrentUser() currentUser: User,
 		@Body() createDestinationDto: CreateDestinationDto
 	) {
-		const userId = req['userId']
-
-		return this.destinationsService.create(userId, createDestinationDto)
+		return this.destinationsService.create(currentUser.id, createDestinationDto)
 	}
 
 	@HttpCode(200)
 	@Patch(':id')
 	async update(
 		@Param('id') id: string,
-		@Req() req: FastifyRequest & { userId: string },
+		@CurrentUser() currentUser: User,
 		@Body() updateDestinationDto: UpdateDestinationDto
 	) {
-		const userId = req['userId']
-
-		await this.destinationsService.update(id, userId, updateDestinationDto)
+		await this.destinationsService.update(
+			id,
+			currentUser.id,
+			updateDestinationDto
+		)
 
 		return 'Destino actualizado con éxito mi pana'
 	}
 
 	@HttpCode(200)
 	@Delete(':id')
-	async remove(
-		@Param('id') id: string,
-		@Req() req: FastifyRequest & { userId: string }
-	) {
-		const userId = req['userId']
-
-		await this.destinationsService.remove(id, userId)
+	async remove(@Param('id') id: string, @CurrentUser() currentUser: User) {
+		await this.destinationsService.remove(id, currentUser.id)
 
 		return 'Destino eliminado con éxito mi pana'
 	}
