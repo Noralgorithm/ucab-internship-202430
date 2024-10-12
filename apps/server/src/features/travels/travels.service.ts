@@ -1,12 +1,14 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { GeoJsonPoint } from '~/shared/types'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
 import { VehiclesService } from '../vehicles/vehicles.service'
 import { CreateTravelDto } from './dto/create-travel.dto'
 import { UpdateTravelDto } from './dto/update-travel.dto'
 import { Travel } from './entities/travel.entity'
+import { TravelStatus } from './enums/travel-status.enum'
 
 @Injectable()
 export class TravelsService {
@@ -29,16 +31,41 @@ export class TravelsService {
 			)
 		}
 
-		const travel = this.travelsRepository.create({
-			...createTravelDto,
-			distance: createTravelDto.route.distance,
-			duration: createTravelDto.route.duration,
-			description: createTravelDto.route.description,
-			geoJsonLineString: createTravelDto.route.polyline,
+		const {
+			availableSeatQuantity,
+			forWomen,
+			status,
+			type,
+			route: { description, distance, duration, polyline }
+		} = createTravelDto
+
+		const origin: GeoJsonPoint = {
+			type: 'Point',
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that coordinates is not empty and has at least two elements
+			coordinates: polyline.coordinates.at(0)!
+		}
+
+		const destination: GeoJsonPoint = {
+			type: 'Point',
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that coordinates is not empty and has at least two elements
+			coordinates: polyline.coordinates.at(-1)!
+		}
+
+		const travel = this.travelsRepository.save({
+			availableSeatQuantity,
+			forWomen,
+			description,
+			distance,
+			duration,
+			geoJsonLineString: polyline,
+			status,
+			type,
+			origin,
+			destination,
 			vehicle
 		})
 
-		return this.travelsRepository.save(travel)
+		return travel
 	}
 
 	async findOne(id: number) {
@@ -51,5 +78,16 @@ export class TravelsService {
 
 	async remove(id: number) {
 		return `This action removes a #${id} travel`
+	}
+
+	async getAvailableDrivers() {
+		const travels = await this.travelsRepository.find({
+			where: { status: TravelStatus.NOT_STARTED },
+			order: { createdAt: 'DESC' }
+		})
+
+		const drivers = travels.map((travel) => travel.vehicle.driver)
+
+		return drivers
 	}
 }

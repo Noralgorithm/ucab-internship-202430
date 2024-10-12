@@ -14,6 +14,7 @@ import { Ride } from '~/features/rides/entities/ride.entity'
 import { GeoJsonLineString } from '~/features/routes/types'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import { RouteType } from '~/shared/constants'
+import { GeoJsonPoint } from '~/shared/types'
 import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 import { TravelStatus } from '../enums/travel-status.enum'
 
@@ -42,20 +43,25 @@ export class Travel {
 	geoJsonLineString: GeoJsonLineString
 	//
 
-	@Column({ type: 'varchar' })
-	endpoint: string
+	@Column('jsonb')
+	origin: GeoJsonPoint
+
+	@Column('jsonb')
+	destination: GeoJsonPoint
 
 	@Column({
 		type: 'timestamptz',
-		transformer: LuxonDateTransformer
+		transformer: LuxonDateTransformer,
+		nullable: true
 	})
-	departureTime: DateTime
+	departureTime?: DateTime
 
 	@Column({
 		type: 'timestamptz',
-		transformer: LuxonDateTransformer
+		transformer: LuxonDateTransformer,
+		nullable: true
 	})
-	arrivalTime: DateTime
+	arrivalTime?: DateTime
 
 	@Column({ type: 'boolean', default: false, nullable: false })
 	forWomen: boolean

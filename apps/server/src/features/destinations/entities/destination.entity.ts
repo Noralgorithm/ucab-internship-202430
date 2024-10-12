@@ -30,6 +30,9 @@ export class Destination {
 	@Column({ type: 'decimal' })
 	longitude: number
 
+	// @Column()
+	// destinationPicFilename: string
+
 	@CreateDateColumn({
 		type: 'timestamptz',
 		transformer: LuxonDateTransformer

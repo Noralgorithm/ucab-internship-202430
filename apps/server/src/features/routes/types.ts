@@ -139,6 +139,8 @@ export interface RoutesService {
 	}): Promise<RouteEntity>
 
 	find({ id }: { id: string }): Promise<RouteEntity>
+
+	// screenshotRoute()
 }
 
 // This is a symbol to be used as a provider token

@@ -1,17 +1,8 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-	Req
-} from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { FastifyRequest } from 'fastify'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { User } from '../users/entities/user.entity'
 import { CreateTravelDto } from './dto/create-travel.dto'
-import { UpdateTravelDto } from './dto/update-travel.dto'
 import { TravelsService } from './travels.service'
 
 @ApiTags('[WIP] travels')
@@ -21,26 +12,14 @@ export class TravelsController {
 
 	@Post()
 	create(
-		@Req() req: FastifyRequest & { userId: string },
+		@CurrentUser() currentUser: User,
 		@Body() createTravelDto: CreateTravelDto
 	) {
-		const userId = req['userId']
-
-		return this.travelsService.create(userId, createTravelDto)
+		return this.travelsService.create(currentUser.id, createTravelDto)
 	}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.travelsService.findOne(+id)
-	}
-
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateTravelDto: UpdateTravelDto) {
-		return this.travelsService.update(+id, updateTravelDto)
-	}
-
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.travelsService.remove(+id)
+	@Get('available-drivers')
+	getAvailableDrivers() {
+		return this.travelsService.getAvailableDrivers()
 	}
 }
