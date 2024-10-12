@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { FindOneOptions, Repository } from 'typeorm'
 import { CreateRideDto } from './dto/create-ride.dto'
-import { UpdateRideDto } from './dto/update-ride.dto'
 import { Ride } from './entities/ride.entity'
 
 @Injectable()
@@ -11,6 +10,7 @@ export class RidesService {
 		@InjectRepository(Ride)
 		private readonly ridesRepository: Repository<Ride>
 	) {}
+
 	create(createRideDto: CreateRideDto) {
 		const { destination, origin, passenger, travel } = createRideDto
 
@@ -26,15 +26,13 @@ export class RidesService {
 		return '`This action returns all rides`'
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} ride`
-	}
+	async findOne(options: FindOneOptions<Ride>) {
+		const ride = await this.ridesRepository.findOne(options)
 
-	update(id: number, updateRideDto: UpdateRideDto) {
-		return `This action updates a #${id} ride`
-	}
+		if (ride == null) {
+			throw new NotFoundException('Ride not found')
+		}
 
-	remove(id: number) {
-		return `This action removes a #${id} ride`
+		return ride
 	}
 }

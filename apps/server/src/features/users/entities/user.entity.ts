@@ -11,6 +11,7 @@ import {
 	UpdateDateColumn
 } from 'typeorm'
 import { Destination } from '~/features/destinations/entities/destination.entity'
+import { Message } from '~/features/messages/entities/message.entity'
 import { Ride } from '~/features/rides/entities/ride.entity'
 import { RouteEntity } from '~/features/routes/entities/route.entity'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
@@ -131,4 +132,16 @@ export class User {
 		(ride) => ride.passenger
 	)
 	rides: Ride[]
+
+	@OneToMany(
+		() => Message,
+		(message) => message.driver
+	)
+	messagesAsDriver: Message[]
+
+	@OneToMany(
+		() => Message,
+		(message) => message.passenger
+	)
+	messagesAsPassenger: Message[]
 }

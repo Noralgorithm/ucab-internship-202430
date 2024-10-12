@@ -1,6 +1,8 @@
 import {
 	Body,
 	Controller,
+	Get,
+	Param,
 	Post,
 	UnprocessableEntityException
 } from '@nestjs/common'
@@ -77,5 +79,10 @@ export class RidesController {
 			passenger: currentUser,
 			travel
 		})
+	}
+
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.ridesService.findOne({ where: { id: id } })
 	}
 }

@@ -5,6 +5,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { validate } from '~/app/config/env.validation'
 import { AuthModule } from '~/features/auth/auth.module'
 import { DestinationsModule } from '~/features/destinations/destinations.module'
+import { MessagesModule } from '~/features/messages/messages.module'
 import { ProfileModule } from '~/features/profile/profile.module'
 import { RidesModule } from '~/features/rides/rides.module'
 import { RoutesModule } from '~/features/routes/routes.module'
@@ -41,7 +42,8 @@ import { FilesController } from './files.controller'
 		DestinationsModule,
 		RoutesModule,
 		TravelsModule,
-		RidesModule
+		RidesModule,
+		MessagesModule
 	],
 	controllers: [FilesController]
 })

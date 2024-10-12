@@ -6,9 +6,11 @@ import {
 	Entity,
 	Generated,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { Message } from '~/features/messages/entities/message.entity'
 import { Travel } from '~/features/travels/entities/travel.entity'
 import { User } from '~/features/users/entities/user.entity'
 import { GeoJsonPoint } from '~/shared/types'
@@ -93,4 +95,10 @@ export class Ride {
 		(travel) => travel.rides
 	)
 	travel: Travel
+
+	@OneToMany(
+		() => Message,
+		(message) => message.ride
+	)
+	messages: Message[]
 }
