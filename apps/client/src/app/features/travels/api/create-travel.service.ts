@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
+import { GeoJsonLineString } from '~/shared/types/maps/geo-json-line-string.type'
 import { Travel } from '~/shared/types/travels/travel.type'
 
 @Injectable({
@@ -11,19 +12,43 @@ export class CreateTravelService {
 
 	execute(createTravelServiceDto: CreateTravelServiceDto) {
 		return this.http.post<SuccesfulResponse<unknown>>(
-			'/destinations',
+			'/travels',
 			createTravelServiceDto
 		)
 	}
 }
 
-export interface CreateTravelServiceDto extends Travel {}
+export interface CreateTravelServiceDto extends Omit<Travel, 'route'> {
+	route: RouteDto
+}
 
-/* {
-  "forWomen": false,
-  "type": "to-ucab",
-  "status": "not-started",
-  "availableSeatQuantity": 1,
-  "vehicleId": "string",
-  "routeId": "string"
-} */
+export interface RouteDto {
+	duration: string
+	description: string
+	distance: number
+	polyline: GeoJsonLineString
+}
+/* "route": {
+	"duration": "08816594262564157495908388746856099112013976635390684333006329555947796747977786627670197s",
+	"description": "string",
+	"distance": 0,
+	"polyline": {
+		"coordinates": [
+			[
+				58.382,
+				34.604,
+				23
+			],
+			[
+				58.3816,
+				34.6037
+			],
+			[
+				58.381,
+				34.603,
+				12
+			]
+		],
+		"type": "string"
+	}
+}, */

@@ -75,7 +75,9 @@ export class RouteSelectionComponent {
 
 		if (selectedRoute) {
 			this.createTravelStoreService.route = selectedRoute.data
-			this.router.navigate(['/app/'])
+			this.router.navigate(['/app/confirm-travel'], {
+				queryParamsHandling: 'merge'
+			})
 		}
 	}
 
