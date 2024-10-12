@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { FastifyRequest } from 'fastify'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { User } from '../users/entities/user.entity'
 import { CreateVehicleDto } from './dto/create-vehicle.dto'
 import { DeleteVehicleParamsDto } from './dto/delete-vehicle-params.dto'
 import { UpdateVehicleParamsDto } from './dto/update-vehicle-params.dto'
@@ -24,10 +26,8 @@ export class VehiclesController {
 
 	@HttpCode(200)
 	@Get('mine')
-	async findMine(@Req() req: FastifyRequest & { userId: string }) {
-		const userId = req['userId']
-
-		return await this.vehiclesService.findByDriver(userId)
+	async findMine(@CurrentUser() currentUser: User) {
+		return await this.vehiclesService.findByDriver(currentUser.id)
 	}
 
 	@HttpCode(200)
