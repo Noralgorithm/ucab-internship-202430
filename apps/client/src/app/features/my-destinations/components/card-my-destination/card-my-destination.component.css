@@ -29,6 +29,7 @@ img {
 	backdrop-filter: blur(.75rem);
 	border-bottom-left-radius: 1rem;
 	border-bottom-right-radius: 1rem;
+	min-height: 5rem;
 }
 
 .destination-name {
