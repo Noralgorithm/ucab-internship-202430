@@ -6,11 +6,9 @@ import {
 	HttpCode,
 	Param,
 	Patch,
-	Post,
-	Req
+	Post
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { FastifyRequest } from 'fastify'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
 import { CreateVehicleDto } from './dto/create-vehicle.dto'
@@ -39,24 +37,20 @@ export class VehiclesController {
 	@HttpCode(201)
 	@Post()
 	async create(
-		@Req() req: FastifyRequest & { userId: string },
+		@CurrentUser() currentUser: User,
 		@Body() createVehicleDto: CreateVehicleDto
 	) {
-		const userId = req['userId']
-
-		return await this.vehiclesService.create(userId, createVehicleDto)
+		return await this.vehiclesService.create(currentUser.id, createVehicleDto)
 	}
 
 	@HttpCode(200)
 	@Patch(':id')
 	async update(
 		@Param() { id }: UpdateVehicleParamsDto,
-		@Req() req: FastifyRequest & { userId: string },
+		@CurrentUser() currentUser: User,
 		@Body() updateVehicleDto: UpdateVehicleDto
 	) {
-		const userId = req['userId']
-
-		await this.vehiclesService.update(id, userId, updateVehicleDto)
+		await this.vehiclesService.update(id, currentUser.id, updateVehicleDto)
 
 		return 'Vehículo actualizado con éxito mi pana'
 	}
@@ -65,11 +59,9 @@ export class VehiclesController {
 	@Delete(':id')
 	async remove(
 		@Param() { id }: DeleteVehicleParamsDto,
-		@Req() req: FastifyRequest & { userId: string }
+		@CurrentUser() currentUser: User
 	) {
-		const userId = req['userId']
-
-		await this.vehiclesService.remove(id, userId)
+		await this.vehiclesService.remove(id, currentUser.id)
 
 		return 'Vehículo eliminado con éxito mi pana'
 	}
