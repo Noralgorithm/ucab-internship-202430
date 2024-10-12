@@ -6,3 +6,4 @@ export const UCAB_GUAYANA_LOCATION: Location = {
 		longitude: -62.712719
 	}
 }
+//TODO: consider moving this to shared constants

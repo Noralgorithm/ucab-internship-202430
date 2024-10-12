@@ -1,3 +1,6 @@
+import { UCAB_GUAYANA_LOCATION } from '~/features/routes/constants'
+import { GeoJsonPoint } from './types'
+
 export enum Gender {
 	MALE = 'male',
 	FEMALE = 'female'
@@ -46,3 +49,12 @@ export const MAX_HEADING = 360
 export const MIN_DISTANCE = 0
 
 export const UCAB_EMAIL_REGEX = /^.+@ucab\.edu\.ve$|^.+@est\.ucab\.edu\.ve$/
+
+export const UCAB_GUAYANA_POINT: GeoJsonPoint = {
+	type: 'Point',
+	coordinates: [
+		UCAB_GUAYANA_LOCATION.coords.longitude,
+		UCAB_GUAYANA_LOCATION.coords.latitude
+	]
+}
+//TODO: consider moving this to rides constants

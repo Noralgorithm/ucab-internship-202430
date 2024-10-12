@@ -1,6 +1,10 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common'
+import {
+	Injectable,
+	NotFoundException,
+	UnprocessableEntityException
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { FindOneOptions, Repository } from 'typeorm'
 import { GeoJsonPoint } from '~/shared/types'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
@@ -68,8 +72,14 @@ export class TravelsService {
 		return travel
 	}
 
-	async findOne(id: number) {
-		return `This action returns a #${id} travel`
+	async findOne(options: FindOneOptions<Travel>) {
+		const travel = await this.travelsRepository.findOne(options)
+
+		if (travel == null) {
+			throw new NotFoundException('Travel not found')
+		}
+
+		return travel
 	}
 
 	async update(id: number, updateTravelDto: UpdateTravelDto) {
@@ -83,7 +93,8 @@ export class TravelsService {
 	async getAvailableDrivers() {
 		const travels = await this.travelsRepository.find({
 			where: { status: TravelStatus.NOT_STARTED },
-			order: { createdAt: 'DESC' }
+			order: { createdAt: 'DESC' },
+			relations: { vehicle: { driver: true } }
 		})
 
 		const drivers = travels.map((travel) => travel.vehicle.driver)

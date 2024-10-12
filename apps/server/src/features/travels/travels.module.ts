@@ -14,6 +14,7 @@ import { TravelsService } from './travels.service'
 		RoutesModule
 	],
 	controllers: [TravelsController],
-	providers: [TravelsService]
+	providers: [TravelsService],
+	exports: [TravelsService]
 })
 export class TravelsModule {}

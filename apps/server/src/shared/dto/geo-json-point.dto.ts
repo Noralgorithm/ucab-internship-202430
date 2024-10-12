@@ -8,7 +8,7 @@ const point = 'Point'
 
 export class GeoJsonPointDto implements GeoJsonPoint {
 	@Equals(point, {
-		message: 'El tipo de geometría debe ser "LineString"'
+		message: `El tipo de geometría debe ser "${point}"`
 	})
 	type: typeof point
 

@@ -1,44 +1,81 @@
 import {
 	Body,
 	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post
+	Post,
+	UnprocessableEntityException
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { CreateRideDto } from './dto/create-ride.dto'
-import { UpdateRideDto } from './dto/update-ride.dto'
+import { NotFoundError } from 'rxjs'
+import { UCAB_GUAYANA_POINT } from '~/shared/constants'
+import { UnknownError } from '~/shared/errors'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { Travel } from '../travels/entities/travel.entity'
+import { TravelsService } from '../travels/travels.service'
+import { User } from '../users/entities/user.entity'
+import { CreateForMeDto } from './dto/create-for-me.dto'
 import { RidesService } from './rides.service'
 
 @ApiTags('[WIP] rides')
 @Controller('rides')
 export class RidesController {
-	constructor(private readonly ridesService: RidesService) {}
+	constructor(
+		private readonly ridesService: RidesService,
+		private readonly travelsService: TravelsService
+	) {}
 
-	@Post()
-	create(@Body() createRideDto: CreateRideDto) {
-		return this.ridesService.create(createRideDto)
+	@Post('from-ucab/for-me')
+	async createFromUcabForMe(
+		@CurrentUser() currentUser: User,
+		@Body() createForMeDto: CreateForMeDto
+	) {
+		let travel: Travel
+		try {
+			travel = await this.travelsService.findOne({
+				where: { id: createForMeDto.travelId }
+			})
+		} catch (error: unknown) {
+			if (error instanceof NotFoundError) {
+				throw new UnprocessableEntityException(
+					'No se encontró el viaje especificado'
+				)
+			}
+
+			throw new UnknownError('', { cause: error })
+		}
+
+		return await this.ridesService.create({
+			destination: createForMeDto.point,
+			origin: UCAB_GUAYANA_POINT,
+			passenger: currentUser,
+			travel
+		})
 	}
 
-	@Get()
-	findAll() {
-		return this.ridesService.findAll()
-	}
+	@Post('to-ucab/for-me')
+	async createToUcabForMe(
+		@CurrentUser() currentUser: User,
+		@Body() createForMeDto: CreateForMeDto
+	) {
+		let travel: Travel
+		try {
+			travel = await this.travelsService.findOne({
+				where: { id: createForMeDto.travelId }
+			})
+		} catch (error: unknown) {
+			if (error instanceof NotFoundError) {
+				throw new UnprocessableEntityException(
+					'No se encontró el viaje especificado'
+				)
+			}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.ridesService.findOne(+id)
-	}
+			throw new UnknownError('', { cause: error })
+		}
 
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateRideDto: UpdateRideDto) {
-		return this.ridesService.update(+id, updateRideDto)
-	}
-
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.ridesService.remove(+id)
+		return await this.ridesService.create({
+			destination: UCAB_GUAYANA_POINT,
+			origin: createForMeDto.point,
+			passenger: currentUser,
+			travel
+		})
 	}
 }
