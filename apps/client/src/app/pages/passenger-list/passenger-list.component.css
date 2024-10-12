@@ -85,6 +85,8 @@ h1 {
 	color: var(--primary-text-value);
 }
 
+/* Vehicle */
+
 .vehicle-card {
 	display: flex;
 	align-items: center;
@@ -201,6 +203,6 @@ h1 {
 	width: var(--icon-s);
 }
 
-.vehicles-available {
+.vehicle {
 	margin-top: 0.5rem;
 }

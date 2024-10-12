@@ -9,7 +9,7 @@
 
 	<ul class="destinations-list">
 		@for (destination of destinations; track destination.id) {
-		<card-my-destination [destination]="destination" />
+		<card-my-destination [destination]="destination" [actionButtons]="true" />
 		}
 	</ul>
 

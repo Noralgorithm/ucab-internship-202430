@@ -3,9 +3,11 @@
 	<img [src]="imageDestinationUrl" alt="map">
 	<div class="card-destination-information">
 		<h2 class="heading-xsmall destination-name">{{destination.name}}</h2>
+		@if(actionButtons){
 		<div class="card-buttons-container">
 			<button mButton size="small" severity="tertiary">Eliminar</button>
 			<button mButton size="small" severity="primary">Editar</button>
 		</div>
+		}
 	</div>
 </div>
