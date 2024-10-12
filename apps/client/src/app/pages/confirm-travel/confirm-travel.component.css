@@ -1,0 +1,90 @@
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: .8rem;
+	width: 100%;
+	padding-top: 3.625rem;
+}
+
+h1 {
+	color: var(--primary-text-label);
+}
+
+.only-woman-info {
+	display: flex;
+	justify-content: center;
+	gap: .375rem;
+}
+
+.only-woman-info p {
+	color: #ee1f5c;
+}
+
+.only-woman-info img {
+	width: var(--icon-s);
+}
+
+body {
+	min-height: auto;
+}
+
+/* Vehicle */
+
+.vehicle p {
+	color: var(--primary-text-placeholder);
+}
+
+.vehicle-card {
+	display: flex;
+	align-items: center;
+	border: .2rem solid var(--greyscale-border);
+	width: 22.625rem;
+	height: 7.75rem;
+	border-radius: 1rem;
+	justify-content: start;
+}
+
+.vehicle-card-image {
+	width: 8.5rem;
+}
+
+.vehicle-card-info {
+	display: flex;
+	flex-direction: column;
+	gap: .3rem;
+	color: var(--primary-text-value);
+}
+
+.vehicle-card-info .vehicle-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	gap: .2rem;
+}
+
+.vehcicle-specs {
+	display: flex;
+	flex-direction: column;
+	gap: .3rem;
+}
+
+.vehcicle-specs .quantity-seats-available {
+	color: var(--primary-text-placeholder);
+}
+
+/* Route */
+
+.route p {
+	color: var(--primary-text-placeholder);
+}
+
+.route-card {
+	display: flex;
+	align-items: center;
+	border: .2rem solid var(--greyscale-border);
+	width: 22.625rem;
+	height: 7.75rem;
+	border-radius: 1rem;
+	justify-content: start;
+}

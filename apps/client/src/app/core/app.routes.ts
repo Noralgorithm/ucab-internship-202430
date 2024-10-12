@@ -7,6 +7,7 @@ import { LoginComponent } from '~/pages/auth/login/login.component'
 import { RegisterComponent } from '~/pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '~/pages/auth/successful-email-verification/successful-email-verification.component'
 import { AvailableDriversComponent } from '~/pages/available-drivers/available-drivers.component'
+import { ConfirmTravelComponent } from '~/pages/confirm-travel/confirm-travel.component'
 import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.component'
 import { EditVehicleComponent } from '~/pages/edit-vehicle/edit-vehicle.component'
 import { HomeComponent } from '~/pages/home/home.component'
@@ -131,6 +132,11 @@ export const routes: Routes = [
 				path: 'passenger-list',
 				title: 'Lista de pasajeros',
 				component: PassengerListComponent
+			},
+			{
+				path: 'confirm-travel',
+				title: 'Confirmar viaje',
+				component: ConfirmTravelComponent
 			}
 		]
 	}
