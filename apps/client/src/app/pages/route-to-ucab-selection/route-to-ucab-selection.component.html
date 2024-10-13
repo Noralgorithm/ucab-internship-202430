@@ -8,7 +8,7 @@
 		}"></map-marker>
 		@for (r of routes; track $index) {
 		<map-polyline [path]="r.vertices" [options]="{
-			strokeColor: r.selected ? '#0096FF' : '#999999',
+			strokeColor: r.selected ? '#0096FF' : '#AAAAAA',
 			strokeOpacity: 1.0,
 			strokeWeight: 8,
 			zIndex: r.selected ? 1 : 0

@@ -68,7 +68,7 @@ export class OfferTravelComponent {
 		const routeToNavigate =
 			this.createTravelStoreService.type === 'to-ucab'
 				? '/app/route-to-ucab-selection'
-				: '/app/route-from-ucab-selection'
+				: '/app/external-destination-selection'
 
 		this.router.navigate([routeToNavigate], {
 			queryParams: {
