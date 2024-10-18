@@ -58,7 +58,7 @@ export class ConfirmTravelComponent {
 				vehicleId: this.createTravelStoreService.vehicleId as string
 			})
 			.subscribe((res) => {
-				console.log(res)
+				this.router.navigate(['/app/travel-lobby'])
 			})
 	}
 }

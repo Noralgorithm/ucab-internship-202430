@@ -19,6 +19,7 @@ import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.componen
 import { PassengerListComponent } from '~/pages/passenger-list/passenger-list.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
+import { TravelLobbyComponent } from '~/pages/travel-lobby/travel-lobby.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
 import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
 import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
@@ -143,6 +144,11 @@ export const routes: Routes = [
 				path: 'external-destination-selection',
 				title: 'Seleccionar destino externo',
 				component: ExternalDestinationSelectionComponent
+			},
+			{
+				path: 'travel-lobby',
+				title: 'Sala de viaje',
+				component: TravelLobbyComponent
 			}
 		]
 	}
