@@ -29,7 +29,7 @@ export class DestinationsService {
 
 	async findByPassenger(passenger: User) {
 		return await this.destinationsRepository.find({
-			where: { user: passenger },
+			where: { user: { internalId: passenger.internalId } },
 			order: { createdAt: 'DESC' }
 		})
 	}
