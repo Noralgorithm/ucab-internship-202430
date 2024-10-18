@@ -135,13 +135,7 @@ export class User {
 
 	@OneToMany(
 		() => Message,
-		(message) => message.driver
+		(message) => message.sender
 	)
-	messagesAsDriver: Message[]
-
-	@OneToMany(
-		() => Message,
-		(message) => message.passenger
-	)
-	messagesAsPassenger: Message[]
+	messages: Message[]
 }

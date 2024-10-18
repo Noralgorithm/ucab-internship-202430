@@ -1,13 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsUUID } from 'class-validator'
 import { Ride } from '~/features/rides/entities/ride.entity'
 import { Exists } from '~/shared/validators/exists.validator'
 
-export class CreateMessageDto {
-	@ApiProperty({ example: false })
-	@IsString()
-	content: string
-
+export class FindRideMessagesDto {
 	@Exists({ entity: Ride, key: 'id' })
 	@IsUUID(4)
 	@IsString()

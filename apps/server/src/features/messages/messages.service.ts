@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { RidesService } from '../rides/rides.service'
-import { User } from '../users/entities/user.entity'
-import { CreateMessageAsDriverDto } from './dto/create-message-as-driver.dto'
-import { CreateMessageAsPassengerDto } from './dto/create-message-as-passenger.dto'
+import { RidesService } from '~/features/rides/rides.service'
+import { User } from '~/features/users/entities/user.entity'
+import { CreateMessageDto } from './dto/create-message.dto'
+import { FindRideMessagesDto } from './dto/find-ride-messages.dto'
 import { Message } from './entities/message.entity'
 
 @Injectable()
@@ -15,27 +15,24 @@ export class MessagesService {
 		private readonly ridesService: RidesService
 	) {}
 
-	async createAsDriver(createMessageDto: CreateMessageAsDriverDto) {}
-
-	async createAsPassenger(
-		createMessageDto: CreateMessageAsPassengerDto,
-		currentUser: User
-	) {
+	async create(createMessageDto: CreateMessageDto, currentUser: User) {
 		const ride = await this.ridesService.findOne({
 			where: { id: createMessageDto.rideId }
 		})
 
-		console.log('Driver')
-		console.log(ride.travel.vehicle.driver)
+		const message = this.messagesRepository.create({
+			...createMessageDto,
+			ride,
+			sender: currentUser
+		})
 
-		// const message = this.messagesRepository.create({
-		// 	...createMessageDto,
-		// 	ride,
-		// 	passenger: currentUser
-		// })
+		return await this.messagesRepository.save(message)
 	}
 
-	async findOne(id: number) {
-		return `This action returns a #${id} message`
+	async findAllRideMessages(findRideMessagesDto: FindRideMessagesDto) {
+		return await this.messagesRepository.find({
+			where: { ride: { id: findRideMessagesDto.rideId } },
+			order: { createdAt: 'ASC' }
+		})
 	}
 }

@@ -51,13 +51,7 @@ export class Message {
 
 	@ManyToOne(
 		() => User,
-		(user) => user.messagesAsDriver
+		(user) => user.messages
 	)
-	driver: User
-
-	@ManyToOne(
-		() => User,
-		(user) => user.messagesAsPassenger
-	)
-	passenger: User
+	sender: User
 }

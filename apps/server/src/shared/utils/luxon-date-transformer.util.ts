@@ -5,7 +5,10 @@ export const LuxonDateTransformer = {
 		return value?.toISO()
 	},
 
-	from(value: Date): DateTime {
+	from(value: Date | null): DateTime | null {
+		if (value == null) {
+			return null
+		}
 		return DateTime.fromJSDate(value)
 	}
 }
