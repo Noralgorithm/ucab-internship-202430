@@ -23,7 +23,7 @@ export class DestinationsController {
 	@HttpCode(200)
 	@Get('mine')
 	async findAll(@CurrentUser() currentUser: User) {
-		return this.destinationsService.findByPassenger(currentUser.id)
+		return this.destinationsService.findByPassenger(currentUser)
 	}
 
 	@Get(':id')
@@ -37,7 +37,7 @@ export class DestinationsController {
 		@CurrentUser() currentUser: User,
 		@Body() createDestinationDto: CreateDestinationDto
 	) {
-		return this.destinationsService.create(currentUser.id, createDestinationDto)
+		return this.destinationsService.create(currentUser, createDestinationDto)
 	}
 
 	@HttpCode(200)
