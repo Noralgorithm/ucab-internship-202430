@@ -47,11 +47,7 @@ export class DestinationsController {
 		@CurrentUser() currentUser: User,
 		@Body() updateDestinationDto: UpdateDestinationDto
 	) {
-		await this.destinationsService.update(
-			id,
-			currentUser.id,
-			updateDestinationDto
-		)
+		await this.destinationsService.update(id, currentUser, updateDestinationDto)
 
 		return 'Destino actualizado con éxito mi pana'
 	}
@@ -59,7 +55,7 @@ export class DestinationsController {
 	@HttpCode(200)
 	@Delete(':id')
 	async remove(@Param('id') id: string, @CurrentUser() currentUser: User) {
-		await this.destinationsService.remove(id, currentUser.id)
+		await this.destinationsService.remove(id, currentUser)
 
 		return 'Destino eliminado con éxito mi pana'
 	}

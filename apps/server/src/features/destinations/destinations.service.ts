@@ -34,10 +34,10 @@ export class DestinationsService {
 		})
 	}
 
-	async findOneByPassenger(id: Destination['id'], passengerId: User['id']) {
+	async findOneByPassenger(id: Destination['id'], passenger: User) {
 		const destination = await this.destinationsRepository.findOneBy({
 			id,
-			user: { id: passengerId }
+			user: passenger
 		})
 
 		if (destination == null) {
@@ -53,11 +53,11 @@ export class DestinationsService {
 
 	async update(
 		id: Destination['id'],
-		driverId: User['id'],
+		driver: User,
 		updateVehicleDto: UpdateDestinationDto
 	) {
 		try {
-			await this.findOneByPassenger(id, driverId)
+			await this.findOneByPassenger(id, driver)
 		} catch (error: unknown) {
 			if (error instanceof NotFoundException) {
 				throw new UnprocessableEntityException('Destination does not exist')
@@ -69,9 +69,9 @@ export class DestinationsService {
 		return this.destinationsRepository.update({ id }, updateVehicleDto)
 	}
 
-	async remove(id: Destination['id'], passengerId: User['id']) {
+	async remove(id: Destination['id'], passenger: User) {
 		try {
-			await this.findOneByPassenger(id, passengerId)
+			await this.findOneByPassenger(id, passenger)
 		} catch (error: unknown) {
 			if (error instanceof NotFoundException) {
 				throw new UnprocessableEntityException('Destination does not exist')
