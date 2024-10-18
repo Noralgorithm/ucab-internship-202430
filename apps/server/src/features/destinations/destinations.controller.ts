@@ -34,10 +34,10 @@ export class DestinationsController {
 	@HttpCode(201)
 	@Post()
 	async create(
-		@CurrentUser() currentUser: User,
-		@Body() createDestinationDto: CreateDestinationDto
+		@Body() createDestinationDto: CreateDestinationDto,
+		@CurrentUser() currentUser: User
 	) {
-		return this.destinationsService.create(currentUser, createDestinationDto)
+		return this.destinationsService.create(createDestinationDto, currentUser)
 	}
 
 	@HttpCode(200)

@@ -18,11 +18,13 @@ export class DestinationsService {
 		private readonly destinationsRepository: Repository<Destination>
 	) {}
 
-	async create(passenger: User, createDestinationDto: CreateDestinationDto) {
-		return this.destinationsRepository.save({
+	async create(createDestinationDto: CreateDestinationDto, passenger: User) {
+		const destination = this.destinationsRepository.create({
 			...createDestinationDto,
-			passenger
+			user: passenger
 		})
+
+		return await this.destinationsRepository.save(destination)
 	}
 
 	async findByPassenger(passenger: User) {
