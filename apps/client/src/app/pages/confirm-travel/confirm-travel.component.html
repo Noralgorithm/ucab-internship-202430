@@ -1,10 +1,13 @@
 <page-layout [hasTabBar]="true">
 	<header>
 		<h1 class="heading-small">Información del viaje</h1>
+
+		@if (isWomenOnly) {
 		<div class="only-woman-info">
 			<img src="assets/svgs/SecurityShield.svg" alt="Escudo">
 			<p class="paragraph-small">Solo mujeres en el viaje</p>
 		</div>
+		}
 	</header>
 
 	<body>
@@ -12,16 +15,17 @@
 			<p class="label-small">Vehículo</p>
 			<div class="vehicle-card">
 				<div class="vehicle-card-image">
-					<movic-vehicle color="#FF0000"></movic-vehicle>
+					<movic-vehicle [color]="vehicle?.color!"></movic-vehicle>
 				</div>
 				<div class="vehicle-card-info">
 					<div class="vehicle-details">
-						<p class="label-medium vehicle-title">Chevrolet | Vitara</p>
-						<p class="label-medium vehicle-plate">AFN1234</p>
+						<p class="label-medium vehicle-title">{{vehicle?.brand}} | {{vehicle?.model}}</p>
+						<p class="label-medium vehicle-plate">{{vehicle?.plate}}</p>
 					</div>
 					<div class="vehcicle-specs">
-						<p class="label-medium">Rojo</p>
-						<p class="label-medium quantity-seats-available">Asientos disponibles 3 de 4</p>
+						<p class="label-medium">{{vehicleColorsService.getLabelByHex(vehicle?.color!)}}</p>
+						<p class="label-medium quantity-seats-available">Asientos disponibles {{seatsQuantity}} de
+							{{vehicle?.seatQuantity}}</p>
 					</div>
 				</div>
 			</div>
@@ -34,8 +38,13 @@
 
 				</div>
 				<div class="points-name">
+					@if (isToUcab) {
+					<P class="label-medium">Mi posición actual</P>
 					<p class="label-medium">UCAB</p>
-					<P class="label-medium">Mi casa</P>
+					} @else {
+					<p class="label-medium">UCAB</p>
+					<P class="label-medium">{{externalDestinationName}}</P>
+					}
 				</div>
 				<div class="icon-map">
 				</div>

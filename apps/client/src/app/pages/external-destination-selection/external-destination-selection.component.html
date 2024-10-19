@@ -9,7 +9,9 @@
 
 	<body>
 		<ul class="destinations-list">
-			<card-my-destination [destination]="destination!" [actionButtons]="false" />
+			@for (d of destinations; track d.id) {
+			<card-my-destination [destination]="d" [actionButtons]="false" (click)="handleDestinationSelection(d)" />
+			}
 		</ul>
 	</body>
 </page-layout>

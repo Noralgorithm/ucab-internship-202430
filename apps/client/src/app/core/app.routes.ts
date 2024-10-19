@@ -16,8 +16,8 @@ import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
-import { PassengerListComponent } from '~/pages/passenger-list/passenger-list.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
+import { RouteFromUcabSelectionComponent } from '~/pages/route-from-ucab-selection/route-from-ucab-selection.component'
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
 import { TravelLobbyComponent } from '~/pages/travel-lobby/travel-lobby.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
@@ -131,11 +131,6 @@ export const routes: Routes = [
 				component: RouteSelectionComponent
 			},
 			{
-				path: 'passenger-list',
-				title: 'Lista de pasajeros',
-				component: PassengerListComponent
-			},
-			{
 				path: 'confirm-travel',
 				title: 'Confirmar viaje',
 				component: ConfirmTravelComponent
@@ -144,6 +139,11 @@ export const routes: Routes = [
 				path: 'external-destination-selection',
 				title: 'Seleccionar destino externo',
 				component: ExternalDestinationSelectionComponent
+			},
+			{
+				path: 'route-from-ucab-selection',
+				title: 'Seleccionar ruta desde UCAB',
+				component: RouteFromUcabSelectionComponent
 			},
 			{
 				path: 'travel-lobby',

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core'
+import { Router } from '@angular/router'
+import { GetOwnDestinationsService } from '~/features/my-destinations/api/get-own-destinations.service'
+import { CreateTravelStoreService } from '~/features/travels/create-travel-store.service'
 import { Destination } from '~/shared/types/maps/destination'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
 import { CardMyDestinationComponent } from '../../features/my-destinations/components/card-my-destination/card-my-destination.component'
@@ -11,10 +14,26 @@ import { CardMyDestinationComponent } from '../../features/my-destinations/compo
 	styleUrl: './external-destination-selection.component.css'
 })
 export class ExternalDestinationSelectionComponent {
-	destination: Destination = {
-		id: '0412',
-		name: 'Mi casa',
-		latitude: 8.29755988674447,
-		longitude: -62.71142547253992
+	destinations: Destination[] = []
+
+	constructor(
+		private readonly getOwnDestinationsService: GetOwnDestinationsService,
+		private readonly createTravelStoreService: CreateTravelStoreService,
+		private readonly router: Router
+	) {}
+
+	ngOnInit() {
+		this.getOwnDestinationsService.execute().subscribe((res) => {
+			this.destinations = res.data
+		})
+	}
+
+	handleDestinationSelection(destination: Destination) {
+		this.createTravelStoreService.destinationId = destination.id
+
+		this.router.navigate(['/app/route-from-ucab-selection'], {
+			queryParams: { destinationId: destination.id },
+			queryParamsHandling: 'merge'
+		})
 	}
 }
