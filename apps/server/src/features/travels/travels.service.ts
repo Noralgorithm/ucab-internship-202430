@@ -99,4 +99,13 @@ export class TravelsService {
 
 		return travels
 	}
+
+	async findRideRequests(options: FindOneOptions<Travel>) {
+		const travelRideRequests = await this.travelsRepository.findOne({
+			where: options.where,
+			relations: ['rides', 'rides.passenger']
+		})
+
+		return travelRideRequests?.rides
+	}
 }

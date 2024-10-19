@@ -24,10 +24,6 @@ export class RidesService {
 		return await this.ridesRepository.save(ride)
 	}
 
-	async findAll() {
-		return '`This action returns all rides`'
-	}
-
 	async findOne(options: FindOneOptions<Ride>) {
 		const ride = await this.ridesRepository.findOne(options)
 

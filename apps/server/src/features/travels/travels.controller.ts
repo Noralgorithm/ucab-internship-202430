@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
@@ -21,5 +21,10 @@ export class TravelsController {
 	@Get('available-drivers')
 	getAvailableDrivers() {
 		return this.travelsService.getAvailableDrivers()
+	}
+
+	@Get('ride-requests/:id')
+	findRideRequests(@Param('id') id: string) {
+		return this.travelsService.findRideRequests({ where: { id: id } })
 	}
 }
