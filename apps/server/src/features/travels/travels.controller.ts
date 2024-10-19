@@ -27,4 +27,12 @@ export class TravelsController {
 	findRideRequests(@Param('id') id: string) {
 		return this.travelsService.findRideRequests({ where: { id: id } })
 	}
+
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.travelsService.findOne({
+			where: { id: id },
+			relations: ['vehicle']
+		})
+	}
 }

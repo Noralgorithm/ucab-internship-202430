@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindOneOptions, Repository } from 'typeorm'
+import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
 import { Ride } from './entities/ride.entity'
 
@@ -32,5 +33,18 @@ export class RidesService {
 		}
 
 		return ride
+	}
+
+	async answerRequest(
+		options: FindOneOptions<Ride>,
+		answerRequestDto: AnswerRequestDto
+	) {
+		const ride = await this.findOne(options)
+
+		const updatedRide = await this.ridesRepository.update(ride, {
+			isAccepted: answerRequestDto.isAccepted
+		})
+
+		return updatedRide
 	}
 }
