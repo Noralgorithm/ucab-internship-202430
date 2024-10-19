@@ -97,8 +97,6 @@ export class TravelsService {
 			relations: { vehicle: { driver: true } }
 		})
 
-		const drivers = travels.map((travel) => travel.vehicle.driver)
-
-		return drivers
+		return travels
 	}
 }

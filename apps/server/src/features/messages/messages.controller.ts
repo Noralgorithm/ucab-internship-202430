@@ -20,7 +20,7 @@ export class MessagesController {
 	}
 
 	@Get(':id')
-	findAll(@Param('id') id: string) {
-		return this.messagesService.findAllRideMessages(id)
+	findAll(@Param('id') id: string, @CurrentUser() currentUser: User) {
+		return this.messagesService.findAllRideMessages(id, currentUser)
 	}
 }

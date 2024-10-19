@@ -11,18 +11,20 @@ export class RidesService {
 		private readonly ridesRepository: Repository<Ride>
 	) {}
 
-	create(createRideDto: CreateRideDto) {
+	async create(createRideDto: CreateRideDto) {
 		const { destination, origin, passenger, travel } = createRideDto
 
-		return this.ridesRepository.save({
+		const ride = this.ridesRepository.create({
 			destination,
 			origin,
 			passenger,
 			travel
 		})
+
+		return await this.ridesRepository.save(ride)
 	}
 
-	findAll() {
+	async findAll() {
 		return '`This action returns all rides`'
 	}
 

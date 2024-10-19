@@ -33,10 +33,18 @@ export class MessagesService {
 		return await this.messagesRepository.save(message)
 	}
 
-	async findAllRideMessages(rideId: Ride['id']) {
-		return await this.messagesRepository.find({
+	async findAllRideMessages(rideId: Ride['id'], currentUser: User) {
+		const sendedMessages = await this.messagesRepository.find({
 			where: { ride: { id: rideId } },
+			relations: ['sender'],
 			order: { createdAt: 'ASC' }
 		})
+
+		const messages = sendedMessages.map(({ sender, ...msg }) => ({
+			...msg,
+			isMine: sender.id === currentUser.id
+		}))
+
+		return messages
 	}
 }
