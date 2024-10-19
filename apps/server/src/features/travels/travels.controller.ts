@@ -23,7 +23,7 @@ export class TravelsController {
 		return this.travelsService.getAvailableDrivers()
 	}
 
-	@Get('ride-requests/:id')
+	@Get(':id/ride-requests')
 	findRideRequests(@Param('id') id: string) {
 		return this.travelsService.findRideRequests({ where: { id: id } })
 	}

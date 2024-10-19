@@ -14,6 +14,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { Travel } from '../travels/entities/travel.entity'
 import { TravelsService } from '../travels/travels.service'
 import { User } from '../users/entities/user.entity'
+import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CreateForMeDto } from './dto/create-for-me.dto'
 import { RidesService } from './rides.service'
 
@@ -84,5 +85,16 @@ export class RidesController {
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.ridesService.findOne({ where: { id: id } })
+	}
+
+	@Post(':id/answer-ride-request')
+	answerRequest(
+		@Param('id') id: string,
+		@Body() answerRequestDto: AnswerRequestDto
+	) {
+		return this.ridesService.answerRequest(
+			{ where: { id: id } },
+			answerRequestDto
+		)
 	}
 }
