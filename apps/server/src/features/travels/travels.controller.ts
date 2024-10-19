@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
+import { ChangeTravelStatusDto } from './dto/change-travel-status.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
 import { TravelsService } from './travels.service'
 
@@ -34,5 +35,16 @@ export class TravelsController {
 			where: { id: id },
 			relations: ['vehicle']
 		})
+	}
+
+	@Patch(':id/status')
+	changeStatus(
+		@Param('id') id: string,
+		@Body() changeTravelStatusDto: ChangeTravelStatusDto
+	) {
+		return this.travelsService.changeStatus(
+			{ where: { id: id } },
+			changeTravelStatusDto
+		)
 	}
 }

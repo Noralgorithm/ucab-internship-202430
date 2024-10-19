@@ -3,6 +3,7 @@ import {
 	Controller,
 	Get,
 	Param,
+	Patch,
 	Post,
 	UnprocessableEntityException
 } from '@nestjs/common'
@@ -88,7 +89,7 @@ export class RidesController {
 		return this.ridesService.findOne({ where: { id: id } })
 	}
 
-	@Post(':id/answer-ride-request')
+	@Patch(':id/answer-ride-request')
 	answerRequest(
 		@Param('id') id: string,
 		@Body() answerRequestDto: AnswerRequestDto
@@ -99,8 +100,8 @@ export class RidesController {
 		)
 	}
 
-	@Post(':id/cancel-ride')
-	findOnee(
+	@Patch(':id/cancel-ride')
+	cancelRequest(
 		@Param('id') id: string,
 		@Body() cancelRequestDto: CancelRequestDto
 	) {

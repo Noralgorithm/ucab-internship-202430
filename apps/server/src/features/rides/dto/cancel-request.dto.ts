@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsString } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator'
 import { TravelCancelType } from '../enums/travel-cancel-type.enum'
 
 export class CancelRequestDto {
@@ -9,5 +9,6 @@ export class CancelRequestDto {
 
 	@ApiProperty({ example: TravelCancelType.DRIVER_DENIAL })
 	@IsEnum(TravelCancelType)
+	@IsNotEmpty()
 	travelCancelType: TravelCancelType
 }

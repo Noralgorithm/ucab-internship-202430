@@ -9,6 +9,7 @@ import { GeoJsonPoint } from '~/shared/types'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
 import { VehiclesService } from '../vehicles/vehicles.service'
+import { ChangeTravelStatusDto } from './dto/change-travel-status.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
 import { UpdateTravelDto } from './dto/update-travel.dto'
 import { Travel } from './entities/travel.entity'
@@ -107,5 +108,18 @@ export class TravelsService {
 		})
 
 		return travelRideRequests?.rides
+	}
+
+	async changeStatus(
+		options: FindOneOptions<Travel>,
+		startTravelDto: ChangeTravelStatusDto
+	) {
+		const travel = await this.findOne(options)
+
+		const updatedRide = await this.travelsRepository.update(travel, {
+			...startTravelDto
+		})
+
+		return updatedRide
 	}
 }

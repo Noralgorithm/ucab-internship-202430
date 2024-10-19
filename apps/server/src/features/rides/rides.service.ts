@@ -53,12 +53,12 @@ export class RidesService {
 	// TODO: Validate that is not possible to cancel an already canceled request
 	async cancelRequest(
 		options: FindOneOptions<Ride>,
-		answerRequestDto: CancelRequestDto
+		cancelRequestDto: CancelRequestDto
 	) {
 		const ride = await this.findOne(options)
 
 		const updatedRide = await this.ridesRepository.update(ride, {
-			...answerRequestDto
+			...cancelRequestDto
 		})
 
 		return updatedRide
