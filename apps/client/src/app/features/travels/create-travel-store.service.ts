@@ -17,6 +17,7 @@ export class CreateTravelStoreService {
 	availableSeatQuantity: number | null = null
 	vehicleId: string | null = null
 	route: Route | null = null
+	destinationId: string | null = null
 
 	constructor(private readonly activatedRoute: ActivatedRoute) {
 		this.activatedRoute.queryParams.subscribe((params) => {
@@ -25,6 +26,7 @@ export class CreateTravelStoreService {
 			this.status = params['status'] as TravelStatus
 			this.availableSeatQuantity = Number(params['availableSeatQuantity'])
 			this.vehicleId = params['vehicleId']
+			this.destinationId = params['destinationId']
 		})
 	}
 }

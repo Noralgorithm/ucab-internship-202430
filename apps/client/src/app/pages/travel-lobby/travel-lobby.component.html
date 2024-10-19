@@ -1,1 +1,145 @@
-<p>travel-lobby works!</p>
+<page-layout [hasTabBar]="true">
+	<main>
+		<header>
+			<h1 class="heading-small">Lista de pasajeros</h1>
+			<div class="only-woman-info">
+				<img src="assets/svgs/SecurityShield.svg" alt="Escudo">
+				<p class="paragraph-small">Solo mujeres en el viaje</p>
+			</div>
+			<section class="route-information">
+				<div class="starting-point">
+					<img src="assets/svgs/StartingPointGray.svg" alt="Punto de Inicio" class="icon">
+					<div class="starting-point-info">
+						<p class="paragraph-small title">Punto de partida</p>
+						<p class="paragraph-small location">UCAB</p>
+					</div>
+				</div>
+				<div class="external-destination">
+					<img src="assets/svgs/ExternalPointGray.svg" alt="Destino Externo" class="icon">
+					<div class="external-destination-info">
+						<p class="paragraph-small title">Destino Externo</p>
+						<p class="paragraph-small location">Mi casa Isla Dorada</p>
+					</div>
+				</div>
+			</section>
+		</header>
+
+		<section class="vehicle">
+			<div class="vehicle-card">
+				<div class="vehicle-card-image">
+					<movic-vehicle color="#FF0000"></movic-vehicle>
+				</div>
+				<div class="vehicle-card-info">
+					<div class="vehicle-details">
+						<p class="label-medium vehicle-title">Chevrolet | Vitara</p>
+						<p class="label-medium vehicle-plate">AFN1234</p>
+					</div>
+					<div class="vehcicle-specs">
+						<p class="label-medium">Rojo</p>
+						<p class="label-medium quantity-seats-available">Asientos disponibles 3 de 4</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="passengers">
+			<p class="label-small passengers-quantity">Pasajeros de 2 de 3</p>
+			<div class="passengers-list">
+				<div class="passenger-card">
+
+					<img class="avatar" src="/assets/images/DriverPhoto.png" alt="Imágen del conductor" />
+
+					<section>
+						<div class="card-row justify-between label-medium">
+							<div class="card-row">
+								<span class="passenger-name">María Paula Forero</span>
+								<div class="rating-information">
+									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<span class="card-information rating-number">4.8 (60)</span>
+								</div>
+							</div>
+							<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+						</div>
+
+						<div class="card-row paragraph-xsmall">
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
+									alt="icono de distancia a caminar">
+								<span class="card-information-title">50 metros</span>
+							</div>
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
+									alt="icono de emparejamiento">
+								<span class="card-information-title">70% de emparejamiento</span>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="passenger-card">
+
+					<img class="avatar" src="/assets/images/DriverPhoto.png" alt="Imágen del conductor" />
+
+					<section>
+						<div class="card-row justify-between label-medium">
+							<div class="card-row">
+								<span class="passenger-name">María Paula Forero</span>
+								<div class="rating-information">
+									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<span class="card-information rating-number">4.8 (60)</span>
+								</div>
+							</div>
+							<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+						</div>
+
+						<div class="card-row paragraph-xsmall">
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
+									alt="icono de distancia a caminar">
+								<span class="card-information-title">50 metros</span>
+							</div>
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
+									alt="icono de emparejamiento">
+								<span class="card-information-title">70% de emparejamiento</span>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="passenger-card">
+
+					<img class="avatar" src="/assets/images/DriverPhoto.png" alt="Imágen del conductor" />
+
+					<section>
+						<div class="card-row justify-between label-medium">
+							<div class="card-row">
+								<span class="passenger-name">María Paula Forero</span>
+								<div class="rating-information">
+									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<span class="card-information rating-number">4.8 (60)</span>
+								</div>
+							</div>
+							<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+						</div>
+
+						<div class="card-row paragraph-xsmall">
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
+									alt="icono de distancia a caminar">
+								<span class="card-information-title">50 metros</span>
+							</div>
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
+									alt="icono de emparejamiento">
+								<span class="card-information-title">70% de emparejamiento</span>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+
+		<button mButton size="large">Iniciar Viaje</button>
+	</main>
+
+</page-layout>
