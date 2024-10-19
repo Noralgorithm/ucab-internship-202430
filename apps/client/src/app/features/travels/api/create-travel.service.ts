@@ -11,7 +11,7 @@ export class CreateTravelService {
 	constructor(private readonly http: HttpClient) {}
 
 	execute(createTravelServiceDto: CreateTravelServiceDto) {
-		return this.http.post<SuccesfulResponse<unknown>>(
+		return this.http.post<SuccesfulResponse<ResponseDto>>(
 			'/travels',
 			createTravelServiceDto
 		)
@@ -27,6 +27,10 @@ export interface RouteDto {
 	description: string
 	distance: number
 	polyline: GeoJsonLineString
+}
+
+interface ResponseDto {
+	id: string
 }
 /* "route": {
 	"duration": "08816594262564157495908388746856099112013976635390684333006329555947796747977786627670197s",
