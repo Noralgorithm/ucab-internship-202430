@@ -15,6 +15,7 @@ import { Travel } from '../travels/entities/travel.entity'
 import { TravelsService } from '../travels/travels.service'
 import { User } from '../users/entities/user.entity'
 import { AnswerRequestDto } from './dto/answer-request.dto'
+import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateForMeDto } from './dto/create-for-me.dto'
 import { RidesService } from './rides.service'
 
@@ -95,6 +96,17 @@ export class RidesController {
 		return this.ridesService.answerRequest(
 			{ where: { id: id } },
 			answerRequestDto
+		)
+	}
+
+	@Post(':id/cancel-ride')
+	findOnee(
+		@Param('id') id: string,
+		@Body() cancelRequestDto: CancelRequestDto
+	) {
+		return this.ridesService.cancelRequest(
+			{ where: { id: id } },
+			cancelRequestDto
 		)
 	}
 }

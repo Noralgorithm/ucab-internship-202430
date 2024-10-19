@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindOneOptions, Repository } from 'typeorm'
 import { AnswerRequestDto } from './dto/answer-request.dto'
+import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
 import { Ride } from './entities/ride.entity'
 
@@ -35,6 +36,7 @@ export class RidesService {
 		return ride
 	}
 
+	// TODO: Validate that the one answering the request is the driver and not somebody else
 	async answerRequest(
 		options: FindOneOptions<Ride>,
 		answerRequestDto: AnswerRequestDto
@@ -43,6 +45,20 @@ export class RidesService {
 
 		const updatedRide = await this.ridesRepository.update(ride, {
 			isAccepted: answerRequestDto.isAccepted
+		})
+
+		return updatedRide
+	}
+
+	// TODO: Validate that is not possible to cancel an already canceled request
+	async cancelRequest(
+		options: FindOneOptions<Ride>,
+		answerRequestDto: CancelRequestDto
+	) {
+		const ride = await this.findOne(options)
+
+		const updatedRide = await this.ridesRepository.update(ride, {
+			...answerRequestDto
 		})
 
 		return updatedRide
