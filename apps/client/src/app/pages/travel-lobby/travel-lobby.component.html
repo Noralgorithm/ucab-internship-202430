@@ -54,8 +54,11 @@
 		</section>
 
 		<section class="passengers">
-			<p class="label-small passengers-quantity">Pasajeros de {{travel?.rides?.length}} de
-				{{travel?.availableSeatQuantity}}</p>
+			<div class="passengers-list-header">
+				<p class="label-small passengers-quantity">Pasajeros {{travel?.rides?.length}} de
+					{{travel?.availableSeatQuantity}}</p>
+				<p class="view-requests-button">Ver solicitudes</p>
+			</div>
 			<div class="passengers-list">
 
 				@for (r of travel?.rides; track r.id) {

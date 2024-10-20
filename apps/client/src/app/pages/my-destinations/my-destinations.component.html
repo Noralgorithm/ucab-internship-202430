@@ -1,15 +1,15 @@
 <page-layout [hasTabBar]="true">
 	<header>
 		<h1 class="heading-xsmall">Mis destinos</h1>
-		@if(destinations.length < 3){ <button mButton severity="contrast" size="small"
-			routerLink="/app/my-destination/add">Agregar</button>
+		@if(destinations.length < 3){ <button mButton severity="contrast" size="small" routerLink="/app/my-destination/add">
+			Agregar</button>
 			}
 	</header>
 	<p class="paragraph-medium destination-counter">{{destinations.length}} de 3 destinos para agregar</p>
 
 	<ul class="destinations-list">
-		@for (destination of destinations; track destination.id) {
-		<card-my-destination [destination]="destination" [actionButtons]="true" />
+		@for (d of destinations; track d.id) {
+		<card-my-destination [destination]="d" [actionButtons]="true" (onDelete)="handleDelete(d.id)" />
 		}
 	</ul>
 

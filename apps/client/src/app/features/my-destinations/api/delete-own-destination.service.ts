@@ -5,7 +5,7 @@ import { SuccesfulResponse } from '~/shared/types/backend-response.type'
 @Injectable({
 	providedIn: 'root'
 })
-export class DeleteOwnVehicleService {
+export class DeleteOwnDestinationService {
 	constructor(private readonly http: HttpClient) {}
 
 	execute(destinationId: string) {
