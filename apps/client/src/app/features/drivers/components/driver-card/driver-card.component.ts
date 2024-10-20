@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
+import { UserProfile } from '~/shared/types/users/user-profile.type'
 
 @Component({
 	selector: 'driver-card',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core'
 	templateUrl: './driver-card.component.html',
 	styleUrl: './driver-card.component.css'
 })
-export class DriverCardComponent {}
+export class DriverCardComponent {
+	@Input({ required: true }) driver!: UserProfile & {
+		passengerAmount: number
+		passengerCapacity: number
+	}
+}

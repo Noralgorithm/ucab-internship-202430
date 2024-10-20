@@ -58,3 +58,10 @@ export const UCAB_GUAYANA_POINT: GeoJsonPoint = {
 	]
 }
 //TODO: consider moving this to rides constants
+
+export const GOOGLE_MAPS_STATIC_MAPS = {
+	url: 'https://maps.googleapis.com/maps/api/staticmap',
+	method: 'GET'
+}
+
+export const GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE = 'es-419'

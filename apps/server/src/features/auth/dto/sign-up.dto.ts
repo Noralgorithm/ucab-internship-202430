@@ -33,7 +33,6 @@ export class SignUpDto {
 	@IsEnum(UserType)
 	type: UserType
 
-	//TODO: recieve file
 	@ApiProperty({ type: 'string', format: 'binary' })
 	profilePic: MemoryStorageFile
 

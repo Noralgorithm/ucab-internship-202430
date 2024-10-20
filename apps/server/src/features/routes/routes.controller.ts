@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
@@ -47,15 +47,24 @@ export class RoutesController {
 	}
 
 	@Post('mine')
-	saveMineRoute(
+	saveMyRoute(
 		@Body() { route, name, type }: SaveMineRouteDto,
 		@CurrentUser() currentUser: User
 	) {
+		//TODO: validate that user is driver
 		return this.routesService.saveUserRoute({
 			route,
 			name,
 			type,
 			user: currentUser
+		})
+	}
+
+	@Get('mine')
+	getMyRoutes(@CurrentUser() currentUser: User) {
+		//TODO: validate that user is driver
+		return this.routesService.findAll({
+			where: { user: { id: currentUser.id } }
 		})
 	}
 }

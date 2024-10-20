@@ -11,4 +11,6 @@ export class BaseError extends Error {
 
 export class UnknownError extends BaseError {}
 
+export class MalformedGeoJsonLineStringError extends BaseError {}
+
 //TODO: create exception filter to handle this cases

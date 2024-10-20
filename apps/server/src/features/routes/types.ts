@@ -1,3 +1,4 @@
+import { FindManyOptions, FindOneOptions } from 'typeorm'
 import { RouteType } from '~/shared/constants'
 import { User } from '../users/entities/user.entity'
 import { RouteEntity } from './entities/route.entity'
@@ -138,9 +139,15 @@ export interface RoutesService {
 		user: User
 	}): Promise<RouteEntity>
 
-	find({ id }: { id: string }): Promise<RouteEntity>
+	findOne(options: FindOneOptions<RouteEntity>): Promise<RouteEntity>
 
-	// screenshotRoute()
+	findAll(options?: FindManyOptions<RouteEntity>): Promise<RouteEntity[]>
+
+	takeRoutePhoto({
+		route
+	}: {
+		route: Route
+	}): Promise<{ photoFilename: string }>
 }
 
 // This is a symbol to be used as a provider token

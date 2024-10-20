@@ -2,17 +2,17 @@
 	<h1 class="heading-small">Lista de conductores</h1>
 
 	<div class="checkbox-container">
+		@if (isAWoman()) {
 		<label class="only-woman-label">
 			<input class="only-woman-checkbox" type="checkbox" />
-			Solo mujeres en el viaje</label>
+			Solo mujeres en el viaje
+		</label>
+		}
 	</div>
 
 	<ul>
-
-		@for (i of [1,2,3,4,5]; track $index) {
-		<driver-card routerLink="/app/waiting-for-review" />
+		@for (travel of travels; track $index) {
+		<driver-card routerLink="/app/waiting-for-review" [driver]="getTravelDriverData(travel)" />
 		}
-
 	</ul>
-
 </page-layout>

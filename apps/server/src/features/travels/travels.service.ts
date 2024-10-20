@@ -95,10 +95,15 @@ export class TravelsService {
 		const travels = await this.travelsRepository.find({
 			where: { status: TravelStatus.NOT_STARTED },
 			order: { createdAt: 'DESC' },
-			relations: { vehicle: { driver: true } }
+			relations: { vehicle: { driver: true }, rides: true }
 		})
 
-		return travels
+		const formattedTravels = travels.map(({ rides, ...travel }) => ({
+			...travel,
+			passengerAmount: rides.filter((ride) => ride.isAccepted).length
+		}))
+
+		return formattedTravels
 	}
 
 	async findRideRequests(options: FindOneOptions<Travel>) {
