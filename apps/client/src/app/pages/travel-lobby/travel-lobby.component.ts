@@ -1,7 +1,8 @@
 import { Component } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
-import { Travel } from '~/shared/types/travels/travel.type'
+import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
+import { TravelLobbyData } from '~/shared/types/travels/travel.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { VehicleImageComponent } from '../../features/vehicles/components/vehicle-image/vehicle-image.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
@@ -14,10 +15,11 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 	styleUrl: './travel-lobby.component.css'
 })
 export class TravelLobbyComponent {
-	travel: Travel | null = null
+	travel: TravelLobbyData | null = null
 
 	constructor(
 		private readonly getTravelByIdService: GetTravelByIdService,
+		public readonly vehiclesColorService: VehiclesColorsService,
 		private readonly router: Router,
 		private readonly route: ActivatedRoute
 	) {
