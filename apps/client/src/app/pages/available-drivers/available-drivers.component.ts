@@ -35,4 +35,12 @@ export class AvailableDriversComponent implements OnInit {
 			this.travels = res.data
 		})
 	}
+
+	getTravelDriverData(travel: TravelAvailableDriverData) {
+		return {
+			...travel.vehicle.driver,
+			passengerAmount: travel.passengerAmount,
+			passengerCapacity: travel.availableSeatQuantity
+		}
+	}
 }

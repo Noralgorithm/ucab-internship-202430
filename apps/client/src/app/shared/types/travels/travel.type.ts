@@ -17,6 +17,7 @@ export type TravelType = 'to-ucab' | 'from-ucab'
 export type TravelStatus = 'not-started' | 'in-progress' | 'finished'
 
 export type TravelAvailableDriverData = Travel & {
+	passengerAmount: number
 	vehicle: Vehicle & {
 		driver: UserProfile
 	}

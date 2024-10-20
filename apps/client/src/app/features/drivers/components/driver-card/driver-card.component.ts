@@ -9,5 +9,8 @@ import { UserProfile } from '~/shared/types/users/user-profile.type'
 	styleUrl: './driver-card.component.css'
 })
 export class DriverCardComponent {
-	@Input({ required: true }) driver!: UserProfile
+	@Input({ required: true }) driver!: UserProfile & {
+		passengerAmount: number
+		passengerCapacity: number
+	}
 }
