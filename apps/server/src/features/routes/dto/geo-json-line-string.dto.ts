@@ -6,6 +6,7 @@ import { GeoJsonLineString, GeoJsonPosition } from '../types'
 const lineString = 'LineString'
 
 export class GeoJsonLineStringDto implements GeoJsonLineString {
+	@ApiProperty({ type: 'enum', enum: [lineString] })
 	@Equals(lineString, {
 		message: 'El tipo de geometría debe ser "LineString"'
 	})

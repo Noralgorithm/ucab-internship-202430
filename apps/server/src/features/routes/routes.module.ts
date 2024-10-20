@@ -1,5 +1,6 @@
 import { Module, Provider } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
 import { RouteEntity } from './entities/route.entity'
 import { GoogleMapsRoutesService } from './google-maps/google-maps-routes.service'
 import { RoutesController } from './routes.controller'
@@ -11,7 +12,7 @@ const routesServiceProvider: Provider<RoutesService> = {
 }
 
 @Module({
-	imports: [TypeOrmModule.forFeature([RouteEntity])],
+	imports: [TypeOrmModule.forFeature([RouteEntity]), FileStorageModule],
 	controllers: [RoutesController],
 	providers: [routesServiceProvider],
 	exports: [routesServiceProvider]

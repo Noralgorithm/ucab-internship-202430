@@ -1,9 +1,14 @@
+import { Buffer } from 'node:buffer'
+import { fromGeoJSON } from '@mapbox/polyline'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { validateOrReject } from 'class-validator'
+import { FindManyOptions, FindOneOptions, Repository } from 'typeorm'
 import { User } from '~/features/users/entities/user.entity'
 import { RouteType } from '~/shared/constants'
+import { FileStorageService } from '~/shared/files-upload/file-storage/file-storage.service'
+import { RouteDto } from '../dto/route.dto'
 import { RouteEntity } from '../entities/route.entity'
 import { NoRoutesFoundError } from '../errors'
 import {
@@ -15,7 +20,8 @@ import {
 } from '../types'
 import {
 	GOOGLE_MAPS_COMPUTE_ROUTES,
-	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE
+	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE,
+	GOOGLE_MAPS_STATIC_MAPS
 } from './constants'
 import { GoogleMapsAPIError } from './errors'
 import {
@@ -28,17 +34,102 @@ export class GoogleMapsRoutesService implements RoutesService {
 	constructor(
 		@InjectRepository(RouteEntity)
 		private readonly routesRepository: Repository<RouteEntity>,
-		private readonly configService: ConfigService
+		private readonly configService: ConfigService,
+		private readonly fileStorageService: FileStorageService
 	) {}
 
-	async find({ id }: { id: string }): Promise<RouteEntity> {
-		const route = await this.routesRepository.findOne({ where: { id } })
+	async findAll(
+		options?: FindManyOptions<RouteEntity>
+	): Promise<RouteEntity[]> {
+		const routes = await this.routesRepository.find(options)
+
+		return routes
+	}
+
+	async findOne(options: FindOneOptions<RouteEntity>): Promise<RouteEntity> {
+		const route = await this.routesRepository.findOne(options)
 
 		if (route == null) {
 			throw new NotFoundException('No se encontró la ruta especificada')
 		}
 
 		return route
+	}
+
+	async takeRoutePhoto({
+		route
+	}: { route: RouteDto }): Promise<{ photoFilename: string }> {
+		validateOrReject(route)
+
+		const { polyline } = route
+		const { coordinates } = polyline
+
+		const [originGeoJsonPosition, destinationGeoJsonPosition] = [
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that coordinates is not empty and has at least two elements
+			coordinates.at(0)!,
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that coordinates is not empty and has at least two elements
+			coordinates.at(-1)!
+		]
+
+		const origin = {
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that geoJsonPosition is not empty and has at least two elements
+			lat: originGeoJsonPosition.at(1)!,
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that geoJsonPosition is not empty and has at least two elements
+			lng: originGeoJsonPosition.at(0)!
+		}
+
+		const destination = {
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that geoJsonPosition is not empty and has at least two elements
+			lat: destinationGeoJsonPosition.at(1)!,
+			// biome-ignore lint/style/noNonNullAssertion: Validated in geo-json-line-string.dto.ts that geoJsonPosition is not empty and has at least two elements
+			lng: destinationGeoJsonPosition.at(0)!
+		}
+
+		const params = {
+			markers: {
+				origin: `size:mid|label:O|${origin.lat},${origin.lng}`,
+				destination: `size:mid|label:D|${destination.lat},${destination.lng}`
+			},
+			size: '300x300',
+			key: this.configService.get('GOOGLE_MAPS_API_KEY'),
+			path: `weight:5|enc:${fromGeoJSON(polyline)}`,
+			format: 'png',
+			maptype: 'roadmap',
+			language: GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE,
+			scale: '2'
+		}
+
+		const googleMapsUrl = new URL(GOOGLE_MAPS_STATIC_MAPS.url)
+
+		googleMapsUrl.searchParams.append('size', params.size)
+		googleMapsUrl.searchParams.append('markers', params.markers.origin)
+		googleMapsUrl.searchParams.append('markers', params.markers.destination)
+		googleMapsUrl.searchParams.append('path', params.path)
+		googleMapsUrl.searchParams.append('format', params.format)
+		googleMapsUrl.searchParams.append('maptype', params.maptype)
+		googleMapsUrl.searchParams.append('language', params.language)
+		googleMapsUrl.searchParams.append('scale', params.scale)
+		googleMapsUrl.searchParams.append('key', params.key)
+
+		const response = await fetch(googleMapsUrl, {
+			method: GOOGLE_MAPS_STATIC_MAPS.method
+		})
+
+		if (!response.ok) {
+			throw new GoogleMapsAPIError('Error al obtener la imagen del mapa')
+		}
+
+		const imageAsBlob = await response.blob()
+
+		const buffer = Buffer.from(await imageAsBlob.arrayBuffer())
+
+		const photoFilename = this.fileStorageService.save({
+			buffer,
+			mimetype: 'image/png',
+			size: buffer.length
+		})
+
+		return { photoFilename }
 	}
 
 	async createAndSaveUserDriveRoute({
@@ -190,13 +281,16 @@ export class GoogleMapsRoutesService implements RoutesService {
 		name: string
 		user: User
 	}): Promise<RouteEntity> {
+		const { photoFilename } = await this.takeRoutePhoto({ route })
+
 		return await this.routesRepository.save({
-			name: name,
-			type: type,
+			name,
+			type,
 			distance: route.distance,
 			duration: route.duration,
 			description: route.description,
 			geoJsonLineString: route.polyline,
+			photoFilename,
 			user
 		})
 	}

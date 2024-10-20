@@ -47,7 +47,9 @@ export class RouteEntity {
 
 	@Column('jsonb', { nullable: false })
 	geoJsonLineString: GeoJsonLineString
-	//
+
+	@Column({ type: 'text', nullable: false })
+	photoFilename: string
 
 	@CreateDateColumn({
 		type: 'timestamptz',
