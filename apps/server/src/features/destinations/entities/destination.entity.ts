@@ -30,8 +30,8 @@ export class Destination {
 	@Column({ type: 'decimal' })
 	longitude: number
 
-	// @Column()
-	// destinationPicFilename: string
+	@Column({ default: '' })
+	destinationPhotoFilename: string
 
 	@CreateDateColumn({
 		type: 'timestamptz',

@@ -7,6 +7,10 @@ import { validateOrReject } from 'class-validator'
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm'
 import { User } from '~/features/users/entities/user.entity'
 import { RouteType } from '~/shared/constants'
+import {
+	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE,
+	GOOGLE_MAPS_STATIC_MAPS
+} from '~/shared/constants'
 import { FileStorageService } from '~/shared/files-upload/file-storage/file-storage.service'
 import { RouteDto } from '../dto/route.dto'
 import { RouteEntity } from '../entities/route.entity'
@@ -18,11 +22,7 @@ import {
 	RoutesService,
 	Waypoint
 } from '../types'
-import {
-	GOOGLE_MAPS_COMPUTE_ROUTES,
-	GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE,
-	GOOGLE_MAPS_STATIC_MAPS
-} from './constants'
+import { GOOGLE_MAPS_COMPUTE_ROUTES } from './constants'
 import { GoogleMapsAPIError } from './errors'
 import {
 	GoogleMapsComputeRoutesRequest,
