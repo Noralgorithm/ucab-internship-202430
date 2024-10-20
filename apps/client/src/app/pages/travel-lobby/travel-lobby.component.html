@@ -57,11 +57,11 @@
 			<div class="passengers-list-header">
 				<p class="label-small passengers-quantity">Pasajeros {{travel?.rides?.length}} de
 					{{travel?.availableSeatQuantity}}</p>
-				<p class="view-requests-button">Ver solicitudes</p>
+				<p class="view-requests-button" (click)="openPendingRequestsModal()">Ver solicitudes</p>
 			</div>
 			<div class="passengers-list">
 
-				@for (r of travel?.rides; track r.id) {
+				@for (r of acceptedRequests; track r.id) {
 				<div class="passenger-card">
 
 					<img class="avatar" [src]="r.passenger.profilePicSrc" alt="Imágen del conductor" />
@@ -98,5 +98,38 @@
 		<div class="button-container">
 			<button mButton size="large">Iniciar Viaje</button>
 		</div>
+
+		<modal [(isOpen)]="isPendingRequestsModalOpen">
+			@for (r of pendingRequests; track r.id) {
+			<div class="passenger-card">
+
+				<img class="avatar" [src]="r.passenger.profilePicSrc" alt="Imágen del conductor" />
+
+				<section>
+					<div class="card-row justify-between label-medium">
+						<div class="card-row">
+							<span class="passenger-name">{{r.passenger.firstName}} {{r.passenger.lastName}}</span>
+							<div class="rating-information">
+								<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+								<span class="card-information rating-number">4.8 (60)</span>
+							</div>
+						</div>
+						<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+					</div>
+
+					<div class="card-row paragraph-xsmall">
+						<div class="card-information">
+							<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
+							<span class="card-information-title">{{r.passenger.walkDistance}} m</span>
+						</div>
+						<div class="card-information">
+							<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
+							<span class="card-information-title">70% de emparejamiento</span>
+						</div>
+					</div>
+				</section>
+			</div>
+			}
+		</modal>
 	</main>
 </page-layout>
