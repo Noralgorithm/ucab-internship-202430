@@ -107,7 +107,7 @@ export class TravelsService {
 			relations: ['rides', 'rides.passenger']
 		})
 
-		return travelRideRequests?.rides
+		return travelRideRequests?.rides.filter((ride) => ride.isAccepted === null)
 	}
 
 	async changeStatus(

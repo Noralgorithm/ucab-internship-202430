@@ -26,8 +26,8 @@ export class Ride {
 	@Column({ type: 'uuid', unique: true })
 	id: string
 
-	@Column({ type: 'boolean', default: false, nullable: false })
-	isAccepted: boolean
+	@Column({ type: 'boolean', default: null, nullable: true })
+	isAccepted?: boolean
 
 	@Column({
 		type: 'timestamptz',

@@ -30,11 +30,15 @@ export class TravelsController {
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.travelsService.findOne({
+	async findOne(@Param('id') id: string) {
+		const travel = await this.travelsService.findOne({
 			where: { id: id },
-			relations: ['vehicle']
+			relations: ['vehicle', 'rides', 'rides.passenger']
 		})
+
+		travel.rides = travel.rides.filter((ride) => ride.isAccepted)
+
+		return travel
 	}
 
 	@Patch(':id/status')
