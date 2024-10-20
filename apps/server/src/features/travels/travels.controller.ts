@@ -33,10 +33,8 @@ export class TravelsController {
 	async findOne(@Param('id') id: string) {
 		const travel = await this.travelsService.findOne({
 			where: { id: id },
-			relations: ['vehicle', 'rides', 'rides.passenger']
+			relations: ['vehicle', 'vehicle.driver', 'rides', 'rides.passenger']
 		})
-
-		travel.rides = travel.rides.filter((ride) => ride.isAccepted)
 
 		return travel
 	}
