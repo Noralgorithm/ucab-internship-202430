@@ -43,11 +43,11 @@ export class RidesService {
 	) {
 		const ride = await this.findOne(options)
 
-		const updatedRide = await this.ridesRepository.update(ride, {
+		await this.ridesRepository.update(ride.internalId, {
 			isAccepted: answerRequestDto.isAccepted
 		})
 
-		return updatedRide
+		return 'Ride request answered'
 	}
 
 	// TODO: Validate that is not possible to cancel an already canceled request
