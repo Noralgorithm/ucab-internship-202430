@@ -16,12 +16,12 @@ export class MessagesService {
 	) {}
 
 	async create(
-		rideId: Ride['id'],
+		id: Ride['id'],
 		createMessageDto: CreateMessageDto,
 		currentUser: User
 	) {
 		const ride = await this.ridesService.findOne({
-			where: { id: rideId }
+			where: { id: id }
 		})
 
 		const message = this.messagesRepository.create({
@@ -33,15 +33,15 @@ export class MessagesService {
 		return await this.messagesRepository.save(message)
 	}
 
-	async findAllRideMessages(rideId: Ride['id'], currentUser: User) {
+	async findAllRideMessages(id: Ride['id'], currentUser: User) {
 		const sendedMessages = await this.messagesRepository.find({
-			where: { ride: { id: rideId } },
+			where: { ride: { id: id } },
 			relations: ['sender'],
 			order: { createdAt: 'ASC' }
 		})
 
 		const ride = await this.ridesService.findOne({
-			where: { id: rideId },
+			where: { id: id },
 			relations: [
 				'travel',
 				'travel.vehicle',
