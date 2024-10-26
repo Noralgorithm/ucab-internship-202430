@@ -47,9 +47,13 @@ export class RidesService {
 			relations: { travel: { vehicle: { driver: true } } }
 		})
 
+		const travelCancelType = answerRequestDto.isAccepted
+			? TravelCancelType.DRIVER_DENIAL
+			: undefined
+
 		await this.ridesRepository.update(ride.internalId, {
 			isAccepted: answerRequestDto.isAccepted,
-			travelCancelType: TravelCancelType.DRIVER_DENIAL
+			travelCancelType
 		})
 
 		return 'Ride request answered'
