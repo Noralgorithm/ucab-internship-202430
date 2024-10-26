@@ -40,11 +40,16 @@ export class MessagesService {
 			order: { createdAt: 'ASC' }
 		})
 
+		const ride = await this.ridesService.findOne({
+			where: { id: rideId },
+			relations: ['driver', 'passengers']
+		})
+
 		const messages = sendedMessages.map(({ sender, ...msg }) => ({
 			...msg,
 			isMine: sender.id === currentUser.id
 		}))
 
-		return messages
+		return { ...ride, messages }
 	}
 }

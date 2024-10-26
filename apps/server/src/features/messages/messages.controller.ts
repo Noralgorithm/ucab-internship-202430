@@ -19,7 +19,7 @@ export class MessagesController {
 		return this.messagesService.create(id, createMessageDto, currentUser)
 	}
 
-	@Get(':id')
+	@Get(':rideId')
 	findAll(@Param('id') id: string, @CurrentUser() currentUser: User) {
 		return this.messagesService.findAllRideMessages(id, currentUser)
 	}
