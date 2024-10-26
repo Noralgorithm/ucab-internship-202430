@@ -92,11 +92,13 @@ export class RidesController {
 	@Patch(':id/answer-ride-request')
 	answerRequest(
 		@Param('id') id: string,
-		@Body() answerRequestDto: AnswerRequestDto
+		@Body() answerRequestDto: AnswerRequestDto,
+		@CurrentUser() currentUser: User
 	) {
 		return this.ridesService.answerRequest(
 			{ where: { id: id } },
-			answerRequestDto
+			answerRequestDto,
+			currentUser
 		)
 	}
 
