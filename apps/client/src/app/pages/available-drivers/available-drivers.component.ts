@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { RouterLink } from '@angular/router'
+import { ActivatedRoute, RouterLink } from '@angular/router'
 import { DriverCardComponent } from '~/features/drivers/components/driver-card/driver-card.component'
+import { OwnLocationService } from '~/features/maps/own-location.service'
+import { RequestRideService } from '~/features/rides/api/request-ride.service'
 import { GetTravelAvailableDrivers } from '~/features/travels/api/get-travel-available-drivers.service'
 import { GENDER_KEY } from '~/shared/constants'
 import { TravelAvailableDriverData } from '~/shared/types/travels/travel.type'
@@ -16,13 +18,38 @@ import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-lay
 })
 export class AvailableDriversComponent implements OnInit {
 	travels: TravelAvailableDriverData[] = []
+	travelType: 'from-ucab' | 'to-ucab' = 'from-ucab'
 
 	constructor(
-		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers
-	) {}
+		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
+		private readonly requestRideService: RequestRideService,
+		private readonly ownLocationService: OwnLocationService,
+		private readonly route: ActivatedRoute
+	) {
+		this.route.queryParams.subscribe((params) => {
+			this.travelType = params['type']
+		})
+	}
 
 	ngOnInit() {
 		this.getDrivers()
+	}
+
+	handleDriverSelection(travel: TravelAvailableDriverData) {
+		this.ownLocationService.$location.subscribe((location) => {
+			this.requestRideService
+				.execute(
+					{
+						travelId: travel.id,
+						point: {
+							type: 'Point',
+							coordinates: [location.coords.longitude, location.coords.latitude]
+						}
+					},
+					this.travelType
+				)
+				.subscribe(() => {})
+		})
 	}
 
 	isAWoman() {

@@ -18,7 +18,7 @@ export class CreateTravelService {
 	}
 }
 
-export interface CreateTravelServiceDto extends Omit<Travel, 'route'> {
+export interface CreateTravelServiceDto extends Omit<Travel, 'route' | 'id'> {
 	route: RouteDto
 }
 

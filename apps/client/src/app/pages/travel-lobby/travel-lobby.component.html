@@ -55,33 +55,34 @@
 
 		<section class="passengers">
 			<div class="passengers-list-header">
-				<p class="label-small passengers-quantity">Pasajeros {{travel?.rides?.length}} de
+				<p class="label-small passengers-quantity">Pasajeros {{acceptedRequests.length}} de
 					{{travel?.availableSeatQuantity}}</p>
-				<p class="view-requests-button" (click)="openPendingRequestsModal()">Ver solicitudes</p>
+				<button class="view-requests-button" (click)="openPendingRequestsModal()">Ver solicitudes
+					({{pendingRequests.length}})</button>
 			</div>
 			<div class="passengers-list">
 
-				@for (r of acceptedRequests; track r.id) {
+				@for (ride of acceptedRequests; track ride.id) {
 				<div class="passenger-card">
 
-					<img class="avatar" [src]="r.passenger.profilePicSrc" alt="Imágen del conductor" />
+					<img class="avatar" [src]="ride.passenger.profilePicSrc" alt="Imágen del conductor" />
 
 					<section>
 						<div class="card-row justify-between label-medium">
 							<div class="card-row">
-								<span class="passenger-name">{{r.passenger.firstName}} {{r.passenger.lastName}}</span>
+								<span class="passenger-name">{{ride.passenger.firstName}} {{ride.passenger.lastName}}</span>
 								<div class="rating-information">
 									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
 							</div>
-							<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+							<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat" (click)="goToChat(ride)">
 						</div>
 
 						<div class="card-row paragraph-xsmall">
 							<div class="card-information">
 								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
-								<span class="card-information-title">{{r.passenger.walkDistance}} m</span>
+								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
 							</div>
 							<div class="card-information">
 								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
@@ -99,36 +100,49 @@
 			<button mButton size="large">Iniciar Viaje</button>
 		</div>
 
-		<modal [(isOpen)]="isPendingRequestsModalOpen">
-			@for (r of pendingRequests; track r.id) {
-			<div class="passenger-card">
+		<modal [(isOpen)]="isPendingRequestsModalOpen" title="Solicitudes pendientes">
+			<div class=" passengers-list">
+				@for (ride of pendingRequests; track ride.id) {
+				<div class="passenger-card">
 
-				<img class="avatar" [src]="r.passenger.profilePicSrc" alt="Imágen del conductor" />
+					<img class="avatar" [src]="ride.passenger.profilePicSrc" alt="Imágen del conductor" />
 
-				<section>
-					<div class="card-row justify-between label-medium">
-						<div class="card-row">
-							<span class="passenger-name">{{r.passenger.firstName}} {{r.passenger.lastName}}</span>
-							<div class="rating-information">
-								<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
-								<span class="card-information rating-number">4.8 (60)</span>
+					<section>
+						<div class="card-row justify-between label-medium">
+							<div class="card-row">
+								<span class="passenger-name">{{ride.passenger.firstName}} {{ride.passenger.lastName}}</span>
+								<div class="rating-information">
+									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<span class="card-information rating-number">4.8 (60)</span>
+								</div>
+							</div>
+							<div>
+								<button class="action-icon" (click)="acceptRideRequest(ride)">
+									✅
+								</button>
+								<button class="action-icon" (click)="rejectRideRequest(ride)">
+									❌
+								</button>
 							</div>
 						</div>
-						<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
-					</div>
 
-					<div class="card-row paragraph-xsmall">
-						<div class="card-information">
-							<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
-							<span class="card-information-title">{{r.passenger.walkDistance}} m</span>
+						<div class="card-row paragraph-xsmall">
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
+								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
+							</div>
+							<div class="card-information">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
+								<span class="card-information-title">70% de emparejamiento</span>
+							</div>
 						</div>
-						<div class="card-information">
-							<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
-							<span class="card-information-title">70% de emparejamiento</span>
-						</div>
-					</div>
-				</section>
+					</section>
+				</div>
+				}
 			</div>
+
+			@if (pendingRequests.length === 0) {
+			<p class="paragraph-small">No hay solicitudes pendientes</p>
 			}
 		</modal>
 	</main>

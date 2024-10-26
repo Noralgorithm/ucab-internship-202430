@@ -224,10 +224,15 @@ h1 {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 1.5rem;
 }
 
 .view-requests-button {
 	border-radius: 10px;
 	padding: 0.5rem 1.5rem;
 	border: solid 2px var(--primary-text-value);
+}
+
+.action-icon {
+	font-size: 1.5rem;
 }

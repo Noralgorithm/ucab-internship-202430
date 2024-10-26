@@ -4,6 +4,7 @@ export interface RideRequest {
 	id: string
 	passenger: UserProfile
 	isAccepted: boolean
+	travelCancelType: string
 }
 
 export interface Message {
