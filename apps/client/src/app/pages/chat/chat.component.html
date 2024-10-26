@@ -1,31 +1,23 @@
-<page-layout [hasTabBar]="true">
+<page-layout>
 	@if (this.rideMessages !== null) {
 	<h1 class="heading-small">Chat con {{rideMessages.driver.firstName}} </h1>
-	@for (msg of rideMessages.messages; track $index) {
-	@if (msg.isMine) {
-	<div class="own-msg-container">
-		<div class="msg">{{msg.content}}</div>
-		<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
-	</div>
-	}@else {
-	<div class="msg-container">
-		<div class="msg">{{msg.content}}</div>
-		<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
+	<div class="msgs-container">
+		@for (msg of rideMessages.messages; track $index) {
+		@if (msg.isMine) {
+		<div class="own-msg-container">
+			<div class="msg">{{msg.content}}</div>
+			<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
+		</div>
+		}@else {
+		<div class="msg-container">
+			<div class="msg">{{msg.content}}</div>
+			<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
+		</div>
+		}
+		}
 	</div>
 	}
-	}
-	<div class="own-msg-container">
-		<div class="msg">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia dignissimos eligendi atque
-			magnam eum fuga non assumenda earum blanditiis error veniam similique natus aliquid, distinctio ipsum vitae
-			aliquam eveniet qui?</div>
-		<div class="msg-timestamp">02:09AM</div>
-	</div>
 
-	<div class="msg-container">
-		<div class="msg">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia dignissimos eligendi atque
-			magnam eum fuga non assumenda earum blanditiis error veniam similique natus aliquid, distinctio ipsum vitae
-			aliquam eveniet qui?</div>
-		<div class="msg-timestamp">02:09AM</div>
-	</div>
-	}
-</page-layout>x
+	<input type="text" name="" id="" class="text-box" placeholder="Mensaje" [(ngModel)]="newMessage"
+		(keyup.enter)="sendMessage()">
+</page-layout>
