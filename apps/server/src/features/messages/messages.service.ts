@@ -42,7 +42,12 @@ export class MessagesService {
 
 		const ride = await this.ridesService.findOne({
 			where: { id: rideId },
-			relations: ['driver', 'passengers']
+			relations: [
+				'travel',
+				'travel.vehicle',
+				'travel.vehicle.driver',
+				'passenger'
+			]
 		})
 
 		const messages = sendedMessages.map(({ sender, ...msg }) => ({
@@ -50,6 +55,10 @@ export class MessagesService {
 			isMine: sender.id === currentUser.id
 		}))
 
-		return { ...ride, messages }
+		return {
+			driver: ride.travel.vehicle.driver,
+			passenger: ride.passenger,
+			messages
+		}
 	}
 }
