@@ -1,10 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+	Injectable,
+	NotFoundException,
+	UnprocessableEntityException
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindOneOptions, Repository } from 'typeorm'
+import { User } from '../users/entities/user.entity'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
 import { Ride } from './entities/ride.entity'
+import { TravelCancelType } from './enums/travel-cancel-type.enum'
 
 @Injectable()
 export class RidesService {
@@ -36,15 +42,27 @@ export class RidesService {
 		return ride
 	}
 
-	// TODO: Validate that the one answering the request is the driver and not somebody else
+	// TODO: Prettify how requester is validated
 	async answerRequest(
 		options: FindOneOptions<Ride>,
-		answerRequestDto: AnswerRequestDto
+		answerRequestDto: AnswerRequestDto,
+		requester: User
 	) {
-		const ride = await this.findOne(options)
+		const ride = await this.findOne({
+			...options,
+			relations: { travel: { vehicle: { driver: true } } }
+		})
+
+		const invalidRequester =
+			!requester.isDriver || ride.travel.vehicle.driver.id !== requester.id
+
+		if (invalidRequester) {
+			throw new UnprocessableEntityException('Esta cola no existe')
+		}
 
 		await this.ridesRepository.update(ride.internalId, {
-			isAccepted: answerRequestDto.isAccepted
+			isAccepted: answerRequestDto.isAccepted,
+			travelCancelType: TravelCancelType.DRIVER_DENIAL
 		})
 
 		return 'Ride request answered'
