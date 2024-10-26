@@ -5,3 +5,18 @@ export interface RideRequest {
 	passenger: UserProfile
 	isAccepted: boolean
 }
+
+export interface Message {
+	id: string
+	content: string
+	createdAt: string
+	updatedAt: string
+	deletedAt: string
+	isMine: boolean
+}
+
+export type RideMessages = {
+	driver: UserProfile
+	passenger: UserProfile
+	messages: Message[]
+}

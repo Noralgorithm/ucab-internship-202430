@@ -7,6 +7,7 @@ import { LoginComponent } from '~/pages/auth/login/login.component'
 import { RegisterComponent } from '~/pages/auth/register/register.component'
 import { SuccessfulEmailVerificationComponent } from '~/pages/auth/successful-email-verification/successful-email-verification.component'
 import { AvailableDriversComponent } from '~/pages/available-drivers/available-drivers.component'
+import { ChatComponent } from '~/pages/chat/chat.component'
 import { ConfirmTravelComponent } from '~/pages/confirm-travel/confirm-travel.component'
 import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.component'
 import { EditVehicleComponent } from '~/pages/edit-vehicle/edit-vehicle.component'
@@ -30,6 +31,11 @@ export const routes: Routes = [
 		path: '',
 		title: 'MoviC',
 		component: AuthComponent
+	},
+	{
+		path: 'chat',
+		title: 'Chat',
+		component: ChatComponent
 	},
 	{
 		path: 'login',

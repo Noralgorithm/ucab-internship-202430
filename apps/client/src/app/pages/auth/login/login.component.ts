@@ -82,6 +82,7 @@ export class LoginComponent {
 						(localStorage.getItem(PREFERRED_ROLE_KEY) as UserRole) ??
 						'passenger'
 					this.setUserCurrentRole()
+					this.toastrService.success('Ha iniciado sesión correctamente!')
 					this.router.navigate(['/app'])
 				},
 				error: (err) => {

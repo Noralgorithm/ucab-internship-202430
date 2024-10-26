@@ -1,0 +1,50 @@
+h1 {
+	text-align: left;
+	margin-top: 2rem;
+	width: 100%;
+	color: var(--primary-text-label);
+}
+
+.own-msg-container {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+	border-radius: 0.5rem;
+	padding: 0.5rem 0.5rem 1.25rem 0.5rem;
+	margin: 0.5rem;
+	background-color: #0183fe;
+
+	.msg {
+		color: #fff;
+	}
+
+	.msg-timestamp {
+		position: absolute;
+		bottom: 0.25rem;
+		right: 0.5rem;
+		font-size: 0.6rem;
+		color: #c7cde6;
+	}
+}
+
+.msg-container {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+	border-radius: 0.5rem;
+	padding: 0.5rem 0.5rem 1.25rem 0.5rem;
+	margin: 0.5rem;
+	background-color: #f3e9e9;
+
+	.msg {
+		color: #000;
+	}
+
+	.msg-timestamp {
+		position: absolute;
+		bottom: 0.25rem;
+		right: 0.5rem;
+		font-size: 0.6rem;
+		color: #1e1e21;
+	}
+}
