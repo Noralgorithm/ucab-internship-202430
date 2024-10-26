@@ -32,10 +32,6 @@
 	color: var(--primary-text-placeholder);
 }
 
-.card-information-title {
-	color: var(--primary-text-placeholder);
-}
-
 .rating-information {
 	display: flex;
 	align-items: center;
@@ -54,4 +50,8 @@
 
 .card-information-icon {
 	width: var(--icon-s);
+}
+
+.card-information-title {
+	color: var(--primary-text-placeholder);
 }
