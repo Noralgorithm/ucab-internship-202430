@@ -65,6 +65,8 @@ export class ChatComponent implements OnInit {
 		this.sendRideMessageService
 			.execute('8db5020e-4cd2-46eb-b7f2-70f5d320248c', this.newMessage)
 			.subscribe(() => {})
+
+		this.newMessage = ''
 	}
 
 	formatDate(date: string) {
