@@ -2,6 +2,7 @@ h1 {
 	text-align: left;
 	margin-top: 2rem;
 	width: 100%;
+	color: var(--primary-text-label);
 }
 
 p {
@@ -18,12 +19,16 @@ p {
 	justify-content: center;
 	align-items: center;
 	text-decoration: none;
-	color: var(--text-color);
 	width: 100%;
 	border-radius: 20px;
 	border: 3px solid #bab3c7;
 	cursor: pointer;
 	gap: 0.5rem;
+	background-color: var(--contrast-surface-subtle);
+}
+
+.card .option-name {
+	color: var(--primary-text-value);
 }
 
 .cards-container {
@@ -41,6 +46,17 @@ p {
 	justify-content: center;
 	align-items: start;
 	gap: 1rem;
+}
+
+.card-info .information-text {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+}
+
+.card-info .information-text p {
+	text-align: start;
 }
 
 .icon {

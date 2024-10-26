@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { CreateTravelStoreService } from '~/features/travels/create-travel-store.service'
 import { GetOwnVehiclesService } from '~/features/vehicles/api/get-own-vehicles.service'
+import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -24,6 +25,7 @@ export class OfferTravelComponent {
 	constructor(
 		private getOwnVehiclesService: GetOwnVehiclesService,
 		private createTravelStoreService: CreateTravelStoreService,
+		public vehiclesColorsService: VehiclesColorsService,
 		private readonly router: Router
 	) {}
 
