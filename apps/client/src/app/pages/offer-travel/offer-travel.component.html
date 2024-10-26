@@ -13,7 +13,7 @@
 	@for (v of myVehicles; track v.id) {
 	<div class="card-vehicle" (click)="handleVehicleSelection(v)">
 		<div class="card-vehicle-image">
-			<movic-vehicle color="#FF0000"></movic-vehicle>
+			<movic-vehicle [color]="v.color"></movic-vehicle>
 		</div>
 		<div class="card-vehicle-info">
 			<div class="vehicle-details">
@@ -22,7 +22,7 @@
 			</div>
 			<div class="vehcicle-specs">
 				<p class="label-medium spec-item">{{v.seatQuantity}}</p>
-				<p class="label-medium spec-item">Rojo</p>
+				<p class="label-medium spec-item">{{vehiclesColorsService.getLabelByHex(v.color)}}</p>
 			</div>
 		</div>
 	</div>

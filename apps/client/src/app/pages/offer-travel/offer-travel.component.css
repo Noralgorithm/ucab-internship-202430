@@ -24,6 +24,7 @@ h3 {
 	height: 7.75rem;
 	border-radius: 1rem;
 	justify-content: start;
+	cursor: pointer;
 }
 
 .card-vehicle-image {
