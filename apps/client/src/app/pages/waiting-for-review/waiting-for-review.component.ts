@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
-import { interval, mergeMap } from 'rxjs'
+import { Subscription, interval, mergeMap } from 'rxjs'
 import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DriverCardComponent } from '../../features/drivers/components/driver-card/driver-card.component'
@@ -30,8 +30,10 @@ export class WaitingForReviewComponent implements OnInit {
 		})
 	}
 
+	subscription: Subscription | null = null
+
 	ngOnInit() {
-		interval(FETCH_WAIT_TIME_IN_MS)
+		this.subscription = interval(FETCH_WAIT_TIME_IN_MS)
 			.pipe(
 				mergeMap(() =>
 					this.getRideService.execute(this.rideId as string, false)
@@ -45,6 +47,10 @@ export class WaitingForReviewComponent implements OnInit {
 					this.toastr.success('El conductor ha aceptado tu solicitud')
 				}
 			})
+	}
+
+	ngOnDestroy() {
+		this.subscription?.unsubscribe()
 	}
 
 	cancelReview() {
