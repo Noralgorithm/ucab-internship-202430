@@ -53,7 +53,7 @@ export class TravelLobbyComponent {
 							(ride) => ride.isAccepted
 						)
 						this.pendingRequests = this.travel.rides.filter(
-							(ride) => !ride.isAccepted && !ride.travelCancelType
+							(ride) => ride.isAccepted === null
 						)
 					},
 					error: () => {

@@ -7,7 +7,7 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DriverCardComponent } from '../../features/drivers/components/driver-card/driver-card.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 
-const FETCH_WAIT_TIME_IN_MS = 2000
+const FETCH_WAIT_TIME_IN_MS = 1000
 
 @Component({
 	selector: 'app-waiting-for-review',
@@ -41,19 +41,21 @@ export class WaitingForReviewComponent implements OnInit {
 			)
 			.subscribe((res) => {
 				if (res.data.isAccepted === false) {
+					this.subscription?.unsubscribe()
 					this.toastr.error('El conductor ha rechazado tu solicitud')
-					this.router.navigate(['/app/available-drivers'])
+					this.router.navigate(['/app/available-drivers'], {
+						queryParamsHandling: 'preserve'
+					})
 				} else if (res.data.isAccepted === true) {
+					this.subscription?.unsubscribe()
 					this.toastr.success('El conductor ha aceptado tu solicitud')
 				}
 			})
 	}
 
-	ngOnDestroy() {
-		this.subscription?.unsubscribe()
-	}
-
 	cancelReview() {
-		this.router.navigate(['/app/available-drivers'])
+		this.router.navigate(['/app/available-drivers'], {
+			queryParamsHandling: 'preserve'
+		})
 	}
 }

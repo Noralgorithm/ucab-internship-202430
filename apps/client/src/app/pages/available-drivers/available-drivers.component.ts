@@ -77,7 +77,8 @@ export class AvailableDriversComponent implements OnInit {
 
 	redirectToReview(ride: Ride) {
 		this.router.navigate(['app/waiting-for-review'], {
-			queryParams: { id: ride.id }
+			queryParams: { id: ride.id },
+			queryParamsHandling: 'merge'
 		})
 	}
 }
