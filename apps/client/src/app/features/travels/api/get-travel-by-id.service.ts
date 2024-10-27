@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { map } from 'rxjs'
 import { BYPASS_LOADING } from '~/core/interceptors/loading.interceptor'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
-import { RideRequest } from '~/shared/types/rides/ride-request.type'
+import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelLobbyData } from '~/shared/types/travels/travel.type'
 import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image-url.util'
 
@@ -45,7 +45,7 @@ export class GetTravelByIdService {
 }
 
 type ResponseDto = Omit<TravelLobbyData, 'rides'> & {
-	rides: (RideRequest & {
+	rides: (Ride & {
 		passenger: { profilePicFilename: string }
 	})[]
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { map } from 'rxjs'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
-import { RideRequest } from '~/shared/types/rides/ride-request.type'
+import { Ride } from '~/shared/types/rides/ride-request.type'
 import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image-url.util'
 
 @Injectable({
@@ -21,7 +21,7 @@ export class GetRideRequestsService {
 
 	private parseResponse(
 		res: SuccesfulResponse<ResponseDto>
-	): SuccesfulResponse<RideRequest[]> {
+	): SuccesfulResponse<Ride[]> {
 		return {
 			status: res.status,
 			data: res.data.map((rideRequest) => ({
@@ -37,6 +37,6 @@ export class GetRideRequestsService {
 	}
 }
 
-type ResponseDto = (RideRequest & {
+type ResponseDto = (Ride & {
 	passenger: { profilePicFilename: string }
 })[]

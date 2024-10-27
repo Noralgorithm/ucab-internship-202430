@@ -33,14 +33,14 @@ export class TravelTypeSelectionComponent {
 
 	handleToUcabSelection() {
 		this.createTravelStoreService.type = 'to-ucab'
-		this.router.navigate([this.ucabToExternalRouteToRedirect], {
+		this.router.navigate([this.externalToUcabRouteToRedirect], {
 			queryParams: { type: 'to-ucab' }
 		})
 	}
 
 	handleFromUcabSelection() {
 		this.createTravelStoreService.type = 'from-ucab'
-		this.router.navigate([this.externalToUcabRouteToRedirect], {
+		this.router.navigate([this.ucabToExternalRouteToRedirect], {
 			queryParams: { type: 'from-ucab' }
 		})
 	}

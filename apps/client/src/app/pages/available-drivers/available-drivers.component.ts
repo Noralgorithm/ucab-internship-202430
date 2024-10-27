@@ -5,6 +5,7 @@ import { OwnLocationService } from '~/features/maps/own-location.service'
 import { RequestRideService } from '~/features/rides/api/request-ride.service'
 import { GetTravelAvailableDrivers } from '~/features/travels/api/get-travel-available-drivers.service'
 import { GENDER_KEY } from '~/shared/constants'
+import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelAvailableDriverData } from '~/shared/types/travels/travel.type'
 import { Gender } from '~/shared/types/users/user-gender.type'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -49,7 +50,9 @@ export class AvailableDriversComponent implements OnInit {
 					},
 					this.travelType
 				)
-				.subscribe(() => {})
+				.subscribe((res) => {
+					this.redirectToReview(res.data)
+				})
 		})
 	}
 
@@ -72,9 +75,9 @@ export class AvailableDriversComponent implements OnInit {
 		}
 	}
 
-	redirectToReview(travel: TravelAvailableDriverData) {
+	redirectToReview(ride: Ride) {
 		this.router.navigate(['app/waiting-for-review'], {
-			queryParams: { driverId: 'paula' }
+			queryParams: { id: ride.id }
 		})
 	}
 }

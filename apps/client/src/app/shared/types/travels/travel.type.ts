@@ -1,4 +1,4 @@
-import { RideRequest } from '../rides/ride-request.type'
+import { Ride } from '../rides/ride-request.type'
 import { UserProfile } from '../users/user-profile.type'
 import { Vehicle } from '../vehicles/vehicle.type'
 import { Route } from './route.type'
@@ -26,5 +26,5 @@ export type TravelAvailableDriverData = Travel & {
 
 export type TravelLobbyData = Travel & {
 	vehicle: Vehicle
-	rides: RideRequest[]
+	rides: Ride[]
 }
