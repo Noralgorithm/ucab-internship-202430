@@ -71,9 +71,10 @@ export class AvailableDriversComponent implements OnInit {
 			passengerCapacity: travel.availableSeatQuantity
 		}
 	}
-	redirectToReview(driverId: string) {
+
+	redirectToReview(travel: TravelAvailableDriverData) {
 		this.router.navigate(['app/waiting-for-review'], {
-			queryParams: { driver: driverId }
+			queryParams: { driverId: 'paula' }
 		})
 	}
 }
