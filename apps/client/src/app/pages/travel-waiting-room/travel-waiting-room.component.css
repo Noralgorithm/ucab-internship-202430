@@ -1,3 +1,7 @@
+main {
+	height: 100%;
+}
+
 header {
 	display: flex;
 	flex-direction: column;
@@ -107,7 +111,7 @@ header h1 {
 
 .rating-information {
 	display: flex;
-	align-items: center;
+	justify-content: center;
 	gap: .1875rem;
 }
 
@@ -117,4 +121,39 @@ header h1 {
 
 .chat-icon {
 	width: var(--icon-l);
+}
+
+.driver-vehicle-information {
+	display: flex;
+	flex-direction: column;
+	margin-top: 4.8125rem;
+}
+
+.driver-information {
+	display: flex;
+	gap: .6875rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.avatar {
+	width: 2.1875rem;
+	aspect-ratio: 1;
+	border-radius: 100%;
+	margin: 0.5rem 0;
+}
+
+.driver-information p {
+	color: var(--primary-text-value);
+}
+
+.vehicle-information {
+	display: flex;
+	gap: 2.0625rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.vehicle-information p {
+	color: var(--primary-text-value);
 }
