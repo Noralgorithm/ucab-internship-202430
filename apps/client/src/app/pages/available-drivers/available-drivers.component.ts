@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { DriverCardComponent } from '~/features/drivers/components/driver-card/driver-card.component'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { RequestRideService } from '~/features/rides/api/request-ride.service'
@@ -24,7 +24,8 @@ export class AvailableDriversComponent implements OnInit {
 		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
 		private readonly requestRideService: RequestRideService,
 		private readonly ownLocationService: OwnLocationService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.travelType = params['type']
@@ -69,5 +70,10 @@ export class AvailableDriversComponent implements OnInit {
 			passengerAmount: travel.passengerAmount,
 			passengerCapacity: travel.availableSeatQuantity
 		}
+	}
+	redirectToReview(driverId: string) {
+		this.router.navigate(['app/waiting-for-review'], {
+			queryParams: { driver: driverId }
+		})
 	}
 }
