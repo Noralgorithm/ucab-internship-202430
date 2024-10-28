@@ -6,14 +6,22 @@
 				<img src="assets/svgs/StartingPointGray.svg" alt="Punto de Inicio" class="icon">
 				<div class="starting-point-info">
 					<p class="paragraph-small title">Punto de partida</p>
-					<p class="paragraph-small location">Ucab</p>
+					@if(ride?.travel?.type === 'from-ucab'){
+					<p class="paragraph-small location">UCAB</p>
+					} @else {
+					<p class="paragraph-small location">Mi ubicación actual</p>
+					}
 				</div>
 			</div>
 			<div class="external-destination">
 				<img src="assets/svgs/ExternalPointGray.svg" alt="Destino Externo" class="icon">
 				<div class="external-destination-info">
 					<p class="paragraph-small title">Destino Externo</p>
-					<p class="paragraph-small location">Mi casa</p>
+					@if(ride?.travel?.type === 'from-ucab'){
+					<p class="paragraph-small location">Isla Dorada</p>
+					} @else {
+					<p class="paragraph-small location">UCAB</p>
+					}
 				</div>
 			</div>
 		</section>
@@ -26,27 +34,30 @@
 				<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento" />
 				<span class="card-information-title paragraph-small">70%</span>
 			</div>
+			@if(ride?.travel?.forWomen){
 			<div class="only-woman-info">
 				<img src="assets/svgs/SecurityShield.svg" alt="Escudo">
 				<p class="paragraph-small">Solo mujeres en el viaje</p>
 			</div>
+			}
 		</div>
 	</header>
 
 	<section class="driver-vehicle-information">
 		<div class="driver-information">
 			<img class="avatar" src="assets/images/DriverPhoto.png" alt="Imágen del conductor" />
-			<p class="label-medium">Maria Paula Forero</p>
+			<p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
+				{{ride?.travel?.vehicle?.driver?.lastName}}</p>
 			<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
 		</div>
 		<div class="rating-information">
 			<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
 			<span class="card-information rating-number label-small">4.8 (60)</span>
 		</div>
-		<movic-vehicle color="#fffff"></movic-vehicle>
+		<movic-vehicle [color]="ride?.travel?.vehicle?.color ?? '#fff'"></movic-vehicle>
 		<div class="vehicle-information">
-			<p class="paragraph-medium">Chevrolet | Spark</p>
-			<p class="paragraph-medium">A17BN1E</p>
+			<p class="paragraph-medium">{{ride?.travel?.vehicle?.brand}} | {{ride?.travel?.vehicle?.model}}</p>
+			<p class="paragraph-medium">{{ride?.travel?.vehicle?.plate}}</p>
 		</div>
 	</section>
 </page-layout>
