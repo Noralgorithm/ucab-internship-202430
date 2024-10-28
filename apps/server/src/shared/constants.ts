@@ -65,3 +65,6 @@ export const GOOGLE_MAPS_STATIC_MAPS = {
 }
 
 export const GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE = 'es-419'
+
+export const MIN_STAR_RATING = 0
+export const MAX_STAR_RATING = 5

@@ -2,8 +2,10 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
-import { ChangeTravelStatusDto } from './dto/change-travel-status.dto'
+import { CancelDto } from './dto/cancel.dto'
+import { CompleteDto } from './dto/complete.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
+import { StartDto } from './dto/start.dto'
 import { TravelsService } from './travels.service'
 
 @ApiTags('[WIP] travels')
@@ -25,8 +27,15 @@ export class TravelsController {
 	}
 
 	@Get(':id/ride-requests')
-	findRideRequests(@Param('id') id: string) {
-		return this.travelsService.findRideRequests({ where: { id: id } })
+	async findRideRequests(
+		@Param('id') id: string,
+		@CurrentUser() currentUser: User
+	) {
+		await this.travelsService.findOne({
+			where: { id, vehicle: { driver: { id: currentUser.id } } }
+		})
+
+		return await this.travelsService.findRideRequests({ where: { id: id } })
 	}
 
 	@Get(':id')
@@ -39,14 +48,18 @@ export class TravelsController {
 		return travel
 	}
 
-	@Patch(':id/status')
-	changeStatus(
-		@Param('id') id: string,
-		@Body() changeTravelStatusDto: ChangeTravelStatusDto
-	) {
-		return this.travelsService.changeStatus(
-			{ where: { id: id } },
-			changeTravelStatusDto
-		)
+	@Patch('start')
+	start(@Body() startDto: StartDto, @CurrentUser() currentUser: User) {
+		return this.travelsService.start(startDto, currentUser)
+	}
+
+	@Patch('cancel')
+	cancel(@Body() cancelDto: CancelDto, @CurrentUser() currentUser: User) {
+		return this.travelsService.cancel(cancelDto, currentUser)
+	}
+
+	@Patch('complete')
+	complete(@Body() completeDto: CompleteDto, @CurrentUser() currentUser: User) {
+		return this.travelsService.complete(completeDto, currentUser)
 	}
 }

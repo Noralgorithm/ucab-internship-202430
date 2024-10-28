@@ -4,13 +4,19 @@ import {
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { FindOneOptions, Repository } from 'typeorm'
+import { DateTime } from 'luxon'
+import { Equal, FindOneOptions, Or, Repository } from 'typeorm'
 import { GeoJsonPoint } from '~/shared/types'
+import { TravelCancelType } from '../rides/enums/travel-cancel-type.enum'
+import { RidesService } from '../rides/rides.service'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
 import { VehiclesService } from '../vehicles/vehicles.service'
+import { CancelDto } from './dto/cancel.dto'
 import { ChangeTravelStatusDto } from './dto/change-travel-status.dto'
+import { CompleteDto } from './dto/complete.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
+import { StartDto } from './dto/start.dto'
 import { UpdateTravelDto } from './dto/update-travel.dto'
 import { Travel } from './entities/travel.entity'
 import { TravelStatus } from './enums/travel-status.enum'
@@ -20,9 +26,11 @@ export class TravelsService {
 	constructor(
 		@InjectRepository(Travel)
 		private readonly travelsRepository: Repository<Travel>,
-		private readonly vehiclesService: VehiclesService
+		private readonly vehiclesService: VehiclesService,
+		private readonly ridesService: RidesService
 	) {}
 
+	//TODO: validate that this user is not in a ride that has not been completed or cancelled
 	async create(driverId: User['id'], createTravelDto: CreateTravelDto) {
 		let vehicle: Vehicle
 		try {
@@ -36,10 +44,23 @@ export class TravelsService {
 			)
 		}
 
+		const travels = await this.travelsRepository.find({
+			where: {
+				vehicle: { driver: { id: driverId } },
+				status: Or(
+					Equal(TravelStatus.NOT_STARTED),
+					Equal(TravelStatus.IN_PROGRESS)
+				)
+			}
+		})
+
+		if (travels.length > 0) {
+			throw new UnprocessableEntityException('Ya tienes un viaje en curso')
+		}
+
 		const {
 			availableSeatQuantity,
 			forWomen,
-			status,
 			type,
 			route: { description, distance, duration, polyline }
 		} = createTravelDto
@@ -63,7 +84,7 @@ export class TravelsService {
 			distance,
 			duration,
 			geoJsonLineString: polyline,
-			status,
+			status: TravelStatus.NOT_STARTED,
 			type,
 			origin,
 			destination,
@@ -126,5 +147,117 @@ export class TravelsService {
 		})
 
 		return updatedRide
+	}
+
+	async start({ travelId }: StartDto, requester: User) {
+		//biome-ignore lint/style/noNonNullAssertion: Already validated
+		const travel = (await this.travelsRepository.findOne({
+			where: { id: travelId },
+			relations: { rides: true, vehicle: { driver: true } }
+		}))!
+
+		//TODO: this should be extracted into permissions middleware or something, see how it is implemented in rides.controller.ts
+		const invalidRequester =
+			!requester.isDriver || travel.vehicle.driver.id !== requester.id
+
+		if (invalidRequester) {
+			throw new UnprocessableEntityException('Este viaje no existe')
+		}
+
+		if (travel.status !== TravelStatus.NOT_STARTED) {
+			throw new UnprocessableEntityException('El viaje ya ha comenzado')
+		}
+
+		await this.travelsRepository.update(travel, {
+			status: TravelStatus.IN_PROGRESS,
+			departureTime: DateTime.now()
+		})
+
+		await Promise.all(
+			travel.rides.map(async (ride) => {
+				//! don't do this at home kids
+				try {
+					await this.ridesService.start({ rideId: ride.id })
+				} catch (_) {}
+			})
+		)
+	}
+
+	async cancel({ travelId, reason }: CancelDto, requester: User) {
+		//biome-ignore lint/style/noNonNullAssertion: Already validated
+		const travel = (await this.travelsRepository.findOne({
+			where: { id: travelId },
+			relations: { rides: true, vehicle: { driver: true } }
+		}))!
+
+		//TODO: this should be extracted into permissions middleware or something
+		const invalidRequester =
+			!requester.isDriver || travel.vehicle.driver.id !== requester.id
+
+		if (invalidRequester) {
+			throw new UnprocessableEntityException('Este viaje no existe')
+		}
+
+		if (travel.status === TravelStatus.CANCELLED) {
+			throw new UnprocessableEntityException('El viaje ya ha sido cancelado')
+		}
+
+		if (travel.status !== TravelStatus.NOT_STARTED) {
+			throw new UnprocessableEntityException(
+				'No se puede cancelar el viaje porque ya ha comenzado'
+			)
+		}
+
+		await this.travelsRepository.update(travel, {
+			status: TravelStatus.CANCELLED
+		})
+
+		await Promise.all(
+			travel.rides.map(async (ride) => {
+				//! don't do this at home kids
+				//TODO: test that this does not change the status of already cancelled rides
+				try {
+					await this.ridesService.cancelRequest(
+						{
+							where: {
+								id: ride.id,
+								travelCancelType: undefined,
+								isAccepted: true
+							}
+						},
+						{
+							travelCancelType: TravelCancelType.DRIVER_DENIAL,
+							reason
+						}
+					)
+				} catch (_) {}
+			})
+		)
+	}
+
+	//TODO: rate passengers
+	async complete({ travelId }: CompleteDto, requester) {
+		//biome-ignore lint/style/noNonNullAssertion: Already validated
+		const travel = (await this.travelsRepository.findOne({
+			where: { id: travelId },
+			relations: { rides: true, vehicle: { driver: true } }
+		}))!
+
+		//TODO: this should be extracted into permissions middleware or something
+		const invalidRequester =
+			!requester.isDriver || travel.vehicle.driver.id !== requester.id
+
+		if (invalidRequester) {
+			throw new UnprocessableEntityException('Este viaje no existe')
+		}
+
+		if (travel.status !== TravelStatus.IN_PROGRESS) {
+			throw new UnprocessableEntityException('El viaje no ha comenzado')
+		}
+
+		await this.travelsRepository.update(travel, {
+			status: TravelStatus.COMPLETED,
+			arrivalTime: DateTime.now()
+		})
 	}
 }
