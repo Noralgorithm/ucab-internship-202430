@@ -18,7 +18,6 @@ import { RouteDto } from '~/features/routes/dto/route.dto'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
 import { RouteType } from '~/shared/constants'
 import { Exists } from '~/shared/validators/exists.validator'
-import { TravelStatus } from '../enums/travel-status.enum'
 
 export class CreateTravelDto {
 	@ApiProperty({ example: false })
@@ -29,11 +28,6 @@ export class CreateTravelDto {
 	@IsEnum(RouteType)
 	@IsNotEmpty()
 	type: RouteType
-
-	@ApiProperty({ example: TravelStatus.NOT_STARTED })
-	@IsEnum(TravelStatus)
-	@IsNotEmpty()
-	status: TravelStatus
 
 	@IsPositive()
 	@IsInt()
