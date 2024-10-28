@@ -1,5 +1,6 @@
 export const TOKEN_KEY = 'token'
 
+export const ID_KEY = 'userId'
 export const GENDER_KEY = 'gender'
 export const PREFERRED_ROLE_KEY = 'preferredRole'
 export const CURRENT_ROLE_KEY = 'currentRole'

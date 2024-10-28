@@ -27,7 +27,7 @@ export interface Message {
 }
 
 export type RideMessages = {
-	driver: UserProfile
-	passenger: UserProfile
+	driver: UserProfile & { id: string }
+	passenger: UserProfile & { id: string }
 	messages: Message[]
 }

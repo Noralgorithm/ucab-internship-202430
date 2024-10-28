@@ -4,8 +4,11 @@ import { ActivatedRoute } from '@angular/router'
 import { interval, mergeMap } from 'rxjs'
 import { RetrieveRideMessagesService } from '~/features/chat/api/retrieve-ride-messages.service'
 import { SendRideMessageService } from '~/features/chat/api/send-ride-message.service'
-import { RideMessages } from '~/shared/types/rides/ride-request.type'
+import { ID_KEY } from '~/shared/constants'
+import { Message, RideMessages } from '~/shared/types/rides/ride-request.type'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
+
+const REFETCH_WAIT_TIME_IN_MS = 1000
 
 @Component({
 	selector: 'app-chat',
@@ -15,10 +18,11 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 	styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit {
+	currentUserId = localStorage.getItem(ID_KEY)
+	rideId = ''
 	rideMessages: RideMessages | null = null
+	groupedMessages: GroupedMessages[] = []
 	newMessage = ''
-	REFETCH_WAIT_TIME_IN_MS = 2000
-	rideId: string | null = null
 
 	constructor(
 		private readonly retrieveRideMessagesService: RetrieveRideMessagesService,
@@ -26,34 +30,20 @@ export class ChatComponent implements OnInit {
 		private readonly route: ActivatedRoute
 	) {
 		this.route.queryParams.subscribe((params) => {
-			this.rideId = params['id'] as string
+			this.rideId = params['rideId']
 		})
 	}
 
 	ngOnInit() {
-		interval(this.REFETCH_WAIT_TIME_IN_MS)
+		interval(REFETCH_WAIT_TIME_IN_MS)
 			.pipe(
-				mergeMap(() => {
-					if (this.rideId) {
-						return this.retrieveRideMessagesService.execute(this.rideId)
-					}
-					return []
-				})
+				mergeMap(() => this.retrieveRideMessagesService.execute(this.rideId))
 			)
 			.subscribe({
 				next: (res) => {
 					this.rideMessages = res.data
+					this.groupedMessages = this.groupMessagesByDate()
 				}
-			})
-
-		this.getRideMessages()
-	}
-
-	getRideMessages() {
-		this.retrieveRideMessagesService
-			.execute('8db5020e-4cd2-46eb-b7f2-70f5d320248c')
-			.subscribe((res) => {
-				this.rideMessages = res.data
 			})
 	}
 
@@ -63,31 +53,48 @@ export class ChatComponent implements OnInit {
 		}
 
 		this.sendRideMessageService
-			.execute('8db5020e-4cd2-46eb-b7f2-70f5d320248c', this.newMessage)
+			.execute(this.rideId, this.newMessage)
 			.subscribe(() => {})
 
 		this.newMessage = ''
 	}
 
 	formatDate(date: string) {
-		const inputDate = new Date(date)
-		const today = new Date()
-
-		const isToday = inputDate.toDateString() === today.toDateString()
-
-		if (isToday) {
-			return inputDate.toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-				hour12: true
-			})
-		}
-		return inputDate.toLocaleString([], {
-			day: '2-digit',
-			month: '2-digit',
+		return new Date(date).toLocaleString([], {
 			hour: '2-digit',
 			minute: '2-digit',
 			hour12: true
 		})
 	}
+
+	groupMessagesByDate(): GroupedMessages[] {
+		if (!this.rideMessages) {
+			return []
+		}
+
+		const groupedMessages = this.rideMessages.messages.reduce(
+			(acc, message) => {
+				const date = new Date(message.createdAt).toLocaleDateString()
+				const messages = acc.get(date) || []
+				messages.push(message)
+				acc.set(date, messages)
+				return acc
+			},
+			new Map<string, RideMessages['messages']>()
+		)
+
+		return Array.from(groupedMessages.entries()).map(([date, messages]) => ({
+			date,
+			messages
+		}))
+	}
+
+	whoami(compareId: string) {
+		return this.currentUserId === compareId
+	}
+}
+
+interface GroupedMessages {
+	date: string
+	messages: Message[]
 }
