@@ -24,6 +24,7 @@ export class TravelWaitingRoomComponent implements OnInit {
 		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
+			// TODO: CHANGE THIS POR RIDEid
 			this.rideId = params['id'] as string
 		})
 	}

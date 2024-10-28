@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { interval, mergeMap } from 'rxjs'
 import { RetrieveRideMessagesService } from '~/features/chat/api/retrieve-ride-messages.service'
 import { SendRideMessageService } from '~/features/chat/api/send-ride-message.service'
@@ -13,7 +13,7 @@ const REFETCH_WAIT_TIME_IN_MS = 1000
 @Component({
 	selector: 'app-chat',
 	standalone: true,
-	imports: [PageLayoutComponent, FormsModule],
+	imports: [PageLayoutComponent, FormsModule, RouterLink],
 	templateUrl: './chat.component.html',
 	styleUrl: './chat.component.css'
 })
@@ -27,7 +27,8 @@ export class ChatComponent implements OnInit {
 	constructor(
 		private readonly retrieveRideMessagesService: RetrieveRideMessagesService,
 		private readonly sendRideMessageService: SendRideMessageService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['rideId']
@@ -91,6 +92,16 @@ export class ChatComponent implements OnInit {
 
 	whoami(compareId: string) {
 		return this.currentUserId === compareId
+	}
+	redirectPassenger() {
+		this.router.navigate(['app/travel-waiting-room'], {
+			queryParams: { id: this.rideId }
+		})
+	}
+	redirectDriver() {
+		this.router.navigate(['app/travel-lobby'], {
+			queryParams: { id: this.rideId }
+		})
 	}
 }
 

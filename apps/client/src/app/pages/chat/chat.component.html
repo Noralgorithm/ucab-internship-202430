@@ -3,8 +3,10 @@
 		<div class="chat-container">
 			@if (this.rideMessages !== null) {
 			<div class="chat-heading">
-				<img src="/assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
 				@if (!whoami(rideMessages.driver.id)) {
+				<button (click)="redirectPassenger()">
+					<img src=" /assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
+				</button>
 				<div class="person-container">
 
 					<img class="person-img" src="{{ rideMessages.driver.profilePicSrc }}" alt="imagen de usuario" />
@@ -14,6 +16,9 @@
 				</div>
 				<img src="/assets/svgs/ChatCarIcon.svg" alt="icono de tipo de usuario" class="icon-img" />
 				} @else {
+				<button (click)="redirectDriver()">
+					<img src="/assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
+				</button>
 				<div class="person-container">
 					<img class="person-img" src="{{ rideMessages.passenger.profilePicSrc }}" alt="imagen de usuario" />
 					<div class="person-name">
@@ -44,7 +49,8 @@
 			<div class="input-container">
 				<input type="text" name="" id="" class="text-box" placeholder="Mensaje" [(ngModel)]="newMessage"
 					(keyup.enter)="sendMessage()" />
-				<img src="/assets/svgs/ChatSendMessageArrow.svg" alt="icono de enviar mensaje" (click)="sendMessage()" />
+				<img src="/assets/svgs/ChatSendMessageArrow.svg" alt="icono de enviar mensaje"
+					(click)="sendMessage()" />
 			</div>
 		</div>
 	</div>

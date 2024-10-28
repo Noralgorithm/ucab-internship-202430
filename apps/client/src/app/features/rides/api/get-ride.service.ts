@@ -5,6 +5,9 @@ import { RideTravelData } from '~/shared/types/rides/ride-request.type'
 
 import { map } from 'rxjs'
 import { BYPASS_LOADING } from '~/core/interceptors/loading.interceptor'
+import { Travel } from '~/shared/types/travels/travel.type'
+import { UserProfile } from '~/shared/types/users/user-profile.type'
+import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image-url.util'
 
 @Injectable({
@@ -17,14 +20,14 @@ export class GetRideService {
 		const url = `/rides/${rideId}`
 
 		return this.http
-			.get<SuccesfulResponse<RideTravelData>>(url, {
+			.get<SuccesfulResponse<ResponseDto>>(url, {
 				context: new HttpContext().set(BYPASS_LOADING, !withLoading)
 			})
 			.pipe(map(this.parseResponse))
 	}
 
 	private parseResponse(
-		response: SuccesfulResponse<RideTravelData>
+		response: SuccesfulResponse<ResponseDto>
 	): SuccesfulResponse<RideTravelData> {
 		return {
 			status: response.status,
@@ -36,14 +39,20 @@ export class GetRideService {
 						...response.data.travel.vehicle,
 						driver: {
 							...response.data.travel.vehicle.driver,
-							//TODO: Fix this
 							profilePicSrc: constructBackendImageUrl(
-								response.data.travel.vehicle.driver.profilePicSrc
+								response.data.travel.vehicle.driver.profilePicFilename
 							)
 						}
 					}
 				}
 			}
+		}
+	}
+}
+type ResponseDto = Omit<RideTravelData, 'travel'> & {
+	travel: Travel & {
+		vehicle: Vehicle & {
+			driver: UserProfile & { profilePicFilename: string }
 		}
 	}
 }
