@@ -44,6 +44,9 @@ export class Ride {
 	@Column({ type: 'jsonb' })
 	destination: GeoJsonPoint
 
+	@Column({ type: 'jsonb', nullable: true })
+	dropOff?: GeoJsonPoint
+
 	@Column({ type: 'boolean', default: false })
 	tookTheRide: boolean
 
@@ -63,8 +66,14 @@ export class Ride {
 	@Column({ type: 'float', nullable: true })
 	passengerStarRating?: number
 
+	@Column({ nullable: true })
+	passengerCommentAfterRide?: string
+
 	@Column({ type: 'float', nullable: true })
 	driverStarRating?: number
+
+	@Column({ nullable: true })
+	driverCommentAfterRide?: string
 
 	@CreateDateColumn({
 		type: 'timestamptz',
