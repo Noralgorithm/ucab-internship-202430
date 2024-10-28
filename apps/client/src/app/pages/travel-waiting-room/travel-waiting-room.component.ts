@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { VehicleImageComponent } from '~/features/vehicles/components/vehicle-image/vehicle-image.component'
@@ -19,10 +19,11 @@ export class TravelWaitingRoomComponent implements OnInit {
 
 	constructor(
 		private readonly getRideService: GetRideService,
-		private readonly router: ActivatedRoute,
-		private readonly toast: ToastrService
+		private readonly route: ActivatedRoute,
+		private readonly toast: ToastrService,
+		private readonly router: Router
 	) {
-		this.router.queryParams.subscribe((params) => {
+		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['id'] as string
 		})
 	}
@@ -37,6 +38,13 @@ export class TravelWaitingRoomComponent implements OnInit {
 					'Ha ocurrido un error al cargar la información del viaje'
 				)
 			}
+		})
+	}
+
+	redirectToChat() {
+		this.router.navigate(['chat'], {
+			queryParams: { rideId: this.ride?.id },
+			queryParamsHandling: 'merge'
 		})
 	}
 }

@@ -33,11 +33,6 @@ export const routes: Routes = [
 		component: AuthComponent
 	},
 	{
-		path: 'chat',
-		title: 'Chat',
-		component: ChatComponent
-	},
-	{
 		path: 'login',
 		title: 'Iniciar sesión',
 		component: LoginComponent
@@ -56,6 +51,11 @@ export const routes: Routes = [
 		path: 'email-verification/success',
 		title: 'Correo enviado con éxito',
 		component: SuccessfulEmailVerificationComponent
+	},
+	{
+		path: 'chat',
+		title: 'Chat',
+		component: ChatComponent
 	},
 	{
 		path: 'app',

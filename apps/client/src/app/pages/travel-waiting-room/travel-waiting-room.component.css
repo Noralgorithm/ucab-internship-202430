@@ -117,6 +117,7 @@ header h1 {
 
 .chat-icon {
 	width: var(--icon-l);
+	cursor: pointer;
 }
 
 .driver-vehicle-information {
