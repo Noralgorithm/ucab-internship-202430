@@ -4,7 +4,7 @@
 			@if (this.rideMessages !== null) {
 			<div class="chat-heading">
 				<img src="/assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
-				@if (whoami(rideMessages.driver.id)) {
+				@if (!whoami(rideMessages.driver.id)) {
 				<div class="person-container">
 
 					<img class="person-img" src="{{ rideMessages.driver.profilePicSrc }}" alt="imagen de usuario" />
