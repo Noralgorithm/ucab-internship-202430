@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { tap } from 'rxjs'
-import { GENDER_KEY, PREFERRED_ROLE_KEY, TOKEN_KEY } from '~/shared/constants'
+import {
+	GENDER_KEY,
+	ID_KEY,
+	PREFERRED_ROLE_KEY,
+	TOKEN_KEY
+} from '~/shared/constants'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
 
 @Injectable({
@@ -21,6 +26,7 @@ export class SignInService {
 
 	private storeSessionData(response: SuccesfulResponse<ResponseDto>) {
 		localStorage.setItem(TOKEN_KEY, response.data.accessToken)
+		localStorage.setItem(ID_KEY, response.data.user.id)
 		localStorage.setItem(PREFERRED_ROLE_KEY, response.data.user.preferredRole)
 		localStorage.setItem(GENDER_KEY, response.data.user.gender)
 	}
@@ -29,6 +35,7 @@ export class SignInService {
 interface ResponseDto {
 	accessToken: string
 	user: {
+		id: string
 		preferredRole: string
 		gender: string
 	}

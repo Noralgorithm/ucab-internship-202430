@@ -6,7 +6,7 @@ import { Route } from './route.type'
 export interface Travel {
 	id: string
 	forWomen: boolean
-	type: string
+	type: TravelType
 	status: string
 	availableSeatQuantity: number
 	vehicleId: string

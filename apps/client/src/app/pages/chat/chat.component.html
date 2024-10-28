@@ -1,23 +1,51 @@
 <page-layout>
-	@if (this.rideMessages !== null) {
-	<h1 class="heading-small">Chat con {{rideMessages.driver.firstName}} </h1>
-	<div class="msgs-container">
-		@for (msg of rideMessages.messages; track $index) {
-		@if (msg.isMine) {
-		<div class="own-msg-container">
-			<div class="msg">{{msg.content}}</div>
-			<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
-		</div>
-		}@else {
-		<div class="msg-container">
-			<div class="msg">{{msg.content}}</div>
-			<div class="msg-timestamp">{{formatDate(msg.createdAt)}}</div>
-		</div>
-		}
-		}
-	</div>
-	}
+	<div class="container-container">
+		<div class="chat-container">
+			@if (this.rideMessages !== null) {
+			<div class="chat-heading">
+				<img src="/assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
+				@if (!whoami(rideMessages.driver.id)) {
+				<div class="person-container">
 
-	<input type="text" name="" id="" class="text-box" placeholder="Mensaje" [(ngModel)]="newMessage"
-		(keyup.enter)="sendMessage()">
+					<img class="person-img" src="{{ rideMessages.driver.profilePicSrc }}" alt="imagen de usuario" />
+					<div class="person-name">
+						{{rideMessages.driver.firstName}} {{rideMessages.driver.lastName}}
+					</div>
+				</div>
+				<img src="/assets/svgs/ChatCarIcon.svg" alt="icono de tipo de usuario" class="icon-img" />
+				} @else {
+				<div class="person-container">
+					<img class="person-img" src="{{ rideMessages.passenger.profilePicSrc }}" alt="imagen de usuario" />
+					<div class="person-name">
+						{{rideMessages.passenger.firstName}} {{rideMessages.passenger.lastName}}
+					</div>
+				</div>
+				<img src="/assets/svgs/Walk.svg" alt="icono de tipo de usuario" class="icon-img" />
+				}
+			</div>
+			<div class="msgs-container">
+				@for (date of groupedMessages; track $index) {
+				<div class="chat-date">{{date.date}}</div>
+				@for (item of
+				date.messages; track $index) { @if (item.isMine) {
+				<div class="own-msg-container">
+					<div class="msg">{{ item.content }}</div>
+					<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
+				</div>
+				}@else {
+				<div class="msg-container">
+					<div class="msg">{{ item.content }}</div>
+					<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
+				</div>
+				} } }
+			</div>
+			}
+
+			<div class="input-container">
+				<input type="text" name="" id="" class="text-box" placeholder="Mensaje" [(ngModel)]="newMessage"
+					(keyup.enter)="sendMessage()" />
+				<img src="/assets/svgs/ChatSendMessageArrow.svg" alt="icono de enviar mensaje" (click)="sendMessage()" />
+			</div>
+		</div>
+	</div>
 </page-layout>

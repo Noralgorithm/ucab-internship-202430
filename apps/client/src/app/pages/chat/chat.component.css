@@ -1,8 +1,74 @@
-h1 {
-	text-align: left;
+.container-container {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+}
+
+.chat-container {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+
+	& input {
+		width: 100%;
+		border: none;
+		outline: none;
+		font-size: 0.875rem;
+		padding: 0.5rem;
+		margin: 0.5rem;
+	}
+}
+
+.chat-date {
+	text-align: center;
+	color: #666668;
+	font-size: 0.7rem;
+	margin: 0.5rem 0 0.5rem 0;
+}
+
+.input-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.5rem;
+	border-top: 1px solid #e0e0e0;
+}
+
+.chat-heading {
 	margin-top: 2rem;
-	width: 100%;
-	color: var(--primary-text-label);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+
+	img {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+}
+
+.person-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.5rem;
+
+	& .person-img {
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 100%;
+	}
+
+	.person-name {
+		font-size: 0.9rem;
+		font-weight: 500;
+		line-height: 1rem;
+		color: #121a40;
+	}
 }
 
 .msgs-container {
@@ -10,11 +76,9 @@ h1 {
 	flex-direction: column;
 	min-width: 100%;
 	overflow-y: auto;
-	height: 75vh;
-	padding: 1rem;
+	scrollbar-width: none;
 }
 
-/* Common styles for message containers */
 .msg-container,
 .own-msg-container {
 	display: flex;
@@ -23,29 +87,26 @@ h1 {
 	flex-shrink: 1;
 	flex-basis: auto;
 	max-width: 80%;
-	min-width: 20%;
+	min-width: 35%;
 	border-radius: 0.5rem;
-	padding: 0.5rem 0.5rem 1.25rem 0.5rem;
-	margin: 0.5rem;
-	word-wrap: break-word;
+	padding: 0.25rem 0.5rem 1rem 0.5rem;
+	margin: 0.25rem;
 }
 
-/* Styles for own messages */
 .own-msg-container {
-	background-color: #0183fe;
+	background-color: #007aff;
 	align-self: flex-end;
 }
 
-/* Styles for other messages */
 .msg-container {
-	background-color: #f3e9e9;
+	background-color: #f2f2f7;
 	align-self: flex-start;
 }
 
-/* Common styles for messages */
 .msg-container .msg,
 .own-msg-container .msg {
-	font-size: 0.8rem;
+	font-size: 0.85rem;
+	margin-bottom: 0.25rem;
 }
 
 .own-msg-container .msg {
@@ -56,28 +117,18 @@ h1 {
 	color: #000;
 }
 
-/* Common styles for timestamps */
 .msg-container .msg-timestamp,
 .own-msg-container .msg-timestamp {
 	position: absolute;
 	bottom: 0.25rem;
 	right: 0.5rem;
-	font-size: 0.5rem;
+	font-size: 0.65rem;
 }
 
 .own-msg-container .msg-timestamp {
-	color: #c7cde6;
+	color: rgba(255, 255, 255, 0.9);
 }
 
 .msg-container .msg-timestamp {
-	color: #1e1e21;
-}
-
-.text-box {
-	display: flex;
-	position: relative;
-	flex-wrap: wrap;
-	border-radius: 0.5rem;
-	padding: 0.5rem;
-	margin: 0.5rem;
+	color: rgba(0, 0, 0, 0.9);
 }

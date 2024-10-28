@@ -49,6 +49,9 @@ export class WaitingForReviewComponent implements OnInit {
 				} else if (res.data.isAccepted === true) {
 					this.subscription?.unsubscribe()
 					this.toastr.success('El conductor ha aceptado tu solicitud')
+					this.router.navigate(['/app/travel-waiting-room'], {
+						queryParams: { id: this.rideId }
+					})
 				}
 			})
 	}

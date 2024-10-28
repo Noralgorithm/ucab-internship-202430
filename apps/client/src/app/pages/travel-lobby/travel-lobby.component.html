@@ -41,12 +41,14 @@
 				</div>
 				<div class="vehicle-card-info">
 					<div class="vehicle-details">
-						<p class="label-medium vehicle-title">{{travel?.vehicle?.brand}} | {{travel?.vehicle?.model}}</p>
+						<p class="label-medium vehicle-title">{{travel?.vehicle?.brand}} | {{travel?.vehicle?.model}}
+						</p>
 						<p class="label-medium vehicle-plate">{{travel?.vehicle?.plate}}</p>
 					</div>
 					<div class="vehcicle-specs">
 						<p class="label-medium">{{vehiclesColorService.getLabelByHex(travel?.vehicle?.color!)}}</p>
-						<p class="label-medium quantity-seats-available">Asientos disponibles {{travel?.availableSeatQuantity}} de
+						<p class="label-medium quantity-seats-available">Asientos disponibles
+							{{travel?.availableSeatQuantity}} de
 							{{travel?.vehicle?.seatQuantity}}</p>
 					</div>
 				</div>
@@ -70,13 +72,14 @@
 					<section>
 						<div class="card-row justify-between label-medium">
 							<div class="card-row">
-								<span class="passenger-name">{{ride.passenger.firstName}} {{ride.passenger.lastName}}</span>
+								<span class="passenger-name">{{ride.passenger.firstName}}
+									{{ride.passenger.lastName}}</span>
 								<div class="rating-information">
 									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
 							</div>
-							<button (click)="goToChat(ride)">
+							<button (click)="redirectToChat(ride.id)">
 								<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
 							</button>
 
@@ -84,11 +87,13 @@
 
 						<div class="card-row paragraph-xsmall">
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
+									alt="icono de distancia a caminar">
 								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
 							</div>
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
+									alt="icono de emparejamiento">
 								<span class="card-information-title">70% de emparejamiento</span>
 							</div>
 						</div>
@@ -113,7 +118,8 @@
 					<section>
 						<div class="card-row justify-between label-medium">
 							<div class="card-row">
-								<span class="passenger-name">{{ride.passenger.firstName}} {{ride.passenger.lastName}}</span>
+								<span class="passenger-name">{{ride.passenger.firstName}}
+									{{ride.passenger.lastName}}</span>
 								<div class="rating-information">
 									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
 									<span class="card-information rating-number">4.8 (60)</span>
@@ -131,11 +137,13 @@
 
 						<div class="card-row paragraph-xsmall">
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
+									alt="icono de distancia a caminar">
 								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
 							</div>
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
+									alt="icono de emparejamiento">
 								<span class="card-information-title">70% de emparejamiento</span>
 							</div>
 						</div>
