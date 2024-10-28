@@ -86,7 +86,10 @@ export class RidesController {
 
 	@Get(':id')
 	findOne(@Param('id') id: string) {
-		return this.ridesService.findOne({ where: { id: id } })
+		return this.ridesService.findOne({
+			where: { id: id },
+			relations: { travel: { vehicle: { driver: true } } }
+		})
 	}
 
 	@Patch(':id/answer-ride-request')
