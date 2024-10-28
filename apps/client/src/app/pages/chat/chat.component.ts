@@ -19,7 +19,7 @@ const REFETCH_WAIT_TIME_IN_MS = 1000
 })
 export class ChatComponent implements OnInit {
 	currentUserId = localStorage.getItem(ID_KEY)
-	rideId = '8db5020e-4cd2-46eb-b7f2-70f5d320248c'
+	rideId = ''
 	rideMessages: RideMessages | null = null
 	groupedMessages: GroupedMessages[] = []
 	newMessage = ''
@@ -30,7 +30,7 @@ export class ChatComponent implements OnInit {
 		private readonly route: ActivatedRoute
 	) {
 		this.route.queryParams.subscribe((params) => {
-			// this.rideId = params.rideId
+			this.rideId = params['rideId']
 		})
 	}
 
