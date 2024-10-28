@@ -112,7 +112,11 @@ export class AuthService {
 
 	async signIn(signInDto: SignInDto): Promise<{
 		accessToken: string
-		user: { preferredRole: User['preferredRole']; gender: User['gender'] }
+		user: {
+			id: User['id']
+			preferredRole: User['preferredRole']
+			gender: User['gender']
+		}
 	}> {
 		const user = await this.usersRepository.findOne({
 			where: { email: signInDto.email },
@@ -156,6 +160,7 @@ export class AuthService {
 		return {
 			accessToken: await this.jwtService.signAsync(payload),
 			user: {
+				id: user.id,
 				preferredRole: user.preferredRole,
 				gender: user.gender
 			}
