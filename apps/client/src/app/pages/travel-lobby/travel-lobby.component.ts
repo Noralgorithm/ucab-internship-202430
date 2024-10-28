@@ -4,7 +4,7 @@ import { interval, mergeMap } from 'rxjs'
 import { AnswerRideRequestService } from '~/features/rides/api/answer-ride-request.service'
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
-import { RideRequest } from '~/shared/types/rides/ride-request.type'
+import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelLobbyData } from '~/shared/types/travels/travel.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { VehicleImageComponent } from '../../features/vehicles/components/vehicle-image/vehicle-image.component'
@@ -27,8 +27,8 @@ const REFETCH_WAIT_TIME_IN_MS = 1000
 })
 export class TravelLobbyComponent {
 	travel: TravelLobbyData | null = null
-	acceptedRequests: RideRequest[] = []
-	pendingRequests: RideRequest[] = []
+	acceptedRequests: Ride[] = []
+	pendingRequests: Ride[] = []
 
 	isPendingRequestsModalOpen = false
 
@@ -53,7 +53,7 @@ export class TravelLobbyComponent {
 							(ride) => ride.isAccepted
 						)
 						this.pendingRequests = this.travel.rides.filter(
-							(ride) => !ride.isAccepted && !ride.travelCancelType
+							(ride) => ride.isAccepted === null
 						)
 					},
 					error: () => {
@@ -67,7 +67,7 @@ export class TravelLobbyComponent {
 		this.isPendingRequestsModalOpen = true
 	}
 
-	acceptRideRequest(request: RideRequest) {
+	acceptRideRequest(request: Ride) {
 		this.answerRideRequestService
 			.execute(request.id, { isAccepted: true })
 			.subscribe({
@@ -80,7 +80,7 @@ export class TravelLobbyComponent {
 			})
 	}
 
-	rejectRideRequest(request: RideRequest) {
+	rejectRideRequest(request: Ride) {
 		this.answerRideRequestService
 			.execute(request.id, { isAccepted: false })
 			.subscribe({
@@ -92,8 +92,8 @@ export class TravelLobbyComponent {
 			})
 	}
 
-	goToChat(ride: RideRequest) {
-		this.router.navigate(['/app/chat'], {
+	goToChat(ride: Ride) {
+		this.router.navigate(['/chat'], {
 			queryParams: {
 				id: ride.id
 			}

@@ -11,6 +11,7 @@
 
 h1 {
 	text-wrap: pretty;
+	color: var(--primary-text-label);
 }
 
 button {

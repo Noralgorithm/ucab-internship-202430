@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { DriverCardComponent } from '~/features/drivers/components/driver-card/driver-card.component'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { RequestRideService } from '~/features/rides/api/request-ride.service'
 import { GetTravelAvailableDrivers } from '~/features/travels/api/get-travel-available-drivers.service'
 import { GENDER_KEY } from '~/shared/constants'
+import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelAvailableDriverData } from '~/shared/types/travels/travel.type'
 import { Gender } from '~/shared/types/users/user-gender.type'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -24,7 +25,8 @@ export class AvailableDriversComponent implements OnInit {
 		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
 		private readonly requestRideService: RequestRideService,
 		private readonly ownLocationService: OwnLocationService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.travelType = params['type']
@@ -48,7 +50,9 @@ export class AvailableDriversComponent implements OnInit {
 					},
 					this.travelType
 				)
-				.subscribe(() => {})
+				.subscribe((res) => {
+					this.redirectToReview(res.data)
+				})
 		})
 	}
 
@@ -69,5 +73,12 @@ export class AvailableDriversComponent implements OnInit {
 			passengerAmount: travel.passengerAmount,
 			passengerCapacity: travel.availableSeatQuantity
 		}
+	}
+
+	redirectToReview(ride: Ride) {
+		this.router.navigate(['app/waiting-for-review'], {
+			queryParams: { id: ride.id },
+			queryParamsHandling: 'merge'
+		})
 	}
 }

@@ -12,7 +12,7 @@
 
 	<ul>
 		@for (travel of travels; track $index) {
-		<driver-card routerLink="/app/waiting-for-review" [driver]="getTravelDriverData(travel)" />
+		<driver-card [driver]="getTravelDriverData(travel)" (click)="handleDriverSelection(travel)" />
 		}
 	</ul>
 </page-layout>

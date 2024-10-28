@@ -81,7 +81,7 @@
 
 	&.severity-danger {
 		--bg-color: var(--error-surface);
-		--text-color: var(--primary-text-value);
+		--text-color: var(--contrast-text-value);
 	}
 
 	&.severity-help {

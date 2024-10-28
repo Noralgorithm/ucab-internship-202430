@@ -1,6 +1,6 @@
 import { UserProfile } from '../users/user-profile.type'
 
-export interface RideRequest {
+export interface Ride {
 	id: string
 	passenger: UserProfile
 	isAccepted: boolean

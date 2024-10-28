@@ -1,0 +1,155 @@
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: .8rem;
+	width: 100%;
+	padding-top: 3.625rem;
+}
+
+header h1 {
+	color: var(--primary-text-label);
+}
+
+.route-information {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.starting-point {
+	display: flex;
+	align-items: start;
+	gap: .5rem;
+}
+
+.starting-point .icon {
+	width: var(--icon-s);
+}
+
+.starting-point-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.starting-point-info .title {
+	color: var(--primary-text-placeholder);
+	line-height: .8rem;
+}
+
+.starting-point-info .location {
+	color: var(--primary-text-value);
+}
+
+.external-destination {
+	display: flex;
+	align-items: start;
+	gap: .5rem;
+}
+
+.external-destination .icon {
+	width: var(--icon-s);
+}
+
+.external-destination-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.external-destination-info .title {
+	color: var(--primary-text-placeholder);
+	line-height: .8rem;
+}
+
+.external-destination-info .location {
+	color: var(--primary-text-value);
+}
+
+.card-row {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.card-information {
+	display: flex;
+	align-items: center;
+	gap: .1875rem;
+}
+
+.card-information-icon {
+	width: var(--icon-s);
+}
+
+.card-information-title {
+	color: var(--primary-text-placeholder);
+}
+
+.only-woman-info {
+	display: flex;
+	justify-content: center;
+	gap: .375rem;
+}
+
+.only-woman-info p {
+	color: #ee1f5c;
+}
+
+.only-woman-info img {
+	width: var(--icon-s);
+}
+
+.rating-number {
+	color: var(--primary-text-placeholder);
+}
+
+.rating-information {
+	display: flex;
+	justify-content: center;
+	gap: .1875rem;
+}
+
+.rating-icon {
+	width: 1.25rem;
+}
+
+.chat-icon {
+	width: var(--icon-l);
+}
+
+.driver-vehicle-information {
+	display: flex;
+	flex-direction: column;
+	margin-top: 4.8125rem;
+}
+
+.driver-information {
+	display: flex;
+	gap: .6875rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.avatar {
+	width: 2.1875rem;
+	aspect-ratio: 1;
+	border-radius: 100%;
+	margin: 0.5rem 0;
+}
+
+.driver-information p {
+	color: var(--primary-text-value);
+}
+
+.vehicle-information {
+	display: flex;
+	gap: 2.0625rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.vehicle-information p {
+	color: var(--primary-text-value);
+}

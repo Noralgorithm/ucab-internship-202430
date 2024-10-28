@@ -22,7 +22,7 @@ import { RouteFromUcabSelectionComponent } from '~/pages/route-from-ucab-selecti
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
 import { TravelLobbyComponent } from '~/pages/travel-lobby/travel-lobby.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
-import { ViewTravelsComponent } from '~/pages/view-travels/view-travels.component'
+import { TravelWaitingRoomComponent } from '~/pages/travel-waiting-room/travel-waiting-room.component'
 import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
 import { TabBarLayoutComponent } from './components/tab-bar/tab-bar-layout/tab-bar-layout.component'
 
@@ -112,11 +112,6 @@ export const routes: Routes = [
 				component: OfferTravelComponent
 			},
 			{
-				path: 'view-travels',
-				title: 'Ver viajes',
-				component: ViewTravelsComponent
-			},
-			{
 				path: 'travel-type-selection',
 				title: 'Seleccionar tipo de viaje',
 				component: TravelTypeSelectionComponent
@@ -155,6 +150,11 @@ export const routes: Routes = [
 				path: 'travel-lobby',
 				title: 'Sala de viaje',
 				component: TravelLobbyComponent
+			},
+			{
+				path: 'travel-waiting-room',
+				title: 'Información del viaje',
+				component: TravelWaitingRoomComponent
 			}
 		]
 	}
