@@ -48,7 +48,9 @@
 			<img class="avatar" src="assets/images/DriverPhoto.png" alt="Imágen del conductor" />
 			<p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
 				{{ride?.travel?.vehicle?.driver?.lastName}}</p>
-			<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat" (click)="redirectToChat()">
+			<button (click)="redirectToChat()">
+				<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
+			</button>
 		</div>
 		<div class="rating-information">
 			<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />

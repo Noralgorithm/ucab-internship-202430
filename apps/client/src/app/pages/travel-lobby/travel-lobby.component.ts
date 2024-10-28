@@ -92,10 +92,10 @@ export class TravelLobbyComponent {
 			})
 	}
 
-	redirectToChat() {
+	redirectToChat(rideId: string) {
 		this.router.navigate(['/chat'], {
 			queryParams: {
-				id: '01'
+				rideId: rideId
 			}
 		})
 	}
