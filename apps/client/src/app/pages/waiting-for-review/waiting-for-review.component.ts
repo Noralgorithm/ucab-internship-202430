@@ -56,6 +56,10 @@ export class WaitingForReviewComponent implements OnInit {
 			})
 	}
 
+	ngOnDestroy() {
+		this.subscription?.unsubscribe()
+	}
+
 	cancelReview() {
 		this.router.navigate(['/app/available-drivers'], {
 			queryParamsHandling: 'preserve'

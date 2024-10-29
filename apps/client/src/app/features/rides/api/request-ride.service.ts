@@ -10,12 +10,9 @@ import { Ride } from '~/shared/types/rides/ride-request.type'
 export class RequestRideService {
 	constructor(private readonly http: HttpClient) {}
 
-	execute(
-		requestRideServiceDto: RequestRideServiceDto,
-		travelType: 'from-ucab' | 'to-ucab'
-	) {
+	execute(requestRideServiceDto: RequestRideServiceDto) {
 		return this.http.post<SuccesfulResponse<Ride>>(
-			`/rides/${travelType}/for-me`,
+			'/rides/for-me',
 			requestRideServiceDto
 		)
 	}
