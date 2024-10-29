@@ -18,6 +18,7 @@ import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
+import { RideDestinationSelectionComponent } from '~/pages/ride-destination-selection/ride-destination-selection.component'
 import { RouteFromUcabSelectionComponent } from '~/pages/route-from-ucab-selection/route-from-ucab-selection.component'
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
 import { TravelLobbyComponent } from '~/pages/travel-lobby/travel-lobby.component'
@@ -145,6 +146,11 @@ export const routes: Routes = [
 				path: 'route-from-ucab-selection',
 				title: 'Seleccionar ruta desde UCAB',
 				component: RouteFromUcabSelectionComponent
+			},
+			{
+				path: 'ride-destination-selection',
+				title: 'Seleccionar destino externo',
+				component: RideDestinationSelectionComponent
 			},
 			{
 				path: 'travel-lobby',

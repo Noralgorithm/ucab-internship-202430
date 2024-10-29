@@ -22,7 +22,7 @@ export class TravelTypeSelectionComponent {
 	) {
 		this.userCurrentRoleService.currentRole$.subscribe((role) => {
 			if (role === 'passenger') {
-				this.ucabToExternalRouteToRedirect = '/app/select-destination'
+				this.ucabToExternalRouteToRedirect = '/app/ride-destination-selection'
 				this.externalToUcabRouteToRedirect = '/app/available-drivers'
 			} else {
 				this.ucabToExternalRouteToRedirect = '/app/offer-travel'

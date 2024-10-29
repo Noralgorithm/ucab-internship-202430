@@ -1,0 +1,17 @@
+<page-layout [hasTabBar]="true">
+	<header>
+		<div class="travel-type-information">
+			<img class="icon" src="/assets/svgs/University.svg" alt="icono universidad" />
+			<p class="heading-small">UCAB → Destino Externo</p>
+		</div>
+		<p class="heading-xsmall">Selecciona el destino externo</p>
+	</header>
+
+	<body>
+		<ul class="destinations-list">
+			@for (d of destinations; track d.id) {
+			<card-my-destination [destination]="d" [actionButtons]="false" (click)="handleDestinationSelection(d)" />
+			}
+		</ul>
+	</body>
+</page-layout>
