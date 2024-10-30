@@ -22,8 +22,8 @@ export class TravelsController {
 	}
 
 	@Get('available-drivers')
-	getAvailableDrivers() {
-		return this.travelsService.getAvailableDrivers()
+	getAvailableDrivers(@CurrentUser() currentUser: User) {
+		return this.travelsService.getAvailableDrivers(currentUser)
 	}
 
 	@Get(':id/ride-requests')

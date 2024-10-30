@@ -75,9 +75,7 @@ export class RidesController {
 
 		if (
 			rides.filter(
-				(ride) =>
-					ride.isAccepted === false &&
-					ride.travelCancelType === TravelCancelType.DRIVER_DENIAL
+				(ride) => ride.travelCancelType === TravelCancelType.DRIVER_DENIAL
 			).length > 0
 		) {
 			throw new UnprocessableEntityException(

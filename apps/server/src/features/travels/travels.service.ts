@@ -112,14 +112,23 @@ export class TravelsService {
 		return `This action removes a #${id} travel`
 	}
 
-	async getAvailableDrivers() {
+	async getAvailableDrivers(currentUser: User) {
 		const travels = await this.travelsRepository.find({
 			where: { status: TravelStatus.NOT_STARTED },
 			order: { createdAt: 'DESC' },
-			relations: { vehicle: { driver: true }, rides: true }
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		})
 
-		const formattedTravels = travels.map(({ rides, ...travel }) => ({
+		const filteredTravels = travels.filter(
+			(travel) =>
+				!travel.rides.some(
+					(ride) =>
+						ride.passenger.id === currentUser.id &&
+						ride.travelCancelType === TravelCancelType.DRIVER_DENIAL
+				)
+		)
+
+		const formattedTravels = filteredTravels.map(({ rides, ...travel }) => ({
 			...travel,
 			passengerAmount: rides.filter((ride) => ride.isAccepted).length
 		}))
