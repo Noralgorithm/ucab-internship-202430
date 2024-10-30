@@ -69,7 +69,9 @@ export class TravelLobbyComponent {
 
 	acceptRideRequest(request: Ride) {
 		this.answerRideRequestService
-			.execute(request.id, { isAccepted: true })
+			.execute(request.id, {
+				isAccepted: true
+			})
 			.subscribe({
 				next: () => {
 					this.acceptedRequests.push(request)
@@ -82,7 +84,10 @@ export class TravelLobbyComponent {
 
 	rejectRideRequest(request: Ride) {
 		this.answerRideRequestService
-			.execute(request.id, { isAccepted: false })
+			.execute(request.id, {
+				isAccepted: false,
+				travelCancelType: 'driver-denial'
+			})
 			.subscribe({
 				next: () => {
 					this.pendingRequests = this.pendingRequests.filter(

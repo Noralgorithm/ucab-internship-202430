@@ -21,4 +21,5 @@ export class AnswerRideRequestService {
 
 export interface AnswerRideRequestServiceDto {
 	isAccepted: boolean
+	travelCancelType?: 'driver-denial' | 'passenger-denial'
 }
