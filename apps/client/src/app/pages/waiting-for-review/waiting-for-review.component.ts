@@ -73,7 +73,7 @@ export class WaitingForReviewComponent implements OnInit {
 			})
 			.subscribe({
 				next: () => {
-					this.toastr.success('Solicitud Cancelada')
+					this.toastr.success('Solicitud cancelada')
 				}
 			})
 	}
