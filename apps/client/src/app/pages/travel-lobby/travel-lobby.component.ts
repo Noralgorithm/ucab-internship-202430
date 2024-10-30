@@ -101,7 +101,8 @@ export class TravelLobbyComponent {
 		this.router.navigate(['/chat'], {
 			queryParams: {
 				rideId: rideId
-			}
+			},
+			queryParamsHandling: 'preserve'
 		})
 	}
 }

@@ -95,12 +95,14 @@ export class ChatComponent implements OnInit {
 	}
 	redirectPassenger() {
 		this.router.navigate(['app/travel-waiting-room'], {
-			queryParams: { id: this.rideId }
+			queryParams: { id: this.rideId },
+			queryParamsHandling: 'preserve'
 		})
 	}
 	redirectDriver() {
 		this.router.navigate(['app/travel-lobby'], {
-			queryParams: { id: this.rideId }
+			queryParams: { id: this.rideId },
+			queryParamsHandling: 'preserve'
 		})
 	}
 }
