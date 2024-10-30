@@ -66,11 +66,17 @@ export class RidesService {
 			relations: { travel: { vehicle: { driver: true } } }
 		})
 
-		await this.ridesRepository.update(ride.internalId, {
-			isAccepted: answerRequestDto.isAccepted,
-			travelCancelType: answerRequestDto.travelCancelType,
-			cancellationReason: answerRequestDto.cancellationReason
-		})
+		const { isAccepted, travelCancelType, cancellationReason } =
+			answerRequestDto
+
+		const updateData: Partial<Ride> = { isAccepted }
+
+		if (!ride.isAccepted) {
+			updateData.travelCancelType = travelCancelType
+			updateData.cancellationReason = cancellationReason
+		}
+
+		await this.ridesRepository.update(ride.internalId, updateData)
 
 		return 'Ride request answered'
 	}
