@@ -12,23 +12,25 @@
 		<h3 class="label-small">Selecciona el vehículo a utilizar</h3>
 	</header>
 
-	@for (v of myVehicles; track v.id) {
-	<div class="card-vehicle" (click)="handleVehicleSelection(v)">
-		<div class="card-vehicle-image">
-			<movic-vehicle [color]="v.color"></movic-vehicle>
-		</div>
-		<div class="card-vehicle-info">
-			<div class="vehicle-details">
-				<h4 class="label-medium vehicle-title">{{v.brand}} | {{v.model}}</h4>
-				<h4 class="label-medium vehicle-plate">{{v.plate}}</h4>
+	<div class="vehicles-container">
+		@for (v of myVehicles; track v.id) {
+		<div class="card-vehicle" (click)="handleVehicleSelection(v)">
+			<div class="card-vehicle-image">
+				<movic-vehicle [color]="v.color"></movic-vehicle>
 			</div>
-			<div class="vehcicle-specs">
-				<p class="label-medium spec-item">{{v.seatQuantity}}</p>
-				<p class="label-medium spec-item">{{vehiclesColorsService.getLabelByHex(v.color)}}</p>
+			<div class="card-vehicle-info">
+				<div class="vehicle-details">
+					<h4 class="label-medium vehicle-title">{{v.brand}} | {{v.model}}</h4>
+					<h4 class="label-medium vehicle-plate">{{v.plate}}</h4>
+				</div>
+				<div class="vehcicle-specs">
+					<p class="label-medium spec-item">{{v.seatQuantity}}</p>
+					<p class="label-medium spec-item">{{vehiclesColorsService.getLabelByHex(v.color)}}</p>
+				</div>
 			</div>
 		</div>
+		}
 	</div>
-	}
 
 	<modal title="Asientos disponibles" variant="confirmation" [(isOpen)]="isModalOpen" (onConfirm)="handleConfirm()">
 		<div class="modal-body">
