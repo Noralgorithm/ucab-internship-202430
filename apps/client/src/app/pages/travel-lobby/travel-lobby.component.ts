@@ -102,7 +102,7 @@ export class TravelLobbyComponent {
 			queryParams: {
 				rideId: rideId
 			},
-			queryParamsHandling: 'preserve'
+			queryParamsHandling: 'merge'
 		})
 	}
 }
