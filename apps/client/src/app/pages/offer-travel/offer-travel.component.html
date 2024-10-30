@@ -1,12 +1,14 @@
 <page-layout [hasTabBar]="true">
 	<header>
 		<h1 class="heading-small">Crear Viaje</h1>
+		@if(isAWoman()){
 		<div class="checkbox-container">
 			<label class="only-woman-label">
 				<input class="only-woman-checkbox" type="checkbox" />
 				Solo mujeres en el viaje
 			</label>
 		</div>
+		}
 		<h3 class="label-small">Selecciona el vehículo a utilizar</h3>
 	</header>
 
