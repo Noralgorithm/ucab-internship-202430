@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Get,
+	Param,
+	Patch,
+	Post,
+	Query
+} from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { User } from '../users/entities/user.entity'
+import { AvailableDriversFiltersDto } from './dto/available-drivers-filters.dto'
 import { CancelDto } from './dto/cancel.dto'
 import { CompleteDto } from './dto/complete.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
@@ -22,8 +31,14 @@ export class TravelsController {
 	}
 
 	@Get('available-drivers')
-	getAvailableDrivers() {
-		return this.travelsService.getAvailableDrivers()
+	getAvailableDrivers(
+		@Query() availableDriversFiltersDto: AvailableDriversFiltersDto,
+		@CurrentUser() currentUser: User
+	) {
+		return this.travelsService.getAvailableDrivers(
+			availableDriversFiltersDto,
+			currentUser
+		)
 	}
 
 	@Get(':id/ride-requests')

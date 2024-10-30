@@ -21,8 +21,21 @@ export class MessagesService {
 		currentUser: User
 	) {
 		const ride = await this.ridesService.findOne({
-			where: { id: id }
+			where: { id: id },
+			relations: [
+				'travel',
+				'travel.vehicle',
+				'travel.vehicle.driver',
+				'passenger'
+			]
 		})
+
+		if (
+			ride.passenger.id !== currentUser.id &&
+			ride.travel.vehicle.driver.id !== currentUser.id
+		) {
+			throw new Error('Only driver or passenger can send messages')
+		}
 
 		const message = this.messagesRepository.create({
 			...createMessageDto,
@@ -49,6 +62,13 @@ export class MessagesService {
 				'passenger'
 			]
 		})
+
+		if (
+			ride.passenger.id !== currentUser.id &&
+			ride.travel.vehicle.driver.id !== currentUser.id
+		) {
+			throw new Error('Only driver or passenger can send messages')
+		}
 
 		const messages = sendedMessages.map(({ sender, ...msg }) => ({
 			...msg,
