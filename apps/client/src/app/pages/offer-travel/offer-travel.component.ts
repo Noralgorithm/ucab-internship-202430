@@ -3,6 +3,8 @@ import { Router } from '@angular/router'
 import { CreateTravelStoreService } from '~/features/travels/create-travel-store.service'
 import { GetOwnVehiclesService } from '~/features/vehicles/api/get-own-vehicles.service'
 import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
+import { GENDER_KEY } from '~/shared/constants'
+import { Gender } from '~/shared/types/users/user-gender.type'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
@@ -55,6 +57,11 @@ export class OfferTravelComponent {
 			return
 		}
 		this.seatsCount--
+	}
+
+	isAWoman() {
+		if (localStorage.getItem(GENDER_KEY) === ('female' as Gender)) return true
+		return false
 	}
 
 	handleVehicleSelection(vehicle: Vehicle) {

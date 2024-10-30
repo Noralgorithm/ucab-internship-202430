@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { Subscription, interval, mergeMap } from 'rxjs'
+import { AnswerRideRequestService } from '~/features/rides/api/answer-ride-request.service'
 import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { DriverCardComponent } from '../../features/drivers/components/driver-card/driver-card.component'
@@ -17,13 +18,14 @@ const FETCH_WAIT_TIME_IN_MS = 1000
 	styleUrl: './waiting-for-review.component.css'
 })
 export class WaitingForReviewComponent implements OnInit {
-	rideId: string | null = null
+	rideId = ''
 
 	constructor(
 		private readonly getRideService: GetRideService,
 		private readonly router: Router,
 		private readonly route: ActivatedRoute,
-		private readonly toastr: ToastrService
+		private readonly toastr: ToastrService,
+		private readonly answerRideRequestService: AnswerRideRequestService
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['id'] as string
@@ -64,5 +66,15 @@ export class WaitingForReviewComponent implements OnInit {
 		this.router.navigate(['/app/available-drivers'], {
 			queryParamsHandling: 'preserve'
 		})
+		this.answerRideRequestService
+			.execute(this.rideId, {
+				isAccepted: false,
+				travelCancelType: 'passenger-denial'
+			})
+			.subscribe({
+				next: () => {
+					this.toastr.success('Solicitud cancelada')
+				}
+			})
 	}
 }
