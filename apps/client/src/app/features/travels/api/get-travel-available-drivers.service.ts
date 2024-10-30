@@ -2,10 +2,20 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { map } from 'rxjs'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
-import { TravelAvailableDriverData } from '~/shared/types/travels/travel.type'
+import {
+	TravelAvailableDriverData,
+	TravelType
+} from '~/shared/types/travels/travel.type'
 import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image-url.util'
+
+interface QueryParams {
+	isWomanOnly?: boolean
+	type?: TravelType
+	lat?: string
+	lng?: string
+}
 
 @Injectable({
 	providedIn: 'root'
@@ -13,11 +23,15 @@ import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image
 export class GetTravelAvailableDrivers {
 	constructor(private readonly http: HttpClient) {}
 
-	execute() {
+	execute(query?: QueryParams) {
 		const url = '/travels/available-drivers'
 
 		return this.http
-			.get<SuccesfulResponse<ResponseDto>>(url)
+			.get<SuccesfulResponse<ResponseDto>>(url, {
+				params: {
+					...query
+				}
+			})
 			.pipe(map(this.parseResponse))
 	}
 

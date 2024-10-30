@@ -23,6 +23,8 @@ export class AvailableDriversComponent implements OnInit {
 	travelType: 'from-ucab' | 'to-ucab' = 'to-ucab'
 	destinationId: string | null = null
 
+	destinationLatLng: google.maps.LatLngLiteral | null = null
+
 	constructor(
 		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
 		private readonly requestRideService: RequestRideService,
@@ -38,7 +40,21 @@ export class AvailableDriversComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getDrivers()
+		this.getDestinationLatLng()
+	}
+
+	getDestinationLatLng() {
+		if (!this.destinationId) return
+
+		this.getDestinationService.execute(this.destinationId).subscribe({
+			next: (res) => {
+				this.destinationLatLng = {
+					lat: Number(res.data.latitude),
+					lng: Number(res.data.longitude)
+				}
+				this.getDrivers()
+			}
+		})
 	}
 
 	handleDriverSelection(travel: TravelAvailableDriverData) {
@@ -91,9 +107,16 @@ export class AvailableDriversComponent implements OnInit {
 	}
 
 	getDrivers() {
-		this.getTravelAvailableDriversService.execute().subscribe((res) => {
-			this.travels = res.data
-		})
+		this.getTravelAvailableDriversService
+			.execute({
+				isWomanOnly: this.isAWoman(),
+				type: this.travelType,
+				lat: String(this.destinationLatLng?.lat),
+				lng: String(this.destinationLatLng?.lng)
+			})
+			.subscribe((res) => {
+				this.travels = res.data
+			})
 	}
 
 	getTravelDriverData(travel: TravelAvailableDriverData) {
