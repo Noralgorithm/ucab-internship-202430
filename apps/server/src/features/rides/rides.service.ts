@@ -12,7 +12,6 @@ import { CreateRideDto } from './dto/create-ride.dto'
 import { FinishRideDto } from './dto/finish-ride.dto'
 import { StartRideDto } from './dto/start-ride.dto'
 import { Ride } from './entities/ride.entity'
-import { TravelCancelType } from './enums/travel-cancel-type.enum'
 
 @Injectable()
 export class RidesService {
@@ -67,14 +66,9 @@ export class RidesService {
 			relations: { travel: { vehicle: { driver: true } } }
 		})
 
-		//TODO: do not count this as a cancellation and validate other methods to check for isAccepted
-		const travelCancelType = answerRequestDto.isAccepted
-			? undefined
-			: TravelCancelType.DRIVER_DENIAL
-
 		await this.ridesRepository.update(ride.internalId, {
 			isAccepted: answerRequestDto.isAccepted,
-			travelCancelType,
+			travelCancelType: answerRequestDto.travelCancelType,
 			cancellationReason: answerRequestDto.cancellationReason
 		})
 

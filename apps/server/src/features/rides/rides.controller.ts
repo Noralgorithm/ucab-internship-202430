@@ -103,7 +103,10 @@ export class RidesController {
 		@CurrentUser() currentUser: User
 	) {
 		await this.ridesService.findOne({
-			where: { id, travel: { vehicle: { driver: { id: currentUser.id } } } }
+			where: [
+				{ id, travel: { vehicle: { driver: { id: currentUser.id } } } },
+				{ id, passenger: { id: currentUser.id } }
+			]
 		})
 
 		return await this.ridesService.answerRequest(

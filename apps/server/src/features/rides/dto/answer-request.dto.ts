@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsBoolean, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator'
 import { Ride } from '../entities/ride.entity'
+import { TravelCancelType } from '../enums/travel-cancel-type.enum'
 
 export class AnswerRequestDto {
 	@ApiProperty({ example: false })
@@ -10,4 +11,11 @@ export class AnswerRequestDto {
 	@IsString()
 	@IsOptional()
 	cancellationReason?: Ride['cancellationReason']
+
+	@IsEnum(TravelCancelType)
+	@IsOptional()
+	@ApiProperty({
+		example: `${TravelCancelType.DRIVER_DENIAL} || ${TravelCancelType.PASSENGER_DENIAL}`
+	})
+	travelCancelType?: Ride['travelCancelType']
 }
