@@ -1,19 +1,19 @@
-import { IsBoolean, IsEnum, IsNumber, IsOptional } from 'class-validator'
+import { IsBooleanString, IsEnum, IsOptional, IsString } from 'class-validator'
 import { RouteType } from '~/shared/constants'
 
 export class AvailableDriversFiltersDto {
-	@IsBoolean()
+	@IsBooleanString()
 	@IsOptional()
 	isWomanOnly: boolean
 
 	@IsEnum(RouteType)
 	type: RouteType
 
-	@IsNumber()
+	@IsString()
 	@IsOptional()
 	lat: string
 
-	@IsNumber()
+	@IsString()
 	@IsOptional()
 	lng: string
 }
