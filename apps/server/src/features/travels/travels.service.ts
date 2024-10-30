@@ -132,11 +132,18 @@ export class TravelsService {
 			})
 		} else {
 			travels = await this.travelsRepository.find({
-				where: {
-					status: TravelStatus.NOT_STARTED,
-					type: availableDriversFiltersDto.type,
-					forWomen: availableDriversFiltersDto.isWomanOnly ? true : undefined
-				},
+				where: [
+					{
+						status: TravelStatus.NOT_STARTED,
+						type: availableDriversFiltersDto.type,
+						forWomen: availableDriversFiltersDto.isWomanOnly
+					},
+					{
+						status: TravelStatus.NOT_STARTED,
+						type: availableDriversFiltersDto.type,
+						forWomen: false
+					}
+				],
 				order: { createdAt: 'DESC' },
 				relations: { vehicle: { driver: true }, rides: { passenger: true } }
 			})
