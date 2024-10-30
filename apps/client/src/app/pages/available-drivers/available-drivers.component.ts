@@ -44,7 +44,10 @@ export class AvailableDriversComponent implements OnInit {
 	}
 
 	getDestinationLatLng() {
-		if (!this.destinationId) return
+		if (!this.destinationId) {
+			this.getDrivers()
+			return
+		}
 
 		this.getDestinationService.execute(this.destinationId).subscribe({
 			next: (res) => {
