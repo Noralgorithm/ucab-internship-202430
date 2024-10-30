@@ -4,7 +4,8 @@
 		@if(isAWoman()){
 		<div class="checkbox-container">
 			<label class="only-woman-label">
-				<input class="only-woman-checkbox" type="checkbox" />
+				<input class="only-woman-checkbox" type="checkbox" [checked]="optionOnlyWomans"
+					(change)="changeOptionOnlyWomans($event)" />
 				Solo mujeres en el viaje
 			</label>
 		</div>

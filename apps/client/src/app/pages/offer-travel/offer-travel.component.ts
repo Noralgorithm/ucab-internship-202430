@@ -35,6 +35,7 @@ export class OfferTravelComponent {
 	selectedVehicle: Vehicle | null = null
 	seatsCount = 0
 	isModalOpen = false
+	optionOnlyWomans = false
 
 	ngOnInit() {
 		this.getOwnVehiclesService.execute().subscribe((res) => {
@@ -73,7 +74,7 @@ export class OfferTravelComponent {
 	handleConfirm() {
 		this.createTravelStoreService.vehicleId = String(this.selectedVehicle?.id)
 		this.createTravelStoreService.availableSeatQuantity = this.seatsCount
-
+		this.createTravelStoreService.forWomen = this.optionOnlyWomans
 		const routeToNavigate =
 			this.createTravelStoreService.type === 'to-ucab'
 				? '/app/route-to-ucab-selection'
@@ -82,9 +83,14 @@ export class OfferTravelComponent {
 		this.router.navigate([routeToNavigate], {
 			queryParams: {
 				vehicleId: this.selectedVehicle?.id,
-				availableSeatQuantity: this.seatsCount
+				availableSeatQuantity: this.seatsCount,
+				forWomen: this.optionOnlyWomans
 			},
 			queryParamsHandling: 'merge'
 		})
+	}
+
+	changeOptionOnlyWomans(event: Event) {
+		this.optionOnlyWomans = (event.target as HTMLInputElement).checked
 	}
 }
