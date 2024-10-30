@@ -6,12 +6,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
 import { Equal, FindOneOptions, Or, Repository } from 'typeorm'
+import { Gender } from '~/shared/constants'
 import { GeoJsonPoint } from '~/shared/types'
 import { TravelCancelType } from '../rides/enums/travel-cancel-type.enum'
 import { RidesService } from '../rides/rides.service'
 import { User } from '../users/entities/user.entity'
 import { Vehicle } from '../vehicles/entities/vehicle.entity'
 import { VehiclesService } from '../vehicles/vehicles.service'
+import { AvailableDriversFiltersDto } from './dto/available-drivers-filters.dto'
 import { CancelDto } from './dto/cancel.dto'
 import { ChangeTravelStatusDto } from './dto/change-travel-status.dto'
 import { CompleteDto } from './dto/complete.dto'
@@ -112,12 +114,33 @@ export class TravelsService {
 		return `This action removes a #${id} travel`
 	}
 
-	async getAvailableDrivers(currentUser: User) {
-		const travels = await this.travelsRepository.find({
-			where: { status: TravelStatus.NOT_STARTED },
-			order: { createdAt: 'DESC' },
-			relations: { vehicle: { driver: true }, rides: { passenger: true } }
-		})
+	// TODO: Implement Match Algorithm using Point
+	async getAvailableDrivers(
+		availableDriversFiltersDto: AvailableDriversFiltersDto,
+		currentUser: User
+	) {
+		let travels: Travel[]
+		if (currentUser.gender === Gender.MALE) {
+			travels = await this.travelsRepository.find({
+				where: {
+					status: TravelStatus.NOT_STARTED,
+					type: availableDriversFiltersDto.type,
+					forWomen: false
+				},
+				order: { createdAt: 'DESC' },
+				relations: { vehicle: { driver: true }, rides: { passenger: true } }
+			})
+		} else {
+			travels = await this.travelsRepository.find({
+				where: {
+					status: TravelStatus.NOT_STARTED,
+					type: availableDriversFiltersDto.type,
+					forWomen: availableDriversFiltersDto.isWomanOnly ? true : undefined
+				},
+				order: { createdAt: 'DESC' },
+				relations: { vehicle: { driver: true }, rides: { passenger: true } }
+			})
+		}
 
 		const filteredTravels = travels.filter(
 			(travel) =>
