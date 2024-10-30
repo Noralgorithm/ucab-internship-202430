@@ -41,3 +41,7 @@ section {
 	color: white;
 	background-color: #f92564;
 }
+
+.driver-card {
+	cursor: pointer;
+}

@@ -12,7 +12,8 @@
 
 	<ul>
 		@for (travel of travels; track $index) {
-		<driver-card [driver]="getTravelDriverData(travel)" (click)="handleDriverSelection(travel)" />
+		<driver-card class="driver-card" [driver]="getTravelDriverData(travel)"
+			(click)="handleDriverSelection(travel)" />
 		}
 	</ul>
 </page-layout>
