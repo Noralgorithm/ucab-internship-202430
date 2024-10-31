@@ -64,17 +64,41 @@ export class TravelsController {
 	}
 
 	@Patch('start')
-	start(@Body() startDto: StartDto, @CurrentUser() currentUser: User) {
-		return this.travelsService.start(startDto, currentUser)
+	async start(@Body() startDto: StartDto, @CurrentUser() currentUser: User) {
+		await this.travelsService.findOne({
+			where: {
+				id: startDto.travelId,
+				vehicle: { driver: { id: currentUser.id } }
+			}
+		})
+
+		return this.travelsService.start(startDto)
 	}
 
 	@Patch('cancel')
-	cancel(@Body() cancelDto: CancelDto, @CurrentUser() currentUser: User) {
-		return this.travelsService.cancel(cancelDto, currentUser)
+	async cancel(@Body() cancelDto: CancelDto, @CurrentUser() currentUser: User) {
+		await this.travelsService.findOne({
+			where: {
+				id: cancelDto.travelId,
+				vehicle: { driver: { id: currentUser.id } }
+			}
+		})
+
+		return this.travelsService.cancel(cancelDto)
 	}
 
 	@Patch('complete')
-	complete(@Body() completeDto: CompleteDto, @CurrentUser() currentUser: User) {
-		return this.travelsService.complete(completeDto, currentUser)
+	async complete(
+		@Body() completeDto: CompleteDto,
+		@CurrentUser() currentUser: User
+	) {
+		await this.travelsService.findOne({
+			where: {
+				id: completeDto.travelId,
+				vehicle: { driver: { id: currentUser.id } }
+			}
+		})
+
+		return this.travelsService.complete(completeDto)
 	}
 }

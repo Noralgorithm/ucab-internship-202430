@@ -188,20 +188,12 @@ export class TravelsService {
 		return updatedRide
 	}
 
-	async start({ travelId }: StartDto, requester: User) {
+	async start({ travelId }: StartDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: { rides: true, vehicle: { driver: true } }
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
-
-		//TODO: this should be extracted into permissions middleware or something, see how it is implemented in rides.controller.ts
-		const invalidRequester =
-			!requester.isDriver || travel.vehicle.driver.id !== requester.id
-
-		if (invalidRequester) {
-			throw new UnprocessableEntityException('Este viaje no existe')
-		}
 
 		if (travel.status !== TravelStatus.NOT_STARTED) {
 			throw new UnprocessableEntityException('El viaje ya ha comenzado')
@@ -222,20 +214,12 @@ export class TravelsService {
 		)
 	}
 
-	async cancel({ travelId, reason }: CancelDto, requester: User) {
+	async cancel({ travelId, reason }: CancelDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: { rides: true, vehicle: { driver: true } }
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
-
-		//TODO: this should be extracted into permissions middleware or something
-		const invalidRequester =
-			!requester.isDriver || travel.vehicle.driver.id !== requester.id
-
-		if (invalidRequester) {
-			throw new UnprocessableEntityException('Este viaje no existe')
-		}
 
 		if (travel.status === TravelStatus.CANCELLED) {
 			throw new UnprocessableEntityException('El viaje ya ha sido cancelado')
@@ -275,20 +259,12 @@ export class TravelsService {
 	}
 
 	//TODO: rate passengers
-	async complete({ travelId }: CompleteDto, requester) {
+	async complete({ travelId }: CompleteDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: { rides: true, vehicle: { driver: true } }
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
-
-		//TODO: this should be extracted into permissions middleware or something
-		const invalidRequester =
-			!requester.isDriver || travel.vehicle.driver.id !== requester.id
-
-		if (invalidRequester) {
-			throw new UnprocessableEntityException('Este viaje no existe')
-		}
 
 		if (travel.status !== TravelStatus.IN_PROGRESS) {
 			throw new UnprocessableEntityException('El viaje no ha comenzado')
