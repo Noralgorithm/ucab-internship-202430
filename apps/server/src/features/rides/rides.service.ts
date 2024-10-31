@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
-import { FindOneOptions, Repository } from 'typeorm'
+import { FindManyOptions, FindOneOptions, Repository } from 'typeorm'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
@@ -55,6 +55,16 @@ export class RidesService {
 		}
 
 		return ride
+	}
+
+	async find(options: FindManyOptions<Ride>) {
+		const rides = await this.ridesRepository.find(options)
+
+		if (rides == null) {
+			throw new NotFoundException('Rides not found')
+		}
+
+		return rides
 	}
 
 	async answerRequest(

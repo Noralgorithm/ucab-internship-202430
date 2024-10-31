@@ -191,9 +191,12 @@ export class TravelsService {
 	async start({ travelId }: StartDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
-			where: { id: travelId },
-			relations: { rides: true }
+			where: { id: travelId }
 		}))!
+
+		travel.rides = await this.ridesService.find({
+			where: { travel: { id: travelId } }
+		})
 
 		if (travel.status !== TravelStatus.NOT_STARTED) {
 			throw new UnprocessableEntityException('El viaje ya ha comenzado')
