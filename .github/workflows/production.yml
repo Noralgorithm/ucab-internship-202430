@@ -22,9 +22,11 @@ jobs:
             git pull
             pnpm install
             pnpm --filter server migration:run
-            pnpm --filter server build
+            pnpm build
             pm2 restart movic-backend
-            pm2 restart movic-frontend
+            cp /var/apps/ucab-internship-202430/apps/client/.htaccess /var/apps/ucab-internship-202430/apps/client/dist/client/browser/.htaccess
+            rm /var/www/ucab-internship-client -rf
+            mv /var/apps/ucab-internship-202430/apps/client/dist /var/www/ucab-internship-client
 
           # pnpm generate:docs
           # rm /var/www/green-summary-client-docs -rf
