@@ -190,7 +190,7 @@ export class TravelsService {
 
 	async start({ travelId }: StartDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
-		const travel = (await this.travelsRepository.findOne({
+		const travel = (await this.findOne({
 			where: { id: travelId },
 			relations: ['vehicle', 'vehicle.driver', 'rides']
 		}))!
