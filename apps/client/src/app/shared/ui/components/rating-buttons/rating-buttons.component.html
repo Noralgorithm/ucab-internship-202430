@@ -1,0 +1,7 @@
+<div class="rating-buttons">
+	@for (star of stars; track $index) {
+	<button class="icon-star-rating" (click)="rate($index+1)">
+		<img [src]="star ? '/assets/svgs/FullStar.svg' : '/assets/svgs/FullStarEmpty.svg'">
+	</button>
+	}
+</div>
