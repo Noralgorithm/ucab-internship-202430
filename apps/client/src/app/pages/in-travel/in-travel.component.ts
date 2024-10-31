@@ -1,6 +1,9 @@
 import { Component } from '@angular/core'
 import { GoogleMap, MapMarker, MapPolyline } from '@angular/google-maps'
+import { ActivatedRoute } from '@angular/router'
+import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { geoJsonLineStringToLatLng } from '~/shared/utils/geo-json-line-string.util'
 
 @Component({
 	selector: 'app-in-travel',
@@ -10,6 +13,10 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 	styleUrl: './in-travel.component.css'
 })
 export class InTravelComponent {
+	travelId: string | null = null
+
+	vertices: google.maps.LatLngLiteral[] = []
+
 	passengers: MarkerPassengers = [
 		{
 			destinationMarkerPosition: { lat: 40.73061, lng: -73.935242 }
@@ -21,9 +28,6 @@ export class InTravelComponent {
 			destinationMarkerPosition: { lat: 51.507351, lng: -0.127758 }
 		}
 	]
-	sendEmergencymessage() {
-		alert('AYUDA ME SECUESTRARON')
-	}
 
 	options: google.maps.MapOptions = {
 		streetViewControl: false
@@ -31,6 +35,33 @@ export class InTravelComponent {
 
 	markerOptions: google.maps.MarkerOptions = {
 		draggable: false
+	}
+
+	constructor(
+		private readonly getTravelByIdService: GetTravelByIdService,
+		private readonly route: ActivatedRoute
+	) {
+		this.route.queryParams.subscribe((params) => {
+			this.travelId = params['id']
+		})
+	}
+
+	ngOnInit() {
+		if (!this.travelId) {
+			return
+		}
+
+		this.getTravelByIdService.execute(this.travelId).subscribe({
+			next: (res) => {
+				this.vertices = geoJsonLineStringToLatLng(
+					res.data.route.polyline.geoJsonLinestring
+				)
+			}
+		})
+	}
+
+	sendEmergencymessage() {
+		alert('AYUDA ME SECUESTRARON')
 	}
 }
 
