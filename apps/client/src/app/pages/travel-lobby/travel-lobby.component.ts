@@ -89,7 +89,8 @@ export class TravelLobbyComponent {
 				this.router.navigate(['/in-travel'], {
 					queryParams: {
 						id: this.travel?.id
-					}
+					},
+					queryParamsHandling: 'preserve'
 				})
 			},
 			error: () => {
