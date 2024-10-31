@@ -1,1 +1,14 @@
-<p>in-travel works!</p>
+<main class="container">
+	<google-map height="100%" width="100%" [options]="options" [zoom]="18">
+		<!--TODO: Add InfoWindow for show the profile pic-->
+		@for (passenger of passengers; track $index) {
+		<map-marker [options]="markerOptions" [position]="passenger.destinationMarkerPosition" [options]="{
+				icon: 'https://cdn-icons-png.flaticon.com/32/684/684908.png',
+			}"></map-marker>
+		}
+	</google-map>
+	<div class="button-container">
+		<button mButton size="small" severity="danger" (click)="sendEmergencymessage()">SOS</button>
+		<button mButton size="large" severity="primary" (click)="sendEmergencymessage()">Terminar viaje</button>
+	</div>
+</main>
