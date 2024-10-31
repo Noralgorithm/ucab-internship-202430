@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { Subscription, interval, mergeMap } from 'rxjs'
 import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { VehicleImageComponent } from '~/features/vehicles/components/vehicle-image/vehicle-image.component'
 import { RideTravelData } from '~/shared/types/rides/ride-request.type'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
+
+const REFETCH_WAIT_TIME_IN_MS = 2000
 
 @Component({
 	selector: 'app-travel-waiting-room',
@@ -16,6 +19,8 @@ import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-lay
 export class TravelWaitingRoomComponent implements OnInit {
 	rideId = ''
 	ride: RideTravelData | null = null
+
+	rideSubscription: Subscription | null = null
 
 	constructor(
 		private readonly getRideService: GetRideService,
@@ -39,6 +44,35 @@ export class TravelWaitingRoomComponent implements OnInit {
 					'Ha ocurrido un error al cargar la información del viaje'
 				)
 			}
+		})
+
+		this.rideSubscription = interval(REFETCH_WAIT_TIME_IN_MS)
+			.pipe(mergeMap(() => this.getRideService.execute(this.rideId, false)))
+			.subscribe({
+				next: (res) => {
+					if (res.data.travel.status === 'in-progress') {
+						this.toast.success('El viaje ha comenzado')
+						this.redirectToRide()
+						this.rideSubscription?.unsubscribe()
+					} else if (res.data.travel.status === 'canceled') {
+						this.toast.error('El viaje ha sido cancelado')
+						this.router.navigate(['/app'])
+						this.rideSubscription?.unsubscribe()
+					} else if (res.data.travel.status === 'completed') {
+						this.toast.error('Ese viaje ya ha finalizado')
+						this.rideSubscription?.unsubscribe()
+					}
+				}
+			})
+	}
+
+	ngOnDestroy() {
+		this.rideSubscription?.unsubscribe()
+	}
+
+	redirectToRide() {
+		this.router.navigate(['/in-ride'], {
+			queryParamsHandling: 'preserve'
 		})
 	}
 

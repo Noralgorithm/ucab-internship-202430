@@ -7,7 +7,7 @@ export interface Travel {
 	id: string
 	forWomen: boolean
 	type: TravelType
-	status: string
+	status: 'not-started' | 'in-progress' | 'completed' | 'canceled'
 	availableSeatQuantity: number
 	vehicleId: string
 	route: Route
