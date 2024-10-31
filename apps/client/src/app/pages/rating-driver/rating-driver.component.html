@@ -12,28 +12,16 @@
 				<span class="card-information rating-number label-small">4.8 (60)</span>
 			</div>
 		</div>
-		<div class="rating-buttons">
-			<button>
-				<img class="icon-star-rating" src="/assets/svgs/FullStarEmpty.svg" alt="Icono estrella de rating">
-			</button>
-			<button>
-				<img class="icon-star-rating" src="/assets/svgs/FullStarEmpty.svg" alt="Icono estrella de rating">
-			</button>
-			<button>
-				<img class="icon-star-rating" src="/assets/svgs/FullStarEmpty.svg" alt="Icono estrella de rating">
-			</button>
-			<button>
-				<img class="icon-star-rating" src="/assets/svgs/FullStarEmpty.svg" alt="Icono estrella de rating">
-			</button>
-			<button>
-				<img class="icon-star-rating" src="/assets/svgs/FullStarEmpty.svg" alt="Icono estrella de rating">
-			</button>
-		</div>
+		<rating-buttons (selectedRating)="onSelectedRating($event)"></rating-buttons>
 		<movic-vehicle [color]="ride?.travel?.vehicle?.color ?? '#fff'"></movic-vehicle>
 		<div class="vehicle-information">
 			<p class="paragraph-medium">{{ride?.travel?.vehicle?.brand}} | {{ride?.travel?.vehicle?.model}}</p>
 			<p class="paragraph-medium">{{ride?.travel?.vehicle?.plate}}</p>
 		</div>
 	</section>
+
+	<button mButton size="large" (click)="confirmRating()">
+		Calificar
+	</button>
 
 </page-layout>

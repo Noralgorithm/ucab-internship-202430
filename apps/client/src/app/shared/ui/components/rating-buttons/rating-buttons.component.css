@@ -1,0 +1,22 @@
+.rating-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.icon-star-rating {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+	outline: none;
+}
+
+.icon-star-rating img {
+	width: 2.1875rem;
+	height: 2.1875rem;
+}

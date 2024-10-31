@@ -34,7 +34,8 @@ header h1 {
 .driver-vehicle-information {
 	display: flex;
 	flex-direction: column;
-	margin-top: 4.8125rem;
+	padding-top: 4.8125rem;
+	padding-bottom: 4.8125rem;
 }
 
 .driver-information {
@@ -64,16 +65,4 @@ header h1 {
 
 .vehicle-information p {
 	color: var(--primary-text-value);
-}
-
-.rating-buttons {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1.25rem;
-}
-
-.icon-star-rating {
-	width: 2.1875rem;
-	height: 2.1875rem;
 }
