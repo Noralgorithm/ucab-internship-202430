@@ -151,10 +151,9 @@ export class RidesController {
 			]
 		})
 
-		return await this.ridesService.cancelRequest(
-			{ where: { id } },
-			cancelRequestDto
-		)
+		await this.ridesService.cancelRequest({ where: { id } }, cancelRequestDto)
+
+		return 'Ride cancelled'
 	}
 
 	@Patch(':id/finish-ride')
@@ -167,6 +166,8 @@ export class RidesController {
 			where: { id, passenger: { id: currentUser.id } }
 		})
 
-		return await this.ridesService.complete(finishRideDto)
+		await this.ridesService.complete(finishRideDto)
+
+		return 'Ride finished'
 	}
 }
