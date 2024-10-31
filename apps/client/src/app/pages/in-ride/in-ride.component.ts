@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { GoogleMap, MapMarker, MapPolyline } from '@angular/google-maps'
+import { Router } from '@angular/router'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 
 @Component({
@@ -10,6 +11,8 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 	styleUrl: './in-ride.component.css'
 })
 export class InRideComponent {
+	constructor(private readonly router: Router) {}
+
 	sendEmergencymessage() {
 		alert('AYUDA ME SECUESTRARON')
 	}
@@ -25,5 +28,13 @@ export class InRideComponent {
 	destinationMarkerPosition: google.maps.LatLngLiteral = {
 		lat: 8.2524,
 		lng: -62.784558
+	}
+
+	redirectToRatingDriver() {
+		this.router.navigate(['rating-driver'], {
+			queryParams: {
+				rideId: 'rideId'
+			}
+		})
 	}
 }
