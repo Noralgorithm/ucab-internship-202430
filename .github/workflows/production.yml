@@ -24,6 +24,7 @@ jobs:
             pnpm --filter server migration:run
             pnpm build
             pm2 restart movic-backend
+            pm2 save
             cp /var/apps/ucab-internship-202430/apps/client/.htaccess /var/apps/ucab-internship-202430/apps/client/dist/client/browser/.htaccess
             rm /var/www/ucab-internship-client -rf
             mv /var/apps/ucab-internship-202430/apps/client/dist /var/www/ucab-internship-client
