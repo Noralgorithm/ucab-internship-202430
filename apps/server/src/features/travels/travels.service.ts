@@ -190,9 +190,9 @@ export class TravelsService {
 
 	async start({ travelId }: StartDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
-		const travel = (await this.findOne({
+		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: ['vehicle', 'vehicle.driver', 'rides']
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
 
 		if (travel.status !== TravelStatus.NOT_STARTED) {
@@ -218,7 +218,7 @@ export class TravelsService {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: ['vehicle', 'vehicle.driver', 'rides']
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
 
 		if (travel.status === TravelStatus.CANCELLED) {
@@ -263,7 +263,7 @@ export class TravelsService {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
 			where: { id: travelId },
-			relations: ['vehicle', 'vehicle.driver', 'rides']
+			relations: { vehicle: { driver: true }, rides: { passenger: true } }
 		}))!
 
 		if (travel.status !== TravelStatus.IN_PROGRESS) {
