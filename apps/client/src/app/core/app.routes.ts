@@ -13,11 +13,15 @@ import { EditProfileComponent } from '~/pages/edit-profile/edit-profile.componen
 import { EditVehicleComponent } from '~/pages/edit-vehicle/edit-vehicle.component'
 import { ExternalDestinationSelectionComponent } from '~/pages/external-destination-selection/external-destination-selection.component'
 import { HomeComponent } from '~/pages/home/home.component'
+import { InRideComponent } from '~/pages/in-ride/in-ride.component'
+import { InTravelComponent } from '~/pages/in-travel/in-travel.component'
 import { MovipanasComponent } from '~/pages/movipanas/movipanas.component'
 import { MyDestinationsComponent } from '~/pages/my-destinations/my-destinations.component'
 import { MyVehiclesComponent } from '~/pages/my-vehicles/my-vehicles.component'
 import { OfferTravelComponent } from '~/pages/offer-travel/offer-travel.component'
 import { ProfileComponent } from '~/pages/profile/profile.component'
+import { RatingDriverComponent } from '~/pages/rating-driver/rating-driver.component'
+import { RatingPassengersComponent } from '~/pages/rating-passengers/rating-passengers.component'
 import { RideDestinationSelectionComponent } from '~/pages/ride-destination-selection/ride-destination-selection.component'
 import { RouteFromUcabSelectionComponent } from '~/pages/route-from-ucab-selection/route-from-ucab-selection.component'
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
@@ -57,6 +61,26 @@ export const routes: Routes = [
 		path: 'chat',
 		title: 'Chat',
 		component: ChatComponent
+	},
+	{
+		path: 'in-ride',
+		title: 'En viaje',
+		component: InRideComponent
+	},
+	{
+		path: 'in-travel',
+		title: 'En viaje',
+		component: InTravelComponent
+	},
+	{
+		path: 'rating-driver',
+		title: 'Calificar conductor',
+		component: RatingDriverComponent
+	},
+	{
+		path: 'rating-passengers',
+		title: 'Calificar pasajeros',
+		component: RatingPassengersComponent
 	},
 	{
 		path: 'app',

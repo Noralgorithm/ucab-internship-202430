@@ -108,6 +108,7 @@ header h1 {
 .rating-information {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	gap: .1875rem;
 }
 
