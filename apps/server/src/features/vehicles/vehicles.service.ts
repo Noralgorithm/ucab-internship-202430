@@ -4,7 +4,7 @@ import {
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Equal, Not, Repository } from 'typeorm'
 import { VEHICLES_MAX_AMOUNT } from '~/shared/constants'
 import { UnknownError } from '~/shared/errors'
 import { User } from '../users/entities/user.entity'
@@ -89,6 +89,22 @@ export class VehiclesService {
 		} catch (error: unknown) {
 			if (error instanceof NotFoundException) {
 				throw new UnprocessableEntityException('Vehicle does not exist')
+			}
+
+			throw new UnknownError(undefined, { cause: error })
+		}
+
+		try {
+			const otherVehicleWithPlate = await this.vehiclesRepository.findOne({
+				where: { id: Not(Equal(id)), plate: updateVehicleDto.plate }
+			})
+
+			if (otherVehicleWithPlate != null) {
+				throw new UnprocessableEntityException('Plate already in use')
+			}
+		} catch (error: unknown) {
+			if (error instanceof UnprocessableEntityException) {
+				throw error
 			}
 
 			throw new UnknownError(undefined, { cause: error })
