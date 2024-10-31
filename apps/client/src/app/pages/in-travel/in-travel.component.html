@@ -1,6 +1,8 @@
 <main class="container">
 	<google-map height="100%" width="100%" [options]="options" [zoom]="18">
 		<!--TODO: Add InfoWindow for show the profile pic-->
+		<map-polyline [path]="vertices" />
+
 		@for (passenger of passengers; track $index) {
 		<map-marker [options]="markerOptions" [position]="passenger.destinationMarkerPosition" [options]="{
 				icon: 'https://cdn-icons-png.flaticon.com/32/684/684908.png',

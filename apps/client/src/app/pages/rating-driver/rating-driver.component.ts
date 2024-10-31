@@ -41,7 +41,7 @@ export class RatingDriverComponent implements OnInit {
 		private readonly route: ActivatedRoute,
 		private readonly getRideService: GetRideService
 	) {
-		this.route.params.subscribe((params) => {
+		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['id']
 		})
 	}
@@ -69,20 +69,20 @@ export class RatingDriverComponent implements OnInit {
 				coordinates: [position.coords.latitude, position.coords.longitude],
 				type: 'Point'
 			}
-		})
-		const payload: FinishRideServiceDto = {
-			rideId: this.rideId,
-			dropOff: this.ownLocation,
-			passengerStarRating: this.selectedRating,
-			passengerCommentAfterRide: 'no comments'
-		}
-		this.finishRideService.execute(payload).subscribe({
-			next: () => {
-				console.log('Ride finished')
-			},
-			error: () => {
-				console.log('Error finishing ride')
+			const payload: FinishRideServiceDto = {
+				rideId: this.rideId,
+				dropOff: this.ownLocation,
+				passengerStarRating: this.selectedRating as number,
+				passengerCommentAfterRide: 'no comments'
 			}
+			this.finishRideService.execute(payload).subscribe({
+				next: () => {
+					console.log('Ride finished')
+				},
+				error: () => {
+					console.log('Error finishing ride')
+				}
+			})
 		})
 	}
 }

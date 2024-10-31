@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
-import { interval, mergeMap } from 'rxjs'
+import { Subscription, interval, mergeMap } from 'rxjs'
 import { RetrieveRideMessagesService } from '~/features/chat/api/retrieve-ride-messages.service'
 import { SendRideMessageService } from '~/features/chat/api/send-ride-message.service'
 import { ID_KEY } from '~/shared/constants'
@@ -24,6 +24,8 @@ export class ChatComponent implements OnInit {
 	groupedMessages: GroupedMessages[] = []
 	newMessage = ''
 
+	chatSubscription: Subscription | null = null
+
 	constructor(
 		private readonly retrieveRideMessagesService: RetrieveRideMessagesService,
 		private readonly sendRideMessageService: SendRideMessageService,
@@ -36,7 +38,7 @@ export class ChatComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		interval(REFETCH_WAIT_TIME_IN_MS)
+		this.chatSubscription = interval(REFETCH_WAIT_TIME_IN_MS)
 			.pipe(
 				mergeMap(() => this.retrieveRideMessagesService.execute(this.rideId))
 			)
@@ -46,6 +48,10 @@ export class ChatComponent implements OnInit {
 					this.groupedMessages = this.groupMessagesByDate()
 				}
 			})
+	}
+
+	ngOnDestroy() {
+		this.chatSubscription?.unsubscribe()
 	}
 
 	sendMessage() {
