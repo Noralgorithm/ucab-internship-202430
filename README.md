@@ -20,7 +20,7 @@ This project uses pnpm so we encourage you to do so.
 pnpm install
 ```
 
-## Development Server
+## Development Server :)
 
 Run `pnpm dev` for both devs servers either Client or Server, both applications will automatically reload if you change any of the source files.
 
