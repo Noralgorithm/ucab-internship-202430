@@ -72,7 +72,9 @@ export class TravelsController {
 			}
 		})
 
-		return this.travelsService.start(startDto)
+		this.travelsService.start(startDto)
+
+		return 'Viaje comenzado'
 	}
 
 	@Patch('cancel')
@@ -84,7 +86,9 @@ export class TravelsController {
 			}
 		})
 
-		return this.travelsService.cancel(cancelDto)
+		this.travelsService.cancel(cancelDto)
+
+		return 'Viaje cancelado'
 	}
 
 	@Patch('complete')
@@ -99,6 +103,8 @@ export class TravelsController {
 			}
 		})
 
-		return this.travelsService.complete(completeDto)
+		this.travelsService.complete(completeDto)
+
+		return 'Viaje finalizado'
 	}
 }
