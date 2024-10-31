@@ -34,7 +34,8 @@ export class InRideComponent {
 		this.router.navigate(['rating-driver'], {
 			queryParams: {
 				rideId: 'rideId'
-			}
+			},
+			queryParamsHandling: 'preserve'
 		})
 	}
 }

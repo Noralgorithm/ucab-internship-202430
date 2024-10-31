@@ -1,10 +1,11 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import {
 	FinishRideService,
 	FinishRideServiceDto
 } from '~/features/rides/api/finish-ride.service'
+import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { GeoJsonPoint } from '~/shared/types/maps/geo-json-points.type'
 import { RideTravelData } from '~/shared/types/rides/ride-request.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
@@ -24,10 +25,10 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 	templateUrl: './rating-driver.component.html',
 	styleUrl: './rating-driver.component.css'
 })
-export class RatingDriverComponent {
+export class RatingDriverComponent implements OnInit {
 	ride: RideTravelData | null = null
 	stars = [false, false, false, false, false]
-	selectedRating = 0
+	selectedRating: number | null = null
 	rideId = ''
 	ownLocation: GeoJsonPoint = {
 		coordinates: [0, 0],
@@ -37,10 +38,23 @@ export class RatingDriverComponent {
 	constructor(
 		private readonly finishRideService: FinishRideService,
 		private readonly ownLocationService: OwnLocationService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly getRideService: GetRideService
 	) {
 		this.route.params.subscribe((params) => {
-			this.rideId = params['rideId']
+			this.rideId = params['id']
+		})
+	}
+
+	ngOnInit() {
+		this.getRideService.execute(this.rideId).subscribe({
+			next: (res) => {
+				this.ride = res.data
+				console.log('viaje obtenido')
+			},
+			error: () => {
+				console.log('error obteniendo el viaje')
+			}
 		})
 	}
 
@@ -49,6 +63,7 @@ export class RatingDriverComponent {
 	}
 
 	ratingDriver() {
+		if (!this.selectedRating) return
 		this.ownLocationService.$location.subscribe((position) => {
 			this.ownLocation = {
 				coordinates: [position.coords.latitude, position.coords.longitude],
@@ -62,10 +77,10 @@ export class RatingDriverComponent {
 			passengerCommentAfterRide: 'no comments'
 		}
 		this.finishRideService.execute(payload).subscribe({
-			next: (res) => {
+			next: () => {
 				console.log('Ride finished')
 			},
-			error: (err) => {
+			error: () => {
 				console.log('Error finishing ride')
 			}
 		})

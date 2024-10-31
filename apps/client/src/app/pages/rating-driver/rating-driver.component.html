@@ -6,7 +6,8 @@
 	<section class="driver-vehicle-information">
 		<div class="driver-information">
 			<img class="avatar" src="{{ ride?.travel?.vehicle?.driver?.profilePicSrc }}" alt="Imágen del conductor" />
-			<p class="label-medium">Maria Paula Forero</p>
+			<p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
+				{{ride?.travel?.vehicle?.driver?.lastName}}</p>
 			<div class="rating-information">
 				<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
 				<span class="card-information rating-number label-small">4.8 (60)</span>
@@ -20,7 +21,7 @@
 		</div>
 	</section>
 
-	<button mButton size="large" (click)="ratingDriver()">
+	<button mButton size="large" (click)="ratingDriver()" [disabled]="!selectedRating">
 		Calificar
 	</button>
 
