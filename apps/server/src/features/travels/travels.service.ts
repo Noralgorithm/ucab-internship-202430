@@ -191,21 +191,21 @@ export class TravelsService {
 	async start({ travelId }: StartDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
-			where: { id: travelId }
+			where: { id: travelId },
+			relations: { rides: true }
 		}))!
-
-		travel.rides = await this.ridesService.find({
-			where: { travel: { id: travelId } }
-		})
 
 		if (travel.status !== TravelStatus.NOT_STARTED) {
 			throw new UnprocessableEntityException('El viaje ya ha comenzado')
 		}
 
-		await this.travelsRepository.update(travel, {
-			status: TravelStatus.IN_PROGRESS,
-			departureTime: DateTime.now()
-		})
+		await this.travelsRepository.update(
+			{ id: travel.id },
+			{
+				status: TravelStatus.IN_PROGRESS,
+				departureTime: DateTime.now()
+			}
+		)
 
 		await Promise.all(
 			travel.rides.map(async (ride) => {
@@ -234,9 +234,12 @@ export class TravelsService {
 			)
 		}
 
-		await this.travelsRepository.update(travel, {
-			status: TravelStatus.CANCELLED
-		})
+		await this.travelsRepository.update(
+			{ id: travel.id },
+			{
+				status: TravelStatus.CANCELLED
+			}
+		)
 
 		await Promise.all(
 			travel.rides.map(async (ride) => {
@@ -273,9 +276,12 @@ export class TravelsService {
 			throw new UnprocessableEntityException('El viaje no ha comenzado')
 		}
 
-		await this.travelsRepository.update(travel, {
-			status: TravelStatus.COMPLETED,
-			arrivalTime: DateTime.now()
-		})
+		await this.travelsRepository.update(
+			{ id: travel.id },
+			{
+				status: TravelStatus.COMPLETED,
+				arrivalTime: DateTime.now()
+			}
+		)
 	}
 }
