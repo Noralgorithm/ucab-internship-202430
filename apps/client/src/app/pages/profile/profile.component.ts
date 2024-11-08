@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { Router, RouterLink } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { TOKEN_KEY } from '~/shared/constants'
@@ -20,7 +21,8 @@ export class ProfileComponent {
 	constructor(
 		private readonly getOwnProfileService: GetOwnProfileService,
 		public readonly userCurrentRoleService: UserCurrentRoleService,
-		private router: Router
+		private router: Router,
+		private readonly toastrService: ToastrService
 	) {}
 
 	userTypeLabels = USER_TYPE_LABELS
@@ -37,8 +39,7 @@ export class ProfileComponent {
 	logout() {
 		localStorage.removeItem(TOKEN_KEY)
 		localStorage.removeItem('user')
-		//TODO: ADD Toast
-		// this.toast.show('success', 'Éxito', 'Usted ha cerrado sesión correctamente')
+		this.toastrService.success('Se ha cerrado la sesión correctamente')
 		this.router.navigate([''])
 	}
 }

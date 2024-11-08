@@ -1,7 +1,9 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { GoogleMap, MapMarker, MapPolyline } from '@angular/google-maps'
 import { Router } from '@angular/router'
+import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { generateEmergencyLink } from '~/shared/utils/generate-emergency-link'
 
 @Component({
 	selector: 'app-in-ride',
@@ -10,13 +12,7 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 	templateUrl: './in-ride.component.html',
 	styleUrl: './in-ride.component.css'
 })
-export class InRideComponent {
-	constructor(private readonly router: Router) {}
-
-	sendEmergencymessage() {
-		alert('AYUDA ME SECUESTRARON')
-	}
-
+export class InRideComponent implements OnInit {
 	options: google.maps.MapOptions = {
 		streetViewControl: false
 	}
@@ -28,6 +24,23 @@ export class InRideComponent {
 	destinationMarkerPosition: google.maps.LatLngLiteral = {
 		lat: 8.2524,
 		lng: -62.784558
+	}
+
+	emergencyNumber = ''
+
+	emergencyLink = ''
+
+	constructor(
+		private readonly router: Router,
+		private readonly getOwnProfileService: GetOwnProfileService
+	) {}
+
+	ngOnInit() {
+		this.getOwnProfileService.execute().subscribe((res) => {
+			if (!res.data.emergencyContactPhoneNumber) return
+			this.emergencyNumber = res.data.emergencyContactPhoneNumber
+			this.emergencyLink = generateEmergencyLink(this.emergencyNumber)
+		})
 	}
 
 	redirectToRatingDriver() {

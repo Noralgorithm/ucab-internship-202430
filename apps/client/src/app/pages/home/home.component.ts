@@ -17,8 +17,6 @@ export class HomeComponent {
 	//TODO: make component not execute animations on first load when user is already setted as driver
 
 	isUserRoleToggleChecked = false
-	emergencyNumber = '12345678'
-	emergencyLink = `sms://${this.emergencyNumber}?&body=AYUDAAAA ME SECUESTRAN`
 
 	ngOnInit() {
 		this.userCurrentRoleService.currentRole$.subscribe((role) => {

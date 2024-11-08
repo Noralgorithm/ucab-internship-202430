@@ -1,8 +1,10 @@
 import { Component } from '@angular/core'
 import { GoogleMap, MapMarker, MapPolyline } from '@angular/google-maps'
 import { ActivatedRoute } from '@angular/router'
+import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { generateEmergencyLink } from '~/shared/utils/generate-emergency-link'
 import { geoJsonLineStringToLatLng } from '~/shared/utils/geo-json-line-string.util'
 
 @Component({
@@ -16,6 +18,10 @@ export class InTravelComponent {
 	travelId: string | null = null
 
 	vertices: google.maps.LatLngLiteral[] = []
+
+	emergencyNumber = ''
+
+	emergencyLink = ''
 
 	passengers: MarkerPassengers = [
 		{
@@ -39,7 +45,8 @@ export class InTravelComponent {
 
 	constructor(
 		private readonly getTravelByIdService: GetTravelByIdService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly getOwnProfileService: GetOwnProfileService
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.travelId = params['id']
@@ -58,10 +65,12 @@ export class InTravelComponent {
 				)
 			}
 		})
-	}
 
-	sendEmergencymessage() {
-		alert('AYUDA ME SECUESTRARON')
+		this.getOwnProfileService.execute().subscribe((res) => {
+			if (!res.data.emergencyContactPhoneNumber) return
+			this.emergencyNumber = res.data.emergencyContactPhoneNumber
+			this.emergencyLink = generateEmergencyLink(this.emergencyNumber)
+		})
 	}
 }
 
