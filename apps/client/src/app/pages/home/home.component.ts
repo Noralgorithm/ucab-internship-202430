@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { ModalComponent } from '~/shared/ui/components/modal/modal.component'
+import { EMERGENCY_NUMBER } from '~root/secrets'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 
 @Component({
@@ -17,6 +18,8 @@ export class HomeComponent {
 	//TODO: make component not execute animations on first load when user is already setted as driver
 
 	isUserRoleToggleChecked = false
+	emergencyNumber = EMERGENCY_NUMBER
+	emergencyLink = `sms://${EMERGENCY_NUMBER}?&body=AYUDAAAA ME SECUESTRAN`
 
 	ngOnInit() {
 		this.userCurrentRoleService.currentRole$.subscribe((role) => {
