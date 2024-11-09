@@ -26,11 +26,6 @@ header h1 {
 	width: 1.25rem;
 }
 
-.chat-icon {
-	width: var(--icon-l);
-	cursor: pointer;
-}
-
 .driver-vehicle-information {
 	display: flex;
 	flex-direction: column;

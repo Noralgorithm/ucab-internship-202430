@@ -40,6 +40,10 @@ export class RatingPassengersComponent implements OnInit {
 		})
 	}
 
+	ratingPassengers() {
+		console.log('Se calificó a los pasajeros')
+	}
+
 	onSelectedRating(rating: number) {
 		this.selectedRating = rating
 	}
