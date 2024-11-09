@@ -20,6 +20,8 @@ const FETCH_WAIT_TIME_IN_MS = 1000
 export class WaitingForReviewComponent implements OnInit {
 	rideId = ''
 
+	subscription: Subscription | null = null
+
 	constructor(
 		private readonly getRideService: GetRideService,
 		private readonly router: Router,
@@ -31,8 +33,6 @@ export class WaitingForReviewComponent implements OnInit {
 			this.rideId = params['id'] as string
 		})
 	}
-
-	subscription: Subscription | null = null
 
 	ngOnInit() {
 		this.subscription = interval(FETCH_WAIT_TIME_IN_MS)

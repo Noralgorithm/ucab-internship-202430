@@ -27,7 +27,6 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 })
 export class RatingDriverComponent implements OnInit {
 	ride: RideTravelData | null = null
-	stars = [false, false, false, false, false]
 	selectedRating: number | null = null
 	rideId = ''
 	ownLocation: GeoJsonPoint = {
