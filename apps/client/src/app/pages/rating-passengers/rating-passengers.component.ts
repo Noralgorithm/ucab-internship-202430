@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { TravelLobbyData } from '~/shared/types/travels/travel.type'
+import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 import { RatingButtonsComponent } from '../../shared/ui/components/rating-buttons/rating-buttons.component'
 
 @Component({
 	selector: 'app-rating-passengers',
 	standalone: true,
-	imports: [PageLayoutComponent, RatingButtonsComponent],
+	imports: [PageLayoutComponent, RatingButtonsComponent, ButtonComponent],
 	templateUrl: './rating-passengers.component.html',
 	styleUrl: './rating-passengers.component.css'
 })
@@ -17,7 +18,7 @@ export class RatingPassengersComponent implements OnInit {
 
 	travel: TravelLobbyData | undefined
 
-	selectedRating: number | null = null
+	selectedRating: number[] = []
 
 	constructor(
 		private readonly getTravelByIdService: GetTravelByIdService,
@@ -41,10 +42,10 @@ export class RatingPassengersComponent implements OnInit {
 	}
 
 	ratingPassengers() {
-		console.log('Se calificó a los pasajeros')
+		console.log(this.selectedRating)
 	}
 
-	onSelectedRating(rating: number) {
-		this.selectedRating = rating
+	onSelectedRating(rating: number, index: number) {
+		this.selectedRating[index] = rating
 	}
 }
