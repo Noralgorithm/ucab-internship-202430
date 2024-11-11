@@ -181,4 +181,32 @@ export class RidesService {
 			}
 		)
 	}
+
+	async driverComplete({
+		rideId: id,
+		driverCommentAfterRide,
+		driverStarRating
+	}: {
+		rideId: Ride['id']
+		driverCommentAfterRide?: Ride['driverCommentAfterRide']
+		driverStarRating: Ride['driverStarRating']
+	}) {
+		const ride = await this.findOne({ where: { id } })
+
+		if (!ride.tookTheRide) {
+			throw new UnprocessableEntityException('Ride was not taken')
+		}
+
+		if (ride.travelCancelType != null) {
+			throw new UnprocessableEntityException('Ride has been canceled')
+		}
+
+		await this.ridesRepository.update(
+			{ id: ride.id },
+			{
+				driverCommentAfterRide,
+				driverStarRating
+			}
+		)
+	}
 }

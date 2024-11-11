@@ -31,10 +31,9 @@ export class FinishRideDto {
 	@Max(MAX_STAR_RATING)
 	@Min(MIN_STAR_RATING)
 	@IsNumber()
-	@IsOptional()
-	passengerStarRating?: Ride['passengerStarRating']
+	passengerStarRating: NonNullable<Ride['passengerStarRating']>
 
 	@IsString()
 	@IsOptional()
-	passengerCommentAfterRide?: Ride['passengerCommentAfterRide']
+	passengerCommentAfterRide: Ride['passengerCommentAfterRide']
 }

@@ -264,13 +264,21 @@ export class TravelsService {
 		)
 	}
 
-	//TODO: rate passengers
-	async complete({ travelId }: CompleteDto) {
+	//TODO: this should use transactions, and many more things lol
+	async complete({ travelId, rides }: CompleteDto) {
 		//biome-ignore lint/style/noNonNullAssertion: Already validated
 		const travel = (await this.travelsRepository.findOne({
-			where: { id: travelId },
+			where: {
+				id: travelId
+			},
 			relations: { rides: true }
 		}))!
+
+		for (const ride of rides) {
+			if (!travel.rides.some((r) => ride.rideId === r.id)) {
+				throw new NotFoundException('Travel not found')
+			}
+		}
 
 		if (travel.status !== TravelStatus.IN_PROGRESS) {
 			throw new UnprocessableEntityException('El viaje no ha comenzado')
@@ -282,6 +290,12 @@ export class TravelsService {
 				status: TravelStatus.COMPLETED,
 				arrivalTime: DateTime.now()
 			}
+		)
+
+		await Promise.all(
+			rides.map(async (ride) => {
+				await this.ridesService.driverComplete(ride)
+			})
 		)
 	}
 }
