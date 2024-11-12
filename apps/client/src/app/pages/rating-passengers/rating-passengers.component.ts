@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import {
 	CompleteTravelService,
@@ -31,7 +31,8 @@ export class RatingPassengersComponent implements OnInit {
 		private readonly getTravelByIdService: GetTravelByIdService,
 		private readonly route: ActivatedRoute,
 		private readonly completeTravelService: CompleteTravelService,
-		private readonly toastrService: ToastrService
+		private readonly toastrService: ToastrService,
+		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.travelId = params['id'] as string
@@ -59,6 +60,7 @@ export class RatingPassengersComponent implements OnInit {
 		this.completeTravelService.execute(payload).subscribe({
 			next: () => {
 				this.toastrService.success('Calificación enviada con éxito')
+				this.router.navigate(['app'])
 			}
 		})
 	}
