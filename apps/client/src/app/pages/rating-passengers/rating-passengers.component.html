@@ -4,7 +4,7 @@
 	</header>
 
 	<div class="passengers-list">
-		@for (ride of travel?.rides; track $index) {
+		@for (ride of travel?.rides; track ride.id) {
 
 		<section class="passenger-rating-information">
 			<div class="passenger-information">
@@ -16,7 +16,7 @@
 					<span class="card-information rating-number label-small">4.8 (60)</span>
 				</div>
 			</div>
-			<rating-buttons (selectedRating)="onSelectedRating($event, $index)"></rating-buttons>
+			<rating-buttons (selectedRating)="onSelectedRating($event, ride.id)"></rating-buttons>
 		</section>
 		}
 	</div>
