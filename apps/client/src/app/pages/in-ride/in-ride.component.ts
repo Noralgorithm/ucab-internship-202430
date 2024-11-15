@@ -72,14 +72,17 @@ export class InRideComponent implements OnInit {
 	}
 
 	getCurrentLocation() {
-		this.ownLocationService.$location.subscribe((position) => {
-			this.emergencyLink = generateEmergencyLink(
-				this.emergencyNumber,
-				this.vehiclePlate,
-				position.coords.latitude.toString(),
-				position.coords.longitude.toString()
-			)
+		this.ownLocationService.$location.subscribe({
+			next: () => {
+				alert('CurrentLocation')
+			}
 		})
+		this.emergencyLink = generateEmergencyLink(
+			this.emergencyNumber,
+			this.vehiclePlate,
+			'0',
+			'0'
+		)
 	}
 
 	redirectToRatingDriver() {
