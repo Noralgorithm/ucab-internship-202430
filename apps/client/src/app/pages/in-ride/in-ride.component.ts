@@ -37,6 +37,11 @@ export class InRideComponent implements OnInit {
 
 	vehiclePlate = ''
 
+	currentLocation = {
+		lat: '',
+		lng: ''
+	}
+
 	ride: RideTravelData | null = null
 
 	constructor(
@@ -52,19 +57,22 @@ export class InRideComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getRideService.execute(this.rideId).subscribe({
+			next: (res) => {
+				this.ride = res.data
+				this.vehiclePlate = res.data.travel.vehicle.plate
+			}
+		})
+		this.getOwnProfileService.execute().subscribe({
+			next: (res) => {
+				if (!res.data.emergencyContactPhoneNumber) return
+				this.emergencyNumber = res.data.emergencyContactPhoneNumber
+			}
+		})
+	}
+
+	getCurrentLocation() {
 		this.ownLocationService.$location.subscribe((position) => {
-			this.getRideService.execute(this.rideId).subscribe({
-				next: (res) => {
-					this.ride = res.data
-					this.vehiclePlate = res.data.travel.vehicle.plate
-				}
-			})
-			this.getOwnProfileService.execute().subscribe({
-				next: (res) => {
-					if (!res.data.emergencyContactPhoneNumber) return
-					this.emergencyNumber = res.data.emergencyContactPhoneNumber
-				}
-			})
 			this.emergencyLink = generateEmergencyLink(
 				this.emergencyNumber,
 				this.vehiclePlate,

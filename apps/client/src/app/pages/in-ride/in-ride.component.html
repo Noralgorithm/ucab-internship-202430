@@ -7,7 +7,7 @@
 	</google-map>
 	<div class="button-container">
 		<a [href]="emergencyLink">
-			<button mButton size="small" severity="danger">
+			<button mButton size="small" severity="danger" (click)="getCurrentLocation()">
 				SOS
 			</button>
 		</a>
