@@ -86,6 +86,8 @@ export class InRideComponent implements OnInit {
 	}
 
 	redirectToRatingDriver() {
-		this.router.navigate(['rating-driver'])
+		this.router.navigate(['rating-driver'], {
+			queryParamsHandling: 'preserve'
+		})
 	}
 }
