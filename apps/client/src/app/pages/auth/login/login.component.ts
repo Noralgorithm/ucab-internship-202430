@@ -73,7 +73,7 @@ export class LoginComponent {
 
 		this.signInService
 			.execute(
-				this.loginFormGroup.value.email,
+				this.loginFormGroup.value.email.toLowerCase(),
 				this.loginFormGroup.value.password
 			)
 			.subscribe({
