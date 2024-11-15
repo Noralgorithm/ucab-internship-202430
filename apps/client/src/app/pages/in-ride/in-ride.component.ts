@@ -71,18 +71,18 @@ export class InRideComponent implements OnInit {
 		})
 	}
 
-	getCurrentLocation() {
+	redirectToSms() {
 		this.ownLocationService.$location.subscribe({
-			next: () => {
-				alert('CurrentLocation')
+			next: (position) => {
+				this.emergencyLink = generateEmergencyLink(
+					this.emergencyNumber,
+					this.vehiclePlate,
+					position.coords.latitude.toString(),
+					position.coords.longitude.toString()
+				)
+				window.open(this.emergencyLink, '_system')
 			}
 		})
-		this.emergencyLink = generateEmergencyLink(
-			this.emergencyNumber,
-			this.vehiclePlate,
-			'0',
-			'0'
-		)
 	}
 
 	redirectToRatingDriver() {
