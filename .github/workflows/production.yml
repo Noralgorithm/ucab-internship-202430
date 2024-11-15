@@ -28,6 +28,7 @@ jobs:
             cp /var/apps/ucab-internship-202430/apps/client/.htaccess /var/apps/ucab-internship-202430/apps/client/dist/client/browser/.htaccess
             rm /var/www/ucab-internship-client -rf
             mv /var/apps/ucab-internship-202430/apps/client/dist /var/www/ucab-internship-client
+            cp /var/apps/ucab-internship-202430/apps/client/secrets.js /var/www/ucab-internship-client/client/browser/secrets.js
 
           # pnpm generate:docs
           # rm /var/www/green-summary-client-docs -rf
