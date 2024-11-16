@@ -1,17 +1,31 @@
 import {
+	ConflictException,
 	Injectable,
 	NotFoundException,
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm'
+import {
+	FindManyOptions,
+	FindOneOptions,
+	IsNull,
+	MoreThan,
+	Repository
+} from 'typeorm'
+import {
+	AFTER_CANCELLED_RIDE_COOLDOWN,
+	AFTER_COMPLETED_RIDE_COOLDOWN,
+	Gender
+} from '~/shared/constants'
+import { TravelStatus } from '../travels/enums/travel-status.enum'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
 import { FinishRideDto } from './dto/finish-ride.dto'
 import { StartRideDto } from './dto/start-ride.dto'
 import { Ride } from './entities/ride.entity'
+import { TravelCancelType } from './enums/travel-cancel-type.enum'
 
 @Injectable()
 export class RidesService {
@@ -20,21 +34,112 @@ export class RidesService {
 		private readonly ridesRepository: Repository<Ride>
 	) {}
 
-	//TODO: validate that this user is not in a travel that has not been completed or cancelled
 	async create(createRideDto: CreateRideDto) {
 		const { destination, origin, passenger, travel } = createRideDto
 
-		const rides = await this.ridesRepository.find({
+		//Travel related validations
+		if (travel.status !== TravelStatus.NOT_STARTED) {
+			throw new UnprocessableEntityException(
+				'El viaje ya ha comenzado o ha finalizado'
+			)
+		}
+
+		if (travel.forWomen && passenger.gender !== Gender.FEMALE) {
+			throw new UnprocessableEntityException('Este viaje es solo para mujeres')
+		}
+
+		//Ride related validations
+		const isInCooldownAfterCancelledRide = await this.ridesRepository.exists({
 			where: {
 				passenger: { id: passenger.id },
-				isAccepted: true,
-				travelCancelType: undefined,
-				arrivalTime: undefined
+				deletedAt: MoreThan(DateTime.now().minus(AFTER_CANCELLED_RIDE_COOLDOWN))
+			},
+			order: {
+				deletedAt: 'DESC'
+			},
+			withDeleted: true
+		})
+
+		if (isInCooldownAfterCancelledRide) {
+			throw new UnprocessableEntityException(
+				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera después de cancelar una'
+			)
+		}
+
+		const isInCooldownAfterCompletedRide = await this.ridesRepository.exists({
+			where: {
+				passenger: { id: passenger.id },
+				arrivalTime: MoreThan(
+					DateTime.now().minus(AFTER_COMPLETED_RIDE_COOLDOWN)
+				)
+			},
+			order: {
+				arrivalTime: 'DESC'
 			}
 		})
 
-		if (rides.length > 0) {
-			throw new UnprocessableEntityException('Passenger already has a ride')
+		if (isInCooldownAfterCompletedRide) {
+			throw new UnprocessableEntityException(
+				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera después de completar una'
+			)
+		}
+
+		const rides = await this.ridesRepository.find({
+			where: [
+				{
+					passenger: { id: passenger.id },
+					isAccepted: true,
+					travelCancelType: IsNull(),
+					arrivalTime: IsNull()
+				},
+				{
+					passenger: { id: passenger.id },
+					travel: { id: travel.id }
+				}
+			],
+			relations: { travel: true },
+			withDeleted: true
+		})
+
+		rides.sort((a, b) => {
+			if (a.travel.id === travel.id) {
+				return -1
+			}
+
+			if (b.travel.id === travel.id) {
+				return 1
+			}
+
+			return 0
+		})
+
+		let previousRide: Ride | null = null
+
+		for (const ride of rides) {
+			if (ride.travel.id === travel.id) {
+				if (ride.travelCancelType === TravelCancelType.PASSENGER_DENIAL) {
+					previousRide = ride
+					continue
+				}
+
+				if (ride.travelCancelType === TravelCancelType.DRIVER_DENIAL) {
+					throw new UnprocessableEntityException(
+						'El pasajero ya ha sido rechazado por el conductor en este viaje'
+					)
+				}
+
+				throw new ConflictException(
+					'El pasajero ya ha solicitado una cola en este viaje'
+				)
+			}
+
+			throw new UnprocessableEntityException(
+				'El pasajero ya ha solicitado una cola en otro viaje'
+			)
+		}
+
+		if (previousRide != null) {
+			await this.ridesRepository.delete({ id: previousRide.id })
 		}
 
 		const ride = this.ridesRepository.create({
@@ -71,22 +176,21 @@ export class RidesService {
 		options: FindOneOptions<Ride>,
 		answerRequestDto: AnswerRequestDto
 	) {
-		const ride = await this.findOne({
-			...options,
-			relations: { travel: { vehicle: { driver: true } } }
-		})
-
 		const { isAccepted, travelCancelType, cancellationReason } =
 			answerRequestDto
 
-		const updateData: Partial<Ride> = { isAccepted }
+		if (!isAccepted) {
+			if (travelCancelType == null) {
+				throw new UnprocessableEntityException(
+					'Travel cancel type must be provided when rejecting a ride request'
+				)
+			}
 
-		if (!ride.isAccepted) {
-			updateData.travelCancelType = travelCancelType
-			updateData.cancellationReason = cancellationReason
+			await this.cancelRequest(options, {
+				travelCancelType,
+				reason: cancellationReason
+			})
 		}
-
-		await this.ridesRepository.update(ride.internalId, updateData)
 
 		return 'Ride request answered'
 	}
@@ -115,9 +219,14 @@ export class RidesService {
 			throw new UnprocessableEntityException('Ride has already been completed')
 		}
 
-		const updatedRide = await this.ridesRepository.update(ride, {
-			...cancelRequestDto
-		})
+		await this.ridesRepository.softDelete({ id: ride.id })
+
+		const updatedRide = await this.ridesRepository.update(
+			{ id: ride.id },
+			{
+				...cancelRequestDto
+			}
+		)
 
 		return updatedRide
 	}
@@ -131,10 +240,6 @@ export class RidesService {
 
 		if (!ride.isAccepted) {
 			throw new UnprocessableEntityException("Not accepted rides can't start")
-		}
-
-		if (ride.travelCancelType != null) {
-			throw new UnprocessableEntityException('Ride has been cancelled')
 		}
 
 		const rideIsCompleted = ride.arrivalTime != null
@@ -167,10 +272,6 @@ export class RidesService {
 			throw new UnprocessableEntityException('Ride was not taken')
 		}
 
-		if (ride.travelCancelType != null) {
-			throw new UnprocessableEntityException('Ride has been canceled')
-		}
-
 		await this.ridesRepository.update(
 			{ id: ride.id },
 			{
@@ -195,10 +296,6 @@ export class RidesService {
 
 		if (!ride.tookTheRide) {
 			throw new UnprocessableEntityException('Ride was not taken')
-		}
-
-		if (ride.travelCancelType != null) {
-			throw new UnprocessableEntityException('Ride has been canceled')
 		}
 
 		await this.ridesRepository.update(

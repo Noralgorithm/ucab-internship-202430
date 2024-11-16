@@ -1,3 +1,4 @@
+import { Duration } from 'luxon'
 import { UCAB_GUAYANA_LOCATION } from '~/features/routes/constants'
 import { GeoJsonPoint } from './types'
 
@@ -68,3 +69,10 @@ export const GOOGLE_MAPS_LATAM_SPANISH_LANGUAGE_CODE = 'es-419'
 
 export const MIN_STAR_RATING = 0
 export const MAX_STAR_RATING = 5
+
+export const AFTER_COMPLETED_RIDE_COOLDOWN = Duration.fromDurationLike({
+	hours: 2
+})
+export const AFTER_CANCELLED_RIDE_COOLDOWN = Duration.fromDurationLike({
+	seconds: 30
+})

@@ -8,22 +8,17 @@ import {
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { InjectRepository } from '@nestjs/typeorm'
 import { NotFoundError } from 'rxjs'
-import { Repository } from 'typeorm'
-import { Gender, RouteType, UCAB_GUAYANA_POINT } from '~/shared/constants'
+import { RouteType, UCAB_GUAYANA_POINT } from '~/shared/constants'
 import { UnknownError } from '~/shared/errors'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { Travel } from '../travels/entities/travel.entity'
-import { TravelStatus } from '../travels/enums/travel-status.enum'
 import { TravelsService } from '../travels/travels.service'
 import { User } from '../users/entities/user.entity'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateForMeDto } from './dto/create-for-me.dto'
 import { FinishRideDto } from './dto/finish-ride.dto'
-import { Ride } from './entities/ride.entity'
-import { TravelCancelType } from './enums/travel-cancel-type.enum'
 import { RidesService } from './rides.service'
 
 @ApiTags('[WIP] rides')
@@ -31,8 +26,7 @@ import { RidesService } from './rides.service'
 export class RidesController {
 	constructor(
 		private readonly ridesService: RidesService,
-		private readonly travelsService: TravelsService,
-		@InjectRepository(Ride) private readonly ridesRepository: Repository<Ride>
+		private readonly travelsService: TravelsService
 	) {}
 
 	@Post('for-me')
@@ -53,34 +47,6 @@ export class RidesController {
 			}
 
 			throw new UnknownError('', { cause: error })
-		}
-
-		if (travel.status !== TravelStatus.NOT_STARTED) {
-			throw new UnprocessableEntityException(
-				'El viaje ya ha comenzado o ha finalizado'
-			)
-		}
-
-		if (travel.forWomen && currentUser.gender !== Gender.FEMALE) {
-			throw new UnprocessableEntityException('Este viaje es solo para mujeres')
-		}
-
-		const rides = await this.ridesRepository.find({
-			where: { travel, passenger: currentUser }
-		})
-
-		if (rides.filter((ride) => ride.isAccepted).length > 0) {
-			throw new UnprocessableEntityException('Ya ha solicitado un ride')
-		}
-
-		if (
-			rides.filter(
-				(ride) => ride.travelCancelType === TravelCancelType.DRIVER_DENIAL
-			).length > 0
-		) {
-			throw new UnprocessableEntityException(
-				'Ha sido rechazado por un conductor'
-			)
 		}
 
 		if (travel.type === RouteType.FROM_UCAB) {
@@ -110,12 +76,14 @@ export class RidesController {
 			where: [
 				{ id, travel: { vehicle: { driver: { id: currentUser.id } } } },
 				{ id, passenger: { id: currentUser.id } }
-			]
+			],
+			withDeleted: true
 		})
 
 		return await this.ridesService.findOne({
 			where: { id: id },
-			relations: { travel: { vehicle: { driver: true } } }
+			relations: { travel: { vehicle: { driver: true } } },
+			withDeleted: true
 		})
 	}
 
