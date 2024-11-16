@@ -6,19 +6,14 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
-import {
-	FindManyOptions,
-	FindOneOptions,
-	IsNull,
-	MoreThan,
-	Repository
-} from 'typeorm'
+import { FindManyOptions, FindOneOptions, IsNull, Repository } from 'typeorm'
 import {
 	AFTER_CANCELLED_RIDE_COOLDOWN,
 	AFTER_COMPLETED_RIDE_COOLDOWN,
 	Gender
 } from '~/shared/constants'
 import { TravelStatus } from '../travels/enums/travel-status.enum'
+import { User } from '../users/entities/user.entity'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
@@ -31,7 +26,9 @@ import { TravelCancelType } from './enums/travel-cancel-type.enum'
 export class RidesService {
 	constructor(
 		@InjectRepository(Ride)
-		private readonly ridesRepository: Repository<Ride>
+		private readonly ridesRepository: Repository<Ride>,
+		@InjectRepository(User)
+		private readonly usersRepository: Repository<User>
 	) {}
 
 	async create(createRideDto: CreateRideDto) {
@@ -48,42 +45,22 @@ export class RidesService {
 			throw new UnprocessableEntityException('Este viaje es solo para mujeres')
 		}
 
+		//Passenger related validations
+
+		//TODO: extract this to users service
+
+		// biome-ignore lint/style/noNonNullAssertion: Already validated
+		const { canRideAt } = (await this.usersRepository.findOne({
+			where: { id: passenger.id }
+		}))!
+
+		if (canRideAt < DateTime.now()) {
+			throw new UnprocessableEntityException(
+				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera'
+			)
+		}
+
 		//Ride related validations
-		const isInCooldownAfterCancelledRide = await this.ridesRepository.exists({
-			where: {
-				passenger: { id: passenger.id },
-				deletedAt: MoreThan(DateTime.now().minus(AFTER_CANCELLED_RIDE_COOLDOWN))
-			},
-			order: {
-				deletedAt: 'DESC'
-			},
-			withDeleted: true
-		})
-
-		if (isInCooldownAfterCancelledRide) {
-			throw new UnprocessableEntityException(
-				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera después de cancelar una'
-			)
-		}
-
-		const isInCooldownAfterCompletedRide = await this.ridesRepository.exists({
-			where: {
-				passenger: { id: passenger.id },
-				arrivalTime: MoreThan(
-					DateTime.now().minus(AFTER_COMPLETED_RIDE_COOLDOWN)
-				)
-			},
-			order: {
-				arrivalTime: 'DESC'
-			}
-		})
-
-		if (isInCooldownAfterCompletedRide) {
-			throw new UnprocessableEntityException(
-				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera después de completar una'
-			)
-		}
-
 		const rides = await this.ridesRepository.find({
 			where: [
 				{
@@ -206,7 +183,10 @@ export class RidesService {
 		options: FindOneOptions<Ride>,
 		cancelRequestDto: CancelRequestDto
 	) {
-		const ride = await this.findOne(options)
+		const ride = await this.findOne({
+			...options,
+			relations: { passenger: true }
+		})
 
 		const rideAlreadyCancelled = ride.travelCancelType != null
 
@@ -233,6 +213,19 @@ export class RidesService {
 			{
 				...cancelRequestDto
 			}
+		)
+
+		//TODO: extract this to users service
+
+		// biome-ignore lint/style/noNonNullAssertion: Already validated
+		const { deletedAt } = (await this.ridesRepository.findOne({
+			where: { id: ride.id },
+			withDeleted: true
+		}))!
+
+		await this.usersRepository.update(
+			{ id: ride.passenger.id },
+			{ canRideAt: deletedAt.plus(AFTER_CANCELLED_RIDE_COOLDOWN) }
 		)
 
 		return updatedRide
@@ -287,6 +280,20 @@ export class RidesService {
 				passengerCommentAfterRide,
 				passengerStarRating
 			}
+		)
+
+		//TODO: extract this to users service
+
+		// biome-ignore lint/style/noNonNullAssertion: Already validated
+		const { arrivalTime } = (await this.ridesRepository.findOne({
+			where: { id: ride.id },
+			withDeleted: true
+		}))!
+
+		await this.usersRepository.update(
+			{ id: ride.passenger.id },
+			// biome-ignore lint/style/noNonNullAssertion: Already set
+			{ canRideAt: arrivalTime!.plus(AFTER_COMPLETED_RIDE_COOLDOWN) }
 		)
 	}
 

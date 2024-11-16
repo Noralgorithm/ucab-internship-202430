@@ -97,6 +97,13 @@ export class User {
 	})
 	deletedAt: DateTime
 
+	@Column({
+		type: 'timestamptz',
+		transformer: LuxonDateTransformer,
+		default: 'NOW()'
+	})
+	canRideAt: DateTime
+
 	@OneToMany(
 		() => Vehicle,
 		(vehicle) => vehicle.driver,

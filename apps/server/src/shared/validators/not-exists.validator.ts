@@ -10,7 +10,8 @@ import {
 import {
 	DataSource,
 	EntityMetadataNotFoundError,
-	EntityPropertyNotFoundError
+	EntityPropertyNotFoundError,
+	QueryFailedError
 } from 'typeorm'
 import { UnknownError } from '../errors'
 import { Class } from '../types'
@@ -60,6 +61,13 @@ export class NotExistsConstraint implements ValidatorConstraintInterface {
 				throw new TypeError(`Property ${key} not found in entity ${entity}`, {
 					cause: error
 				})
+			}
+
+			//TODO: should be handled in a different way depending of arguments and other validators applied
+			//* This was added because of a case in which validating that smt is an UUID and then querying using this validator in some field which is also an UUID resulted in a QueryFailedError because previous validator failed and this nevertheless followed
+			if (error instanceof QueryFailedError) {
+				console.error(error)
+				return false
 			}
 
 			throw new Error('An error occurred while using the repository', {
