@@ -10,9 +10,7 @@
 		}
 	</google-map>
 	<div class="button-container">
-		<a [href]="emergencyLink">
-			<button mButton size="small" severity="danger">SOS</button>
-		</a>
+		<button mButton size="small" severity="danger" (click)="redirectToSms()">SOS</button>
 		<!--TODO: Add func for end travel-->
 		<button mButton size="large" severity="primary" (click)="redirectToRatingPassengers()">Terminar viaje</button>
 	</div>
