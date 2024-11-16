@@ -48,6 +48,7 @@ export class RetrieveRideMessagesService {
 }
 
 interface ResponseDto {
+	travelType: 'from-ucab' | 'to-ucab'
 	driver: UserProfile & { id: string; profilePicFilename: string }
 	passenger: UserProfile & { id: string; profilePicFilename: string }
 	messages: Message[]

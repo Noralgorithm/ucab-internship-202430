@@ -27,6 +27,7 @@ export interface Message {
 }
 
 export type RideMessages = {
+	travelType: 'from-ucab' | 'to-ucab'
 	driver: UserProfile & { id: string }
 	passenger: UserProfile & { id: string }
 	messages: Message[]
