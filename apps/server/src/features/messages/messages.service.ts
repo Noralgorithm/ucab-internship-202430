@@ -76,6 +76,7 @@ export class MessagesService {
 		}))
 
 		return {
+			travelType: ride.travel.type,
 			driver: ride.travel.vehicle.driver,
 			passenger: ride.passenger,
 			messages
