@@ -176,6 +176,8 @@ export class RidesService {
 		options: FindOneOptions<Ride>,
 		answerRequestDto: AnswerRequestDto
 	) {
+		const ride = await this.findOne(options)
+
 		const { isAccepted, travelCancelType, cancellationReason } =
 			answerRequestDto
 
@@ -191,6 +193,11 @@ export class RidesService {
 				reason: cancellationReason
 			})
 		}
+
+		await this.ridesRepository.update(
+			{ internalId: ride.internalId },
+			{ isAccepted: answerRequestDto.isAccepted }
+		)
 
 		return 'Ride request answered'
 	}
