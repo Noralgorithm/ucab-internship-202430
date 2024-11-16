@@ -4,7 +4,7 @@
 			@if (this.rideMessages !== null) {
 			<div class="chat-heading">
 				@if (!whoami(rideMessages.driver.id)) {
-				<button (click)="redirectPassenger()">
+				<button class="no-style-button" (click)="redirectPassenger()">
 					<img src=" /assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
 				</button>
 				<div class="person-container">
