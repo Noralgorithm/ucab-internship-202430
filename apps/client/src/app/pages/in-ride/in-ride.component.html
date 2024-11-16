@@ -6,11 +6,9 @@
 		}"></map-marker>
 	</google-map>
 	<div class="button-container">
-		<a [href]="emergencyLink">
-			<button mButton size="small" severity="danger">
-				SOS
-			</button>
-		</a>
+		<button mButton size="small" severity="danger" (click)="redirectToSms()">
+			SOS
+		</button>
 		<button mButton size="large" severity="primary" (click)="redirectToRatingDriver()">Terminar Cola</button>
 	</div>
 </main>

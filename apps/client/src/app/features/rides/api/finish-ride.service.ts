@@ -10,7 +10,7 @@ export class FinishRideService {
 	constructor(private readonly http: HttpClient) {}
 
 	execute(finishRideDto: FinishRideServiceDto) {
-		return this.http.post<SuccesfulResponse<FinishRideServiceDto>>(
+		return this.http.patch<SuccesfulResponse<FinishRideServiceDto>>(
 			`/rides/${finishRideDto.rideId}/finish-ride`,
 			finishRideDto
 		)

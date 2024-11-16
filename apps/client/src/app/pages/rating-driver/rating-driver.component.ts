@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import {
 	FinishRideService,
@@ -38,7 +39,9 @@ export class RatingDriverComponent implements OnInit {
 		private readonly finishRideService: FinishRideService,
 		private readonly ownLocationService: OwnLocationService,
 		private readonly route: ActivatedRoute,
-		private readonly getRideService: GetRideService
+		private readonly getRideService: GetRideService,
+		private readonly router: Router,
+		private readonly toastrService: ToastrService
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['id']
@@ -76,10 +79,8 @@ export class RatingDriverComponent implements OnInit {
 			}
 			this.finishRideService.execute(payload).subscribe({
 				next: () => {
-					console.log('Ride finished')
-				},
-				error: () => {
-					console.log('Error finishing ride')
+					this.toastrService.success('Calificación enviada con éxito')
+					this.router.navigate(['app'])
 				}
 			})
 		})
