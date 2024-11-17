@@ -113,7 +113,7 @@ body {
 }
 
 .icons-route img {
-	width: var(--icon-s);
+	width: var(--icon-m);
 }
 
 .name-points-route {
