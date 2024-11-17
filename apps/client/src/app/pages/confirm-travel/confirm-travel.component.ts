@@ -25,7 +25,7 @@ import { VehicleImageComponent } from '../../features/vehicles/components/vehicl
 })
 export class ConfirmTravelComponent {
 	externalDestinationName: string | null = null
-	vehicle: Vehicle | null = null
+	vehicle: Vehicle | undefined
 	isWomenOnly = false
 	isToUcab = false
 	seatsQuantity = 0
