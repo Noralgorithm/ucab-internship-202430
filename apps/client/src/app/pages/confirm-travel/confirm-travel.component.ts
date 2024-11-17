@@ -61,6 +61,7 @@ export class ConfirmTravelComponent {
 				.execute(this.createTravelStoreService.vehicleId)
 				.subscribe((res) => {
 					this.vehicle = res.data
+					console.log(this.vehicle)
 				})
 		}
 
