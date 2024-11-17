@@ -92,4 +92,5 @@ body {
 .information-container {
 	display: flex;
 	gap: 3.625rem;
+	flex-direction: column;
 }
