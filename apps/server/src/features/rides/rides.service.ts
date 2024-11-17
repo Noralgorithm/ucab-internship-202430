@@ -268,7 +268,10 @@ export class RidesService {
 		passengerCommentAfterRide,
 		passengerStarRating
 	}: FinishRideDto) {
-		const ride = await this.findOne({ where: { id } })
+		const ride = await this.findOne({
+			where: { id },
+			relations: { passenger: true }
+		})
 
 		if (ride.arrivalTime) {
 			throw new UnprocessableEntityException('Ride has already been completed')
