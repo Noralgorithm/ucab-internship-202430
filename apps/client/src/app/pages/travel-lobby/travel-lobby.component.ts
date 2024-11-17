@@ -55,6 +55,7 @@ export class TravelLobbyComponent {
 				.subscribe({
 					next: (res) => {
 						this.travel = res.data
+						console.log(this.travel.vehicle.color)
 						this.acceptedRequests = this.travel.rides.filter(
 							(ride) => ride.isAccepted
 						)
