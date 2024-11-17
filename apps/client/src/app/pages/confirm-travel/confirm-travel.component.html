@@ -33,19 +33,25 @@
 		<section class="route">
 			<p class="label-small">Ruta</p>
 			<div class="route-card">
-				<div class="icons-points">
-
-				</div>
-				<div class="points-name">
+				<div class="points-container">
 					@if (isToUcab) {
-					<P class="label-medium">Mi posición actual</P>
-					<p class="label-medium">UCAB</p>
+					<div class="icons-route">
+						<img src="assets/svgs/CurrentLocation.svg" alt="punto de inicio">
+						<img src="assets/svgs/ConsecutivePoints.svg" alt="Puntos consecutivos">
+						<img src="assets/svgs/EndPointLocation.svg" alt="punto final">
+					</div>
+					<div class="name-points-route">
+						<p class="label-medium">Mi ubicación</p>
+						<p class="label-medium">UCAB</p>
+					</div>
 					} @else {
-					<p class="label-medium">UCAB</p>
-					<P class="label-medium">{{externalDestinationName}}</P>
+					<div>
+						<p class="label-medium">UCAB</p>
+					</div>
+					<div>
+						<P class="label-medium">{{externalDestinationName}}</P>
+					</div>
 					}
-				</div>
-				<div class="icon-map">
 				</div>
 			</div>
 		</section>

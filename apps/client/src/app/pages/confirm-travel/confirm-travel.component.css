@@ -5,7 +5,7 @@ header {
 	gap: .8rem;
 	width: 100%;
 	padding-top: 3.625rem;
-	padding-bottom: 2rem;
+	padding-bottom: 1.5rem;
 }
 
 h1 {
@@ -98,4 +98,26 @@ body {
 
 .confirm-button {
 	margin-top: 2.5rem;
+}
+
+.points-container {
+	display: flex;
+	gap: .75rem;
+	padding-left: 0.75rem;
+}
+
+.icons-route {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+}
+
+.icons-route img {
+	width: var(--icon-s);
+}
+
+.name-points-route {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
