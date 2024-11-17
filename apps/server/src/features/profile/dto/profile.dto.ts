@@ -1,6 +1,9 @@
-import { Expose, plainToInstance } from 'class-transformer'
+import { ApiProperty } from '@nestjs/swagger'
+import { Expose, Transform, Type, plainToInstance } from 'class-transformer'
+import { DateTime } from 'luxon'
 import { User } from '~/features/users/entities/user.entity'
 import { Gender, UserRole, UserType } from '~/shared/constants'
+import { LuxonDateTransformer } from '~/shared/utils/luxon-date-transformer.util'
 
 export class ProfileDto {
 	@Expose()
@@ -41,6 +44,14 @@ export class ProfileDto {
 
 	@Expose()
 	isBlocked: boolean
+
+	@ApiProperty({ type: 'string', format: 'date-time' })
+	@Expose()
+	@Type(() => Date)
+	@Transform(({ value }) => LuxonDateTransformer.from(value), {
+		toClassOnly: true
+	})
+	canRideAt: DateTime
 
 	@Expose()
 	static from(user: User) {
