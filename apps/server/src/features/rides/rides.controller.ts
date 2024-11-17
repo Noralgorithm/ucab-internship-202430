@@ -37,7 +37,8 @@ export class RidesController {
 		let travel: Travel
 		try {
 			travel = await this.travelsService.findOne({
-				where: { id: createForMeDto.travelId }
+				where: { id: createForMeDto.travelId },
+				relations: { vehicle: { driver: true } }
 			})
 		} catch (error: unknown) {
 			if (error instanceof NotFoundError) {

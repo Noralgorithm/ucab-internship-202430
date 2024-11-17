@@ -45,6 +45,12 @@ export class RidesService {
 			throw new UnprocessableEntityException('Este viaje es solo para mujeres')
 		}
 
+		if (travel.vehicle.driver.id === passenger.id) {
+			throw new UnprocessableEntityException(
+				'El conductor del viaje no puede ser pasajero del mismo'
+			)
+		}
+
 		//Passenger related validations
 
 		//TODO: extract this to users service
@@ -54,7 +60,7 @@ export class RidesService {
 			where: { id: passenger.id }
 		}))!
 
-		if (canRideAt < DateTime.now()) {
+		if (canRideAt > DateTime.now()) {
 			throw new UnprocessableEntityException(
 				'El pasajero no puede solicitar otra cola hasta que pase el tiempo de espera'
 			)
