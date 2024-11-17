@@ -40,6 +40,7 @@ export class OfferTravelComponent {
 	ngOnInit() {
 		this.getOwnVehiclesService.execute().subscribe((res) => {
 			this.myVehicles = res.data
+			console.log(this.myVehicles)
 		})
 	}
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { ChangeDetectorRef, Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { GetDestinationService } from '~/features/my-destinations/api/get-destination.service'
 import {
@@ -36,7 +36,8 @@ export class ConfirmTravelComponent {
 		private readonly getDestinationService: GetDestinationService,
 		private readonly getVehicleByIdService: GetVehicleByIdService,
 		public readonly vehicleColorsService: VehiclesColorsService,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly cdr: ChangeDetectorRef
 	) {
 		if (!this.createTravelStoreService.route) {
 			const routeToRedirect =
@@ -61,6 +62,8 @@ export class ConfirmTravelComponent {
 				.execute(this.createTravelStoreService.vehicleId)
 				.subscribe((res) => {
 					this.vehicle = res.data
+					console.log(this.vehicle.color)
+					this.cdr.detectChanges() // Forzar la detección de cambios
 				})
 		}
 
