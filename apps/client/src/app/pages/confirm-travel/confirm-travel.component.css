@@ -4,7 +4,8 @@ header {
 	align-items: start;
 	gap: .8rem;
 	width: 100%;
-	padding: 3.625rem 0;
+	padding-top: 3.625rem;
+	padding-bottom: 2rem;
 }
 
 h1 {
@@ -91,6 +92,10 @@ body {
 
 .information-container {
 	display: flex;
-	gap: 3.625rem;
+	gap: 2rem;
 	flex-direction: column;
+}
+
+.confirm-button {
+	margin-top: 2.5rem;
 }
