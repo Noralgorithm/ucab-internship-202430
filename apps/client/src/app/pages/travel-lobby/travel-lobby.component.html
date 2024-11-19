@@ -109,7 +109,8 @@
 				Viaje</button>
 		</div>
 
-		<modal [(isOpen)]="isPendingRequestsModalOpen" title="Solicitudes pendientes">
+		<modal [(isOpen)]="isPendingRequestsModalOpen" title="Solicitudes pendientes"
+			srcIcon="/assets/svgs/PendingRequest.svg">
 			<div class=" passengers-list">
 				@for (ride of pendingRequests; track ride.id) {
 				<div class="passenger-card">
@@ -122,7 +123,7 @@
 								<span class="passenger-name">{{ride.passenger.firstName}}
 									{{ride.passenger.lastName}}</span>
 								<div class="rating-information">
-									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<img class="rating-icon" src="assets/svgs/FullStarBlue.svg" alt="icono de rating">
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
 							</div>

@@ -33,7 +33,8 @@
 		}
 	</div>
 
-	<modal title="Asientos disponibles" variant="confirmation" [(isOpen)]="isModalOpen" (onConfirm)="handleConfirm()">
+	<modal title="Asientos disponibles" variant="confirmation" [(isOpen)]="isModalOpen" (onConfirm)="handleConfirm()"
+		srcIcon="assets/svgs/CarSeat.svg">
 		<div class="modal-body">
 			<button class="op-button" (click)="decrementSeatsCount()">-</button>
 			<output>{{seatsCount}}</output>
