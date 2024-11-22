@@ -127,14 +127,6 @@
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
 							</div>
-							<div>
-								<button class="action-icon" (click)="acceptRideRequest(ride)">
-									✅
-								</button>
-								<button class="action-icon" (click)="rejectRideRequest(ride)">
-									❌
-								</button>
-							</div>
 						</div>
 
 						<div class="card-row paragraph-xsmall">
@@ -151,11 +143,21 @@
 						</div>
 					</section>
 				</div>
+				<div class="actions-buttons">
+					<button class="no-style-button accept-button" (click)="acceptRideRequest(ride)">
+						<img class="action-icon" src="/assets/svgs/Accept.svg" alt="icono de aceptar pasajero">
+						Aceptar
+					</button>
+					<button class="no-style-button deny-button" (click)="rejectRideRequest(ride)">
+						<img class="action-icon" src="/assets/svgs/Deny.svg" alt="icono de rechazar pasajero">
+						Rechazar
+					</button>
+				</div>
 				}
 			</div>
 
 			@if (pendingRequests.length === 0) {
-			<p class="paragraph-small">No hay solicitudes pendientes</p>
+			<p class="paragraph-small text-no-requests">No hay solicitudes pendientes</p>
 			}
 		</modal>
 	</main>
