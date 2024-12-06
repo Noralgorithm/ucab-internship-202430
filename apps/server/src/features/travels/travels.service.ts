@@ -298,4 +298,27 @@ export class TravelsService {
 			})
 		)
 	}
+
+	async getUserUnfinishedTravel(userId: User['id']) {
+		const travel = await this.travelsRepository.findOne({
+			where: {
+				vehicle: { driver: { id: userId } },
+				status: Or(
+					Equal(TravelStatus.NOT_STARTED),
+					Equal(TravelStatus.IN_PROGRESS)
+				)
+			}
+		})
+
+		if (travel) {
+			return {
+				isIn: true,
+				payload: { type: 'travel', id: travel.id }
+			}
+		}
+		return {
+			isIn: false,
+			payload: null
+		}
+	}
 }

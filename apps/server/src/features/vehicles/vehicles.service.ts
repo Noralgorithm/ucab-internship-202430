@@ -1,7 +1,9 @@
 import {
+	Inject,
 	Injectable,
 	NotFoundException,
-	UnprocessableEntityException
+	UnprocessableEntityException,
+	forwardRef
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Equal, Not, Repository } from 'typeorm'
@@ -18,6 +20,7 @@ export class VehiclesService {
 	constructor(
 		@InjectRepository(Vehicle)
 		private readonly vehiclesRepository: Repository<Vehicle>,
+		@Inject(forwardRef(() => UsersService))
 		private readonly usersService: UsersService
 	) {}
 

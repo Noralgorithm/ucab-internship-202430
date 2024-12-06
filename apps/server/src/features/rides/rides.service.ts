@@ -329,4 +329,24 @@ export class RidesService {
 			}
 		)
 	}
+
+	async getUserUnfinishedRide(userId: User['id']) {
+		const ride = await this.ridesRepository.findOne({
+			where: {
+				passenger: { id: userId },
+				dropOff: false
+			}
+		})
+
+		if (ride) {
+			return {
+				isIn: true,
+				payload: { type: 'ride', id: ride.id }
+			}
+		}
+		return {
+			isIn: false,
+			payload: null
+		}
+	}
 }
