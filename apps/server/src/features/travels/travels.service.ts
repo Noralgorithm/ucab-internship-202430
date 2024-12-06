@@ -1,7 +1,9 @@
 import {
+	Inject,
 	Injectable,
 	NotFoundException,
-	UnprocessableEntityException
+	UnprocessableEntityException,
+	forwardRef
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
@@ -28,6 +30,7 @@ export class TravelsService {
 	constructor(
 		@InjectRepository(Travel)
 		private readonly travelsRepository: Repository<Travel>,
+		@Inject(forwardRef(() => VehiclesService))
 		private readonly vehiclesService: VehiclesService,
 		private readonly ridesService: RidesService
 	) {}
