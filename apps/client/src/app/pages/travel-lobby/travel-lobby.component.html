@@ -79,7 +79,7 @@
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
 							</div>
-							<button (click)="redirectToChat(ride.id)">
+							<button class="no-style-button" (click)="redirectToChat(ride.id)">
 								<img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
 							</button>
 
@@ -105,10 +105,12 @@
 		</section>
 
 		<div class="button-container">
-			<button mButton size="large" (click)="startTravel()">Iniciar Viaje</button>
+			<button mButton size="large" (click)="startTravel()">Iniciar
+				Viaje</button>
 		</div>
 
-		<modal [(isOpen)]="isPendingRequestsModalOpen" title="Solicitudes pendientes">
+		<modal [(isOpen)]="isPendingRequestsModalOpen" title="Solicitudes pendientes"
+			srcIcon="/assets/svgs/PendingRequest.svg">
 			<div class=" passengers-list">
 				@for (ride of pendingRequests; track ride.id) {
 				<div class="passenger-card">
@@ -121,17 +123,9 @@
 								<span class="passenger-name">{{ride.passenger.firstName}}
 									{{ride.passenger.lastName}}</span>
 								<div class="rating-information">
-									<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
+									<img class="rating-icon" src="assets/svgs/FullStarBlue.svg" alt="icono de rating">
 									<span class="card-information rating-number">4.8 (60)</span>
 								</div>
-							</div>
-							<div>
-								<button class="action-icon" (click)="acceptRideRequest(ride)">
-									✅
-								</button>
-								<button class="action-icon" (click)="rejectRideRequest(ride)">
-									❌
-								</button>
 							</div>
 						</div>
 
@@ -149,11 +143,21 @@
 						</div>
 					</section>
 				</div>
+				<div class="actions-buttons">
+					<button class="no-style-button accept-button" (click)="acceptRideRequest(ride)">
+						<img class="action-icon" src="/assets/svgs/Accept.svg" alt="icono de aceptar pasajero">
+						Aceptar
+					</button>
+					<button class="no-style-button deny-button" (click)="rejectRideRequest(ride)">
+						<img class="action-icon" src="/assets/svgs/Deny.svg" alt="icono de rechazar pasajero">
+						Rechazar
+					</button>
+				</div>
 				}
 			</div>
 
 			@if (pendingRequests.length === 0) {
-			<p class="paragraph-small">No hay solicitudes pendientes</p>
+			<p class="paragraph-small text-no-requests">No hay solicitudes pendientes</p>
 			}
 		</modal>
 	</main>

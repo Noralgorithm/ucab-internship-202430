@@ -25,6 +25,8 @@ export class AvailableDriversComponent implements OnInit {
 
 	destinationLatLng: google.maps.LatLngLiteral | null = null
 
+	optionOnlyWomans = false
+
 	constructor(
 		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
 		private readonly requestRideService: RequestRideService,
@@ -112,7 +114,7 @@ export class AvailableDriversComponent implements OnInit {
 	getDrivers() {
 		this.getTravelAvailableDriversService
 			.execute({
-				isWomanOnly: this.isAWoman(),
+				isWomanOnly: this.optionOnlyWomans,
 				type: this.travelType,
 				lat: String(this.destinationLatLng?.lat),
 				lng: String(this.destinationLatLng?.lng)
@@ -128,6 +130,11 @@ export class AvailableDriversComponent implements OnInit {
 			passengerAmount: travel.passengerAmount,
 			passengerCapacity: travel.availableSeatQuantity
 		}
+	}
+
+	changeOptionOnlyWomans(event: Event) {
+		this.optionOnlyWomans = (event.target as HTMLInputElement).checked
+		this.getDrivers()
 	}
 
 	redirectToReview(ride: Ride) {

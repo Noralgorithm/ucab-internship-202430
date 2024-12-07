@@ -77,6 +77,7 @@ h3 {
 .op-button {
 	width: 2.9375rem;
 	aspect-ratio: 1;
+	border-radius: 50%;
 }
 
 .modal-body {

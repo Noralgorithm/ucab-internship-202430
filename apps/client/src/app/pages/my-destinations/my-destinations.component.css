@@ -16,6 +16,10 @@ header {
 	padding-top: 3.625rem;
 }
 
+header h1 {
+	color: var(--primary-text-value);
+}
+
 .destinations-list {
 	margin-top: 1.5rem;
 	display: flex;

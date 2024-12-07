@@ -55,7 +55,6 @@ export class TravelLobbyComponent {
 				.subscribe({
 					next: (res) => {
 						this.travel = res.data
-						console.log(this.travel.vehicle.color)
 						this.acceptedRequests = this.travel.rides.filter(
 							(ride) => ride.isAccepted
 						)
@@ -84,6 +83,11 @@ export class TravelLobbyComponent {
 
 	startTravel() {
 		if (!this.travel) return
+
+		if (this.acceptedRequests.length === 0) {
+			this.toastr.error('No se puede iniciar un viaje sin pasajeros')
+			return
+		}
 
 		this.startTravelService.execute({ travelId: this.travel.id }).subscribe({
 			next: () => {

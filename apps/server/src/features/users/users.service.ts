@@ -1,12 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindManyOptions, Repository } from 'typeorm'
+import { RidesService } from '../rides/rides.service'
+import { TravelsService } from '../travels/travels.service'
 import { User } from './entities/user.entity'
 
 @Injectable()
 export class UsersService {
 	constructor(
-		@InjectRepository(User) private readonly usersRepository: Repository<User>
+		@InjectRepository(User) private readonly usersRepository: Repository<User>,
+		private readonly travelsService: TravelsService,
+		private readonly ridesService: RidesService
 	) {}
 
 	async findAll(options?: FindManyOptions<User>) {
@@ -33,5 +37,25 @@ export class UsersService {
 		this.usersRepository.softDelete({ id })
 
 		return userToRemove
+	}
+
+	async checkStatus(currentUser: User) {
+		const isOnTravel = await this.travelsService.getUserUnfinishedTravel(
+			currentUser.id
+		)
+
+		if (isOnTravel.isIn) {
+			return isOnTravel
+		}
+
+		const isOnRide = await this.ridesService.getUserUnfinishedRide(
+			currentUser.id
+		)
+
+		if (isOnRide.isIn) {
+			return isOnRide
+		}
+
+		return { isIn: false, payload: null }
 	}
 }
