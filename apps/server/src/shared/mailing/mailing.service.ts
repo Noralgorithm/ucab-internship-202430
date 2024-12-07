@@ -28,6 +28,7 @@ export class MailingService {
 				html
 			})
 		} catch (e: unknown) {
+			console.error(e)
 			if (e instanceof Error) {
 				throw new MailingError(MAILING_ERROR_DEFAULT_MESSAGE, {
 					cause: e
