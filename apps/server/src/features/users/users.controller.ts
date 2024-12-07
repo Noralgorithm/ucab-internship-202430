@@ -18,6 +18,11 @@ export class UsersController {
 		return this.usersService.findOne(id)
 	}
 
+	@Get('me')
+	findMe(@CurrentUser() currentUser: User) {
+		return currentUser
+	}
+
 	@Get('status')
 	checkStatus(@CurrentUser() currentUser: User) {
 		this.usersService.checkStatus(currentUser)
