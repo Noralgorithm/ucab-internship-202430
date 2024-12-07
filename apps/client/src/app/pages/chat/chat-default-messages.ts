@@ -33,7 +33,6 @@ const fromUcab = {
 
 const toUcab = {
 	passenger: [
-		'Mi número de teléfono es: ',
 		'¡Hola!',
 		'Voy para el punto de encuentro',
 		'¡Ya llegué al punto de encuentro!',
@@ -49,7 +48,6 @@ const toUcab = {
 		'Adios!'
 	],
 	driver: [
-		'Mi número de teléfono es:  ',
 		'¿Me puedes dar tu número telefónico?',
 		'¡Hola!',
 		'Te espero 5 minutos',
