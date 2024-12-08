@@ -25,6 +25,6 @@ export class UsersController {
 
 	@Get('status')
 	checkStatus(@CurrentUser() currentUser: User) {
-		this.usersService.checkStatus(currentUser)
+		return this.usersService.checkStatus(currentUser)
 	}
 }
