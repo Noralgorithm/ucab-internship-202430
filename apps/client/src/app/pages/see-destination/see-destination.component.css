@@ -1,0 +1,11 @@
+.back-button {
+	position: absolute;
+	top: 0.5rem;
+	right: 3.5rem;
+	z-index: 2000;
+}
+
+.container {
+	width: 100%;
+	height: calc(100dvh - 5.3rem);
+}

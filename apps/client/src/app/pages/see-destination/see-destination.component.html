@@ -1,0 +1,8 @@
+<main class="container">
+	@if(markerPosition){
+	<google-map height="100%" width="100%" [options]="options" [center]="markerPosition">
+		<button mButton class="back-button" (click)="redirectMyDestinations()">Atrás</button>
+		<map-marker [position]="markerPosition" [options]="markerOptions" />
+	</google-map>
+	}
+</main>

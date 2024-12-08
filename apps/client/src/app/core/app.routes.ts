@@ -25,6 +25,7 @@ import { RatingPassengersComponent } from '~/pages/rating-passengers/rating-pass
 import { RideDestinationSelectionComponent } from '~/pages/ride-destination-selection/ride-destination-selection.component'
 import { RouteFromUcabSelectionComponent } from '~/pages/route-from-ucab-selection/route-from-ucab-selection.component'
 import { RouteSelectionComponent } from '~/pages/route-to-ucab-selection/route-to-ucab-selection.component'
+import { SeeDestinationComponent } from '~/pages/see-destination/see-destination.component'
 import { TravelLobbyComponent } from '~/pages/travel-lobby/travel-lobby.component'
 import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/travel-type-selection.component'
 import { TravelWaitingRoomComponent } from '~/pages/travel-waiting-room/travel-waiting-room.component'
@@ -185,6 +186,11 @@ export const routes: Routes = [
 				path: 'travel-waiting-room',
 				title: 'Información del viaje',
 				component: TravelWaitingRoomComponent
+			},
+			{
+				path: 'see-destination',
+				title: 'Mi Destino',
+				component: SeeDestinationComponent
 			}
 		]
 	}
