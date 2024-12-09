@@ -334,7 +334,8 @@ export class RidesService {
 		const ride = await this.ridesRepository.findOne({
 			where: {
 				passenger: { id: userId },
-				dropOff: false
+				dropOff: IsNull(),
+				arrivalTime: IsNull()
 			}
 		})
 
