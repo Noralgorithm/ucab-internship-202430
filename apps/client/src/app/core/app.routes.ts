@@ -31,6 +31,7 @@ import { TravelTypeSelectionComponent } from '~/pages/travel-type-selection/trav
 import { TravelWaitingRoomComponent } from '~/pages/travel-waiting-room/travel-waiting-room.component'
 import { WaitingForReviewComponent } from '~/pages/waiting-for-review/waiting-for-review.component'
 import { TabBarLayoutComponent } from './components/tab-bar/tab-bar-layout/tab-bar-layout.component'
+import { userStatusGuard } from './guards/user-status.guard'
 
 export const routes: Routes = [
 	{
@@ -65,7 +66,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'in-ride',
-		title: 'En viaje',
+		title: 'En cola',
 		component: InRideComponent
 	},
 	{
@@ -86,6 +87,7 @@ export const routes: Routes = [
 	{
 		path: 'app',
 		component: TabBarLayoutComponent,
+		canActivate: [userStatusGuard],
 		children: [
 			{
 				path: '',
@@ -95,6 +97,7 @@ export const routes: Routes = [
 			{
 				path: 'profile',
 				title: 'Perfil',
+				canActivate: [userStatusGuard],
 				component: ProfileComponent
 			},
 			{

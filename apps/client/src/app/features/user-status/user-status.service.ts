@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
 
 @Injectable({
@@ -10,12 +11,14 @@ import { SuccesfulResponse } from '~/shared/types/backend-response.type'
 export class UserStatusService {
 	constructor(private readonly http: HttpClient) {}
 
-	execute() {
-		return this.http.get<SuccesfulResponse<UserStateServiceDto>>('/user-status')
+	userStatus(): Observable<SuccesfulResponse<UserStatusServiceDto>> {
+		return this.http.get<SuccesfulResponse<UserStatusServiceDto>>(
+			'/users/status'
+		)
 	}
 }
 
-export interface UserStateServiceDto {
+export interface UserStatusServiceDto {
 	isIn: boolean
 	payload: Payload | null
 }
