@@ -41,10 +41,11 @@ header h1 {
 }
 
 .avatar {
-	width: 2.1875rem;
-	aspect-ratio: 1;
+	width: 5.5rem;
+	aspect-ratio: 1 / 1;
 	border-radius: 100%;
-	margin: 0.5rem 0;
+	object-fit: cover;
+	margin-top: 0.5rem;
 }
 
 .driver-information p {

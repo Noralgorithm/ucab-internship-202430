@@ -21,8 +21,9 @@ a {
 
 .avatar {
 	width: 5.5rem;
-	aspect-ratio: 1;
+	aspect-ratio: 1 / 1;
 	border-radius: 100%;
+	object-fit: cover;
 	margin-top: 0.5rem;
 }
 
