@@ -1,21 +1,19 @@
 <page-layout>
-	<brand-logo size="small" [style.margin-top]="'3.875rem'" />
+  <brand-logo size="small" [style.margin-top]="'3.875rem'" />
 
-	<section class="container">
-		<form class="container" [formGroup]="loginFormGroup" (submit)="handleSubmit()">
-			<text-input inputId="email" [control]="loginFormGroup.controls.email" label="Correo electrónico"
-				placeholder="Ingrese el correo electrónico" [style.margin-top]="'5.125rem'" />
+  <section class="container">
+    <form class="container" [formGroup]="loginFormGroup" (submit)="handleSubmit()">
+      <text-input inputId="email" [control]="loginFormGroup.controls.email" label="Correo electrónico"
+        placeholder="Ingrese el correo electrónico" [style.margin-top]="'5.125rem'" />
 
-			<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
-				[control]="loginFormGroup.controls.password" />
+      <password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
+        [control]="loginFormGroup.controls.password" />
 
-			<button mButton size="large" type="submit" [style.margin-top]="'3.5rem'"
-				[disabled]="loginFormGroup.invalid">Iniciar Sesión</button>
-		</form>
+      <button mButton size="large" type="submit" [style.margin-top]="'3.5rem'"
+        [disabled]="loginFormGroup.invalid">Iniciar Sesión</button>
+    </form>
 
-		<a href="/" [style.margin-top]="'2.5rem'">He olvidado mi contraseña</a>
-
-		<!-- TODO: put transparent button whit dark text here -->
-		<button mButton [style.margin-top]="'2.625rem'" severity="contrast" (click)="goToRegister()">Registrarme</button>
-	</section>
+    <!-- TODO: put transparent button whit dark text here -->
+    <button mButton [style.margin-top]="'2.625rem'" severity="contrast" (click)="goToRegister()">Registrarme</button>
+  </section>
 </page-layout>
