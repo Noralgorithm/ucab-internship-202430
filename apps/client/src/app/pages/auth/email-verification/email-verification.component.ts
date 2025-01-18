@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { RequestSignUpService } from '~/features/auth/api/request-sign-up.service'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { LogoComponent } from '~/shared/ui/components/logo/logo.component'
@@ -22,7 +23,8 @@ import { TextInputComponent } from '~/shared/ui/components/text-input/text-input
 export class EmailVerificationComponent {
 	constructor(
 		private readonly requestSignUpService: RequestSignUpService,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly toastrService: ToastrService
 	) {}
 
 	emailControl = new FormControl('', [Validators.email])
@@ -39,7 +41,7 @@ export class EmailVerificationComponent {
 					this.router.navigate(['/email-verification/success'])
 				},
 				error: (err) => {
-					//TODO: show error to user
+					this.toastrService.error('Error verificando el correo electrónico')
 				}
 			})
 	}
