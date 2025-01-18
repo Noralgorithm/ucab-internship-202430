@@ -10,25 +10,28 @@
 	</header>
 
 	<section class="information-container">
+
+		@if (vehicle) {
 		<section class="vehicle">
 			<p class="label-small">Vehículo</p>
 			<div class="vehicle-card">
 				<div class="vehicle-card-image">
-					<movic-vehicle [color]="vehicle?.color || '#fff'"></movic-vehicle>
+					<movic-vehicle [color]="vehicle.color"></movic-vehicle>
 				</div>
 				<div class="vehicle-card-info">
 					<div class="vehicle-details">
-						<p class="label-medium vehicle-title">{{vehicle?.brand}} | {{vehicle?.model}}</p>
-						<p class="label-medium vehicle-plate">{{vehicle?.plate}}</p>
+						<p class="label-medium vehicle-title">{{vehicle.brand}} | {{vehicle.model}}</p>
+						<p class="label-medium vehicle-plate">{{vehicle.plate}}</p>
 					</div>
 					<div class="vehcicle-specs">
-						<p class="label-medium">{{vehicleColorsService.getLabelByHex(vehicle?.color!)}}</p>
+						<p class="label-medium">{{vehicleColorsService.getLabelByHex(vehicle.color!)}}</p>
 						<p class="label-medium quantity-seats-available">Asientos disponibles {{seatsQuantity}} de
-							{{vehicle?.seatQuantity}}</p>
+							{{vehicle.seatQuantity}}</p>
 					</div>
 				</div>
 			</div>
 		</section>
+		}
 
 		<section class="route">
 			<p class="label-small">Ruta</p>

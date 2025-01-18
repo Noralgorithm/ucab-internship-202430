@@ -34,6 +34,7 @@
 			</section>
 		</header>
 
+		@if (travel?.vehicle) {
 		<section class="vehicle">
 			<div class="vehicle-card">
 				<div class="vehicle-card-image">
@@ -54,6 +55,7 @@
 				</div>
 			</div>
 		</section>
+		}
 
 		<section class="passengers">
 			<div class="passengers-list-header">
@@ -87,13 +89,11 @@
 
 						<div class="card-row paragraph-xsmall">
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
-									alt="icono de distancia a caminar">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
 								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
 							</div>
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
-									alt="icono de emparejamiento">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
 								<span class="card-information-title">70% de emparejamiento</span>
 							</div>
 						</div>
@@ -131,13 +131,11 @@
 
 						<div class="card-row paragraph-xsmall">
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg"
-									alt="icono de distancia a caminar">
+								<img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar">
 								<span class="card-information-title">{{ride.passenger.walkDistance}} m</span>
 							</div>
 							<div class="card-information">
-								<img class="card-information-icon" src="/assets/svgs/UnLink.svg"
-									alt="icono de emparejamiento">
+								<img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento">
 								<span class="card-information-title">70% de emparejamiento</span>
 							</div>
 						</div>
