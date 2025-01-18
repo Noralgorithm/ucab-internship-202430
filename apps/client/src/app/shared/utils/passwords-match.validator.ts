@@ -8,7 +8,13 @@ export const passwordsMatchValidator: ValidatorFn = (
 
 	if (!password || !confirmPassword) return null
 
-	return password.value === confirmPassword.value
-		? null
-		: { passwordsMatch: true }
+	const passwordsMatch = password.value === confirmPassword.value
+
+	if (!passwordsMatch) {
+		confirmPassword.setErrors({ notMatchingPassword: true })
+	} else {
+		confirmPassword.setErrors(null)
+	}
+
+	return passwordsMatch ? null : { notMatchingPassword: true }
 }

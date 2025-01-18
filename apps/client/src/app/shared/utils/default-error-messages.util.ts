@@ -3,6 +3,6 @@ import { ValidationErrorMessages } from '~/shared/types/validation-error-message
 export const DEFAULT_ERROR_MESSAGES: ValidationErrorMessages = {
 	required: 'Este campo es requerido',
 	email: 'El correo electrónico es inválido',
-	minLength: 'Este campo requiere más caracteres',
-	maxLength: 'Este campo requiere menos caracteres'
+	minlength: 'Este campo requiere más caracteres',
+	maxlength: 'Este campo requiere menos caracteres'
 }

@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core'
 import { Input } from '@angular/core'
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { ValidationErrorMessages } from '../../../types/validation-error-messages.type'
 import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.util'
 
@@ -14,7 +14,10 @@ import { DEFAULT_ERROR_MESSAGES } from '../../../utils/default-error-messages.ut
 export class PasswordInputComponent {
 	@Input({ required: true }) inputId!: string
 	@Input({ required: true }) control: FormControl = new FormControl()
-	@Input() errorMessages: ValidationErrorMessages = DEFAULT_ERROR_MESSAGES
+	@Input() errorMessages: ValidationErrorMessages = {
+		...DEFAULT_ERROR_MESSAGES,
+		notMatchingPassword: 'Las contraseñas no coinciden'
+	}
 	@Input() placeholder = ''
 	@Input() label = ''
 
@@ -31,7 +34,7 @@ export class PasswordInputComponent {
 		if (!errors) return ''
 
 		const key = Object.keys(errors)[0]
-		return this.errorMessages[key as keyof typeof Validators]
+		return this.errorMessages[key]
 	}
 
 	handlePasswordVisibility() {
