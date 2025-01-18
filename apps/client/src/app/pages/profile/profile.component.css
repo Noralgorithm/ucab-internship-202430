@@ -122,4 +122,5 @@ a {
 .add-button {
 	height: 2.125rem;
 	align-items: center;
+	display: flex;
 }
