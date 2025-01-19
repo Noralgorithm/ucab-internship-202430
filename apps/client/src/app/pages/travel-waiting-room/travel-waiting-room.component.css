@@ -135,11 +135,11 @@ header h1 {
 }
 
 .avatar {
-	width: 5.5rem;
+	width: 4rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 100%;
 	object-fit: cover;
-	margin-top: 0.5rem;
+	margin: 0.5rem 0;
 }
 
 .driver-information p {
