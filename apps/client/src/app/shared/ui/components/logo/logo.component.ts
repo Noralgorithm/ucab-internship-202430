@@ -6,8 +6,8 @@ import { LogoIconComponent } from '../logo-icon/logo-icon.component'
 	standalone: true,
 	imports: [LogoIconComponent],
 	template: `
-    <logo-icon [width]="getStyles().iconWidth" />
-    <span class="brand-name" [style.fontSize]="getStyles().fontSize">
+    <logo-icon [width]="getStyles().iconWidth" [color]="'white'" />
+    <span class="brand-name" [style.fontSize]="getStyles().fontSize" [style.color]="getStyles().color">
       MoviC
     </span>
   `,
@@ -29,6 +29,7 @@ import { LogoIconComponent } from '../logo-icon/logo-icon.component'
 })
 export class LogoComponent {
 	@Input() size: Size = 'small'
+	@Input() color: Color = 'black'
 
 	public readonly SIZE_STYLES = {
 		small: {
@@ -43,8 +44,17 @@ export class LogoComponent {
 		}
 	}
 
+	public readonly COLOR_STYLES = {
+		black: {
+			color: '#000'
+		},
+		white: {
+			color: '#fff'
+		}
+	}
+
 	public getStyles() {
-		return this.SIZE_STYLES[this.size]
+		return { ...this.SIZE_STYLES[this.size], ...this.COLOR_STYLES[this.color] }
 	}
 
 	@HostBinding('style.width') get width() {
@@ -54,3 +64,5 @@ export class LogoComponent {
 
 const SIZES = ['small', 'large'] as const
 type Size = (typeof SIZES)[number]
+
+type Color = 'black' | 'white'

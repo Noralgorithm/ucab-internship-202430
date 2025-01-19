@@ -1,5 +1,4 @@
 import { Component, HostBinding, Input } from '@angular/core'
-import { Color } from '../../colors.enum'
 
 @Component({
 	selector: 'logo-icon',
@@ -15,13 +14,15 @@ import { Color } from '../../colors.enum'
 })
 export class LogoIconComponent {
 	@Input() width = '3rem'
-	@Input() color: Color = Color.Primary
+	@Input() color: Color = 'black'
 
 	@HostBinding('style')
 	get computedHostStyle() {
 		return {
 			width: this.width,
-			fill: `var(--${this.color})`
+			fill: this.color === 'white' ? '#fff' : '#000'
 		}
 	}
 }
+
+export type Color = 'black' | 'white'

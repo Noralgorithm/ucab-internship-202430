@@ -1,4 +1,4 @@
-export enum Color {
+export enum ColorEnum {
 	Primary = 'primary',
 	Secondary = 'secondary',
 	Success = 'success',
@@ -8,3 +8,13 @@ export enum Color {
 	Light = 'light',
 	Dark = 'dark'
 }
+
+export type Color =
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'warning'
+	| 'error'
+	| 'info'
+	| 'light'
+	| 'dark'
