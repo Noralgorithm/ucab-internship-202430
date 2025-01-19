@@ -1,13 +1,12 @@
 <div class="card-destination-container">
-	<button mButton size="small" class="view-button" (click)="seeDestinationInMap()">Ver</button>
-	<img [src]="destination.photoSrc!" alt="Destination image">
-	<div class="card-destination-information">
-		<h2 class="heading-xsmall destination-name">{{destination.name}}</h2>
-		@if(actionButtons){
-		<div class="card-buttons-container">
-			<button mButton size="small" severity="tertiary" (click)="onDelete.emit()">Eliminar</button>
-			<button mButton size="small" severity="primary">Editar</button>
-		</div>
-		}
-	</div>
+  <button mButton size="small" class="view-button" (click)="seeDestinationInMap()">Ver</button>
+  <img [src]="destination.photoSrc!" alt="Destination image">
+  <div class="card-destination-information">
+    <h2 class="heading-xsmall destination-name">{{destination.name}}</h2>
+    @if(actionButtons){
+    <div class="card-buttons-container">
+      <button mButton size="small" severity="tertiary" (click)="onDelete.emit()">Eliminar</button>
+    </div>
+    }
+  </div>
 </div>
