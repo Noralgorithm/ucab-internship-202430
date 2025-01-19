@@ -6,7 +6,7 @@ import { LogoIconComponent } from '../logo-icon/logo-icon.component'
 	standalone: true,
 	imports: [LogoIconComponent],
 	template: `
-    <logo-icon [width]="getStyles().iconWidth" [color]="'white'" />
+    <logo-icon [width]="getStyles().iconWidth" [color]="color" />
     <span class="brand-name" [style.fontSize]="getStyles().fontSize" [style.color]="getStyles().color">
       MoviC
     </span>

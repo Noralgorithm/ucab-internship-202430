@@ -87,11 +87,11 @@ export const routes: Routes = [
 	{
 		path: 'app',
 		component: TabBarLayoutComponent,
-		canActivate: [userStatusGuard],
 		children: [
 			{
 				path: '',
 				title: 'Inicio',
+				canActivate: [userStatusGuard],
 				component: HomeComponent
 			},
 			{
@@ -103,81 +103,97 @@ export const routes: Routes = [
 			{
 				path: 'profile/edit',
 				title: 'Editar perfil',
+				canActivate: [userStatusGuard],
 				component: EditProfileComponent
 			},
 			{
 				path: 'movipanas',
 				title: 'MoviPanas',
+				canActivate: [userStatusGuard],
 				component: MovipanasComponent
 			},
 			{
 				path: 'my-destinations',
 				title: 'Mis destinos',
+				canActivate: [userStatusGuard],
 				component: MyDestinationsComponent
 			},
 			{
 				path: 'my-destination/add',
 				title: 'Agregar destino',
+				canActivate: [userStatusGuard],
 				component: AddDestinationComponent
 			},
 			{
 				path: 'my-vehicles',
 				title: 'Mis vehículos',
+				canActivate: [userStatusGuard],
 				component: MyVehiclesComponent
 			},
 			{
 				path: 'my-vehicle/edit',
 				title: 'Editar vehículo',
+				canActivate: [userStatusGuard],
 				component: EditVehicleComponent
 			},
 			{
 				path: 'my-vehicle/add',
 				title: 'Agregar vehículo',
+				canActivate: [userStatusGuard],
 				component: AddVehicleComponent
 			},
 			{
 				path: 'offer-travel',
 				title: 'Crear viaje',
+				canActivate: [userStatusGuard],
 				component: OfferTravelComponent
 			},
 			{
 				path: 'travel-type-selection',
 				title: 'Seleccionar tipo de viaje',
+				canActivate: [userStatusGuard],
 				component: TravelTypeSelectionComponent
 			},
 			{
 				path: 'available-drivers',
 				title: 'Conductores disponibles',
+				canActivate: [userStatusGuard],
 				component: AvailableDriversComponent
 			},
 			{
 				path: 'waiting-for-review',
 				title: 'Esperando revisión',
+				canActivate: [userStatusGuard],
 				component: WaitingForReviewComponent
 			},
 			{
 				path: 'route-to-ucab-selection',
 				title: 'Seleccionar ruta',
+				canActivate: [userStatusGuard],
 				component: RouteSelectionComponent
 			},
 			{
 				path: 'confirm-travel',
 				title: 'Confirmar viaje',
+				canActivate: [userStatusGuard],
 				component: ConfirmTravelComponent
 			},
 			{
 				path: 'external-destination-selection',
 				title: 'Seleccionar destino externo',
+				canActivate: [userStatusGuard],
 				component: ExternalDestinationSelectionComponent
 			},
 			{
 				path: 'route-from-ucab-selection',
 				title: 'Seleccionar ruta desde UCAB',
+				canActivate: [userStatusGuard],
 				component: RouteFromUcabSelectionComponent
 			},
 			{
 				path: 'ride-destination-selection',
 				title: 'Seleccionar destino externo',
+				canActivate: [userStatusGuard],
 				component: RideDestinationSelectionComponent
 			},
 			{
@@ -193,6 +209,7 @@ export const routes: Routes = [
 			{
 				path: 'see-destination',
 				title: 'Mi Destino',
+				canActivate: [userStatusGuard],
 				component: SeeDestinationComponent
 			}
 		]
