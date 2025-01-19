@@ -336,13 +336,14 @@ export class RidesService {
 				passenger: { id: userId },
 				dropOff: IsNull(),
 				arrivalTime: IsNull()
-			}
+			},
+			relations: { travel: true }
 		})
 
 		if (ride) {
 			return {
 				isIn: true,
-				payload: { type: 'ride', id: ride.id }
+				payload: { type: 'ride', id: ride.id, status: ride.travel.status }
 			}
 		}
 		return {

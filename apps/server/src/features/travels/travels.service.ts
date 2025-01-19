@@ -316,7 +316,7 @@ export class TravelsService {
 		if (travel) {
 			return {
 				isIn: true,
-				payload: { type: 'travel', id: travel.id }
+				payload: { type: 'travel', id: travel.id, status: travel.status }
 			}
 		}
 		return {
