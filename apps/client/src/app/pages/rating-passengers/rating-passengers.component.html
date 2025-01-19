@@ -1,28 +1,27 @@
 <page-layout [hasTabBar]="false">
-	<header>
-		<h1 class="heading-small">Califica a los pasajeros</h1>
-	</header>
+  <header>
+    <h1 class="heading-small">Califica a los pasajeros</h1>
+  </header>
 
-	<div class="passengers-list">
-		@for (ride of travel?.rides; track ride.id) {
+  <div class="passengers-list">
+    @for (ride of travel?.rides; track ride.id) {
+    <section class="passenger-rating-information">
+      <div class="passenger-information">
+        <img class="avatar" src="{{ ride.passenger.profilePicSrc}}" alt="Imágen del Pasajero" />
+        <p class="label-medium">{{ride.passenger.firstName}}
+          {{ride.passenger.lastName}}</p>
+        <div class="rating-information">
+          <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
+          <span class="card-information rating-number label-small">4.8 (60)</span>
+        </div>
+      </div>
+      <rating-buttons (selectedRating)="onSelectedRating($event, ride.id)"></rating-buttons>
+    </section>
+    }
+  </div>
 
-		<section class="passenger-rating-information">
-			<div class="passenger-information">
-				<img class="avatar" src="{{ ride.passenger.profilePicSrc}}" alt="Imágen del conductor" />
-				<p class="label-medium">{{ride.passenger.firstName}}
-					{{ride.passenger.lastName}}</p>
-				<div class="rating-information">
-					<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-					<span class="card-information rating-number label-small">4.8 (60)</span>
-				</div>
-			</div>
-			<rating-buttons (selectedRating)="onSelectedRating($event, ride.id)"></rating-buttons>
-		</section>
-		}
-	</div>
-
-	<button mButton size="large" (click)="ratingPassengers()">
-		Calificar
-	</button>
+  <button mButton size="large" (click)="ratingPassengers()">
+    Calificar
+  </button>
 
 </page-layout>

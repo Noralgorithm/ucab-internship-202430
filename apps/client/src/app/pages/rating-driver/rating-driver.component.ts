@@ -52,10 +52,9 @@ export class RatingDriverComponent implements OnInit {
 		this.getRideService.execute(this.rideId).subscribe({
 			next: (res) => {
 				this.ride = res.data
-				console.log('viaje obtenido')
 			},
 			error: () => {
-				console.log('error obteniendo el viaje')
+				this.toastrService.error('Error obteniendo la información de la cola')
 			}
 		})
 	}

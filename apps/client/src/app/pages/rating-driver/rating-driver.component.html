@@ -1,28 +1,30 @@
 <page-layout [hasTabBar]="false">
-	<header>
-		<h1 class="heading-small">Califica el conductor</h1>
-	</header>
+  <header>
+    <h1 class="heading-small">Califica el conductor</h1>
+  </header>
 
-	<section class="driver-vehicle-information">
-		<div class="driver-information">
-			<img class="avatar" src="{{ ride?.travel?.vehicle?.driver?.profilePicSrc }}" alt="Imágen del conductor" />
-			<p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
-				{{ride?.travel?.vehicle?.driver?.lastName}}</p>
-			<div class="rating-information">
-				<img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-				<span class="card-information rating-number label-small">4.8 (60)</span>
-			</div>
-		</div>
-		<rating-buttons (selectedRating)="onSelectedRating($event)"></rating-buttons>
-		<movic-vehicle [color]="ride?.travel?.vehicle?.color ?? '#fff'"></movic-vehicle>
-		<div class="vehicle-information">
-			<p class="paragraph-medium">{{ride?.travel?.vehicle?.brand}} | {{ride?.travel?.vehicle?.model}}</p>
-			<p class="paragraph-medium">{{ride?.travel?.vehicle?.plate}}</p>
-		</div>
-	</section>
+  @if(ride?.travel?.vehicle){
+  <section class="driver-vehicle-information">
+    <div class="driver-information">
+      <img class="avatar" src="{{ ride?.travel?.vehicle?.driver?.profilePicSrc }}" alt="Imágen del conductor" />
+      <p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
+        {{ride?.travel?.vehicle?.driver?.lastName}}</p>
+      <div class="rating-information">
+        <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
+        <span class="card-information rating-number label-small">4.8 (60)</span>
+      </div>
+    </div>
+    <rating-buttons (selectedRating)="onSelectedRating($event)"></rating-buttons>
+    <movic-vehicle [color]="ride?.travel?.vehicle?.color || '#fff'"></movic-vehicle>
+    <div class="vehicle-information">
+      <p class="paragraph-medium">{{ride?.travel?.vehicle?.brand}} | {{ride?.travel?.vehicle?.model}}</p>
+      <p class="paragraph-medium">{{ride?.travel?.vehicle?.plate}}</p>
+    </div>
+  </section>
+  }
 
-	<button mButton size="large" (click)="ratingDriver()" [disabled]="!selectedRating">
-		Calificar
-	</button>
+  <button mButton size="large" (click)="ratingDriver()" [disabled]="!selectedRating">
+    Calificar
+  </button>
 
 </page-layout>
