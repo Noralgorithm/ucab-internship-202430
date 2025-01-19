@@ -19,7 +19,7 @@ export const userStatusGuard: CanActivateFn = () => {
 						queryParams: { id: res.data.payload.id }
 					})
 				} else if (res.data.payload.status === 'not-started') {
-					router.navigate(['travel-waiting-room'], {
+					router.navigate(['app/travel-waiting-room'], {
 						queryParams: { id: res.data.payload.id }
 					})
 				} else {
