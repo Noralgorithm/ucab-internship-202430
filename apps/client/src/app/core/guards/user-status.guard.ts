@@ -14,13 +14,35 @@ export const userStatusGuard: CanActivateFn = () => {
 			}
 
 			if (res.data.payload?.type === 'ride') {
-				router.navigate(['in-ride'], {
-					queryParams: { id: res.data.payload.id }
-				})
-			} else {
-				router.navigate(['in-travel'], {
-					queryParams: { id: res.data.payload?.id }
-				})
+				if (res.data.payload.status === 'in-progress') {
+					router.navigate(['in-ride'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				} else if (res.data.payload.status === 'not-started') {
+					router.navigate(['travel-waiting-room'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				} else {
+					router.navigate(['app'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				}
+			}
+
+			if (res.data.payload?.type === 'travel') {
+				if (res.data.payload.status === 'in-progress') {
+					router.navigate(['in-travel'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				} else if (res.data.payload.status === 'not-started') {
+					router.navigate(['travel-lobby'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				} else {
+					router.navigate(['app'], {
+						queryParams: { id: res.data.payload.id }
+					})
+				}
 			}
 
 			return false
