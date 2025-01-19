@@ -20,7 +20,7 @@ h1 {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 1.125rem;
+	gap: .625rem;
 	width: 21.125rem;
 	margin-top: 1.25rem;
 }

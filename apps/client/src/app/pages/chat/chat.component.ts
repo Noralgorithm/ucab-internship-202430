@@ -4,10 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription, interval, mergeMap } from 'rxjs'
 import { RetrieveRideMessagesService } from '~/features/chat/api/retrieve-ride-messages.service'
 import { SendRideMessageService } from '~/features/chat/api/send-ride-message.service'
-import { GetOwnProfileService } from '~/features/profile/api/get-own-profile.service'
 import { ID_KEY } from '~/shared/constants'
 import { Message, RideMessages } from '~/shared/types/rides/ride-request.type'
-import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 import { defaultMessages } from './chat-default-messages'
 
@@ -22,7 +20,6 @@ const REFETCH_WAIT_TIME_IN_MS = 1000
 })
 export class ChatComponent implements OnInit {
 	currentUserId = localStorage.getItem(ID_KEY)
-	profile: UserProfile | undefined
 	rideId = ''
 	rideMessages: RideMessages | null = null
 	groupedMessages: GroupedMessages[] = []
@@ -36,8 +33,7 @@ export class ChatComponent implements OnInit {
 		private readonly retrieveRideMessagesService: RetrieveRideMessagesService,
 		private readonly sendRideMessageService: SendRideMessageService,
 		private readonly route: ActivatedRoute,
-		private readonly router: Router,
-		private readonly getOwnProfileService: GetOwnProfileService
+		private readonly router: Router
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.rideId = params['rideId']
@@ -45,9 +41,6 @@ export class ChatComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getOwnProfileService.execute().subscribe((res) => {
-			this.profile = res.data
-		})
 		this.chatSubscription = interval(REFETCH_WAIT_TIME_IN_MS)
 			.pipe(
 				mergeMap(() => this.retrieveRideMessagesService.execute(this.rideId))
@@ -57,12 +50,28 @@ export class ChatComponent implements OnInit {
 					this.rideMessages = res.data
 					this.groupedMessages = this.groupMessagesByDate()
 					if (this.rideMessages.travelType === 'to-ucab') {
-						defaultMessages[this.rideMessages.travelType].driver.push(
-							`Mi número de teléfono es: ${this.profile?.phoneNumber}`
-						)
-						defaultMessages[this.rideMessages.travelType].passenger.push(
-							`Mi número de teléfono es: ${this.profile?.phoneNumber}`
-						)
+						const driverMessage = `Mi número de teléfono es: ${this.rideMessages.driver.phoneNumber}`
+						if (
+							this.rideMessages.driver.phoneNumber &&
+							!defaultMessages[this.rideMessages.travelType].driver.includes(
+								driverMessage
+							)
+						) {
+							defaultMessages[this.rideMessages.travelType].driver.push(
+								driverMessage
+							)
+						}
+						const passengerMessage = `Mi número de teléfono es: ${this.rideMessages.passenger.phoneNumber}`
+						if (
+							this.rideMessages.passenger.phoneNumber &&
+							!defaultMessages[this.rideMessages.travelType].passenger.includes(
+								passengerMessage
+							)
+						) {
+							defaultMessages[this.rideMessages.travelType].passenger.push(
+								passengerMessage
+							)
+						}
 					}
 					if (this.whoami(this.rideMessages.driver.id)) {
 						this.selectOptions =

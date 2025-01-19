@@ -8,10 +8,10 @@
 					<img src=" /assets/svgs/ArrowLeft.svg" alt="icono de volver atras" class="icon-img" />
 				</button>
 				<div class="person-container">
-
 					<img class="person-img" src="{{ rideMessages.driver.profilePicSrc }}" alt="imagen de usuario" />
 					<div class="person-name">
-						{{rideMessages.driver.firstName}} {{rideMessages.driver.lastName}}
+						{{ rideMessages.driver.firstName }}
+						{{ rideMessages.driver.lastName }}
 					</div>
 				</div>
 				<img src="/assets/svgs/ChatCarIcon.svg" alt="icono de tipo de usuario" class="icon-img" />
@@ -22,7 +22,8 @@
 				<div class="person-container">
 					<img class="person-img" src="{{ rideMessages.passenger.profilePicSrc }}" alt="imagen de usuario" />
 					<div class="person-name">
-						{{rideMessages.passenger.firstName}} {{rideMessages.passenger.lastName}}
+						{{ rideMessages.passenger.firstName }}
+						{{ rideMessages.passenger.lastName }}
 					</div>
 				</div>
 				<img src="/assets/svgs/HandBlue.svg" alt="icono de tipo de usuario" class="icon-img" />
@@ -30,9 +31,8 @@
 			</div>
 			<div class="msgs-container">
 				@for (date of groupedMessages; track $index) {
-				<div class="chat-date">{{date.date}}</div>
-				@for (item of
-				date.messages; track $index) { @if (item.isMine) {
+				<div class="chat-date">{{ date.date }}</div>
+				@for (item of date.messages; track $index) { @if (item.isMine) {
 				<div class="own-msg-container">
 					<div class="msg">{{ item.content }}</div>
 					<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
@@ -53,7 +53,7 @@
 					@if(this.isSelectOpen){
 					<div class="select-options">
 						@for (option of selectOptions; track $index) {
-						<div class="option" (click)="sendMessage(option)">{{option}}</div>
+						<div class="option" (click)="sendMessage(option)">{{ option }}</div>
 						}
 					</div>
 					}

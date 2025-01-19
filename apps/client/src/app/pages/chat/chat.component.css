@@ -170,9 +170,9 @@
 }
 
 .own-msg-container .msg-timestamp {
-	color: rgb(255 255 255 0.9);
+	color: #ffffff90;
 }
 
 .msg-container .msg-timestamp {
-	color: rgb(0 0 0 0.9);
+	color: #000000;
 }
