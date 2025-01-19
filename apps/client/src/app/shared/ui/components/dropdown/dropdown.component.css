@@ -10,5 +10,6 @@ select {
 }
 
 label {
+	display: block;
 	color: var(--primary-text-label);
 }

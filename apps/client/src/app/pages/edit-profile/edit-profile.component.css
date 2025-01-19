@@ -79,7 +79,6 @@ header h1 {
 	align-items: center;
 }
 
-/* TODO: change these styles for the ones in figma */
 /* Input file */
 input[type="file"] {
 	position: relative;
