@@ -43,6 +43,7 @@ export class TravelWaitingRoomComponent implements OnInit {
 				this.toast.error(
 					'Ha ocurrido un error al cargar la información del viaje'
 				)
+				this.router.navigate(['/app'])
 			}
 		})
 
