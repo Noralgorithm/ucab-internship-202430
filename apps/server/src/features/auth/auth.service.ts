@@ -150,9 +150,6 @@ export class AuthService {
 			exp: DateTime.now()
 				.plus({ days: this.configService.get('JWT_EXP_DAYS', 30) })
 				.toSeconds(),
-			// NOTE: Sorry Daikoki 😪
-			// NOTE: nvm f u daikoki
-			nbf: DateTime.now(),
 			iat: DateTime.now().toSeconds(),
 			jti: randomUUID() //TODO: change jti to use something like Cuid2, NanoId, and the likes of them
 		}
