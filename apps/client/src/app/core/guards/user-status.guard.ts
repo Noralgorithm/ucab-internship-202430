@@ -13,35 +13,49 @@ export const userStatusGuard: CanActivateFn = () => {
 				return true
 			}
 
+			const currentRoute = router.url
+
 			if (res.data.payload?.type === 'ride') {
 				if (res.data.payload.status === 'in-progress') {
-					router.navigate(['in-ride'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/in-ride') {
+						router.navigate(['in-ride'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				} else if (res.data.payload.status === 'not-started') {
-					router.navigate(['travel-waiting-room'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/travel-waiting-room') {
+						router.navigate(['travel-waiting-room'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				} else {
-					router.navigate(['app'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/app') {
+						router.navigate(['app'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				}
 			}
 
 			if (res.data.payload?.type === 'travel') {
 				if (res.data.payload.status === 'in-progress') {
-					router.navigate(['in-travel'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/in-travel') {
+						router.navigate(['in-travel'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				} else if (res.data.payload.status === 'not-started') {
-					router.navigate(['app/travel-lobby'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/app/travel-lobby') {
+						router.navigate(['app/travel-lobby'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				} else {
-					router.navigate(['app'], {
-						queryParams: { id: res.data.payload.id }
-					})
+					if (currentRoute !== '/app') {
+						router.navigate(['app'], {
+							queryParams: { id: res.data.payload.id }
+						})
+					}
 				}
 			}
 
