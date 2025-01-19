@@ -7,7 +7,7 @@ export interface Travel {
 	id: string
 	forWomen: boolean
 	type: TravelType
-	status: 'not-started' | 'in-progress' | 'completed' | 'canceled'
+	status: TravelStatus
 	availableSeatQuantity: number
 	vehicleId: string
 	route: Route
@@ -15,7 +15,11 @@ export interface Travel {
 
 export type TravelType = 'to-ucab' | 'from-ucab'
 
-export type TravelStatus = 'not-started' | 'in-progress' | 'finished'
+export type TravelStatus =
+	| 'not-started'
+	| 'in-progress'
+	| 'completed'
+	| 'canceled'
 
 export type TravelAvailableDriverData = Travel & {
 	passengerAmount: number
