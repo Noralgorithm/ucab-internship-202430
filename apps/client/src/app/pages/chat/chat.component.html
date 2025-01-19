@@ -32,17 +32,21 @@
 			<div class="msgs-container">
 				@for (date of groupedMessages; track $index) {
 				<div class="chat-date">{{ date.date }}</div>
-				@for (item of date.messages; track $index) { @if (item.isMine) {
-				<div class="own-msg-container">
-					<div class="msg">{{ item.content }}</div>
-					<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
+				<div class="fix">
+					@for (item of date.messages.reverse(); track $index) { @if
+					(item.isMine) {
+					<div class="own-msg-container">
+						<div class="msg">{{ item.content }}</div>
+						<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
+					</div>
+					}@else {
+					<div class="msg-container">
+						<div class="msg">{{ item.content }}</div>
+						<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
+					</div>
+					} }
 				</div>
-				}@else {
-				<div class="msg-container">
-					<div class="msg">{{ item.content }}</div>
-					<div class="msg-timestamp">{{ formatDate(item.createdAt) }}</div>
-				</div>
-				} } }
+				}
 			</div>
 			}
 
