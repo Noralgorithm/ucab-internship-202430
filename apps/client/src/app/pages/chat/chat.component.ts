@@ -50,14 +50,26 @@ export class ChatComponent implements OnInit {
 					this.rideMessages = res.data
 					this.groupedMessages = this.groupMessagesByDate()
 					if (this.rideMessages.travelType === 'to-ucab') {
-						if (this.rideMessages.driver.phoneNumber) {
+						const driverMessage = `Mi número de teléfono es: ${this.rideMessages.driver.phoneNumber}`
+						if (
+							this.rideMessages.driver.phoneNumber &&
+							!defaultMessages[this.rideMessages.travelType].driver.includes(
+								driverMessage
+							)
+						) {
 							defaultMessages[this.rideMessages.travelType].driver.push(
-								`Mi número de teléfono es: ${this.rideMessages.driver.phoneNumber}`
+								driverMessage
 							)
 						}
-						if (this.rideMessages.passenger.phoneNumber !== null) {
+						const passengerMessage = `Mi número de teléfono es: ${this.rideMessages.passenger.phoneNumber}`
+						if (
+							this.rideMessages.passenger.phoneNumber &&
+							!defaultMessages[this.rideMessages.travelType].passenger.includes(
+								passengerMessage
+							)
+						) {
 							defaultMessages[this.rideMessages.travelType].passenger.push(
-								`Mi número de teléfono es: ${this.rideMessages.passenger.phoneNumber}`
+								passengerMessage
 							)
 						}
 					}
