@@ -1,65 +1,70 @@
 <!-- TODO: reduce distance between inputs in ALL FORMS -->
 
 <page-layout>
-	<header class="header-container">
-		<div>
-			<brand-logo class="logo" size="small" />
-			<h4 class="heading-xsmall">Ingrese los datos</h4>
-		</div>
-	</header>
+  <header class="header-container">
+    <div>
+      <brand-logo class="logo" size="small" />
+      <h4 class="heading-xsmall">Ingrese los datos</h4>
+    </div>
+  </header>
 
-	<section>
-		<form class="form-container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
-			<div class="input-profile-pic-container">
-				<label for="profilePic" class="label-medium">Subir foto de perfil</label>
-				<input type="file" (change)="onImageUpload($event)" id="profilePic"
-					accept="image/png,image/jpg,image/jpeg" class="input-profile-pic" />
-			</div>
+  <section>
+    <form class="form-container" (submit)="handleSubmit()" [formGroup]="registerFormGroup">
 
-			<text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
-				[control]="registerFormGroup.controls.firstName" />
+      <div class="input-profile-pic-container">
+        <label for="profilePic" class="label-medium">Foto de perfil</label>
+        <div class="input-profile-pic-container-center">
+          @if(isProfilePicUploaded) {
+          <img [src]="urlProfilePic" class="avatar" width="88px" height="88px" />
+          }
+          <input type="file" (change)="onImageUpload($event)" id="profilePic" accept="image/png,image/jpg,image/jpeg"
+            class="input-profile-pic" />
+        </div>
+      </div>
 
-			<text-input inputId="lastName" label="Apellido" placeholder="Ingrese el apellido"
-				[control]="registerFormGroup.controls.lastName" />
 
+      <text-input inputId="name" label="Nombre" placeholder="Ingrese el nombre"
+        [control]="registerFormGroup.controls.firstName" />
 
-			<div class="radio-input-container">
-				<label for="gender" class="label-medium">Sexo</label>
-				<div class="radio-button-group">
-					<radio-button inputId="gender-male" groupName="gender" [control]="registerFormGroup.controls.gender"
-						value="female" label="Femenino" />
-					<radio-button inputId="gender-female" groupName="gender"
-						[control]="registerFormGroup.controls.gender" value="male" label="Masculino" />
-				</div>
-			</div>
+      <text-input inputId="lastName" label="Apellido" placeholder="Ingrese el apellido"
+        [control]="registerFormGroup.controls.lastName" />
 
-			<text-input inputId="email" label="Correo Electrónico" placeholder="Ingrese el correo electrónico"
-				[control]="registerFormGroup.controls.email" />
+      <div class="radio-input-container">
+        <label for="gender" class="label-medium">Sexo</label>
+        <div class="radio-button-group">
+          <radio-button inputId="gender-male" groupName="gender" [control]="registerFormGroup.controls.gender"
+            value="female" label="Femenino" />
+          <radio-button inputId="gender-female" groupName="gender" [control]="registerFormGroup.controls.gender"
+            value="male" label="Masculino" />
+        </div>
+      </div>
 
-			<password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
-				[control]="registerFormGroup.controls.password" />
+      <text-input inputId="email" label="Correo Electrónico" placeholder="Ingrese el correo electrónico"
+        [control]="registerFormGroup.controls.email" />
 
-			<password-input inputId="confirmPassword" label="Confirmar contraseña"
-				placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
+      <password-input inputId="password" label="Contraseña" placeholder="Ingrese la contraseña"
+        [control]="registerFormGroup.controls.password" />
 
-			@if(isStudent){
-			<text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
-			} @else {
-			<div class="radio-input-container">
-				<label for="type" class="label-medium">Tipo</label>
-				<div class="radio-button-group">
-					<radio-button inputId="type-staff" groupName="type" [control]="registerFormGroup.controls.type"
-						value="staff" label="Personal" />
-					<radio-button inputId="type-professor" groupName="type" [control]="registerFormGroup.controls.type"
-						value="professor" label="Profesor" />
-				</div>
-			</div>
-			}
+      <password-input inputId="confirmPassword" label="Confirmar contraseña"
+        placeholder="Ingrese la contraseña nuevamente" [control]="registerFormGroup.controls.confirmPassword" />
 
-			<button mButton severity="secondary" size="large"
-				[disabled]="registerFormGroup.invalid">Registrarme</button>
+      @if(isStudent){
+      <text-input inputId="type" label="Tipo" [control]="registerFormGroup.controls.type" />
+      } @else {
+      <div class="radio-input-container">
+        <label for="type" class="label-medium">Tipo</label>
+        <div class="radio-button-group">
+          <radio-button inputId="type-staff" groupName="type" [control]="registerFormGroup.controls.type" value="staff"
+            label="Personal" />
+          <radio-button inputId="type-professor" groupName="type" [control]="registerFormGroup.controls.type"
+            value="professor" label="Profesor" />
+        </div>
+      </div>
+      }
 
-		</form>
-
-	</section>
+      <button mButton severity="secondary" size="large" [disabled]="registerFormGroup.invalid">
+        Registrarme
+      </button>
+    </form>
+  </section>
 </page-layout>

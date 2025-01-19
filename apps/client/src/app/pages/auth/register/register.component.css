@@ -62,7 +62,14 @@ label {
 	width: 100%;
 	flex-direction: column;
 	justify-content: center;
-	gap: 0.4rem;
+	gap: .9375rem;
+}
+
+.input-profile-pic-container-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: .625rem;
 }
 
 .radio-input-container label {
@@ -70,12 +77,20 @@ label {
 	text-align: left;
 }
 
-/* TODO: change these styles for the ones in figma */
+.avatar {
+	width: 6rem;
+	aspect-ratio: 1 / 1;
+	border-radius: 100%;
+	object-fit: cover;
+	margin-top: 0.5rem;
+}
+
 /* Input file */
 
 input[type="file"] {
 	position: relative;
-	color: rgba(0, 0, 0, 0);
+	width: 9.125rem;
+	/* color: rgba(0, 0, 0, 0); */
 }
 
 input[type="file"]::file-selector-button {

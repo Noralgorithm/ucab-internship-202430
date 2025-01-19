@@ -51,6 +51,10 @@ export class RegisterComponent {
 
 	isStudent = false
 
+	isProfilePicUploaded = false
+
+	urlProfilePic = ''
+
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
 			this.signUpToken = params['i']
@@ -110,11 +114,21 @@ export class RegisterComponent {
 	}
 
 	onImageUpload(event: Event) {
+		this.isProfilePicUploaded = true
 		if (!event.target) return
 
 		const file = (event.target as HTMLInputElement).files?.[0]
 
 		this.registerFormGroup.patchValue({ profilePic: file ?? null })
+
+		this.createUrlProfilePic()
+	}
+
+	createUrlProfilePic() {
+		if (!this.registerFormGroup.controls.profilePic.value) return
+		this.urlProfilePic = URL.createObjectURL(
+			this.registerFormGroup.controls.profilePic.value
+		)
 	}
 
 	useStudentTypeControl() {
