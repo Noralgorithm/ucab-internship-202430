@@ -3,7 +3,7 @@
 
 	<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
 
-	<img src="assets/svgs/HalfStar.svg" class="star" />
+	<star-rating [rating]='3.5' />
 
 	<h3 class="paragraph-small email">{{ profile?.email ? profile?.email : '--' }}</h3>
 

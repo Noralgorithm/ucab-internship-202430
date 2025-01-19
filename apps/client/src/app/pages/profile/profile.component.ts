@@ -11,13 +11,19 @@ import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
 import { USER_ROLE_LABELS } from '~/shared/utils/user-role-labels.util'
 import { USER_TYPE_LABELS } from '~/shared/utils/user-type-labels.util'
+import { StarRatingComponent } from '../../shared/ui/components/star-rating/star-rating.component'
 
 @Component({
 	selector: 'app-profile',
 	standalone: true,
 	templateUrl: './profile.component.html',
 	styleUrl: './profile.component.css',
-	imports: [PageLayoutComponent, ButtonComponent, RouterLink]
+	imports: [
+		PageLayoutComponent,
+		ButtonComponent,
+		RouterLink,
+		StarRatingComponent
+	]
 })
 export class ProfileComponent {
 	constructor(
