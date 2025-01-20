@@ -80,7 +80,6 @@ export class InRideComponent implements OnInit {
 					position.coords.latitude.toString(),
 					position.coords.longitude.toString()
 				)
-				console.log(this.emergencyLink)
 				window.location.href = this.emergencyLink
 			}
 		})

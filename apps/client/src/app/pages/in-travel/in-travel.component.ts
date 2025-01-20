@@ -16,7 +16,7 @@ import { geoJsonLineStringToLatLng } from '~/shared/utils/geo-json-line-string.u
 	styleUrl: './in-travel.component.css'
 })
 export class InTravelComponent {
-	travelId: string | null = null
+	travelId = ''
 
 	vertices: google.maps.LatLngLiteral[] = []
 
@@ -59,17 +59,16 @@ export class InTravelComponent {
 	}
 
 	ngOnInit() {
-		if (!this.travelId) {
-			return
-		}
+		// if (!this.travelId) {
+		// 	return
+		// }
 
 		this.getTravelByIdService.execute(this.travelId).subscribe({
 			next: (res) => {
+				this.vehiclePlate = res.data.vehicle.plate
 				this.vertices = geoJsonLineStringToLatLng(
 					res.data.route.polyline.geoJsonLinestring
 				)
-				this.vehiclePlate = res.data.vehicle.plate
-				console.log(this.vehiclePlate)
 			}
 		})
 
