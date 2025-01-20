@@ -145,6 +145,35 @@ export class RidesService {
 		return ride
 	}
 
+	async findWithRating(options: FindOneOptions<Ride>) {
+		const ride = await this.ridesRepository.findOne(options)
+
+		if (ride == null) {
+			throw new NotFoundException('Ride not found')
+		}
+
+		const [rating, amountOfRapes] = await this.calculateRating(
+			ride.travel.vehicle.driver.id
+		)
+
+		const rideWithRating = {
+			...ride,
+			travel: {
+				...ride.travel,
+				vehicle: {
+					...ride.travel.vehicle,
+					driver: {
+						...ride.travel.vehicle.driver,
+						rating,
+						amountOfRapes
+					}
+				}
+			}
+		}
+
+		return rideWithRating
+	}
+
 	async find(options: FindManyOptions<Ride>) {
 		const rides = await this.ridesRepository.find(options)
 
