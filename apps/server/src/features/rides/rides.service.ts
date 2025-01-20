@@ -363,6 +363,8 @@ export class RidesService {
 		const ride = await this.ridesRepository.findOne({
 			where: {
 				passenger: { id: userId },
+				isAccepted: true,
+				travelCancelType: IsNull(),
 				dropOff: IsNull(),
 				arrivalTime: IsNull()
 			},
