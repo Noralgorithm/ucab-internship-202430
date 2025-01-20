@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 import { DriverCardComponent } from '~/features/drivers/components/driver-card/driver-card.component'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { GetDestinationService } from '~/features/my-destinations/api/get-destination.service'
@@ -33,7 +34,8 @@ export class AvailableDriversComponent implements OnInit {
 		private readonly ownLocationService: OwnLocationService,
 		private readonly getDestinationService: GetDestinationService,
 		private readonly route: ActivatedRoute,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly toastrService: ToastrService
 	) {
 		this.route.queryParams.subscribe((params) => {
 			this.travelType = params['type']
@@ -73,8 +75,13 @@ export class AvailableDriversComponent implements OnInit {
 							coordinates: [location.coords.longitude, location.coords.latitude]
 						}
 					})
-					.subscribe((res) => {
-						this.redirectToReview(res.data)
+					.subscribe({
+						next: (res) => {
+							this.redirectToReview(res.data)
+						},
+						error: (err) => {
+							this.toastrService.error(err.error.message)
+						}
 					})
 			})
 		} else if (this.travelType === 'from-ucab') {
