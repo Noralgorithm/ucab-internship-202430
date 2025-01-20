@@ -81,7 +81,7 @@ export class RidesController {
 			withDeleted: true
 		})
 
-		return await this.ridesService.findOne({
+		return await this.ridesService.findWithRating({
 			where: { id: id },
 			relations: { travel: { vehicle: { driver: true } } },
 			withDeleted: true
