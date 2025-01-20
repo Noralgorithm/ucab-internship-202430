@@ -69,6 +69,7 @@ export class InTravelComponent {
 					res.data.route.polyline.geoJsonLinestring
 				)
 				this.vehiclePlate = res.data.vehicle.plate
+				console.log(this.vehiclePlate)
 			}
 		})
 
