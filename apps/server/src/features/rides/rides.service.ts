@@ -377,7 +377,7 @@ export class RidesService {
 
 			const total = ratings.reduce((acc, rating) => acc + rating, 0)
 
-			return [total / ratings.length, ratings.length]
+			return [Number((total / ratings.length).toFixed(1)) || 0, ratings.length]
 		}
 
 		return [0, 0]

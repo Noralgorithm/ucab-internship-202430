@@ -189,10 +189,35 @@ export class TravelsService {
 	async findRideRequests(options: FindOneOptions<Travel>) {
 		const travelRideRequests = await this.travelsRepository.findOne({
 			where: options.where,
-			relations: ['rides', 'rides.passenger']
+			relations: { rides: { passenger: true } }
 		})
 
-		return travelRideRequests?.rides.filter((ride) => ride.isAccepted === null)
+		const rideRequests = travelRideRequests?.rides.filter(
+			(ride) => ride.isAccepted === null
+		)
+
+		if (rideRequests) {
+			const formattedRideRequests = await Promise.all(
+				rideRequests.map(async ({ ...ride }) => {
+					const [rating, amountOfRapes] =
+						await this.ridesService.calculateRating(ride.passenger.id)
+
+					const newRide = {
+						...ride,
+						passenger: {
+							...ride.passenger,
+							rating,
+							amountOfRapes
+						}
+					}
+					return {
+						...newRide
+					}
+				})
+			)
+
+			return formattedRideRequests
+		}
 	}
 
 	async changeStatus(
