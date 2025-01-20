@@ -1,22 +1,21 @@
 <page-layout [hasTabBar]="true">
 
-	<div class="container">
-		<section class="card" (click)="roleControl.setValue('passenger')">
-			<radio-button inputId="passenger" [control]="roleControl" value="passenger" />
-			<div class="card-info">
-				<h3>Modo Pasajero</h3>
-				<p>Puedes solicitar servicio de cola a los conductores que se encuentren disponibles en el momento.</p>
-			</div>
-		</section>
+  <div class="container">
+    <section class="card" (click)="roleControl.setValue('passenger')">
+      <radio-button inputId="passenger" [control]="roleControl" value="passenger" />
+      <div class="card-info">
+        <h3>Modo Pasajero</h3>
+        <p>Puedes solicitar servicio de cola a los conductores que se encuentren disponibles en el momento.</p>
+      </div>
+    </section>
 
-		<section class="card">
-			<radio-button inputId="driver" [control]="roleControl" value="driver" />
-			<div class="card-info" (click)="roleControl.setValue('driver')">
-				<h3>Modo Conductor</h3>
-				<p>Puedes poner a disposición tu automovil para ofrecer servicio de colas a personas de la ucab que
-					requieran un aventón para llegar a su destino.</p>
-			</div>
-		</section>
-
-	</div>
+    <section class="card">
+      <radio-button inputId="driver" [control]="roleControl" value="driver" />
+      <div class="card-info" (click)="roleControl.setValue('driver')">
+        <h3>Modo Conductor</h3>
+        <p>Puedes poner a disposición tu automovil para ofrecer servicio de colas a personas de la ucab que
+          requieran un aventón para llegar a su destino.</p>
+      </div>
+    </section>
+  </div>
 </page-layout>
