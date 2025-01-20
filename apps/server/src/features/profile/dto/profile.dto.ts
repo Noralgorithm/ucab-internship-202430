@@ -49,7 +49,7 @@ export class ProfileDto {
 	rating: number
 
 	@Expose()
-	amountOfRapes: number
+	reviewsQuantity: number
 
 	@ApiProperty({ type: 'string', format: 'date-time' })
 	@Expose()
@@ -60,7 +60,7 @@ export class ProfileDto {
 	canRideAt: DateTime
 
 	@Expose()
-	static from(user: User & { rating: number; amountOfRapes: number }) {
+	static from(user: User & { rating: number; reviewsQuantity: number }) {
 		return plainToInstance(ProfileDto, user satisfies ProfileDto, {
 			excludeExtraneousValues: true
 		})

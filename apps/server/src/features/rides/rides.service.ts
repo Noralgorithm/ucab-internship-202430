@@ -152,7 +152,7 @@ export class RidesService {
 			throw new NotFoundException('Ride not found')
 		}
 
-		const [rating, amountOfRapes] = await this.calculateRating(
+		const [rating, reviewsQuantity] = await this.calculateRating(
 			ride.travel.vehicle.driver.id
 		)
 
@@ -165,7 +165,7 @@ export class RidesService {
 					driver: {
 						...ride.travel.vehicle.driver,
 						rating,
-						amountOfRapes
+						reviewsQuantity
 					}
 				}
 			}
@@ -385,7 +385,7 @@ export class RidesService {
 
 	async calculateRating(
 		userId: User['id']
-	): Promise<[rating: number, amountOfRapes: number]> {
+	): Promise<[rating: number, reviewsQuantity: number]> {
 		const user = await this.usersRepository.findOne({
 			where: { id: userId },
 			relations: ['rides', 'rides.passenger']

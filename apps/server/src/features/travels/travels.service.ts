@@ -170,13 +170,13 @@ export class TravelsService {
 					destination,
 					...travel
 				}) => {
-					const [rating, amountOfRapes] =
+					const [rating, reviewsQuantity] =
 						await this.ridesService.calculateRating(travel.vehicle.driver.id)
 
 					return {
 						...travel,
 						rating,
-						amountOfRapes,
+						reviewsQuantity,
 						passengerAmount: rides.filter((ride) => ride.isAccepted).length
 					}
 				}
@@ -199,7 +199,7 @@ export class TravelsService {
 		if (rideRequests) {
 			const formattedRideRequests = await Promise.all(
 				rideRequests.map(async ({ ...ride }) => {
-					const [rating, amountOfRapes] =
+					const [rating, reviewsQuantity] =
 						await this.ridesService.calculateRating(ride.passenger.id)
 
 					const newRide = {
@@ -207,7 +207,7 @@ export class TravelsService {
 						passenger: {
 							...ride.passenger,
 							rating,
-							amountOfRapes
+							reviewsQuantity
 						}
 					}
 					return {

@@ -27,10 +27,10 @@ export class ProfileService {
 
 		const [rating, quantity] = await this.ridesService.calculateRating(id)
 
-		const ratedUser: User & { rating: number; amountOfRapes: number } = {
+		const ratedUser: User & { rating: number; reviewsQuantity: number } = {
 			...user,
 			rating,
-			amountOfRapes: quantity
+			reviewsQuantity: quantity
 		}
 
 		return ProfileDto.from(ratedUser)

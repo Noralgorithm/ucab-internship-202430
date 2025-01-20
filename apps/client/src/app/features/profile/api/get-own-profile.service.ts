@@ -50,5 +50,5 @@ interface ResponseDto {
 	isActive: boolean
 	isBlocked: boolean
 	rating: number
-	amountOfRapes: number
+	reviewsQuantity: number
 }

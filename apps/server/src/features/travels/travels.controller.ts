@@ -68,10 +68,10 @@ export class TravelsController {
 			travel.rides.map(async (ride) => {
 				const [rating, quantity] = await this.ridesService.calculateRating(id)
 
-				const ratedUser: User & { rating: number; amountOfRapes: number } = {
+				const ratedUser: User & { rating: number; reviewsQuantity: number } = {
 					...ride.passenger,
 					rating,
-					amountOfRapes: quantity
+					reviewsQuantity: quantity
 				}
 
 				return {
