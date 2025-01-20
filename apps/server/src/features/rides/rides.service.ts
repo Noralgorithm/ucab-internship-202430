@@ -388,11 +388,34 @@ export class RidesService {
 	): Promise<[rating: number, reviewsQuantity: number]> {
 		const user = await this.usersRepository.findOne({
 			where: { id: userId },
-			relations: ['rides', 'rides.passenger']
+			relations: {
+				vehicles: { travels: { rides: true } },
+				rides: { passenger: true }
+			}
 		})
 
+		let flatTravelRatings: number[] = []
+
+		if (user && user.vehicles.length > 0) {
+			const travelRatings = user.vehicles.map((vehicle) => {
+				return vehicle.travels.map((travel) => {
+					const travelRatings = travel.rides.map(
+						(ride) => ride.driverStarRating
+					)
+
+					return travelRatings
+				})
+			})
+
+			flatTravelRatings = travelRatings
+				.flat(2)
+				.filter((rating) => rating !== undefined)
+		}
+
+		let passengerRatings: number[] = []
+
 		if (user && user.rides.length > 0) {
-			const ratings = user.rides
+			passengerRatings = user.rides
 				.map((ride) => {
 					if (ride.passenger.id === userId) {
 						if (ride.passengerStarRating) {
@@ -405,12 +428,11 @@ export class RidesService {
 					}
 				})
 				.filter((rating) => rating !== undefined)
-
-			const total = ratings.reduce((acc, rating) => acc + rating, 0)
-
-			return [Number((total / ratings.length).toFixed(1)) || 0, ratings.length]
 		}
 
-		return [0, 0]
+		const ratings = [...flatTravelRatings, ...passengerRatings]
+
+		const total = ratings.reduce((acc, rating) => acc + rating, 0)
+		return [Number((total / ratings.length).toFixed(1)) || 0, ratings.length]
 	}
 }
