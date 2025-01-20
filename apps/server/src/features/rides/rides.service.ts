@@ -398,10 +398,10 @@ export class RidesService {
 						if (ride.passengerStarRating) {
 							return ride.passengerStarRating
 						}
-					}
-
-					if (ride.driverStarRating) {
-						return ride.driverStarRating
+					} else {
+						if (ride.driverStarRating) {
+							return ride.driverStarRating
+						}
 					}
 				})
 				.filter((rating) => rating !== undefined)
