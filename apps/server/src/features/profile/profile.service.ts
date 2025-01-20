@@ -18,15 +18,14 @@ export class ProfileService {
 
 	async getUserProfile(id: User['id']): Promise<ProfileDto> {
 		const user = await this.usersRepository.findOne({
-			where: { id },
-			relations: { rides: { passenger: true } }
+			where: { id }
 		})
 
 		if (user == null) {
 			throw new NotFoundException('Usuario no encontrado')
 		}
 
-		const [rating, quantity] = this.ridesService.calculateRating(id, user.rides)
+		const [rating, quantity] = await this.ridesService.calculateRating(id)
 
 		const ratedUser: User & { rating: number; amountOfRapes: number } = {
 			...user,

@@ -161,10 +161,27 @@ export class TravelsService {
 				)
 		)
 
-		const formattedTravels = filteredTravels.map(({ rides, ...travel }) => ({
-			...travel,
-			passengerAmount: rides.filter((ride) => ride.isAccepted).length
-		}))
+		const formattedTravels = await Promise.all(
+			filteredTravels.map(
+				async ({
+					rides,
+					geoJsonLineString,
+					origin,
+					destination,
+					...travel
+				}) => {
+					const [rating, amountOfRapes] =
+						await this.ridesService.calculateRating(travel.vehicle.driver.id)
+
+					return {
+						...travel,
+						rating,
+						amountOfRapes,
+						passengerAmount: rides.filter((ride) => ride.isAccepted).length
+					}
+				}
+			)
+		)
 
 		return formattedTravels
 	}

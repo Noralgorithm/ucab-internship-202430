@@ -352,23 +352,34 @@ export class RidesService {
 		}
 	}
 
-	calculateRating(userId: User['id'], rides: Ride[]) {
-		const ratings = rides
-			.map((ride) => {
-				if (ride.passenger.id === userId) {
-					if (ride.passengerStarRating) {
-						return ride.passengerStarRating
+	async calculateRating(
+		userId: User['id']
+	): Promise<[rating: number, amountOfRapes: number]> {
+		const user = await this.usersRepository.findOne({
+			where: { id: userId },
+			relations: ['rides', 'rides.passenger']
+		})
+
+		if (user && user.rides.length > 0) {
+			const ratings = user.rides
+				.map((ride) => {
+					if (ride.passenger.id === userId) {
+						if (ride.passengerStarRating) {
+							return ride.passengerStarRating
+						}
 					}
-				}
 
-				if (ride.driverStarRating) {
-					return ride.driverStarRating
-				}
-			})
-			.filter((rating) => rating !== undefined)
+					if (ride.driverStarRating) {
+						return ride.driverStarRating
+					}
+				})
+				.filter((rating) => rating !== undefined)
 
-		const total = ratings.reduce((acc, rating) => acc + rating, 0)
+			const total = ratings.reduce((acc, rating) => acc + rating, 0)
 
-		return [total / ratings.length, ratings.length]
+			return [total / ratings.length, ratings.length]
+		}
+
+		return [0, 0]
 	}
 }
