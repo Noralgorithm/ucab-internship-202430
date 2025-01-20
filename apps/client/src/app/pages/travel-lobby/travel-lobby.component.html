@@ -78,9 +78,9 @@
 
           <section>
             <div class="card-row justify-between label-medium">
-              <div class="card-row">
-                <span class="passenger-name">{{ride.passenger.firstName}}
-                  {{ride.passenger.lastName}}</span>
+              <div class="card-row justify-between">
+                <span class="passenger-name">{{getFirstName(ride.passenger.firstName)}}
+                  {{getFirstLastName(ride.passenger.lastName)}}</span>
                 <div class="rating-information">
                   <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
                   <span class="card-information rating-number">4.8 (60)</span>

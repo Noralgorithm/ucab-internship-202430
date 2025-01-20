@@ -91,7 +91,7 @@ export const routes: Routes = [
 			{
 				path: '',
 				title: 'Inicio',
-				canActivate: [userStatusGuard],
+				// canActivate: [userStatusGuard],
 				component: HomeComponent
 			},
 			{

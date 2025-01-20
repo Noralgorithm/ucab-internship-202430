@@ -131,6 +131,22 @@ export class TravelLobbyComponent {
 			})
 	}
 
+	getFirstName(fullName: string) {
+		const fullNameWithoutSpaces = fullName.trim()
+
+		const names = fullNameWithoutSpaces.split('/w+/g')
+
+		return names[0]
+	}
+
+	getFirstLastName(fullLastName: string) {
+		const fullLastNameWithoutSpaces = fullLastName.trim()
+
+		const lastName = fullLastNameWithoutSpaces.split('/w+/g')
+
+		return lastName[0]
+	}
+
 	acceptRideRequest(request: Ride) {
 		this.answerRideRequestService
 			.execute(request.id, {
