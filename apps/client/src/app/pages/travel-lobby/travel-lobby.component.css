@@ -151,6 +151,7 @@ h1 {
 	border: 3px solid #bab3c7;
 	width: auto;
 	max-width: 100%;
+	min-width: 20.125rem;
 	display: flex;
 	justify-content: start;
 	align-items: center;
@@ -159,31 +160,38 @@ h1 {
 
 .card-row {
 	display: flex;
-	justify-content: left;
 	align-items: center;
 	gap: 0.6rem;
-	border: 2px solid red;
+	width: 100%;
 }
 
-.card-row.justify-between {
+.justify-between {
 	justify-content: space-between;
 }
 
 .avatar {
-	width: 4rem;
+	width: 3rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 100%;
 	object-fit: cover;
 	margin: 0.5rem 0;
 }
 
+.title-container {
+	display: flex;
+	gap: .625rem;
+	justify-content: center;
+}
+
 .passenger-name {
-	text-overflow: ellipsis;
 	color: var(--primary-text-value);
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .card-information-title {
 	color: var(--primary-text-placeholder);
+	white-space: nowrap;
 }
 
 .rating-number {

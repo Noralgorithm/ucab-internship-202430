@@ -14,7 +14,10 @@ export const userStatusGuard: CanActivateFn = () => {
 			}
 
 			if (res.data.payload?.type === 'ride') {
-				if (res.data.payload.status === 'in-progress') {
+				if (
+					res.data.payload.status === 'in-progress' ||
+					res.data.payload.status === 'completed'
+				) {
 					router.navigate(['in-ride'], {
 						queryParams: { id: res.data.payload.id }
 					})

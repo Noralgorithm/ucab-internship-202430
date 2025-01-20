@@ -29,10 +29,10 @@ export class Vehicle {
 	internalId: number
 
 	@Generated('uuid')
-	@Column({ type: 'uuid', unique: true })
+	@Column({ type: 'uuid' })
 	id: string
 
-	@Column({ type: 'varchar', length: MAX_PLATE_LENGTH, unique: true })
+	@Column({ type: 'varchar', length: MAX_PLATE_LENGTH })
 	plate: string
 
 	@Column({ type: 'varchar', length: BRAND_MAX_LENGTH })

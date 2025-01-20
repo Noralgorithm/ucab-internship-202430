@@ -161,10 +161,32 @@ export class TravelsService {
 				)
 		)
 
-		const formattedTravels = filteredTravels.map(({ rides, ...travel }) => ({
-			...travel,
-			passengerAmount: rides.filter((ride) => ride.isAccepted).length
-		}))
+		const formattedTravels = await Promise.all(
+			filteredTravels.map(
+				async ({
+					rides,
+					geoJsonLineString,
+					origin,
+					destination,
+					...travel
+				}) => {
+					const [rating, reviewsQuantity] =
+						await this.ridesService.calculateRating(travel.vehicle.driver.id)
+
+					travel.vehicle.driver = {
+						...travel.vehicle.driver,
+						// @ts-ignore
+						rating,
+						reviewsQuantity
+					}
+
+					return {
+						...travel,
+						passengerAmount: rides.filter((ride) => ride.isAccepted).length
+					}
+				}
+			)
+		)
 
 		return formattedTravels
 	}
@@ -172,10 +194,35 @@ export class TravelsService {
 	async findRideRequests(options: FindOneOptions<Travel>) {
 		const travelRideRequests = await this.travelsRepository.findOne({
 			where: options.where,
-			relations: ['rides', 'rides.passenger']
+			relations: { rides: { passenger: true } }
 		})
 
-		return travelRideRequests?.rides.filter((ride) => ride.isAccepted === null)
+		const rideRequests = travelRideRequests?.rides.filter(
+			(ride) => ride.isAccepted === null
+		)
+
+		if (rideRequests) {
+			const formattedRideRequests = await Promise.all(
+				rideRequests.map(async ({ ...ride }) => {
+					const [rating, reviewsQuantity] =
+						await this.ridesService.calculateRating(ride.passenger.id)
+
+					const newRide = {
+						...ride,
+						passenger: {
+							...ride.passenger,
+							rating,
+							reviewsQuantity
+						}
+					}
+					return {
+						...newRide
+					}
+				})
+			)
+
+			return formattedRideRequests
+		}
 	}
 
 	async changeStatus(

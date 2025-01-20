@@ -58,7 +58,7 @@ export class AddVehicleComponent {
 		plate: new FormControl('', [
 			Validators.required,
 			Validators.maxLength(7),
-			Validators.minLength(7)
+			Validators.minLength(6)
 		]),
 		brand: new FormControl('', Validators.required),
 		color: new FormControl('', Validators.required),

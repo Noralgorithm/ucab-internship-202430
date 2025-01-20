@@ -11,6 +11,8 @@ import { GeoJsonPoint } from '~/shared/types/maps/geo-json-points.type'
 import { RideTravelData } from '~/shared/types/rides/ride-request.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { RatingButtonsComponent } from '~/shared/ui/components/rating-buttons/rating-buttons.component'
+import { getFirstLastName } from '~/shared/utils/get-first-last-name'
+import { getFirstName } from '~/shared/utils/get-first-name'
 import { VehicleImageComponent } from '../../features/vehicles/components/vehicle-image/vehicle-image.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 
@@ -27,7 +29,7 @@ import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page
 	styleUrl: './rating-driver.component.css'
 })
 export class RatingDriverComponent implements OnInit {
-	ride: RideTravelData | null = null
+	ride: RideTravelData | undefined
 	selectedRating: number | null = null
 	rideId = ''
 	ownLocation: GeoJsonPoint = {
@@ -52,12 +54,19 @@ export class RatingDriverComponent implements OnInit {
 		this.getRideService.execute(this.rideId).subscribe({
 			next: (res) => {
 				this.ride = res.data
-				console.log('viaje obtenido')
 			},
 			error: () => {
-				console.log('error obteniendo el viaje')
+				this.toastrService.error('Error obteniendo la información de la cola')
 			}
 		})
+	}
+
+	showFirstName(fullName: string) {
+		return getFirstName(fullName)
+	}
+
+	showFirstLastName(fullLastName: string) {
+		return getFirstLastName(fullLastName)
 	}
 
 	onSelectedRating(rating: number) {

@@ -20,7 +20,7 @@ header h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: .1875rem;
+	gap: .3125rem;
 }
 
 .rating-icon {
@@ -47,7 +47,7 @@ header h1 {
 }
 
 .avatar {
-	width: 4rem;
+	width: 3rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 100%;
 	object-fit: cover;
@@ -56,4 +56,8 @@ header h1 {
 
 .passenger-information p {
 	color: var(--primary-text-value);
+}
+
+.send-rating {
+	margin-top: 3.4375rem;
 }

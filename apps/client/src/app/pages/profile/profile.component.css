@@ -19,6 +19,17 @@ a {
 	text-decoration: none;
 }
 
+.rating-number {
+	color: var(--primary-text-placeholder);
+}
+
+.rating-information {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: .1875rem;
+}
+
 .avatar {
 	width: 4rem;
 	aspect-ratio: 1 / 1;

@@ -145,6 +145,35 @@ export class RidesService {
 		return ride
 	}
 
+	async findWithRating(options: FindOneOptions<Ride>) {
+		const ride = await this.ridesRepository.findOne(options)
+
+		if (ride == null) {
+			throw new NotFoundException('Ride not found')
+		}
+
+		const [rating, reviewsQuantity] = await this.calculateRating(
+			ride.travel.vehicle.driver.id
+		)
+
+		const rideWithRating = {
+			...ride,
+			travel: {
+				...ride.travel,
+				vehicle: {
+					...ride.travel.vehicle,
+					driver: {
+						...ride.travel.vehicle.driver,
+						rating,
+						reviewsQuantity
+					}
+				}
+			}
+		}
+
+		return rideWithRating
+	}
+
 	async find(options: FindManyOptions<Ride>) {
 		const rides = await this.ridesRepository.find(options)
 
@@ -334,6 +363,8 @@ export class RidesService {
 		const ride = await this.ridesRepository.findOne({
 			where: {
 				passenger: { id: userId },
+				isAccepted: true,
+				travelCancelType: IsNull(),
 				dropOff: IsNull(),
 				arrivalTime: IsNull()
 			},
@@ -350,5 +381,58 @@ export class RidesService {
 			isIn: false,
 			payload: null
 		}
+	}
+
+	async calculateRating(
+		userId: User['id']
+	): Promise<[rating: number, reviewsQuantity: number]> {
+		const user = await this.usersRepository.findOne({
+			where: { id: userId },
+			relations: {
+				vehicles: { travels: { rides: true } },
+				rides: { passenger: true }
+			}
+		})
+
+		let flatTravelRatings: number[] = []
+
+		if (user && user.vehicles.length > 0) {
+			const travelRatings = user.vehicles.map((vehicle) => {
+				return vehicle.travels.map((travel) => {
+					const travelRatings = travel.rides.map(
+						(ride) => ride.driverStarRating
+					)
+
+					return travelRatings
+				})
+			})
+
+			flatTravelRatings = travelRatings
+				.flat(2)
+				.filter((rating) => rating !== undefined)
+		}
+
+		let passengerRatings: number[] = []
+
+		if (user && user.rides.length > 0) {
+			passengerRatings = user.rides
+				.map((ride) => {
+					if (ride.passenger.id === userId) {
+						if (ride.passengerStarRating) {
+							return ride.passengerStarRating
+						}
+					} else {
+						if (ride.driverStarRating) {
+							return ride.driverStarRating
+						}
+					}
+				})
+				.filter((rating) => rating !== undefined)
+		}
+
+		const ratings = [...flatTravelRatings, ...passengerRatings]
+
+		const total = ratings.reduce((acc, rating) => acc + rating, 0)
+		return [Number((total / ratings.length).toFixed(1)) || 0, ratings.length]
 	}
 }

@@ -124,7 +124,7 @@ header h1 {
 .driver-vehicle-information {
 	display: flex;
 	flex-direction: column;
-	margin-top: 4.8125rem;
+	margin-top: 3.125rem;
 }
 
 .driver-information {
@@ -135,7 +135,7 @@ header h1 {
 }
 
 .avatar {
-	width: 4rem;
+	width: 2.7rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 100%;
 	object-fit: cover;

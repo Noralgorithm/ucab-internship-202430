@@ -2,7 +2,7 @@
 	border-radius: 16px;
 	padding: 0 .6rem;
 	border: 3px solid #bab3c7;
-	width: 100%;
+	width: 18.75rem;
 	display: flex;
 	margin-top: 1rem;
 	align-items: center;
@@ -17,11 +17,15 @@
 	display: flex;
 	width: 100%;
 	align-items: center;
-	gap: 0.6rem;
+	gap: .75rem;
+}
+
+.justify-between {
+	justify-content: space-between;
 }
 
 .avatar {
-	width: 4rem;
+	width: 3rem;
 	aspect-ratio: 1 / 1;
 	border-radius: 100%;
 	object-fit: cover;

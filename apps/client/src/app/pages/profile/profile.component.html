@@ -1,76 +1,82 @@
 <page-layout [hasTabBar]="true">
-	<h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
+  <h1 class="heading-xsmall">{{ profile?.firstName ? profile!.firstName + ' ' + profile!.lastName : '--'}}</h1>
 
-	<img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
+  <img [src]="profile?.profilePicSrc" class="avatar" width="88px" height="88px" />
 
-	<star-rating [rating]='3.5' />
+  @if (profile) {
+  <div class="rating-information">
+    <star-rating [rating]="profile.rating" />
+    <span class="rating-number label-small">
+      ({{profile.reviewsQuantity}})</span>
+  </div>
+  }
 
-	<h3 class="paragraph-small email">{{ profile?.email ? profile?.email : '--' }}</h3>
+  <h3 class="paragraph-small email">{{ profile?.email ? profile?.email : '--' }}</h3>
 
 
-	<a mButton [severity]="'contrast'" class="edit-profile-button" routerLink="/app/profile/edit">Editar perfil</a>
+  <a mButton [severity]="'contrast'" class="edit-profile-button" routerLink="/app/profile/edit">Editar perfil</a>
 
-	<ul class="user-preferences paragraph-medium">
-		<div class="user-preference-item">
-			<img src="assets/svgs/Student.svg" />
-			<li>
-				@if (!profile?.type) {
-				--
-				} @else {
-				{{ userTypeLabels[profile!.type] }}
-				}
-			</li>
-		</div>
-		<div class="user-preference-item">
-			<img src="assets/svgs/Walk.svg" />
-			<li>
-				{{profile?.walkDistance ? profile!.walkDistance + ' mts' : '--'}}
-			</li>
-		</div>
-		<div class="user-preference-item">
-			<img src="assets/svgs/Favourite.svg" />
-			<li>
-				{{profile?.preferredRole ? userRoleLabels[profile!.preferredRole] : '--' }}
-			</li>
-		</div>
-	</ul>
+  <ul class="user-preferences paragraph-medium">
+    <div class="user-preference-item">
+      <img src="assets/svgs/Student.svg" />
+      <li>
+        @if (!profile?.type) {
+        --
+        } @else {
+        {{ userTypeLabels[profile!.type] }}
+        }
+      </li>
+    </div>
+    <div class="user-preference-item">
+      <img src="assets/svgs/Walk.svg" />
+      <li>
+        {{profile?.walkDistance ? profile!.walkDistance + ' mts' : '--'}}
+      </li>
+    </div>
+    <div class="user-preference-item">
+      <img src="assets/svgs/Favourite.svg" />
+      <li>
+        {{profile?.preferredRole ? userRoleLabels[profile!.preferredRole] : '--' }}
+      </li>
+    </div>
+  </ul>
 
-	<section>
-		<h4 class="paragraph-large">Información de contacto</h4>
-		<div class="phone-number-container paragraph-medium">
-			<span class="phone-number-label-container">
-				<img src="assets/svgs/Telephone.svg" class="phone-number-icon" />
-				<span class="phone-number-label">Número de teléfono</span>
-			</span>
-			<span class="phone-number">{{ profile?.phoneNumber ?? '--'}}</span>
-		</div>
-		<div class="phone-number-container paragraph-medium">
-			<span class="phone-number-label-container">
-				<img src="assets/svgs/Alert.svg" class="phone-number-icon" />
-				<span class="phone-number-label">Contacto de emergencia</span>
-			</span>
-			<span class="phone-number">{{ profile?.emergencyContactPhoneNumber ?? '--'}}</span>
-		</div>
-	</section>
+  <section>
+    <h4 class="paragraph-large">Información de contacto</h4>
+    <div class="phone-number-container paragraph-medium">
+      <span class="phone-number-label-container">
+        <img src="assets/svgs/Telephone.svg" class="phone-number-icon" />
+        <span class="phone-number-label">Número de teléfono</span>
+      </span>
+      <span class="phone-number">{{ profile?.phoneNumber ?? '--'}}</span>
+    </div>
+    <div class="phone-number-container paragraph-medium">
+      <span class="phone-number-label-container">
+        <img src="assets/svgs/Alert.svg" class="phone-number-icon" />
+        <span class="phone-number-label">Contacto de emergencia</span>
+      </span>
+      <span class="phone-number">{{ profile?.emergencyContactPhoneNumber ?? '--'}}</span>
+    </div>
+  </section>
 
-	<section>
-		<h4 class="paragraph-large">Mis Destinos</h4>
-		<div class="list-container">
-			@for (destination of destinations; track destination.id) {
-			<div class="chip-container">
-				<img src="assets/svgs/Destination.svg" />
-				<p class="label-small">{{destination.name}}</p>
-			</div>
-			}
-			<div>
-				<button size="small" mButton appearance="outlined" class="add-button"
-					(click)="redirectToMyDestinations()">Añadir</button>
-			</div>
-		</div>
-	</section>
+  <section>
+    <h4 class="paragraph-large">Mis Destinos</h4>
+    <div class="list-container">
+      @for (destination of destinations; track destination.id) {
+      <div class="chip-container">
+        <img src="assets/svgs/Destination.svg" />
+        <p class="label-small">{{destination.name}}</p>
+      </div>
+      }
+      <div>
+        <button size="small" mButton appearance="outlined" class="add-button"
+          (click)="redirectToMyDestinations()">Añadir</button>
+      </div>
+    </div>
+  </section>
 
-	<!-- TODO: add fuctionality My Routes -->
-	<!-- <section>
+  <!-- TODO: add fuctionality My Routes -->
+  <!-- <section>
 		<h4 class="paragraph-large">Mis Rutas</h4>
 		<div class="list-container">
 			<div class="chip-container">
@@ -87,10 +93,10 @@
 		</div>
 	</section> -->
 
-	<section class="action-buttons-container">
-		<button mButton size="large" severity="primary" (click)="logout()"> Cerrar Sesión</button>
-		<!-- TODO: add fuctionality to deactivate the account -->
-		<!-- <button mButton appearance="outlined" size="large"> Desactivar Cuenta</button> -->
-	</section>
+  <section class="action-buttons-container">
+    <button mButton size="large" severity="primary" (click)="logout()"> Cerrar Sesión</button>
+    <!-- TODO: add fuctionality to deactivate the account -->
+    <!-- <button mButton appearance="outlined" size="large"> Desactivar Cuenta</button> -->
+  </section>
 
 </page-layout>

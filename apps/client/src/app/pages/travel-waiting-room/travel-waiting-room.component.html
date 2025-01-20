@@ -28,12 +28,12 @@
     <div class="card-row paragraph-xsmall">
       <div class="card-information">
         <img class="card-information-icon" src="/assets/svgs/WalkGrey.svg" alt="icono de distancia a caminar" />
-        <span class="card-information-title paragraph-small">1500 mts</span>
+        <span class="card-information-title paragraph-small">150 mts</span>
       </div>
-      <div class="card-information">
+      <!-- <div class="card-information">
         <img class="card-information-icon" src="/assets/svgs/UnLink.svg" alt="icono de emparejamiento" />
         <span class="card-information-title paragraph-small">70%</span>
-      </div>
+      </div> -->
       @if(ride?.travel?.forWomen){
       <div class="only-woman-info">
         <img src="assets/svgs/SecurityShield.svg" alt="Escudo">
@@ -43,26 +43,31 @@
     </div>
   </header>
 
-  @if(ride?.travel?.vehicle) {
+  @if(ride?.travel?.vehicle?.driver) {
   <section class="driver-vehicle-information">
     <div class="driver-information">
       <img class="avatar" src="{{ ride?.travel?.vehicle?.driver?.profilePicSrc }}" alt="Imágen del conductor" />
-      <p class="label-medium">{{ride?.travel?.vehicle?.driver?.firstName}}
-        {{ride?.travel?.vehicle?.driver?.lastName}}</p>
-      <button (click)="redirectToChat()">
+      <p class="label-medium">{{showFirstName(ride?.travel?.vehicle?.driver?.firstName ?? 'Nombre no disponible')}}
+        {{showFirstLastName(ride?.travel?.vehicle?.driver?.lastName ?? 'Apellido no disponible')}}</p>
+      <button class="no-style-button" (click)="redirectToChat()">
         <img class="chat-icon" src="/assets/svgs/Chat.svg" alt="icono de chat">
       </button>
     </div>
     <div class="rating-information">
       <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-      <span class="card-information rating-number label-small">4.8 (60)</span>
+      <span class="card-information rating-number label-small">{{ride?.travel?.vehicle?.driver?.rating}}
+        ({{ride?.travel?.vehicle?.driver?.reviewsQuantity}})</span>
     </div>
+
+    @if(ride?.travel?.vehicle) {
     <movic-vehicle [color]="ride?.travel?.vehicle?.color ?? '#fff'"></movic-vehicle>
     <div class="vehicle-information">
       <p class="paragraph-medium">{{ride?.travel?.vehicle?.brand}} | {{ride?.travel?.vehicle?.model}}</p>
       <p class="paragraph-medium">{{ride?.travel?.vehicle?.plate}}</p>
     </div>
+    }
   </section>
   }
+
 
 </page-layout>

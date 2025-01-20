@@ -9,6 +9,8 @@ import {
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { TravelLobbyData } from '~/shared/types/travels/travel.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { getFirstLastName } from '~/shared/utils/get-first-last-name'
+import { getFirstName } from '~/shared/utils/get-first-name'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 import { RatingButtonsComponent } from '../../shared/ui/components/rating-buttons/rating-buttons.component'
 
@@ -44,11 +46,18 @@ export class RatingPassengersComponent implements OnInit {
 			next: (res) => {
 				this.travel = res.data
 			},
-			//TODO: ADD TOAST
 			error: (err) => {
-				console.log('Error obteniendo el viaje')
+				this.toastrService.error('Error obteniendo el viaje')
 			}
 		})
+	}
+
+	showFirstName(fullName: string) {
+		return getFirstName(fullName)
+	}
+
+	showFirstLastName(fullLastName: string) {
+		return getFirstLastName(fullLastName)
 	}
 
 	ratingPassengers() {

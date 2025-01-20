@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { RidesService } from '../rides/rides.service'
 import { User } from '../users/entities/user.entity'
 import { AvailableDriversFiltersDto } from './dto/available-drivers-filters.dto'
 import { CancelDto } from './dto/cancel.dto'
@@ -20,7 +21,10 @@ import { TravelsService } from './travels.service'
 @ApiTags('[WIP] travels')
 @Controller('travels')
 export class TravelsController {
-	constructor(private readonly travelsService: TravelsService) {}
+	constructor(
+		private readonly travelsService: TravelsService,
+		private readonly ridesService: RidesService
+	) {}
 
 	@Post()
 	create(
@@ -60,7 +64,29 @@ export class TravelsController {
 			relations: ['vehicle', 'vehicle.driver', 'rides', 'rides.passenger']
 		})
 
-		return travel
+		const ridesWithRating = await Promise.all(
+			travel.rides.map(async (ride) => {
+				const [rating, quantity] = await this.ridesService.calculateRating(
+					ride.passenger.id
+				)
+
+				const ratedUser: User & { rating: number; reviewsQuantity: number } = {
+					...ride.passenger,
+					rating,
+					reviewsQuantity: quantity
+				}
+
+				return {
+					...ride,
+					passenger: ratedUser
+				}
+			})
+		)
+
+		return {
+			...travel,
+			rides: ridesWithRating
+		}
 	}
 
 	@Patch('start')
