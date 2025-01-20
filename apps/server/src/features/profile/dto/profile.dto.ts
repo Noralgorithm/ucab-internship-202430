@@ -45,6 +45,12 @@ export class ProfileDto {
 	@Expose()
 	isBlocked: boolean
 
+	@Expose()
+	rating: number
+
+	@Expose()
+	amountOfRapes: number
+
 	@ApiProperty({ type: 'string', format: 'date-time' })
 	@Expose()
 	@Type(() => Date)
@@ -54,7 +60,7 @@ export class ProfileDto {
 	canRideAt: DateTime
 
 	@Expose()
-	static from(user: User) {
+	static from(user: User & { rating: number; amountOfRapes: number }) {
 		return plainToInstance(ProfileDto, user satisfies ProfileDto, {
 			excludeExtraneousValues: true
 		})

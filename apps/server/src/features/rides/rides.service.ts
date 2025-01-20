@@ -351,4 +351,24 @@ export class RidesService {
 			payload: null
 		}
 	}
+
+	calculateRating(userId: User['id'], rides: Ride[]) {
+		const ratings = rides
+			.map((ride) => {
+				if (ride.passenger.id === userId) {
+					if (ride.passengerStarRating) {
+						return ride.passengerStarRating
+					}
+				}
+
+				if (ride.driverStarRating) {
+					return ride.driverStarRating
+				}
+			})
+			.filter((rating) => rating !== undefined)
+
+		const total = ratings.reduce((acc, rating) => acc + rating, 0)
+
+		return [total / ratings.length, ratings.length]
+	}
 }
