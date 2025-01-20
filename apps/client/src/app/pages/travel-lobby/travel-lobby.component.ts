@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { Subscription, interval, mergeMap } from 'rxjs'
 import { AnswerRideRequestService } from '~/features/rides/api/answer-ride-request.service'
+import { CancelTravelService } from '~/features/travels/api/cancel-travel.service'
 import { GetTravelByIdService } from '~/features/travels/api/get-travel-by-id.service'
 import { StartTravelService } from '~/features/travels/api/start-travel.service'
 import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.service'
@@ -36,6 +37,8 @@ export class TravelLobbyComponent {
 
 	travelSubscription: Subscription | null = null
 
+	isCancelTravelModalOpen = false
+
 	constructor(
 		private readonly getTravelByIdService: GetTravelByIdService,
 		public readonly vehiclesColorService: VehiclesColorsService,
@@ -43,7 +46,8 @@ export class TravelLobbyComponent {
 		private readonly answerRideRequestService: AnswerRideRequestService,
 		private readonly startTravelService: StartTravelService,
 		private readonly toastr: ToastrService,
-		private readonly route: ActivatedRoute
+		private readonly route: ActivatedRoute,
+		private readonly cancelTravelService: CancelTravelService
 	) {
 		this.route.queryParams.subscribe((params) => {
 			const travelId = params['id'] as string
@@ -104,8 +108,27 @@ export class TravelLobbyComponent {
 		})
 	}
 
+	openCancelTravelModal() {
+		this.isCancelTravelModalOpen = true
+	}
+
 	openPendingRequestsModal() {
 		this.isPendingRequestsModalOpen = true
+	}
+
+	cancelTravel() {
+		if (!this.travel) return
+		this.cancelTravelService
+			.execute({ travelId: this.travel.id, reason: 'driver-canceled' })
+			.subscribe({
+				next: () => {
+					this.toastr.success('Viaje cerrado con éxito')
+					this.router.navigate(['/app'])
+				},
+				error: () => {
+					this.toastr.error('Error cerrando el viaje')
+				}
+			})
 	}
 
 	acceptRideRequest(request: Ride) {

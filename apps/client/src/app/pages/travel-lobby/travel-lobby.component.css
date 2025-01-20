@@ -177,6 +177,12 @@ h1 {
 	margin: 0.5rem 0;
 }
 
+.title-container {
+	display: flex;
+	gap: .625rem;
+	justify-content: center;
+}
+
 .passenger-name {
 	text-overflow: ellipsis;
 	color: var(--primary-text-value);
