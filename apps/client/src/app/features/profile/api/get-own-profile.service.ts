@@ -49,4 +49,6 @@ interface ResponseDto {
 	isDriver: boolean
 	isActive: boolean
 	isBlocked: boolean
+	rating: number
+	amountOfRapes: number
 }

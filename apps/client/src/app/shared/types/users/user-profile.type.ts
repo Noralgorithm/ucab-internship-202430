@@ -16,4 +16,6 @@ export interface UserProfile {
 	isDriver: boolean
 	isActive: boolean
 	isBlocked: boolean
+	rating: number
+	amountOfRapes: number
 }
