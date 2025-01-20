@@ -66,7 +66,9 @@ export class TravelsController {
 
 		const ridesWithRating = await Promise.all(
 			travel.rides.map(async (ride) => {
-				const [rating, quantity] = await this.ridesService.calculateRating(id)
+				const [rating, quantity] = await this.ridesService.calculateRating(
+					ride.passenger.id
+				)
 
 				const ratedUser: User & { rating: number; reviewsQuantity: number } = {
 					...ride.passenger,
