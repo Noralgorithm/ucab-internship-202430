@@ -10,6 +10,8 @@ import { VehiclesColorsService } from '~/features/vehicles/vehicles-colors.servi
 import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelLobbyData } from '~/shared/types/travels/travel.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
+import { getFirstLastName } from '~/shared/utils/get-first-last-name'
+import { getFirstName } from '~/shared/utils/get-first-name'
 import { VehicleImageComponent } from '../../features/vehicles/components/vehicle-image/vehicle-image.component'
 import { ModalComponent } from '../../shared/ui/components/modal/modal.component'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
@@ -38,6 +40,10 @@ export class TravelLobbyComponent {
 	travelSubscription: Subscription | null = null
 
 	isCancelTravelModalOpen = false
+
+	firtName = ''
+
+	lastName = ''
 
 	constructor(
 		private readonly getTravelByIdService: GetTravelByIdService,
@@ -131,20 +137,12 @@ export class TravelLobbyComponent {
 			})
 	}
 
-	getFirstName(fullName: string) {
-		const fullNameWithoutSpaces = fullName.trim()
-
-		const names = fullNameWithoutSpaces.split('/w+/g')
-
-		return names[0]
+	showFirstName(fullName: string) {
+		return getFirstName(fullName)
 	}
 
-	getFirstLastName(fullLastName: string) {
-		const fullLastNameWithoutSpaces = fullLastName.trim()
-
-		const lastName = fullLastNameWithoutSpaces.split('/w+/g')
-
-		return lastName[0]
+	showFirstLastName(fullLastName: string) {
+		return getFirstLastName(fullLastName)
 	}
 
 	acceptRideRequest(request: Ride) {

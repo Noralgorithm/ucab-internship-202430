@@ -6,6 +6,8 @@ import { GetRideService } from '~/features/rides/api/get-ride.service'
 import { VehicleImageComponent } from '~/features/vehicles/components/vehicle-image/vehicle-image.component'
 import { RideTravelData } from '~/shared/types/rides/ride-request.type'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
+import { getFirstLastName } from '~/shared/utils/get-first-last-name'
+import { getFirstName } from '~/shared/utils/get-first-name'
 
 const REFETCH_WAIT_TIME_IN_MS = 2000
 
@@ -65,6 +67,14 @@ export class TravelWaitingRoomComponent implements OnInit {
 					}
 				}
 			})
+	}
+
+	showFirstName(fullName: string) {
+		return getFirstName(fullName)
+	}
+
+	showFirstLastName(fullLastName: string) {
+		return getFirstLastName(fullLastName)
 	}
 
 	ngOnDestroy() {

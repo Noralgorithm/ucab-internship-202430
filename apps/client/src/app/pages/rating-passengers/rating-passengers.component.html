@@ -8,11 +8,12 @@
     <section class="passenger-rating-information">
       <div class="passenger-information">
         <img class="avatar" src="{{ ride.passenger.profilePicSrc}}" alt="Imágen del Pasajero" />
-        <p class="label-medium">{{ride.passenger.firstName}}
-          {{ride.passenger.lastName}}</p>
+        <p class="label-medium">{{showFirstName(ride.passenger.firstName)}}
+          {{showFirstLastName(ride.passenger.lastName)}}</p>
         <div class="rating-information">
           <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-          <span class="card-information rating-number label-small">4.8 (60)</span>
+          <span class="card-information rating-number label-small">{{ride.passenger.rating}}
+            ({{ride.passenger.reviewsQuantity}})</span>
         </div>
       </div>
       <rating-buttons (selectedRating)="onSelectedRating($event, ride.id)"></rating-buttons>
@@ -20,7 +21,7 @@
     }
   </div>
 
-  <button mButton size="large" (click)="ratingPassengers()">
+  <button class="send-rating" mButton size="large" (click)="ratingPassengers()">
     Calificar
   </button>
 

@@ -79,11 +79,12 @@
           <section>
             <div class="card-row justify-between label-medium">
               <div class="card-row justify-between">
-                <span class="passenger-name">{{getFirstName(ride.passenger.firstName)}}
-                  {{getFirstLastName(ride.passenger.lastName)}}</span>
+                <span class="passenger-name">{{showFirstName(ride.passenger.firstName)}}
+                  {{showFirstLastName(ride.passenger.lastName)}}</span>
                 <div class="rating-information">
                   <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
-                  <span class="card-information rating-number">4.8 (60)</span>
+                  <span class="card-information rating-number">{{ride.passenger.rating}}
+                    ({{ride.passenger.reviewsQuantity}})</span>
                 </div>
               </div>
               <button class="no-style-button" (click)="redirectToChat(ride.id)">
@@ -134,11 +135,12 @@
           <section>
             <div class="card-row justify-between label-medium">
               <div class="card-row">
-                <span class="passenger-name">{{ride.passenger.firstName}}
-                  {{ride.passenger.lastName}}</span>
+                <span class="passenger-name">{{showFirstName(ride.passenger.firstName)}}
+                  {{showFirstLastName(ride.passenger.lastName)}}</span>
                 <div class="rating-information">
                   <img class="rating-icon" src="assets/svgs/FullStarBlue.svg" alt="icono de rating">
-                  <span class="card-information rating-number">4.8 (60)</span>
+                  <span class="card-information rating-number">{{ride.passenger.rating}}
+                    ({{ride.passenger.reviewsQuantity}})</span>
                 </div>
               </div>
             </div>
@@ -166,11 +168,10 @@
           </button>
         </div>
         }
+        @if (pendingRequests.length === 0) {
+        <p class="paragraph-small text-no-requests">No hay solicitudes pendientes</p>
+        }
       </div>
-
-      @if (pendingRequests.length === 0) {
-      <p class="paragraph-small text-no-requests">No hay solicitudes pendientes</p>
-      }
     </modal>
   </main>
 </page-layout>
