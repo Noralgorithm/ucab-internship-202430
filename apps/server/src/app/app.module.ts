@@ -7,6 +7,7 @@ import { AuthModule } from '~/features/auth/auth.module'
 import { DestinationsModule } from '~/features/destinations/destinations.module'
 import { MessagesModule } from '~/features/messages/messages.module'
 import { ProfileModule } from '~/features/profile/profile.module'
+import { RankingModule } from '~/features/ranking/ranking.module'
 import { RidesModule } from '~/features/rides/rides.module'
 import { RoutesModule } from '~/features/routes/routes.module'
 import { TravelsModule } from '~/features/travels/travels.module'
@@ -43,7 +44,8 @@ import { FilesController } from './files.controller'
 		RoutesModule,
 		TravelsModule,
 		RidesModule,
-		MessagesModule
+		MessagesModule,
+		RankingModule
 	],
 	controllers: [FilesController]
 })
