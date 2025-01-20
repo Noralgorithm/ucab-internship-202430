@@ -173,10 +173,15 @@ export class TravelsService {
 					const [rating, reviewsQuantity] =
 						await this.ridesService.calculateRating(travel.vehicle.driver.id)
 
+					travel.vehicle.driver = {
+						...travel.vehicle.driver,
+						// @ts-ignore
+						rating,
+						reviewsQuantity
+					}
+
 					return {
 						...travel,
-						rating,
-						reviewsQuantity,
 						passengerAmount: rides.filter((ride) => ride.isAccepted).length
 					}
 				}
