@@ -1,5 +1,6 @@
-import { Module, Provider } from '@nestjs/common'
+import { Module, Provider, forwardRef } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Ride } from '../rides/entities/ride.entity'
 import { Travel } from '../travels/entities/travel.entity'
 import { TravelsModule } from '../travels/travels.module'
 import { UsersModule } from '../users/users.module'
@@ -14,8 +15,13 @@ const distanceMatrixStrategyProvider: Provider<DistanceMatrixStrategy> = {
 }
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Travel]), UsersModule, TravelsModule],
+	imports: [
+		TypeOrmModule.forFeature([Travel, Ride]),
+		UsersModule,
+		forwardRef(() => TravelsModule)
+	],
 	controllers: [RankingController],
-	providers: [RankingService, distanceMatrixStrategyProvider]
+	providers: [RankingService, distanceMatrixStrategyProvider],
+	exports: [distanceMatrixStrategyProvider]
 })
 export class RankingModule {}

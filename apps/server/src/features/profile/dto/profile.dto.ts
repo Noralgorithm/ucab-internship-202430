@@ -60,6 +60,18 @@ export class ProfileDto {
 	canRideAt: DateTime
 
 	@Expose()
+	starRatingAsPassenger?: number
+
+	@Expose()
+	reviewsQuantityAsPassenger: number
+
+	@Expose()
+	starRatingAsDriver?: number
+
+	@Expose()
+	reviewsQuantityAsDriver: number
+
+	@Expose()
 	static from(user: User & { rating: number; reviewsQuantity: number }) {
 		return plainToInstance(ProfileDto, user satisfies ProfileDto, {
 			excludeExtraneousValues: true

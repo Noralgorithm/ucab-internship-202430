@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { FileStorageModule } from '~/shared/files-upload/file-storage/file-storage.module'
 import { RidesModule } from '../rides/rides.module'
 import { User } from '../users/entities/user.entity'
+import { UsersModule } from '../users/users.module'
 import { ProfileController } from './profile.controller'
 import { ProfileService } from './profile.service'
 
@@ -12,7 +13,8 @@ import { ProfileService } from './profile.service'
 		TypeOrmModule.forFeature([User]),
 		JwtModule,
 		FileStorageModule,
-		RidesModule
+		RidesModule,
+		UsersModule
 	],
 	controllers: [ProfileController],
 	providers: [ProfileService]

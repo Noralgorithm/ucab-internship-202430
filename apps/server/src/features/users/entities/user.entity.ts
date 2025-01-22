@@ -104,6 +104,18 @@ export class User {
 	})
 	canRideAt: DateTime
 
+	@Column({ type: 'float', nullable: true })
+	starRatingAsPassenger?: number
+
+	@Column({ type: 'int', default: 0 })
+	reviewsQuantityAsPassenger: number
+
+	@Column({ type: 'float', nullable: true })
+	starRatingAsDriver?: number
+
+	@Column({ type: 'int', default: 0 })
+	reviewsQuantityAsDriver: number
+
 	@OneToMany(
 		() => Vehicle,
 		(vehicle) => vehicle.driver,

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { FileStorageService } from '~/shared/files-upload/file-storage/file-storage.service'
 import { RidesService } from '../rides/rides.service'
 import { User } from '../users/entities/user.entity'
+import { UsersService } from '../users/users.service'
 import { ProfileDto } from './dto/profile.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 
@@ -13,10 +14,14 @@ export class ProfileService {
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
 		private readonly fileStorageService: FileStorageService,
-		private readonly ridesService: RidesService
+		private readonly ridesService: RidesService,
+		private readonly usersService: UsersService
 	) {}
 
 	async getUserProfile(id: User['id']): Promise<ProfileDto> {
+		await this.usersService.updateRatingAsDriver(id)
+		await this.usersService.updateRatingAsPassenger(id)
+
 		const user = await this.usersRepository.findOne({
 			where: { id }
 		})

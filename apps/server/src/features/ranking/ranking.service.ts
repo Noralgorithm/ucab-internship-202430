@@ -4,11 +4,13 @@ import {
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Brackets, Equal, Not, Or, Repository } from 'typeorm'
+import { Brackets, Equal, IsNull, Not, Or, Repository } from 'typeorm'
 import { Gender, RouteType } from '~/shared/constants'
+import { Ride } from '../rides/entities/ride.entity'
 import { Travel } from '../travels/entities/travel.entity'
 import { TravelStatus } from '../travels/enums/travel-status.enum'
 import { TravelsService } from '../travels/travels.service'
+import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { RankingDto } from './dto/ranking.dto'
 import { DistanceMatrix, DistanceMatrixStrategy } from './strategies/types'
@@ -23,7 +25,9 @@ export class RankingService {
 		private readonly usersService: UsersService,
 		private readonly travelsService: TravelsService,
 		@InjectRepository(Travel)
-		private readonly travelsRepository: Repository<Travel>
+		private readonly travelsRepository: Repository<Travel>,
+		@InjectRepository(Ride)
+		private readonly ridesRepository: Repository<Ride>
 	) {}
 
 	//TODO: don't match passenger if they already are in a ride that has not been completed or cancelled
@@ -53,7 +57,26 @@ export class RankingService {
 			})
 		) {
 			throw new UnprocessableEntityException(
-				'No puedes buscar rutas si eres conductor de un viaje que no se ha completado'
+				'No puedes buscar rutas si eres conductor de un viaje que no se ha completado o cancelado'
+			)
+		}
+
+		if (
+			await this.ridesRepository.exists({
+				where: [
+					{
+						passenger: { id: passenger.id },
+						travelCancelType: IsNull()
+					},
+					{
+						passenger: { id: passenger.id },
+						arrivalTime: IsNull()
+					}
+				]
+			})
+		) {
+			throw new UnprocessableEntityException(
+				'No puedes buscar rutas si estás en una cola que no se ha completado o cancelado'
 			)
 		}
 
@@ -98,6 +121,13 @@ export class RankingService {
 				'available_travels'
 			)
 			.innerJoin('available_travels', 'at', 'at.id = t.id')
+			.innerJoinAndSelect('t.vehicle', 'v')
+			.innerJoinAndSelect('v.driver', 'd')
+			.leftJoinAndSelect(
+				't.rides',
+				'r',
+				'r.travel_internal_id = t.internal_id AND r.is_accepted IS TRUE'
+			)
 			.getMany()
 
 		if (travels.length <= 0) {
@@ -110,10 +140,20 @@ export class RankingService {
 
 				const travelDistanceMatrix = {
 					travelId: t.id,
-					distanceMatrix: [] as DistanceMatrix[]
+					driverId: t.vehicle.driver.id,
+					availableSeatQuantity: t.availableSeatQuantity,
+					rating: t.vehicle.driver.starRatingAsDriver,
+					reviewsQuantity: t.vehicle.driver.reviewsQuantityAsDriver,
+					distanceMatrix: [] as DistanceMatrix[],
+					passengerAmount: t.rides.length
 				} as {
 					travelId: Travel['id']
+					availableSeatQuantity: Travel['availableSeatQuantity']
+					driverId: User['id']
+					rating: User['starRatingAsDriver']
+					reviewsQuantity: User['reviewsQuantityAsDriver']
 					distanceMatrix: DistanceMatrix[]
+					passengerAmount: number
 				}
 
 				for (
@@ -159,14 +199,31 @@ export class RankingService {
 			.sort(
 				(a, b) => a.distanceMatrix[0].distance - b.distanceMatrix[0].distance
 			)
-			.map(({ travelId, distanceMatrix }) => ({
-				travelId,
-				distance: distanceMatrix[0]
-			}))
+			.map(
+				({
+					travelId,
+					driverId,
+					availableSeatQuantity,
+					passengerAmount,
+					rating,
+					reviewsQuantity
+				}) => ({
+					travelId,
+					driverId,
+					availableSeatQuantity,
+					passengerAmount,
+					rating,
+					reviewsQuantity
+				})
+			)
 	}
 }
 
 export interface RankResponse {
 	travelId: Travel['id']
-	distance: DistanceMatrix
+	availableSeatQuantity: Travel['availableSeatQuantity']
+	driverId: User['id']
+	rating: User['starRatingAsDriver']
+	reviewsQuantity: User['reviewsQuantityAsDriver']
+	passengerAmount: number
 }

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { FindManyOptions, Repository } from 'typeorm'
+import { FindManyOptions, IsNull, Not, Repository } from 'typeorm'
 import { RidesService } from '../rides/rides.service'
 import { TravelsService } from '../travels/travels.service'
 import { User } from './entities/user.entity'
@@ -57,5 +57,74 @@ export class UsersService {
 		}
 
 		return { isIn: false, payload: null }
+	}
+
+	async updateRatingAsPassenger(id: User['id']) {
+		const user = await this.findOne(id)
+
+		const rides = await this.ridesService.find({
+			where: { passenger: { id }, driverStarRating: Not(IsNull()) }
+		})
+
+		if (rides.length === 0) {
+			return
+		}
+
+		const [accumulatedStarRating, reviewsQuantity] = rides.reduce(
+			(acc, cur) =>
+				cur.driverStarRating == null
+					? acc
+					: [acc[0] + cur.driverStarRating, acc[1] + 1],
+			[
+				user.starRatingAsPassenger == null
+					? 0
+					: user.starRatingAsPassenger * user.reviewsQuantityAsPassenger,
+				user.reviewsQuantityAsPassenger
+			]
+		)
+
+		await this.usersRepository.update(
+			{ id },
+			{
+				starRatingAsPassenger: accumulatedStarRating / reviewsQuantity,
+				reviewsQuantityAsPassenger: reviewsQuantity
+			}
+		)
+	}
+
+	async updateRatingAsDriver(id: User['id']) {
+		const user = await this.findOne(id)
+
+		const rides = await this.ridesService.find({
+			where: {
+				travel: { vehicle: { driver: { id } } },
+				passengerStarRating: Not(IsNull())
+			}
+		})
+
+		if (rides.length === 0) {
+			return
+		}
+
+		const [accumulatedStarRating, reviewsQuantity] = rides.reduce(
+			(acc, cur) =>
+				cur.passengerStarRating == null
+					? acc
+					: [acc[0] + cur.passengerStarRating, acc[1] + 1],
+			[
+				user.starRatingAsDriver == null
+					? 0
+					: user.starRatingAsDriver * user.reviewsQuantityAsDriver,
+				user.reviewsQuantityAsDriver
+			]
+		)
+
+		await this.usersRepository.update(
+			{ id },
+			{
+				starRatingAsDriver: accumulatedStarRating / reviewsQuantity,
+				reviewsQuantityAsDriver: reviewsQuantity
+			}
+		)
 	}
 }

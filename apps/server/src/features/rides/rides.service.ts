@@ -1,8 +1,10 @@
 import {
 	ConflictException,
+	Inject,
 	Injectable,
 	NotFoundException,
-	UnprocessableEntityException
+	UnprocessableEntityException,
+	forwardRef
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
@@ -14,6 +16,7 @@ import {
 } from '~/shared/constants'
 import { TravelStatus } from '../travels/enums/travel-status.enum'
 import { User } from '../users/entities/user.entity'
+import { UsersService } from '../users/users.service'
 import { AnswerRequestDto } from './dto/answer-request.dto'
 import { CancelRequestDto } from './dto/cancel-request.dto'
 import { CreateRideDto } from './dto/create-ride.dto'
@@ -28,7 +31,9 @@ export class RidesService {
 		@InjectRepository(Ride)
 		private readonly ridesRepository: Repository<Ride>,
 		@InjectRepository(User)
-		private readonly usersRepository: Repository<User>
+		private readonly usersRepository: Repository<User>,
+		@Inject(forwardRef(() => UsersService))
+		private readonly usersService: UsersService
 	) {}
 
 	async create(createRideDto: CreateRideDto) {
@@ -299,7 +304,7 @@ export class RidesService {
 	}: FinishRideDto) {
 		const ride = await this.findOne({
 			where: { id },
-			relations: { passenger: true }
+			relations: { passenger: true, travel: { vehicle: { driver: true } } }
 		})
 
 		if (ride.arrivalTime) {
@@ -319,6 +324,9 @@ export class RidesService {
 				passengerStarRating
 			}
 		)
+
+		await this.usersService.updateRatingAsDriver(ride.travel.vehicle.driver.id)
+		await this.usersService.updateRatingAsPassenger(ride.passenger.id)
 
 		//TODO: extract this to users service
 
@@ -344,7 +352,10 @@ export class RidesService {
 		driverCommentAfterRide?: Ride['driverCommentAfterRide']
 		driverStarRating: Ride['driverStarRating']
 	}) {
-		const ride = await this.findOne({ where: { id } })
+		const ride = await this.findOne({
+			where: { id },
+			relations: { passenger: true, travel: { vehicle: { driver: true } } }
+		})
 
 		if (!ride.tookTheRide) {
 			throw new UnprocessableEntityException('Ride was not taken')
@@ -357,6 +368,9 @@ export class RidesService {
 				driverStarRating
 			}
 		)
+
+		await this.usersService.updateRatingAsDriver(ride.travel.vehicle.driver.id)
+		await this.usersService.updateRatingAsPassenger(ride.passenger.id)
 	}
 
 	async getUserUnfinishedRide(userId: User['id']) {
