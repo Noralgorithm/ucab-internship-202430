@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms'
 import { UserCurrentRoleService } from '~/features/profile/user-current-role.service'
 import { PageLayoutComponent } from '../../shared/ui/components/page-layout/page-layout.component'
 import { RadioButtonComponent } from '../../shared/ui/components/radio-button/radio-button.component'
-
 @Component({
 	selector: 'app-home',
 	standalone: true,
