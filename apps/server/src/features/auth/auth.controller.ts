@@ -101,9 +101,4 @@ export class AuthController {
 	signIn(@Body() signInDto: SignInDto) {
 		return this.authService.signIn(signInDto)
 	}
-
-	@Get('sexo')
-	async sexo() {
-		return this.whitelistProvider.getWhitelist()
-	}
 }
