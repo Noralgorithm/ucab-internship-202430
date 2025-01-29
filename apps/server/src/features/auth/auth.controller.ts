@@ -21,7 +21,6 @@ import { SignInDto } from './dto/sign-in.dto'
 import { SignUpRequestResponseDto } from './dto/sign-up-request-response.dto'
 import { SignUpDto } from './dto/sign-up.dto'
 import { WhitelistRequestSignUpDto } from './dto/whitelist-request-sign-up.dto'
-import { WhitelistProvider } from './providers/whitelist.provider'
 
 @ApiTags('auth')
 @Public()
@@ -30,8 +29,7 @@ export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly mailingService: MailingService,
-		private readonly configService: ConfigService,
-		private readonly whitelistProvider: WhitelistProvider
+		private readonly configService: ConfigService
 	) {}
 
 	@HttpCode(200)
