@@ -4,15 +4,15 @@ import {
 	UnprocessableEntityException
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Brackets, Equal, IsNull, Not, Or, Repository } from 'typeorm'
+import { Brackets, Equal, In, IsNull, Not, Or, Repository } from 'typeorm'
 import { Gender, RouteType } from '~/shared/constants'
 import { Ride } from '../rides/entities/ride.entity'
 import { Travel } from '../travels/entities/travel.entity'
 import { TravelStatus } from '../travels/enums/travel-status.enum'
-import { TravelsService } from '../travels/travels.service'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { RankingDto } from './dto/ranking.dto'
+import { TravelDistanceMatrixPerPassenger } from './entities/travel-distance-matrix-per-passenger.entity'
 import { DistanceMatrix, DistanceMatrixStrategy } from './strategies/types'
 
 const MAX_ELEMENTS_PER_REQUEST = 25
@@ -23,15 +23,17 @@ export class RankingService {
 		@Inject(DistanceMatrixStrategy)
 		private readonly distanceMatrixStrategy: DistanceMatrixStrategy,
 		private readonly usersService: UsersService,
-		private readonly travelsService: TravelsService,
 		@InjectRepository(Travel)
 		private readonly travelsRepository: Repository<Travel>,
 		@InjectRepository(Ride)
-		private readonly ridesRepository: Repository<Ride>
+		private readonly ridesRepository: Repository<Ride>,
+		@InjectRepository(TravelDistanceMatrixPerPassenger)
+		private readonly travelDistanceMatrixPerPassengerRepository: Repository<TravelDistanceMatrixPerPassenger>
 	) {}
 
 	//TODO: don't match passenger if they already are in a ride that has not been completed or cancelled
 	//TODO: don't match passenger if they currently are driver of a not completed or cancelled travel
+	//* Tested with not completed travels and rides, pending to test with cancelled travels and rides
 	async rank({
 		passenger,
 		routeType,
@@ -134,24 +136,57 @@ export class RankingService {
 			return []
 		}
 
+		const travelsDistanceMatrixPerPassenger =
+			await this.travelDistanceMatrixPerPassengerRepository.find({
+				where: {
+					passenger: { id: passenger.id },
+					travel: { id: In(travels.map((t) => t.id)) }
+				},
+				relations: { travel: true, passenger: true }
+			})
+
 		const travelsDistanceMatrix = await Promise.all(
 			travels.map(async (t) => {
+				const precalculatedTravelDistanceMatrix =
+					travelsDistanceMatrixPerPassenger.find(
+						(tdm) => tdm.travel.id === t.id
+					)
+
+				if (precalculatedTravelDistanceMatrix != null) {
+					return {
+						travel: t,
+						rating: t.vehicle.driver.totalStarRating,
+						reviewsQuantity: t.vehicle.driver.totalReviewsQuantity,
+						distanceMatrix: [
+							{
+								destination: precalculatedTravelDistanceMatrix.destination,
+								distance: precalculatedTravelDistanceMatrix.distance,
+								duration: precalculatedTravelDistanceMatrix.duration,
+								origin: precalculatedTravelDistanceMatrix.origin
+							}
+						] as DistanceMatrix[],
+						passengerAmount: t.rides.length
+					} as {
+						travel: Travel
+						rating: User['totalStarRating']
+						reviewsQuantity: User['totalReviewsQuantity']
+						distanceMatrix: DistanceMatrix[]
+						passengerAmount: number
+					}
+				}
+
 				const chunkSize = MAX_ELEMENTS_PER_REQUEST
 
 				const travelDistanceMatrix = {
-					travelId: t.id,
-					driverId: t.vehicle.driver.id,
-					availableSeatQuantity: t.availableSeatQuantity,
-					rating: t.vehicle.driver.starRatingAsDriver,
-					reviewsQuantity: t.vehicle.driver.reviewsQuantityAsDriver,
+					travel: t,
+					rating: t.vehicle.driver.totalStarRating,
+					reviewsQuantity: t.vehicle.driver.totalReviewsQuantity,
 					distanceMatrix: [] as DistanceMatrix[],
 					passengerAmount: t.rides.length
 				} as {
-					travelId: Travel['id']
-					availableSeatQuantity: Travel['availableSeatQuantity']
-					driverId: User['id']
-					rating: User['starRatingAsDriver']
-					reviewsQuantity: User['reviewsQuantityAsDriver']
+					travel: Travel
+					rating: User['totalStarRating']
+					reviewsQuantity: User['totalReviewsQuantity']
 					distanceMatrix: DistanceMatrix[]
 					passengerAmount: number
 				}
@@ -195,35 +230,44 @@ export class RankingService {
 			})
 		)
 
+		for (const t of travelsDistanceMatrix) {
+			const precalculatedTravelDistanceMatrix =
+				travelsDistanceMatrixPerPassenger.find(
+					(tdm) => tdm.travel.id === t.travel.id
+				)
+
+			if (precalculatedTravelDistanceMatrix != null) {
+				continue
+			}
+
+			const passengerInMemory = await this.usersService.findOne(passenger.id)
+
+			await this.travelDistanceMatrixPerPassengerRepository.save({
+				origin: passenger.location,
+				destination: t.distanceMatrix[0].destination,
+				distance: t.distanceMatrix[0].distance,
+				duration: t.distanceMatrix[0].duration,
+				travel: t.travel,
+				passenger: passengerInMemory
+			})
+		}
+
 		return travelsDistanceMatrix
 			.sort(
 				(a, b) => a.distanceMatrix[0].distance - b.distanceMatrix[0].distance
 			)
-			.map(
-				({
-					travelId,
-					driverId,
-					availableSeatQuantity,
-					passengerAmount,
-					rating,
-					reviewsQuantity
-				}) => ({
-					travelId,
-					driverId,
-					availableSeatQuantity,
-					passengerAmount,
-					rating,
-					reviewsQuantity
-				})
-			)
+			.map(({ travel, passengerAmount, rating, reviewsQuantity }) => ({
+				travel,
+				passengerAmount,
+				rating,
+				reviewsQuantity
+			}))
 	}
 }
 
 export interface RankResponse {
-	travelId: Travel['id']
-	availableSeatQuantity: Travel['availableSeatQuantity']
-	driverId: User['id']
-	rating: User['starRatingAsDriver']
-	reviewsQuantity: User['reviewsQuantityAsDriver']
+	travel: Travel
+	rating: User['totalStarRating']
+	reviewsQuantity: User['totalReviewsQuantity']
 	passengerAmount: number
 }

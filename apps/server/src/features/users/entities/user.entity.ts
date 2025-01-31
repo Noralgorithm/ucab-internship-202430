@@ -12,6 +12,7 @@ import {
 } from 'typeorm'
 import { Destination } from '~/features/destinations/entities/destination.entity'
 import { Message } from '~/features/messages/entities/message.entity'
+import { TravelDistanceMatrixPerPassenger } from '~/features/ranking/entities/travel-distance-matrix-per-passenger.entity'
 import { Ride } from '~/features/rides/entities/ride.entity'
 import { RouteEntity } from '~/features/routes/entities/route.entity'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
@@ -116,6 +117,12 @@ export class User {
 	@Column({ type: 'int', default: 0 })
 	reviewsQuantityAsDriver: number
 
+	@Column({ type: 'float', nullable: true })
+	totalStarRating?: number
+
+	@Column({ type: 'int', default: 0 })
+	totalReviewsQuantity: number
+
 	@OneToMany(
 		() => Vehicle,
 		(vehicle) => vehicle.driver,
@@ -157,4 +164,10 @@ export class User {
 		(message) => message.sender
 	)
 	messages: Message[]
+
+	@OneToMany(
+		() => TravelDistanceMatrixPerPassenger,
+		(tdm) => tdm.passenger
+	)
+	travelDistanceMatrixPerPassengers: TravelDistanceMatrixPerPassenger[]
 }

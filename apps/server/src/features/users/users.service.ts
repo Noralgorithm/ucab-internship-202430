@@ -60,7 +60,7 @@ export class UsersService {
 	}
 
 	async updateRatingAsPassenger(id: User['id']) {
-		const user = await this.findOne(id)
+		await this.findOne(id)
 
 		const rides = await this.ridesService.find({
 			where: { passenger: { id }, driverStarRating: Not(IsNull()) }
@@ -75,12 +75,7 @@ export class UsersService {
 				cur.driverStarRating == null
 					? acc
 					: [acc[0] + cur.driverStarRating, acc[1] + 1],
-			[
-				user.starRatingAsPassenger == null
-					? 0
-					: user.starRatingAsPassenger * user.reviewsQuantityAsPassenger,
-				user.reviewsQuantityAsPassenger
-			]
+			[0, 0]
 		)
 
 		await this.usersRepository.update(
@@ -93,7 +88,7 @@ export class UsersService {
 	}
 
 	async updateRatingAsDriver(id: User['id']) {
-		const user = await this.findOne(id)
+		await this.findOne(id)
 
 		const rides = await this.ridesService.find({
 			where: {
@@ -111,12 +106,7 @@ export class UsersService {
 				cur.passengerStarRating == null
 					? acc
 					: [acc[0] + cur.passengerStarRating, acc[1] + 1],
-			[
-				user.starRatingAsDriver == null
-					? 0
-					: user.starRatingAsDriver * user.reviewsQuantityAsDriver,
-				user.reviewsQuantityAsDriver
-			]
+			[0, 0]
 		)
 
 		await this.usersRepository.update(
@@ -124,6 +114,35 @@ export class UsersService {
 			{
 				starRatingAsDriver: accumulatedStarRating / reviewsQuantity,
 				reviewsQuantityAsDriver: reviewsQuantity
+			}
+		)
+	}
+
+	async updateTotalRating(id: User['id']) {
+		await this.updateRatingAsPassenger(id)
+		await this.updateRatingAsDriver(id)
+
+		const user = await this.findOne(id)
+
+		const totalReviewsQuantity =
+			user.reviewsQuantityAsPassenger + user.reviewsQuantityAsDriver
+		const accumulatedStarRatingAsPassenger =
+			user.starRatingAsPassenger == null
+				? 0
+				: user.starRatingAsPassenger * user.reviewsQuantityAsPassenger
+		const accumulatedStarRatingAsDriver =
+			user.starRatingAsDriver == null
+				? 0
+				: user.starRatingAsDriver * user.reviewsQuantityAsDriver
+		const totalStarRating =
+			(accumulatedStarRatingAsPassenger + accumulatedStarRatingAsDriver) /
+			totalReviewsQuantity
+
+		await this.usersRepository.update(
+			{ id },
+			{
+				totalStarRating,
+				totalReviewsQuantity
 			}
 		)
 	}

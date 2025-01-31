@@ -16,6 +16,7 @@ import { CancelDto } from './dto/cancel.dto'
 import { CompleteDto } from './dto/complete.dto'
 import { CreateTravelDto } from './dto/create-travel.dto'
 import { StartDto } from './dto/start.dto'
+import { TravelStatus } from './enums/travel-status.enum'
 import { TravelsService } from './travels.service'
 
 @ApiTags('[WIP] travels')
@@ -66,14 +67,10 @@ export class TravelsController {
 
 		const ridesWithRating = await Promise.all(
 			travel.rides.map(async (ride) => {
-				const [rating, quantity] = await this.ridesService.calculateRating(
-					ride.passenger.id
-				)
-
 				const ratedUser: User & { rating: number; reviewsQuantity: number } = {
 					...ride.passenger,
-					rating,
-					reviewsQuantity: quantity
+					rating: ride.passenger.totalStarRating ?? 0,
+					reviewsQuantity: ride.passenger.totalReviewsQuantity
 				}
 
 				return {
@@ -82,6 +79,13 @@ export class TravelsController {
 				}
 			})
 		)
+
+		if (travel.status === TravelStatus.IN_PROGRESS) {
+			travel['passengersRelevantLocations'] =
+				await this.travelsService.getTravelPassengersRelevantLocations(
+					travel.id
+				)
+		}
 
 		return {
 			...travel,

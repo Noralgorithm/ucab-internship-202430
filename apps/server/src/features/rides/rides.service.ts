@@ -12,8 +12,11 @@ import { FindManyOptions, FindOneOptions, IsNull, Repository } from 'typeorm'
 import {
 	AFTER_CANCELLED_RIDE_COOLDOWN,
 	AFTER_COMPLETED_RIDE_COOLDOWN,
-	Gender
+	Gender,
+	PassengerRelevantLocationType,
+	RouteType
 } from '~/shared/constants'
+import { TravelDistanceMatrixPerPassenger } from '../ranking/entities/travel-distance-matrix-per-passenger.entity'
 import { TravelStatus } from '../travels/enums/travel-status.enum'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
@@ -33,7 +36,9 @@ export class RidesService {
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
 		@Inject(forwardRef(() => UsersService))
-		private readonly usersService: UsersService
+		private readonly usersService: UsersService,
+		@InjectRepository(TravelDistanceMatrixPerPassenger)
+		private readonly travelDistanceMatrixPerPassengerRepository: Repository<TravelDistanceMatrixPerPassenger>
 	) {}
 
 	async create(createRideDto: CreateRideDto) {
@@ -151,15 +156,14 @@ export class RidesService {
 	}
 
 	async findWithRating(options: FindOneOptions<Ride>) {
-		const ride = await this.ridesRepository.findOne(options)
+		const ride = await this.ridesRepository.findOne({
+			...options,
+			relations: { travel: { vehicle: { driver: true } } }
+		})
 
 		if (ride == null) {
 			throw new NotFoundException('Ride not found')
 		}
-
-		const [rating, reviewsQuantity] = await this.calculateRating(
-			ride.travel.vehicle.driver.id
-		)
 
 		const rideWithRating = {
 			...ride,
@@ -169,8 +173,8 @@ export class RidesService {
 					...ride.travel.vehicle,
 					driver: {
 						...ride.travel.vehicle.driver,
-						rating,
-						reviewsQuantity
+						rating: ride.travel.vehicle.driver.totalStarRating ?? 0,
+						reviewsQuantity: ride.travel.vehicle.driver.totalReviewsQuantity
 					}
 				}
 			}
@@ -325,8 +329,8 @@ export class RidesService {
 			}
 		)
 
-		await this.usersService.updateRatingAsDriver(ride.travel.vehicle.driver.id)
-		await this.usersService.updateRatingAsPassenger(ride.passenger.id)
+		await this.usersService.updateTotalRating(ride.travel.vehicle.driver.id)
+		await this.usersService.updateTotalRating(ride.passenger.id)
 
 		//TODO: extract this to users service
 
@@ -369,8 +373,8 @@ export class RidesService {
 			}
 		)
 
-		await this.usersService.updateRatingAsDriver(ride.travel.vehicle.driver.id)
-		await this.usersService.updateRatingAsPassenger(ride.passenger.id)
+		await this.usersService.updateTotalRating(ride.travel.vehicle.driver.id)
+		await this.usersService.updateTotalRating(ride.passenger.id)
 	}
 
 	async getUserUnfinishedRide(userId: User['id']) {
@@ -397,56 +401,31 @@ export class RidesService {
 		}
 	}
 
-	async calculateRating(
-		userId: User['id']
-	): Promise<[rating: number, reviewsQuantity: number]> {
-		const user = await this.usersRepository.findOne({
-			where: { id: userId },
-			relations: {
-				vehicles: { travels: { rides: true } },
-				rides: { passenger: true }
-			}
+	async getRidePassengerRelevantLocation(rideId: Ride['id']) {
+		const ride = await this.findOne({
+			where: { id: rideId },
+			relations: { travel: true, passenger: true }
 		})
 
-		let flatTravelRatings: number[] = []
+		const passenger = ride.passenger
+		const travel = ride.travel
 
-		if (user && user.vehicles.length > 0) {
-			const travelRatings = user.vehicles.map((vehicle) => {
-				return vehicle.travels.map((travel) => {
-					const travelRatings = travel.rides.map(
-						(ride) => ride.driverStarRating
-					)
-
-					return travelRatings
-				})
+		const tdm =
+			await this.travelDistanceMatrixPerPassengerRepository.findOneOrFail({
+				where: {
+					travel: { id: travel.id },
+					passenger: { id: passenger.id }
+				}
 			})
 
-			flatTravelRatings = travelRatings
-				.flat(2)
-				.filter((rating) => rating !== undefined)
-		}
-
-		let passengerRatings: number[] = []
-
-		if (user && user.rides.length > 0) {
-			passengerRatings = user.rides
-				.map((ride) => {
-					if (ride.passenger.id === userId) {
-						if (ride.passengerStarRating) {
-							return ride.passengerStarRating
-						}
-					} else {
-						if (ride.driverStarRating) {
-							return ride.driverStarRating
-						}
-					}
-				})
-				.filter((rating) => rating !== undefined)
-		}
-
-		const ratings = [...flatTravelRatings, ...passengerRatings]
-
-		const total = ratings.reduce((acc, rating) => acc + rating, 0)
-		return [Number((total / ratings.length).toFixed(1)) || 0, ratings.length]
+		return travel.type === RouteType.TO_UCAB
+			? {
+					location: tdm.destination,
+					type: PassengerRelevantLocationType.PICK_UP
+				}
+			: {
+					location: tdm.origin,
+					type: PassengerRelevantLocationType.DROP_OFF
+				}
 	}
 }

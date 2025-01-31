@@ -72,6 +72,12 @@ export class ProfileDto {
 	reviewsQuantityAsDriver: number
 
 	@Expose()
+	totalStarRating?: number
+
+	@Expose()
+	totalReviewsQuantity: number
+
+	@Expose()
 	static from(user: User & { rating: number; reviewsQuantity: number }) {
 		return plainToInstance(ProfileDto, user satisfies ProfileDto, {
 			excludeExtraneousValues: true

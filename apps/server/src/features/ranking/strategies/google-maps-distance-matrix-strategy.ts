@@ -67,7 +67,7 @@ export class GoogleMapsDistanceMatrixStrategy
 			(await response.json()) as GoogleMapsDistanceMatrixJsonResponse
 
 		if (responseJson.status !== 'OK') {
-			// console.error(`${responseJson.status}: ${responseJson.error_message}`);
+			throw new Error(`${responseJson.status}: ${responseJson.error_message}`)
 		}
 
 		const originsAsGeoJsonPoints = origins.reduce((acc, cur) => {

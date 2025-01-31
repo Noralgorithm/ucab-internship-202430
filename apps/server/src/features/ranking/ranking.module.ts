@@ -1,9 +1,9 @@
-import { Module, Provider, forwardRef } from '@nestjs/common'
+import { Module, Provider } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Ride } from '../rides/entities/ride.entity'
 import { Travel } from '../travels/entities/travel.entity'
-import { TravelsModule } from '../travels/travels.module'
 import { UsersModule } from '../users/users.module'
+import { TravelDistanceMatrixPerPassenger } from './entities/travel-distance-matrix-per-passenger.entity'
 import { RankingController } from './ranking.controller'
 import { RankingService } from './ranking.service'
 import { GoogleMapsDistanceMatrixStrategy } from './strategies/google-maps-distance-matrix-strategy'
@@ -16,9 +16,8 @@ const distanceMatrixStrategyProvider: Provider<DistanceMatrixStrategy> = {
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([Travel, Ride]),
-		UsersModule,
-		forwardRef(() => TravelsModule)
+		TypeOrmModule.forFeature([Travel, Ride, TravelDistanceMatrixPerPassenger]),
+		UsersModule
 	],
 	controllers: [RankingController],
 	providers: [RankingService, distanceMatrixStrategyProvider],

@@ -81,11 +81,20 @@ export class RidesController {
 			withDeleted: true
 		})
 
-		return await this.ridesService.findWithRating({
+		const rideWithRating = await this.ridesService.findWithRating({
 			where: { id: id },
 			relations: { travel: { vehicle: { driver: true } } },
 			withDeleted: true
 		})
+
+		if (rideWithRating.tookTheRide) {
+			rideWithRating['relevantLocation'] =
+				await this.ridesService.getRidePassengerRelevantLocation(
+					rideWithRating.id
+				)
+		}
+
+		return rideWithRating
 	}
 
 	@Patch(':id/answer-ride-request')

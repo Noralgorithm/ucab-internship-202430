@@ -10,6 +10,7 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { TravelDistanceMatrixPerPassenger } from '~/features/ranking/entities/travel-distance-matrix-per-passenger.entity'
 import { Ride } from '~/features/rides/entities/ride.entity'
 import { GeoJsonLineString } from '~/features/routes/types'
 import { Vehicle } from '~/features/vehicles/entities/vehicle.entity'
@@ -114,4 +115,10 @@ export class Travel {
 		(ride) => ride.travel
 	)
 	rides: Ride[]
+
+	@OneToMany(
+		() => TravelDistanceMatrixPerPassenger,
+		(tdm) => tdm.travel
+	)
+	travelDistanceMatrixPerPassengers: TravelDistanceMatrixPerPassenger[]
 }

@@ -23,6 +23,11 @@ export enum RouteType {
 	FROM_UCAB = 'from-ucab'
 }
 
+export enum PassengerRelevantLocationType {
+	PICK_UP = 'pick-up',
+	DROP_OFF = 'drop-off'
+}
+
 export const NAME_MAX_LENGTH = 35
 export const PASSWORD_MAX_LENGTH = 20
 export const PASSWORD_MIN_LENGTH = 8

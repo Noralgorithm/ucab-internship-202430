@@ -19,8 +19,7 @@ export class ProfileService {
 	) {}
 
 	async getUserProfile(id: User['id']): Promise<ProfileDto> {
-		await this.usersService.updateRatingAsDriver(id)
-		await this.usersService.updateRatingAsPassenger(id)
+		await this.usersService.updateTotalRating(id)
 
 		const user = await this.usersRepository.findOne({
 			where: { id }
@@ -30,12 +29,10 @@ export class ProfileService {
 			throw new NotFoundException('Usuario no encontrado')
 		}
 
-		const [rating, quantity] = await this.ridesService.calculateRating(id)
-
 		const ratedUser: User & { rating: number; reviewsQuantity: number } = {
 			...user,
-			rating,
-			reviewsQuantity: quantity
+			rating: user.totalStarRating ?? 0,
+			reviewsQuantity: user.totalReviewsQuantity
 		}
 
 		return ProfileDto.from(ratedUser)

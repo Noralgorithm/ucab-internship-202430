@@ -7,9 +7,14 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DateTime } from 'luxon'
-import { Equal, FindOneOptions, Or, Repository } from 'typeorm'
-import { Gender } from '~/shared/constants'
+import { Equal, FindOneOptions, In, Or, Repository } from 'typeorm'
+import {
+	Gender,
+	PassengerRelevantLocationType,
+	RouteType
+} from '~/shared/constants'
 import { GeoJsonPoint } from '~/shared/types'
+import { TravelDistanceMatrixPerPassenger } from '../ranking/entities/travel-distance-matrix-per-passenger.entity'
 import { TravelCancelType } from '../rides/enums/travel-cancel-type.enum'
 import { RidesService } from '../rides/rides.service'
 import { User } from '../users/entities/user.entity'
@@ -32,7 +37,9 @@ export class TravelsService {
 		private readonly travelsRepository: Repository<Travel>,
 		@Inject(forwardRef(() => VehiclesService))
 		private readonly vehiclesService: VehiclesService,
-		private readonly ridesService: RidesService
+		private readonly ridesService: RidesService,
+		@InjectRepository(TravelDistanceMatrixPerPassenger)
+		private readonly travelDistanceMatrixPerPassengerRepository: Repository<TravelDistanceMatrixPerPassenger>
 	) {}
 
 	//TODO: validate that this user is not in a ride that has not been completed or cancelled
@@ -170,14 +177,11 @@ export class TravelsService {
 					destination,
 					...travel
 				}) => {
-					const [rating, reviewsQuantity] =
-						await this.ridesService.calculateRating(travel.vehicle.driver.id)
-
 					travel.vehicle.driver = {
 						...travel.vehicle.driver,
 						// @ts-ignore
-						rating,
-						reviewsQuantity
+						rating: travel.vehicle.driver.totalStarRating ?? 0,
+						reviewsQuantity: travel.vehicle.driver.totalReviewsQuantity
 					}
 
 					return {
@@ -204,15 +208,12 @@ export class TravelsService {
 		if (rideRequests) {
 			const formattedRideRequests = await Promise.all(
 				rideRequests.map(async ({ ...ride }) => {
-					const [rating, reviewsQuantity] =
-						await this.ridesService.calculateRating(ride.passenger.id)
-
 					const newRide = {
 						...ride,
 						passenger: {
 							...ride.passenger,
-							rating,
-							reviewsQuantity
+							rating: ride.passenger.totalStarRating ?? 0,
+							reviewsQuantity: ride.passenger.totalReviewsQuantity
 						}
 					}
 					return {
@@ -370,5 +371,41 @@ export class TravelsService {
 			isIn: false,
 			payload: null
 		}
+	}
+
+	async getTravelPassengersRelevantLocations(travelId: Travel['id']) {
+		const travel = await this.findOne({ where: { id: travelId } })
+
+		const rides = await this.ridesService.find({
+			where: { travel: { id: travelId }, tookTheRide: true },
+			relations: {
+				passenger: true
+			}
+		})
+
+		const passengers = rides.map((ride) => ride.passenger)
+
+		const travelDistanceMatrixPerPassengers =
+			await this.travelDistanceMatrixPerPassengerRepository.find({
+				where: {
+					travel: { id: travelId },
+					passenger: { id: In(passengers.map((passenger) => passenger.id)) }
+				},
+				relations: { passenger: true }
+			})
+
+		return travelDistanceMatrixPerPassengers.map((tdm) =>
+			travel.type === RouteType.TO_UCAB
+				? {
+						passenger: tdm.passenger,
+						location: tdm.destination,
+						type: PassengerRelevantLocationType.PICK_UP
+					}
+				: {
+						passenger: tdm.passenger,
+						location: tdm.origin,
+						type: PassengerRelevantLocationType.DROP_OFF
+					}
+		)
 	}
 }
