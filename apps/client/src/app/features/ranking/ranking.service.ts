@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { map } from 'rxjs'
 import { SuccesfulResponse } from '~/shared/types/backend-response.type'
+import { GeoJsonPoint } from '~/shared/types/maps/geo-json-points.type'
 import {
 	TravelAvailableDriverData,
 	TravelType
@@ -20,18 +21,14 @@ interface QueryParams {
 @Injectable({
 	providedIn: 'root'
 })
-export class GetTravelAvailableDrivers {
+export class GetRankingAvailableDrivers {
 	constructor(private readonly http: HttpClient) {}
 
-	execute(query?: QueryParams) {
-		const url = '/travels/available-drivers'
+	execute(createRankingServiceDTO: CreateRankingServiceDTO) {
+		const url = '/ranking/rank'
 
 		return this.http
-			.get<SuccesfulResponse<ResponseDto>>(url, {
-				params: {
-					...query
-				}
-			})
+			.post<SuccesfulResponse<ResponseDto>>(url, createRankingServiceDTO)
 			.pipe(map(this.parseResponse))
 	}
 
@@ -61,3 +58,9 @@ type ResponseDto = (Omit<TravelAvailableDriverData, 'vehicle'> & {
 		driver: UserProfile & { profilePicFilename: string }
 	}
 })[]
+
+export interface CreateRankingServiceDTO {
+	passengerLocation: GeoJsonPoint
+	routeType: 'to-ucab' | 'from-ucab'
+	womenOnly: boolean
+}

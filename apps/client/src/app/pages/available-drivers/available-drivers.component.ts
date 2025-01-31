@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr'
 import { DriverCardComponent } from '~/features/drivers/components/driver-card/driver-card.component'
 import { OwnLocationService } from '~/features/maps/own-location.service'
 import { GetDestinationService } from '~/features/my-destinations/api/get-destination.service'
+import { GetRankingAvailableDrivers } from '~/features/ranking/ranking.service'
 import { RequestRideService } from '~/features/rides/api/request-ride.service'
 import { GetTravelAvailableDrivers } from '~/features/travels/api/get-travel-available-drivers.service'
 import { GENDER_KEY } from '~/shared/constants'
@@ -36,6 +37,7 @@ export class AvailableDriversComponent implements OnInit {
 
 	constructor(
 		private readonly getTravelAvailableDriversService: GetTravelAvailableDrivers,
+		private readonly getRankingAvailableDriversService: GetRankingAvailableDrivers,
 		private readonly requestRideService: RequestRideService,
 		private readonly ownLocationService: OwnLocationService,
 		private readonly getDestinationService: GetDestinationService,
@@ -51,6 +53,7 @@ export class AvailableDriversComponent implements OnInit {
 
 	ngOnInit() {
 		this.getDestinationLatLng()
+		this.getDrivers()
 	}
 
 	getDestinationLatLng() {
@@ -125,16 +128,22 @@ export class AvailableDriversComponent implements OnInit {
 	}
 
 	getDrivers() {
-		this.getTravelAvailableDriversService
-			.execute({
-				isWomanOnly: this.optionOnlyWomans,
-				type: this.travelType,
-				lat: String(this.destinationLatLng?.lat),
-				lng: String(this.destinationLatLng?.lng)
-			})
-			.subscribe((res) => {
-				this.travels = res.data
-			})
+		this.ownLocationService.$location.subscribe((location) => {
+			this.getRankingAvailableDriversService
+				.execute({
+					passengerLocation: {
+						type: 'Point',
+						coordinates: [location.coords.longitude, location.coords.latitude]
+					},
+					routeType: this.travelType,
+					womenOnly: false
+				})
+				.subscribe({
+					next: (res) => {
+						this.travels = res.data
+					}
+				})
+		})
 	}
 
 	getTravelDriverData(travel: TravelAvailableDriverData) {

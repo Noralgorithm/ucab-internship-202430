@@ -7,7 +7,8 @@
         {{showFirstLastName(driver.lastName)}}</span>
       <div class="rating-information">
         <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-        <span class="card-information rating-number">{{driver.rating}} ({{driver.reviewsQuantity}})</span>
+        <span class="card-information rating-number">{{roundToOneDecimal(driver.rating)}}
+          ({{driver.reviewsQuantity}})</span>
       </div>
     </div>
 
