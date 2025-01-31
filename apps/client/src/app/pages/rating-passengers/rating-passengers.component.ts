@@ -60,6 +60,10 @@ export class RatingPassengersComponent implements OnInit {
 		return getFirstLastName(fullLastName)
 	}
 
+	roundToOneDecimal(rating: number) {
+		return Number.parseFloat(rating.toFixed(1))
+	}
+
 	ratingPassengers() {
 		if (!this.rideRating) return
 		const payload: CompleteTravelServiceDto = {

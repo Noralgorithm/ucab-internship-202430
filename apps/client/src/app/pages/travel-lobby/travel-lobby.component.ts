@@ -183,4 +183,8 @@ export class TravelLobbyComponent {
 			queryParamsHandling: 'merge'
 		})
 	}
+
+	roundToOneDecimal(rating: number) {
+		return Number.parseFloat(rating.toFixed(1))
+	}
 }

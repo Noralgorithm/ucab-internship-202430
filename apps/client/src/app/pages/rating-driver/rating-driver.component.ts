@@ -69,6 +69,10 @@ export class RatingDriverComponent implements OnInit {
 		return getFirstLastName(fullLastName)
 	}
 
+	roundToOneDecimal(rating: number) {
+		return Number.parseFloat(rating.toFixed(1))
+	}
+
 	onSelectedRating(rating: number) {
 		this.selectedRating = rating
 	}

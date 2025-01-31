@@ -77,6 +77,10 @@ export class TravelWaitingRoomComponent implements OnInit {
 		return getFirstLastName(fullLastName)
 	}
 
+	roundToOneDecimal(rating: number) {
+		return Number.parseFloat(rating.toFixed(1))
+	}
+
 	ngOnDestroy() {
 		this.rideSubscription?.unsubscribe()
 	}

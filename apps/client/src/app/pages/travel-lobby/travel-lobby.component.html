@@ -83,7 +83,7 @@
                   {{showFirstLastName(ride.passenger.lastName)}}</span>
                 <div class="rating-information">
                   <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating">
-                  <span class="card-information rating-number">{{ride.passenger.rating}}
+                  <span class="card-information rating-number">{{roundToOneDecimal(ride.passenger.rating)}}
                     ({{ride.passenger.reviewsQuantity}})</span>
                 </div>
               </div>
@@ -139,7 +139,7 @@
                   {{showFirstLastName(ride.passenger.lastName)}}</span>
                 <div class="rating-information">
                   <img class="rating-icon" src="assets/svgs/FullStarBlue.svg" alt="icono de rating">
-                  <span class="card-information rating-number">{{ride.passenger.rating}}
+                  <span class="card-information rating-number">{{roundToOneDecimal(ride.passenger.rating)}}
                     ({{ride.passenger.reviewsQuantity}})</span>
                 </div>
               </div>

@@ -12,7 +12,9 @@
         {{showFirstLastName(ride?.travel?.vehicle?.driver?.lastName ?? 'Apellido no disponible')}}</p>
       <div class="rating-information">
         <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
-        <span class="card-information rating-number label-small">{{ride?.travel?.vehicle?.driver?.rating}}
+        <span
+          class="card-information rating-number label-small">{{roundToOneDecimal(ride?.travel?.vehicle?.driver?.rating
+          ?? 0 )}}
           ({{ride?.travel?.vehicle?.driver?.reviewsQuantity}})</span>
       </div>
     </div>
