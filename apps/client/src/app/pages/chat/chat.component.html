@@ -33,7 +33,7 @@
 				@for (date of groupedMessages; track $index) {
 				<div class="chat-date">{{ date.date }}</div>
 				<div class="fix">
-					@for (item of date.messages.reverse(); track $index) { @if
+					@for (item of date.messages.slice().reverse(); track $index) { @if
 					(item.isMine) {
 					<div class="own-msg-container">
 						<div class="msg">{{ item.content }}</div>

@@ -20,6 +20,7 @@ import { RetrieveSignUpParamsDto } from './dto/retrieve-sign-up-params.dto'
 import { SignInDto } from './dto/sign-in.dto'
 import { SignUpRequestResponseDto } from './dto/sign-up-request-response.dto'
 import { SignUpDto } from './dto/sign-up.dto'
+import { WhitelistRequestSignUpDto } from './dto/whitelist-request-sign-up.dto'
 
 @ApiTags('auth')
 @Public()
@@ -39,6 +40,23 @@ export class AuthController {
 		const signUpRequest = await this.authService.getSignUpRequest(params.id)
 
 		return SignUpRequestResponseDto.from(signUpRequest)
+	}
+
+	@HttpCode(200)
+	@Patch('whitelist-request-sign-up')
+	async whitelistRequestSignUp(
+		@Body() requestSignUpDto: WhitelistRequestSignUpDto
+	) {
+		const signUpRequest = await this.authService.requestSignUp(requestSignUpDto)
+
+		//TODO: send mail using mjml template
+		await this.mailingService.sendMailWithHtml({
+			to: signUpRequest.email,
+			subject: 'Confirmación de registro en Movic 🚗',
+			html: `<p>Para confirmar tu registro, accede al siguiente enlace: ${this.configService.get('CLIENT_URL')}/r?i=${signUpRequest.id}</p>`
+		})
+
+		return 'Confirmación enviada con éxito'
 	}
 
 	@HttpCode(200)

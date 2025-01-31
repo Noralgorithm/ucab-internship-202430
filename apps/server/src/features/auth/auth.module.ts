@@ -12,6 +12,7 @@ import { AuthService } from './auth.service'
 import { SignUpRequest } from './entities/sign-up-request.entity'
 import { AuthGuard } from './guards/auth.guard'
 import { RolesGuard } from './guards/roles.guard'
+import { WhitelistProvider } from './providers/whitelist.provider'
 
 @Module({
 	imports: [
@@ -34,6 +35,7 @@ import { RolesGuard } from './guards/roles.guard'
 	],
 	controllers: [AuthController],
 	providers: [
+		WhitelistProvider,
 		{
 			provide: APP_GUARD,
 			useClass: AuthGuard

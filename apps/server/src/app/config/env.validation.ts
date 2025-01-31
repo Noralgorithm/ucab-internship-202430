@@ -115,6 +115,12 @@ class EnvironmentVariables {
 
 	@IsString()
 	GOOGLE_MAPS_API_KEY: string
+
+	@IsString()
+	SPREADSHEET_ID: string
+
+	@IsString()
+	SHEET_NAME: string
 }
 
 export function validate(config: Record<string, unknown>) {

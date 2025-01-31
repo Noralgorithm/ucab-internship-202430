@@ -3,7 +3,8 @@
 
   <section class="card-body">
     <div class="card-row label-medium">
-      <span class="driver-name">{{ driver.firstName }} {{ driver.lastName }}</span>
+      <span class="driver-name">{{showFirstName(driver.firstName)}}
+        {{showFirstLastName(driver.lastName)}}</span>
       <div class="rating-information">
         <img class="rating-icon" src="/assets/svgs/FullStarBlue.svg" alt="icono de rating" />
         <span class="card-information rating-number">{{driver.rating}} ({{driver.reviewsQuantity}})</span>
