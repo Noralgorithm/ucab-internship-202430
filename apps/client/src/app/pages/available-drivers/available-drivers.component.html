@@ -1,20 +1,23 @@
 <page-layout [hasTabBar]="true">
-	<h1 class="heading-small">Lista de conductores</h1>
+  <h1 class="heading-small">Lista de conductores</h1>
 
-	<div class="checkbox-container">
-		@if (isAWoman()) {
-		<label class="only-woman-label">
-			<input class="only-woman-checkbox" type="checkbox" [checked]="optionOnlyWomans"
-				(change)="changeOptionOnlyWomans($event)" />
-			Solo mujeres en el viaje
-		</label>
-		}
-	</div>
+  <div class="checkbox-container">
+    @if (isAWoman()) {
+    <label class="only-woman-label">
+      <input class="only-woman-checkbox" type="checkbox" [checked]="optionOnlyWomans"
+        (change)="changeOptionOnlyWomans($event)" />
+      Solo mujeres en el viaje
+    </label>
+    }
+  </div>
 
-	<ul>
-		@for (travel of travels; track $index) {
-		<driver-card class="driver-card" [driver]="getTravelDriverData(travel)"
-			(click)="handleDriverSelection(travel)" />
-		}
-	</ul>
+  <div class="update-button">
+    <button mButton size="small" severity="tertiary" (click)="getDrivers()">Actualizar Lista</button>
+  </div>
+
+  <ul>
+    @for (travel of travels; track $index) {
+    <driver-card class="driver-card" [driver]="getTravelDriverData(travel)" (click)="handleDriverSelection(travel)" />
+    }
+  </ul>
 </page-layout>
