@@ -1,13 +1,17 @@
 <page-layout [hasTabBar]="true">
 	<header>
 		<h1 class="heading-xsmall">Administrar vehículos</h1>
-		@if(ownVehiclesQuantity < 3) { <button mButton severity="contrast" size="small"
-			routerLink="/app/my-vehicle/add">Agregar</button>
+		@if(ownVehiclesQuantity < 3) { <button mButton severity="contrast" size="small" routerLink="/app/my-vehicle/add">
+			Agregar</button>
 			}
 	</header>
 	<p class="paragraph-medium vehicle-counter">{{ownVehiclesQuantity}} de 3 vehículos para agregar</p>
 
 	<section>
+		@if (myVehicles.length === 0) {
+		<p class="paragraph-medium">No tienes vehículos registrados</p>
+		}
+
 		@for (vehicle of myVehicles; track vehicle.id) {
 		<card-vehicle [vehicle]="vehicle" (updateVehicles)="getOwnVehicles()" />
 		}

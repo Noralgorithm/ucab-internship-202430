@@ -7,6 +7,10 @@
 	</header>
 	<p class="paragraph-medium destination-counter">{{destinations.length}} de 3 destinos para agregar</p>
 
+	@if (destinations.length === 0) {
+	<p class="paragraph-medium">No tienes destinos agregados</p>
+	}
+
 	<ul class="destinations-list">
 		@for (d of destinations; track d.id) {
 		<card-my-destination [destination]="d" [actionButtons]="true" (onDelete)="handleDelete(d.id)" />
