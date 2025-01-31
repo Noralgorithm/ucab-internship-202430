@@ -18,4 +18,6 @@ export interface UserProfile {
 	isBlocked: boolean
 	rating: number
 	reviewsQuantity: number
+	totalStarRating?: number
+	totalReviewsQuantity?: number
 }

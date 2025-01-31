@@ -7,8 +7,6 @@ import {
 	TravelAvailableDriverData,
 	TravelType
 } from '~/shared/types/travels/travel.type'
-import { UserProfile } from '~/shared/types/users/user-profile.type'
-import { Vehicle } from '~/shared/types/vehicles/vehicle.type'
 import { constructBackendImageUrl } from '~/shared/utils/construct-backend-image-url.util'
 
 interface QueryParams {
@@ -37,14 +35,15 @@ export class GetRankingAvailableDrivers {
 	): SuccesfulResponse<TravelAvailableDriverData[]> {
 		return {
 			status: res.status,
-			data: res.data.map((travel) => ({
-				...travel,
+			data: res.data.map((el) => ({
+				...el.travel,
+				...el,
 				vehicle: {
-					...travel.vehicle,
+					...el.travel.vehicle,
 					driver: {
-						...travel.vehicle.driver,
+						...el.travel.vehicle.driver,
 						profilePicSrc: constructBackendImageUrl(
-							travel.vehicle.driver.profilePicFilename
+							el.travel.vehicle.driver.profilePicFilename
 						)
 					}
 				}
@@ -53,11 +52,11 @@ export class GetRankingAvailableDrivers {
 	}
 }
 
-type ResponseDto = (Omit<TravelAvailableDriverData, 'vehicle'> & {
+type ResponseDto = /* (Omit<TravelAvailableDriverData, 'vehicle'> & {
 	vehicle: Vehicle & {
 		driver: UserProfile & { profilePicFilename: string }
 	}
-})[]
+}) */ any[]
 
 export interface CreateRankingServiceDTO {
 	passengerLocation: GeoJsonPoint

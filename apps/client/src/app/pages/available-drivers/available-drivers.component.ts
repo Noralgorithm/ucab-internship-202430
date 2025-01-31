@@ -11,6 +11,7 @@ import { GENDER_KEY } from '~/shared/constants'
 import { Ride } from '~/shared/types/rides/ride-request.type'
 import { TravelAvailableDriverData } from '~/shared/types/travels/travel.type'
 import { Gender } from '~/shared/types/users/user-gender.type'
+import { UserProfile } from '~/shared/types/users/user-profile.type'
 import { ButtonComponent } from '~/shared/ui/components/button/button.component'
 import { PageLayoutComponent } from '~/shared/ui/components/page-layout/page-layout.component'
 
@@ -146,7 +147,10 @@ export class AvailableDriversComponent implements OnInit {
 		})
 	}
 
-	getTravelDriverData(travel: TravelAvailableDriverData) {
+	getTravelDriverData(travel: TravelAvailableDriverData): UserProfile & {
+		passengerAmount: number
+		passengerCapacity: number
+	} {
 		return {
 			...travel.vehicle.driver,
 			passengerAmount: travel.passengerAmount,
